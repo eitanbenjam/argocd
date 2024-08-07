@@ -5,7 +5,7 @@ add_blueprint: true
 
 cs-k8s-infra:
   persistence-volume-provisioner-chart:
-    enabled: true
+    enabled: false
 
   radcom-ingress-nginx-chart:
     enabled: false
