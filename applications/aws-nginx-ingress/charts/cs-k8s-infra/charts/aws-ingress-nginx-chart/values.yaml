@@ -1,8 +1,0 @@
-repository: localhost:5000
-namespace: production
-tag: latest
-eks_subnets: 0.0.0.0/0
-deployment_name: radcom
-create_external_loadbalancer: true
-load_balancer_source_ranges: '0.0.0.0/0'
-enabled: false
