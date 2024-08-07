@@ -5,7 +5,7 @@ add_blueprint: true
 
 cs-k8s-infra:
   persistence-volume-provisioner-chart:
-    enabled: false
+    enabled: true
     privateRegistry:
       registryUrl: *DOCKER_REGISTRY_PLACEHOLDER
     helperImage:
