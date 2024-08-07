@@ -5,24 +5,9 @@ description: cs-k8s-infra
 name: cs-k8s-infra
 version: 1.375.0
 dependencies:
-  - name: aws-ingress-nginx-chart
-    version: 1.6.0
+  - name: persistence-volume-provision
+    version: 1.99.0
     repository:  *HELM_REGISTRY_PLACEHOLDER
-  - name: maveriq-dns-chart
-    version: 1.12.0
-    repository: *HELM_REGISTRY_PLACEHOLDER
-  - name: multus-chart
-    version: 1.7.0
-    repository: *HELM_REGISTRY_PLACEHOLDER
-  - name: persistence-volume-provisioner-chart
-    version: 1.14.0
-    repository: *HELM_REGISTRY_PLACEHOLDER
-  - name: radcom-crds-chart
-    version: 1.15.0
-    repository: *HELM_REGISTRY_PLACEHOLDER
-  - name: radcom-ingress-nginx-chart
-    version: 1.16.0
-    repository: *HELM_REGISTRY_PLACEHOLDER
 
 
 
