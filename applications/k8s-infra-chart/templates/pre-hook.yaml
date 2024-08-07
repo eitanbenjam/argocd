@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "{{ .Release.Name }}-{{ .Chart.Name }}-add-blueprint"
+  name: "{{ .Release.Name }}-{{ .Chart.Name }}-pre-hook"
   labels:
     helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
   annotations:
