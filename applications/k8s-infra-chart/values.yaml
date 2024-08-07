@@ -2,7 +2,7 @@ DOCKER_REGISTRY_PLACEHOLDER: &DOCKER_REGISTRY_PLACEHOLDER 571789434150.dkr.ecr.u
 add_blueprint: true
 ## enable MS deployment
 persistence-volume-provisioner-chart:
-  enabled: true
+  enabled: false
   privateRegistry:
     registryUrl: *DOCKER_REGISTRY_PLACEHOLDER
   helperImage:
