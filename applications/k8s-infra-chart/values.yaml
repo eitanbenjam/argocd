@@ -1,4 +1,4 @@
-DOCKER_REGISTRY_PLACEHOLDER: &DOCKER_REGISTRY_PLACEHOLDER nexus3-prod.radcom.co.il:8088
+DOCKER_REGISTRY_PLACEHOLDER: &DOCKER_REGISTRY_PLACEHOLDER 571789434150.dkr.ecr.us-east-2.amazonaws.com
 add_blueprint: true
 ## enable MS deployment
 persistence-volume-provisioner-chart:
