@@ -16,7 +16,7 @@ spec:
 
   # Source of the application manifests
   sources:
-    - repoURL: https://github.com/eitanbenjam/argocd.git # repoURL: 571789434150.dkr.ecr.us-east-2.amazonaws.com  # Can point to either a Helm chart repo or a git repo.
+    - repoURL: https://github.com/eitanbenjam/argocd # repoURL: 571789434150.dkr.ecr.us-east-2.amazonaws.com  # Can point to either a Helm chart repo or a git repo.
       targetRevision: main  # For Helm, this refers to the chart version.
       path: applications/k8s-infra-chart # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
       ref: my-repo  # For Helm, acts as a reference to this source for fetching values files from this source. Has no meaning when under `source` field
@@ -34,8 +34,8 @@ spec:
         # Helm values files for overriding values in the helm chart
         # The path is relative to the spec.source.path directory defined above
         valueFiles: 
-          - $my-repo/applications/general/values.yaml
-          - $my-repo/applications/k8s-infra-chart/values.yaml
+          - ../general/values.yaml
+          - values.yaml
 
 
         # Ignore locally missing valueFiles when installing Helm chart. Defaults to false
