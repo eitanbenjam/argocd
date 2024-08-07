@@ -5,7 +5,7 @@ description: cs-k8s-infra
 name: cs-k8s-infra
 version: 1.375.0
 dependencies:
-  - name: persistence-volume-provision
+  - name: cs-k8s-infra
     version: 1.99.0
     repository:  *HELM_REGISTRY_PLACEHOLDER
 
