@@ -1,7 +1,9 @@
 DOCKER_REGISTRY_PLACEHOLDER: &DOCKER_REGISTRY_PLACEHOLDER 571789434150.dkr.ecr.us-east-2.amazonaws.com
 add_blueprint: true
 ## enable MS deployment
-k8s-infra-chart:
+#
+
+cs-k8s-infra:
   persistence-volume-provisioner-chart:
     enabled: false
     privateRegistry:
