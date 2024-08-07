@@ -79,7 +79,7 @@ cs-k8s-infra:
       30210: '{{ .Release.Namespace }}/eventbus-kafka-controller-8-external:30202'
 
   radcom-crds-chart:
-    enabled: true
+    enabled: false
 
   multus-chart:
     enabled: false
