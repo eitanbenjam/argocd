@@ -1,0 +1,189 @@
+global:
+  dockerRegistry: srp.radcom-registry.com:5000
+  cloud_provider: "aws"
+  
+
+## enable MS deployment
+persistence-volume-provisioner-chart:
+  enabled: true
+  privateRegistry:
+    registryUrl: srp.radcom-registry.com:5000
+  helperImage:
+    repository: busybox
+    tag: '1.36.0'
+  storageClass:
+    provisionerName: rancher.io/local-path
+    name: local-storage
+
+radcom-ingress-nginx-chart:
+  enabled: false
+  # without fullnameOverride the size of some object names are exceeding the 63 characters limit
+  fullnameOverride: radcom-ingress-nginx-chart
+  controller:
+    ingressClassResource:
+      enabled: false
+    watchIngressWithoutClass: true
+    reportNodeInternalIp: false
+    hostNetwork: true
+    dnsPolicy: ClusterFirstWithHostNet
+    config:
+      ssl-protocols: TLSv1.3
+    extraArgs:
+      publish-status-address: kuberiq-home-vip
+      default-ssl-certificate: "$(POD_NAMESPACE)/tls-secret"
+    podAnnotations:
+      prometheus.io/port: "10254"
+      prometheus.io/scrape: "true"
+    scope:
+      enabled: true
+    service:
+      enabled: false
+      type: NodePort
+      nodePorts:
+        http: 80
+        https: 443
+    image:
+      pullPolicy: Always
+      registry: srp.radcom-registry.com:5000
+      image: registry.k8s.io/ingress-nginx/controller
+      digest:
+    kind: DaemonSet
+    admissionWebhooks:
+      enabled: true
+      patch:
+        image:
+          registry: srp.radcom-registry.com:5000
+          image: registry.k8s.io/ingress-nginx/kube-webhook-certgen
+          digest:
+    metrics:
+      port: 10254
+      enabled: true
+  rbac:
+    create: true
+    scope: true
+  # -- UDP service key-value pairs
+  ## Ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/exposing-tcp-udp-services.md
+  udp:
+    5353: "kube-system/coredns:53"
+  tcp:
+    30093: '{{ .Release.Namespace }}/monitoring-tools-elasticsearch-chart:9300'
+    30201: '{{ .Release.Namespace }}/eventbus-kafka:30201'
+    30202: '{{ .Release.Namespace }}/eventbus-kafka-controller-0-external:30202'
+    30203: '{{ .Release.Namespace }}/eventbus-kafka-controller-1-external:30202'
+    30204: '{{ .Release.Namespace }}/eventbus-kafka-controller-2-external:30202'
+    30205: '{{ .Release.Namespace }}/eventbus-kafka-controller-3-external:30202'
+    30206: '{{ .Release.Namespace }}/eventbus-kafka-controller-4-external:30202'
+    30207: '{{ .Release.Namespace }}/eventbus-kafka-controller-5-external:30202'
+    30208: '{{ .Release.Namespace }}/eventbus-kafka-controller-6-external:30202'
+    30209: '{{ .Release.Namespace }}/eventbus-kafka-controller-7-external:30202'
+    30210: '{{ .Release.Namespace }}/eventbus-kafka-controller-8-external:30202'
+
+radcom-crds-chart:
+  enabled: false
+
+multus-chart:
+  enabled: false
+
+maveriq-dns-chart:
+  enabled: false
+  image:
+    repository: srp.radcom-registry.com:5000/registry.k8s.io/coredns/coredns
+    tag: "v1.10.1"
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  serviceType: "NodePort"
+  # Default zone is what Kubernetes recommends:
+  # https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/#coredns-configmap-options
+  servers:
+  - zones:
+    - zone: .
+    port: 53
+    # If serviceType is nodePort you can specify nodePort here
+    nodePort: 53
+    # hostPort: 53
+    plugins:
+    - name: errors
+    # Serves a /health endpoint on :8080, required for livenessProbe
+    - name: health
+      configBlock: |-
+        lameduck 5s
+    # Serves a /ready endpoint on :8181, required for readinessProbe
+    - name: ready
+    # Required to query kubernetes API for data
+    - name: kubernetes
+      parameters: cluster.local in-addr.arpa ip6.arpa
+      configBlock: |-
+        pods insecure
+        fallthrough in-addr.arpa ip6.arpa
+        ttl 30
+    # Serves a /metrics endpoint on :9153, required for serviceMonitor
+    - name: prometheus
+      parameters: 0.0.0.0:9153
+    - name: reload
+    - name: loadbalance
+    - name: local
+    - name: log
+    # 'loop' detects simple forwarding loops and halts the server.
+    - name: loop
+    - name: file
+      parameters: /etc/coredns/in-addr.arpa.db in-addr.arpa
+    - name: auto
+      parameters: reload 30s
+  - zones:
+    - zone: primary.com
+    port: 53
+    plugins:
+    - name: prometheus
+      parameters: 0.0.0.0:9153
+    - name: log
+    - name: file
+      parameters: /etc/coredns/primary.com.db primary.com
+    - name: auto
+      parameters: reload 30s
+  - zones:
+    - zone: secondary.com
+    port: 53
+    plugins:
+    - name: prometheus
+      parameters: 0.0.0.0:9153
+    - name: log
+    - name: file
+      parameters: /etc/coredns/secondary.com.db secondary.com
+    - name: auto
+      parameters: reload 30s
+  - zones:
+    - zone: radcom-registry.com
+    port: 53
+    plugins:
+    - name: prometheus
+      parameters: 0.0.0.0:9153
+    - name: log
+    - name: file
+      parameters: /etc/coredns/radcom-registry.com.db radcom-registry.com
+    - name: auto
+      parameters: reload 30s
+  zoneFiles:
+  - filename: primary.com.db
+    domain: primary.com
+    contents: |
+      primary.com.        IN SOA kuberiq.primary.com. admin.primary.com. 2015082541 7200 3600 1209600 3600
+                          IN NS  ns1.primary.com.
+  - filename: secondary.com.db
+    domain: secondary.com
+    contents: |
+      secondary.com.        IN SOA kuberiq.secondary.com. admin.secondary.com. 2015082541 7200 3600 1209600 3600
+                            IN NS  ns1.secondary.com.
+  - filename: radcom-registry.com.db
+    domain: radcom-registry.com
+    contents: |
+      radcom-registry.com.        IN SOA kuberiq.radcom-registry.com. admin.radcom-registry.com. 2015082541 7200 3600 1209600 3600
+                                  IN NS  ns1.radcom-registry.com.
+  - filename: in-addr.arpa.db
+    domain: in-addr.arpa
+    contents: |
+      in-addr.arpa.        IN SOA kuberiq.in-addr.arpa admin.primary.com. 2015082541 7200 3600 1209600 3600

@@ -1,0 +1,4 @@
+global:
+  dockerRegistry: srp.radcom-registry.com:5000
+  cloud_provider: "aws"
+enabled: "false"

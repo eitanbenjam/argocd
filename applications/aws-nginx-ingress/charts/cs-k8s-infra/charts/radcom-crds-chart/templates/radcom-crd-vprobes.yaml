@@ -1,0 +1,92 @@
+{{- if .Values.enabled }}
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  # name must match the spec fields below, and be in the form: <plural>.<group>
+  name: vprobes.topology.radcom.com
+spec:
+  # group name to use for REST API: /apis/<group>/<version>
+  group: topology.radcom.com
+  # list of versions supported by this CustomResourceDefinition
+  versions:
+    - name: v1
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required: ["applicationType","siteName","local","cluster","applicationName","version","serviceEndPoint"]
+              properties:
+                _id:
+                  type: string
+                applicationType:
+                 # applicationType = application type (probe, lb, lba)
+                 type: string
+                siteName:
+                 # siteName = site name as a string from input parameter
+                  type: string
+                local:
+                 # local = is it a local CRD or from another site (default always true)
+                  type: boolean
+                cluster:
+                 # cluster = cluster name as a string from input parameter
+                  type: string
+                applicationName:
+                 # applicationName = POD name
+                 type: string
+                version:
+                 # version = version as a string from input parameter
+                  type: string
+                serviceEndPoint:
+                 # serviceEndPoint = the service access to the application/service (can be NULL, IP:PORT, URL)
+                  type: string
+                customAttributes:
+                  type: object
+                  x-kubernetes-preserve-unknown-fields: true
+
+      additionalPrinterColumns:
+        - name: siteID
+          type: string
+          description: Site ID
+          jsonPath: .spec._id
+        - name: Local
+          type: boolean
+          description: Is this site local
+          jsonPath: .spec.local
+        - name: OAMStatus
+          type: string
+          description: Deployment OAM status
+          jsonPath: .spec.oamStatus
+        - name: Version
+          type: string
+          description: Deployment Version
+          jsonPath: .spec.version
+        - name: DNSName
+          type: string
+          description: Site DNS Name
+          jsonPath: .spec.dnsName
+        - name: ConfigurationName
+          type: string
+          description: Deployment Configuration Name
+          jsonPath: .spec.configurationName
+        - name: Age
+          type: date
+          jsonPath: .metadata.creationTimestamp
+  # either Namespaced or Cluster
+  scope: Namespaced
+  names:
+    # plural name to be used in the URL: /apis/<group>/<version>/<plural>
+    plural: vprobes
+    # singular name to be used as an alias on the CLI and for display
+    singular: vprobe
+    # kind is normally the CamelCased singular type. Your resource manifests use this.
+    kind: vProbe
+    shortNames:
+    - vpb
+
+{{- end }}
