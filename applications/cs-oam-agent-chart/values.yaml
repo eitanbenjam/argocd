@@ -1,0 +1,29 @@
+CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER 172.29.170.103
+SITE_ELASTIC_STORAGE_PLACEHOLDER: &SITE_ELASTIC_STORAGE_PLACEHOLDER local-storage
+SITE_HEALTH_STORAGE_PLACEHOLDER: &SITE_HEALTH_STORAGE_PLACEHOLDER local-storage
+service-access-config-chart:
+  radcomConfiguration:
+    conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
+auto-discovery-chart:
+  autoDiscovery:
+    condcutorDnsName: *CONDUCTOR_VIP_PLACEHOLDER
+elasticsearch-chart:
+  master:
+    persistence:
+      storageClass: *SITE_ELASTIC_STORAGE_PLACEHOLDER
+  data:
+    persistence:
+      storageClass: *SITE_ELASTIC_STORAGE_PLACEHOLDER
+prometheus-operator-chart:
+  alertmanager:
+    alertmanagerSpec:
+      storage:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: *SITE_HEALTH_STORAGE_PLACEHOLDER
+  prometheus:
+    prometheusSpec:
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: *SITE_HEALTH_STORAGE_PLACEHOLDER

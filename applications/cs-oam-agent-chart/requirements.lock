@@ -1,0 +1,36 @@
+dependencies:
+- name: alert-notification-ms-chart
+  repository: http://192.188.1.1:30006
+  version: 1.19.0
+- name: daemon-chart
+  repository: http://192.188.1.1:30006
+  version: 1.315.0
+- name: cdf-network-manager-chart
+  repository: http://192.188.1.1:30006
+  version: 1.16.0
+- name: database-loader-chart
+  repository: http://192.188.1.1:30006
+  version: 1.232.0
+- name: database-sync-chart
+  repository: http://192.188.1.1:30006
+  version: 1.19.0
+- name: oam-agent-chart
+  repository: http://192.188.1.1:30006
+  version: 1.167.0
+- name: persistence-volume-exporter-chart
+  repository: http://192.188.1.1:30006
+  version: 1.47.0
+- name: radcom-chart-library-chart
+  repository: http://192.188.1.1:30006
+  version: 1.53.0
+- name: schema-builder-chart
+  repository: http://192.188.1.1:30006
+  version: 1.237.0
+- name: service-access-config-chart
+  repository: http://192.188.1.1:30006
+  version: 1.77.0
+- name: storageclass-exporter-chart
+  repository: http://192.188.1.1:30006
+  version: 1.25.0
+digest: sha256:a1d43e4526acfa2b384caf2ed589388c4b0ffdb2efede21c6fd5d5847c2c28aa
+generated: "2024-07-30T17:04:57.614268686+03:00"
