@@ -1,6 +1,0 @@
-dependencies:
-- name: kafka-chart
-  repository: http://192.188.1.1:30006
-  version: 1.12.0
-digest: sha256:7a4651009ffc11fe3be192e28019273f03abcedc2648226d3724d0295e54fd40
-generated: "2024-07-30T15:23:36.214801433+03:00"
