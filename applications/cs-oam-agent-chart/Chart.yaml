@@ -1,4 +1,4 @@
-HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER http://192.188.1.1:30006
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
 apiVersion: v1
 appVersion: '1.0'
 description: cs-oam-agent
