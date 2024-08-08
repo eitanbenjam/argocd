@@ -23,6 +23,6 @@ cs-k8s-infra:
     repository: *DOCKER_REGISTRY_PLACEHOLDER
     eks_subnets: subnet-08f63aa7cb0c3a30a,subnet-0643f3e7e6092944c
     deployment_name: argocd
-    load_balancer_source_ranges: 0.0.0.0
+    load_balancer_source_ranges: 0.0.0.0/0
     create_external_loadbalancer: false
 
