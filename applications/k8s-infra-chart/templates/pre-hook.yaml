@@ -24,7 +24,8 @@ spec:
       containers:
       - name: pre-install-job
         image: "{{ .Values.global.docker_registry }}/ace-cd:1.125.0"
-        command: ["python3", "ps_tools/update_topology.py",  "--ingress_address", "{{ .Values.global.ingress_address }}", "--site_name", "{{ .Values.global.site }}", "--deployment_name", "${deploymentName}", "--cs_name", "${appname}", "--value_file", "/values/values", "--deployment_version", "${version}"]
+        command: ["echo", "this is prehook"]
+        #command: ["python3", "ps_tools/update_topology.py",  "--ingress_address", "{{ .Values.global.ingress_address }}", "--site_name", "{{ .Values.global.site }}", "--deployment_name", "${deploymentName}", "--cs_name", "${appname}", "--value_file", "/values/values", "--deployment_version", "${version}"]
         env:
         - name: deploymentName
           value: {{ .Release.Name }}
