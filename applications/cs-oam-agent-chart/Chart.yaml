@@ -7,3 +7,4 @@ version: 1.0.0
 dependencies:
   - name: cs-oam-agant
     version: 1.1001.22
+    repository:  *HELM_REGISTRY_PLACEHOLDER
