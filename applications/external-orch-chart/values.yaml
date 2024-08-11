@@ -28,12 +28,12 @@ ace-cd-chart:
 
   cloud:
     type: local
+    service_account_name: cicd-cluster-eks-role
     robin_extra_params:
       robin_server_ip: 2001:1:2:3::4
       robin_server_username: admin
       robin_server_password: Radmin1
     aws_extra_params:
-      service_account_name: cicd-cluster-eks-role
       arn_role: "arn:aws:iam::XXXXXXX:role:radcom/-eks-role"
   image:
     tag: 1.120.0
