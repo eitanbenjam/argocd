@@ -2,7 +2,7 @@ DOCKER_REGISTRY_PLACEHOLDER: &DOCKER_REGISTRY_PLACEHOLDER 571789434150.dkr.ecr.u
 
 ace-cd-chart:
   repository: *DOCKER_REGISTRY_PLACEHOLDER
-  namespace: ace-cd
+  namespace: production
   replicas: 1   # for deployment
   pullPolicy: Always
   node_port: 32142
