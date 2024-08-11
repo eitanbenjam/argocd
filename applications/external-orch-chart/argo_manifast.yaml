@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: k8s-infra 
+  name: external-orch 
   # You'll usually want to add your resources to the argocd namespace.
   namespace: argocd
   # Add this finalizer ONLY if you want these to cascade delete.
@@ -9,7 +9,7 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
   # Add labels to your application object.
   labels:
-    name: k8s-infra
+    name: external-orch
 spec:
   # The project the application belongs to.
   project: default
@@ -18,18 +18,18 @@ spec:
   sources:
     - repoURL: https://github.com/eitanbenjam/argocd # repoURL: 571789434150.dkr.ecr.us-east-2.amazonaws.com  # Can point to either a Helm chart repo or a git repo.
       targetRevision: main  # For Helm, this refers to the chart version.
-      path: applications/k8s-infra-chart # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
+      path: applications/external-orch-chart # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
       ref: my-repo  # For Helm, acts as a reference to this source for fetching values files from this source. Has no meaning when under `source` field
 
 
       # helm specific config
-      #chart: k8s-infra  # Set this when pulling directly from a Helm repo. DO NOT set for git-hosted Helm charts.
+      #chart: external-orch  # Set this when pulling directly from a Helm repo. DO NOT set for git-hosted Helm charts.
       helm:
               #      passCredentials: false # If true then adds --pass-credentials to Helm commands to pass credentials to all domains
         # Extra parameters to set (same as setting through values.yaml, but these take precedence)
         
         # Release name override (defaults to application name)
-        #      releaseName: k8s-infra
+        #      releaseName: external-orch
 
         # Helm values files for overriding values in the helm chart
         # The path is relative to the spec.source.path directory defined above
@@ -48,16 +48,11 @@ spec:
         # and decide which Helm binary to use automatically. This field can be either 'v2' or 'v3'.
         version: v3
     
-    #- repoURL: https://git-codecommit.us-east-2.amazonaws.com/v1/repos/argoeitan  # Can point to either a Helm chart repo or a git repo.
-    #  targetRevision: HEAD  # For Helm, this refers to the chart version.
-    #  path: "applications" #applications/k8s-infra-chart  # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
-    #  ref: values  # For Helm, acts as a reference to this source for fetching values files from this source. Has no meaning when under `source` field
-
+    
   # Destination cluster and namespace to deploy the application
   destination:
     # cluster API URL
     server: https://kubernetes.default.svc
-
     # or cluster name
     # name: in-cluster
     # The namespace will only be set for namespace-scoped resources that have not set a value for .metadata.namespace
@@ -98,4 +93,3 @@ spec:
   # circumstances. Setting to zero will store no history. This will reduce storage used. Increasing will increase the
   # space used to store the history, so we do not recommend increasing it.
   revisionHistoryLimit: 10
-
