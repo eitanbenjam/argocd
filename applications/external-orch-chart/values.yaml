@@ -36,5 +36,5 @@ ace-cd-chart:
       service_account_name: cicd-cluster-eks-role
       arn_role: "arn:aws:iam::XXXXXXX:role:radcom/-eks-role"
   image:
-    tag: latest
+    tag: 1.120.0
     helm_repository_tag: latest
