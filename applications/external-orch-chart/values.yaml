@@ -36,5 +36,5 @@ ace-cd-chart:
     aws_extra_params:
       arn_role: "arn:aws:iam::XXXXXXX:role:radcom/-eks-role"
   image:
-    tag: 1.120.0
+    tag: argo
     helm_repository_tag: latest
