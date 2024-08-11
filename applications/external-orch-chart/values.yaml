@@ -27,7 +27,7 @@ ace-cd-chart:
       memory: '512M'
 
   cloud:
-    type: aws
+    type: local
     robin_extra_params:
       robin_server_ip: 2001:1:2:3::4
       robin_server_username: admin
