@@ -1,8 +1,8 @@
-{{- if .Values.add_blueprint }}
+{{- if .Values.save_blueprint }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "{{ .Release.Name }}-{{ .Chart.Name }}-add-blueprint"
+  name: "{{ .Release.Name }}-{{ .Chart.Name }}-save-blueprint"
   labels:
     helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
   annotations:
@@ -14,7 +14,7 @@ metadata:
 spec:
   template:
     metadata:
-      name: "{{ .Release.Name }}-{{ .Chart.Name }}-add-blueprint"
+      name: "{{ .Release.Name }}-{{ .Chart.Name }}-save-blueprint"
       labels:
         app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
         app.kubernetes.io/instance: {{ .Release.Name | quote }}
@@ -24,8 +24,8 @@ spec:
       containers:
       - name: post-install-job
         image: "{{ .Values.global.docker_registry }}/ace-cd:1.125.0"
-        command: ["echo","post-install hook"]
-        #command: ["python3", "ps_tools/add_blueprint.py",  "--ingress_address", "{{ .Values.global.ingress_address }}", "--site_name", "{{ .Values.global.site }}", "--deployment_name", "${deploymentName}", "--cs_name", "${appname}", "--value_file", "/values/values", "--deployment_version", "${version}"]
+        #command: ["echo","post-install hook"]
+        command: ["bash", "ps_tools/argocd/save_blueprint.sh"]
         env:
         - name: DEPLOYMENTNAME
           value: {{ .Release.Name }}

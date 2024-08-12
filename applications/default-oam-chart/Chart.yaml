@@ -8,4 +8,8 @@ dependencies:
   - name: cs-oam
     version: 1.560.0
     repository:  *HELM_REGISTRY_PLACEHOLDER
+  - name: shared_templates
+    version: 1.0.0
+    repository:  *HELM_REGISTRY_PLACEHOLDER
+
 
