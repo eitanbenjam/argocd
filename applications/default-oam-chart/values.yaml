@@ -1,0 +1,3 @@
+cs-oam:
+  add_blueprint: true
+  wait_for_ace_orchestrator: false
