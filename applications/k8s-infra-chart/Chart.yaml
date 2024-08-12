@@ -8,6 +8,10 @@ dependencies:
   - name: cs-k8s-infra
     version: 1.99.0
     repository:  *HELM_REGISTRY_PLACEHOLDER
+  - name: shared_templates
+    version: 1.0.0
+    repository:  *HELM_REGISTRY_PLACEHOLDER
+
 
 
 

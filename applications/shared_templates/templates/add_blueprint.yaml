@@ -27,13 +27,13 @@ spec:
         command: ["echo","post-install hook"]
         #command: ["python3", "ps_tools/add_blueprint.py",  "--ingress_address", "{{ .Values.global.ingress_address }}", "--site_name", "{{ .Values.global.site }}", "--deployment_name", "${deploymentName}", "--cs_name", "${appname}", "--value_file", "/values/values", "--deployment_version", "${version}"]
         env:
-        - name: deploymentName
+        - name: DEPLOYMENTNAME
           value: {{ .Release.Name }}
-        - name: revision
+        - name: RADCOM_REVISION
           value: "{{ .Release.Revision }}"
-        - name: version
+        - name: RADCOM_VERSION
           value: "{{ .Chart.Version }}"
-        - name: appname
+        - name: RADCOM_APPNAME
           value: "{{ .Chart.Name }}"
         volumeMounts:
         - name: values-volume

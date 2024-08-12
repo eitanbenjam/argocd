@@ -1,8 +1,8 @@
-{{- if .Values.add_blueprint }}
+{{- if .Values.wait_for_ace_orchestrator }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: values-cm
+  name: topology-config-map
   #namespace: {{ .Values.namespace }}
   annotations:
     "helm.sh/hook": pre-install
@@ -12,8 +12,5 @@ metadata:
     app.kubernetes.io/version: "1.0"
     app.kubernetes.io/name: values-cm
 data:
-  values: |
-{{ .Values | toYaml | indent 4 }}
+  conductor_ip:  {{ .Values.conductor_ip }} 
 {{ end }}
-  
-          
