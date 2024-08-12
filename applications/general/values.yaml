@@ -22,4 +22,4 @@ global:
   elasticStorageClass: *SITE_ELASTIC_STORAGE
   site: *SITE
   conductorVip: *CONDUCTOR_VIP
-  appreleaseversion: *VERSION
+  maveriq_version: *VERSION
