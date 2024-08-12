@@ -1,25 +1,18 @@
-DOCKER_REGISTRY_PLACEHOLDER: &DOCKER_REGISTRY_PLACEHOLDER 571789434150.dkr.ecr.us-east-2.amazonaws.com
+global:
+  conductorVip: 1.2.3.4
+  namespace: production
+  dockerRegistry: localhost:5000
+  site: telaviv
+  maveriq_version: 13.09.00.000.00
 
 ace-cd-chart:
-  repository: *DOCKER_REGISTRY_PLACEHOLDER
-  namespace: production
   tag: 1.120.0
   replicas: 1   # for deployment
   pullPolicy: Always
-  node_port: 32142
   env_id: radcom
   source_control: "configmap"  # can be s3:// , configmap, http:// , file://  
-  conductor_ip: None
   srp_ip: None
-  sites: All  # All for all
   ansible_check: yes
-  install_http_service: false
-  build_helm_repository: true
-  upgrade_repo: None
-  upgrade_version: None
-  ### for logs
-  create_log_pvc: false
-  storage_class: local-path
 
   resources:
     limits:
