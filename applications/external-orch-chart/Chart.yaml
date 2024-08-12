@@ -8,7 +8,4 @@ dependencies:
   - name: ace-cd-chart
     version: 99.99
     repository:  *HELM_REGISTRY_PLACEHOLDER
-  - name: shared_templates
-    version: 1.0.0
-    repository:  *HELM_REGISTRY_PLACEHOLDER
 
