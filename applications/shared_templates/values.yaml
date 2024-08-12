@@ -1,5 +1,6 @@
 global:
-        docker_registry: localhost:5000
+  docker_registry: localhost:5000
 add_blueprint: true
 conductor_ip: 1.2.3.4
 wait_for_ace_orchestrator: true
+create_cluster_role: false
