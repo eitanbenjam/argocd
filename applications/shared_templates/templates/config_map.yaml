@@ -1,0 +1,19 @@
+{{- if .Values.add_blueprint }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: values-cm
+  #namespace: {{ .Values.namespace }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-6"
+
+  labels:
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/name: values-cm
+data:
+  values: |
+{{ .Values | toYaml | indent 4 }}
+{{ end }}
+  
+          
