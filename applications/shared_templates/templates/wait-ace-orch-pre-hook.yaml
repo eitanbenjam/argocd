@@ -1,0 +1,33 @@
+{{- if .Values.wait_for_ace_orchestrator }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-{{ .Chart.Name }}-wait-ace-orch-pre-hook"
+  labels:
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-4"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: "{{ .Release.Name }}-{{ .Chart.Name }}-wait-ace-orch-pre-hook"
+      labels:
+        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: wait-ace-orch-pre-install-job
+        image: "{{ .Values.global.docker_registry }}/ace-cd:argo"
+        command: ["bash", "ps_tools/argocd/wait_for_ace_orch.sh"]
+        env:
+        - name: CONDUCTOR_IP
+          valueFrom:
+            configMapKeyRef:
+              name: topology-config-map
+              key: conductor_ip
+{{ end }}
