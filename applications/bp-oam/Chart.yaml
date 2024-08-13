@@ -1,15 +1,13 @@
-HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+HELM_REGISTRY_PLACEHOLDER: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
 apiVersion: v1
 appVersion: '1.0'
+dependencies:
+- name: cs-oam
+  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+  version: 1.266.0
+- name: shared_templates
+  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+  version: 1.0.0
 description: cs-oam
 name: cs-oam
-version: 1.375.0
-dependencies:
-  - name: cs-oam
-    version: 1.560.0
-    repository:  *HELM_REGISTRY_PLACEHOLDER
-  - name: shared_templates
-    version: 1.0.0
-    repository:  *HELM_REGISTRY_PLACEHOLDER
-
-
+version: 13.02.00.000.00

@@ -2,9 +2,9 @@ HELM_REGISTRY_PLACEHOLDER: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
 apiVersion: v1
 appVersion: '1.0'
 dependencies:
-- name: cs-event-bus
+- name: cs-oam-agent
   repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
-  version: 1.4.0
-description: cs-k8s-infra
-name: cs-k8s-infra
+  version: 1.228.0
+description: cs-oam-agent
+name: cs-oam-agent
 version: 13.02.00.000.00

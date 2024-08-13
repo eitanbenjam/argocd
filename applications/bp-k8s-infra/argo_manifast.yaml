@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: k8s-infra 
+  name: bp-k8s-infra 
   # You'll usually want to add your resources to the argocd namespace.
   namespace: argocd
   # Add this finalizer ONLY if you want these to cascade delete.
@@ -9,7 +9,7 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
   # Add labels to your application object.
   labels:
-    name: k8s-infra
+    name: bp-k8s-infra
 spec:
   # The project the application belongs to.
   project: default
@@ -18,7 +18,7 @@ spec:
   sources:
     - repoURL: https://github.com/eitanbenjam/argocd # repoURL: 571789434150.dkr.ecr.us-east-2.amazonaws.com  # Can point to either a Helm chart repo or a git repo.
       targetRevision: main  # For Helm, this refers to the chart version.
-      path: applications/k8s-infra-chart # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
+      path: applications/bp-k8s-infra # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
       ref: my-repo  # For Helm, acts as a reference to this source for fetching values files from this source. Has no meaning when under `source` field
 
 
