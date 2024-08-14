@@ -22,7 +22,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: wait-ace-orch-pre-install-job
-        image: "{{ .Values.global.docker_registry }}/ace-cd:argo"
+        image: "{{ .Values.global.docker_registry }}/ace-cd:{{ .Values.ace-cd-tag }}"
         command: ["bash", "ps_tools/argocd/wait_for_ace_orch.sh"]
         env:
         - name: CONDUCTOR_IP

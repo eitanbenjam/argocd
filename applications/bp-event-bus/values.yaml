@@ -1,4 +1,5 @@
-add_blueprint: true
+shared-templates:
+  add_blueprint: false
 global:
   chartSet: cs-event-bus
   eventbusStorageClass: stc-eventbus

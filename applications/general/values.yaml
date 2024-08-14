@@ -9,6 +9,8 @@ DOCKER_REGISTRY: &DOCKER_REGISTRY 571789434150.dkr.ecr.us-east-2.amazonaws.com
 NAMESPACE: &NAMESPACE production
 CONDUCTOR_VIP: &CONDUCTOR_VIP internal-argocdRadcomBEALB-2065376002.us-east-2.elb.amazonaws.com
 VERSION: &VERSION 13.09.000.05.00
+shared-templates:
+  ace-cd-tag: argo
 
 repository: *DOCKER_REGISTRY
 global:

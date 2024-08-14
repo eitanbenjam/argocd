@@ -5,3 +5,4 @@ conductor_ip: 1.2.3.4
 wait_for_ace_orchestrator: true
 wait_for_ace_orchestrator_on_post: false
 create_cluster_role: false
+ace-cd-tag: latest
