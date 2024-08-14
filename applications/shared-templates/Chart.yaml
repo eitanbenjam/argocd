@@ -2,5 +2,5 @@ HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://571789434150.dkr.ecr
 apiVersion: v1
 appVersion: '1.0'
 description: shared templates for helm hooks
-name: shared_templates
+name: shared-templates
 version: 1.0.0

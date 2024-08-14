@@ -5,7 +5,7 @@ dependencies:
 - name: cs-oam
   repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
   version: 1.266.0
-- name: shared_templates
+- name: shared-templates
   repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
   version: 1.0.0
 description: cs-oam
