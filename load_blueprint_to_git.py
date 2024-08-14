@@ -57,7 +57,7 @@ def main(script_args):
                     chart_set_values_file=os.path.join(script_args.blueprints_folder, bp_type,"configuration",f"{chart_set_values_file_name}.yaml")
                     
                     shutil.copy(chart_set_values_file, git_blueprint_folder)
-                    bp_argo_data['spec']['sources'][0]['helm']['valueFiles'] = ['../general/values.yaml', f'blueprint_value/{chart_set_values_file_name}.yaml' ,'values.yaml']
+                    bp_argo_data['spec']['sources'][0]['helm']['valueFiles'] = [f'blueprint_value/{chart_set_values_file_name}.yaml','../general/values.yaml' ,'values.yaml']
                     
 
                     print (f"Saving argo_manifast to {bp_argo_file}")

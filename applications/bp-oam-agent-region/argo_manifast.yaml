@@ -17,8 +17,8 @@ spec:
   - helm:
       ignoreMissingValueFiles: false
       valueFiles:
-      - ../general/values.yaml
       - blueprint_value/conf-region-oam-agent.yaml
+      - ../general/values.yaml
       - values.yaml
       version: v3
     path: applications/bp-oam-agent-region
