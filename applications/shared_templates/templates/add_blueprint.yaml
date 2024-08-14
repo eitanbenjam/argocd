@@ -1,4 +1,4 @@
-{{- if .Values.add_blueprint }}
+{{- if .Values.add_blueprints }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -22,11 +22,16 @@ spec:
     spec:
       restartPolicy: Never
       containers:
-      - name: post-install-job
+      - name: add-blueprints-post-install-job
         image: "{{ .Values.global.docker_registry }}/ace-cd:1.125.0"
         #command: ["echo","post-install hook"]
-        command: ["bash", "ps_tools/argocd/add_blueprint.sh"]
+        command: ["bash", "ps_tools/argocd/add_blueprints.sh"]
         env:
+        - name: RADCOM_CONDUCTOR_IP
+          valueFrom:
+            configMapKeyRef:
+              name: topology-config-map
+              key: conductor_ip
         - name: DEPLOYMENTNAME
           value: {{ .Release.Name }}
         - name: RADCOM_REVISION
