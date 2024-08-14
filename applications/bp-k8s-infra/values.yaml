@@ -1,6 +1,7 @@
 DOCKER_REGISTRY_PLACEHOLDER: &DOCKER_REGISTRY_PLACEHOLDER 571789434150.dkr.ecr.us-east-2.amazonaws.com
-add_blueprint: true
-wait_for_ace_orchestrator: false
+shared-templates:
+  add_blueprint: true
+  wait_for_ace_orchestrator: false
 ## enable MS deployment
 #
 
