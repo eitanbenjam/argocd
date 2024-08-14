@@ -1,3 +1,4 @@
-cs-oam:
-  add_blueprint: true
+shared-templates:
+  add_blueprints: true
   wait_for_ace_orchestrator: false
+  wait_for_ace_orchestrator_on_post: true
