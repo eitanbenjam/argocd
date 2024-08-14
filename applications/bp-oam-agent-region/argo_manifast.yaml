@@ -21,7 +21,7 @@ spec:
       - blueprint_value/conf-region-oam-agent
       - values.yaml
       version: v3
-    path: applications/bp-oam-agent
+    path: applications/bp-oam-agent-region
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
     targetRevision: main
