@@ -4,7 +4,7 @@ appVersion: '1.0'
 dependencies:
 - name: cs-oam-agent
   repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
-  version: 1.228.0
+  version: 1.1001.0
 description: cs-oam-agent
 name: cs-oam-agent
-version: 13.02.00.000.00
+version: 13.09.00.000.04

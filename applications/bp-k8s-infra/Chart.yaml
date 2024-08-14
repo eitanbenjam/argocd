@@ -1,17 +1,13 @@
-HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+HELM_REGISTRY_PLACEHOLDER: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
 apiVersion: v1
 appVersion: '1.0'
+dependencies:
+- name: cs-k8s-infra
+  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+  version: 1.99.0
+- name: shared-templates
+  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+  version: 1.0.0
 description: cs-k8s-infra
 name: cs-k8s-infra
-version: 1.0.0
-dependencies:
-  - name: cs-k8s-infra
-    version: 1.99.0
-    repository:  *HELM_REGISTRY_PLACEHOLDER
-  - name: shared-templates
-    version: 1.0.0
-    repository:  *HELM_REGISTRY_PLACEHOLDER
-
-
-
-
+version: 13.09.00.000.04

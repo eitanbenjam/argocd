@@ -1,8 +1,9 @@
 CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER 172.29.170.103
 SITE_ELASTIC_STORAGE_PLACEHOLDER: &SITE_ELASTIC_STORAGE_PLACEHOLDER local-storage
 SITE_HEALTH_STORAGE_PLACEHOLDER: &SITE_HEALTH_STORAGE_PLACEHOLDER local-storage
-wait_for_ace_orchestrator_on_post: true
-add_blueprints: true
+shared-templates:
+  wait_for_ace_orchestrator_on_post: true
+  add_blueprints: true
 cs-oam-agent:
   
   wait_for_ace_orchestrator: false
