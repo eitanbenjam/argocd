@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "{{ .Release.Name }}-{{ .Chart.Name }}-wait-ace-orch-pre-hook"
+  name: "{{ .Release.Name }}-wait-ace-orch-pre-hook"
   labels:
     helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
   annotations:
@@ -14,7 +14,7 @@ metadata:
 spec:
   template:
     metadata:
-      name: "{{ .Release.Name }}-{{ .Chart.Name }}-wait-ace-orch-pre-hook"
+      name: "{{ .Release.Name }}-wait-ace-orch-pre-hook"
       labels:
         app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
         app.kubernetes.io/instance: {{ .Release.Name | quote }}
