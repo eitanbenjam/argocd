@@ -10,4 +10,4 @@ dependencies:
   version: 1.0.0
 description: cs-k8s-infra
 name: cs-k8s-infra
-version: 13.09.00.000.04
+version: 13.09.04

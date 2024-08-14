@@ -33,7 +33,8 @@ def main(script_args):
     blueprint_json = read_yaml_file(script_args.blueprints_json)
     for bp in blueprint_json:
         bp_type = bp['blueprintType']
-        bp_version = bp['version']
+        bp_version = ".".join([bp['version'].split(".")[0],bp['version'].split(".")[1],bp['version'].split(".")[-1]])
+
         bp_name = bp['blueprintName']
         git_folder_name = os.path.join(script_args.git_folder, "applications", bp_type)
         #import pdb;pdb.set_trace()
