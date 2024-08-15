@@ -1,0 +1,96 @@
+{{- define "radcom.serviceMonitor.tpl" }}
+{{- $enabled := true }}
+{{- if eq (kindOf .Values.enabled) "bool"  }}
+  {{- $enabled = .Values.enabled }}
+{{- end }}
+{{- if $enabled }}
+{{- $root := . -}}
+{{- $name := include "radcom.name" $root }}
+{{- $fullName := include "radcom.fullname" $root }}
+{{- $namespace := "production" }}
+{{- if .Values.global }}
+  {{- with .Values.global.namespace }}
+    {{- $namespace = . }}
+  {{- end }}
+{{- end }}
+{{- range $serviceMonitor := .Values.servicesMonitor }}
+{{- $port := "" }}
+{{- with $serviceMonitor.port }}
+  {{- $port = tpl . $root }}
+{{- end }}
+{{- $serviceMonitorName := $fullName }}
+{{- if $serviceMonitor.name }}
+  {{- $serviceMonitorName = tpl $serviceMonitor.name $root }}
+{{- end }}
+{{- $matchLabelName := $serviceMonitor.matchLabelName | default $name }}
+{{- $metadataLabelName := $serviceMonitor.metadataLabelName | default $name }}
+{{- $defaultMatchLabels := true }}
+{{- if and (or $serviceMonitor.defaultMatchLabels (eq ($serviceMonitor.defaultMatchLabels | toString) "false")) (eq (kindOf $serviceMonitor.defaultMatchLabels) "bool") }}
+  {{- $defaultMatchLabels = $serviceMonitor.defaultMatchLabels }}
+{{- end }}
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ $serviceMonitorName }}
+  namespace: {{ $namespace }}
+  labels:
+{{- include "radcom.labels" $root | nindent 4 }}
+{{- include "radcom.selectorLabels" (dict "root" $root "name" $metadataLabelName) | nindent 4 }}
+{{- with $serviceMonitor.release }}
+    release: {{ tpl . $root }}
+{{- end }}
+{{- with $serviceMonitor.additionalLabels }}
+  {{- tpl (toYaml .) $root | nindent 4 }}
+{{- end }}
+{{- with $root.Values.podAdditionalLabels }}
+  {{- tpl (toYaml .) $root | nindent 4 }}
+{{- end }}
+{{- with $serviceMonitor.annotations }}
+  annotations:
+  {{- tpl (toYaml .) $root | nindent 4 }}
+{{- end }}
+spec:
+{{- with $serviceMonitor.jobLabel }}
+  jobLabel: {{ tpl . $root }}
+{{- end }}
+  endpoints:
+    - port: {{ $port | default "http" }}
+{{- with $serviceMonitor.path }}
+      path: {{ tpl . $root }}
+{{- end }}
+{{- with $serviceMonitor.interval }}
+      interval: {{ tpl . $root }}
+{{- end }}
+{{- with $serviceMonitor.scrapeTimeout }}
+      scrapeTimeout: {{ tpl . $root }}
+{{- end }}
+{{- if or (eq (kindOf $serviceMonitor.any) "bool") $serviceMonitor.matchNames }}
+  namespaceSelector:
+  {{- if eq (kindOf $serviceMonitor.any) "bool" }}
+    any: {{ $serviceMonitor.any }}
+  {{- end }}
+  {{- if $serviceMonitor.matchNames  }}
+    matchNames:
+    {{- toYaml $serviceMonitor.matchNames | nindent 6 }}
+  {{- end }}
+{{- end }}
+  selector:
+    matchLabels:
+{{- if $defaultMatchLabels }}
+  {{- include "radcom.selectorLabels" (dict "root" $root "name" $matchLabelName) | nindent 6 }}
+{{- else if not $defaultMatchLabels }}
+  {{- with $serviceMonitor.matchLabels }}
+    {{- tpl (toYaml .) $root | nindent 6 }}
+  {{- end }}
+{{- end }}
+{{- with $root.Values.podAdditionalLabels }}
+  {{- tpl (toYaml .) $root | nindent 6 }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- define "radcom.serviceMonitor" -}}
+{{- template "radcom.merge" (append . "radcom.serviceMonitor.tpl") -}}
+{{- end -}}

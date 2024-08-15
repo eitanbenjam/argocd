@@ -1,0 +1,15 @@
+project: default
+source:
+  repoURL: 'https://git-codecommit.us-east-2.amazonaws.com/v1/repos/argoeitan'
+  path: applications/cs-application-be-chart
+  targetRevision: HEAD
+  helm:
+    valueFiles:
+      - values.yaml
+      - custumer_value.yaml
+destination:
+  server: 'https://kubernetes.default.svc'
+  namespace: production
+syncPolicy:
+  syncOptions:
+    - CreateNamespace=true

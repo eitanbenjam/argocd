@@ -1,0 +1,72 @@
+######### NOT IN USE  ###########
+### Only for doc generation by helm-docs ###
+
+enabled: true
+
+service:
+  type: ClusterIP
+  nodePort: No default
+  port: 80
+
+image:
+  repository: srp.radcom-registry.com:5000
+  user: ""
+  tag: AppVersion
+  pullPolicy: IfNotPresent # Always if tag includes SNAPSHOT
+
+imagePullSecrets: []
+
+containerPort: 8080
+
+strategy:
+  type: RollingUpdate
+
+replicaCount: 1
+
+podAnnotations: {}
+
+podAdditionalLabels: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+args: {}
+
+envs: {}
+
+secretName: fullname
+secrets: {}
+
+secretFiles: {}
+
+configFiles: {}
+
+# -- Host path mounts
+hostPaths: {}
+#  etc:
+#   path: /etc
+#   mountPath: /mnt
+#   type: Directory
+
+livenessProbe: {}
+
+readinessProbe: {}
+
+startupProbe: {}
+
+lifecycle: {}
+
+resources: {}
+
+nodeSelector: {}
+
+# -- Pod affinity
+affinity: {}
+
+tolerations: {}
+
+dnsConfig: {}
+
+
+
