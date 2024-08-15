@@ -1,0 +1,9 @@
+SITE_HEALTH_STORAGE_PLACEHOLDER: &SITE_HEALTH_STORAGE_PLACEHOLDER local-storage
+save_blueprint: true
+grafana-helm-chart:
+  persistence:
+    storageClass: *SITE_HEALTH_STORAGE_PLACEHOLDER
+grafana-helm-chart:
+  persistence:
+    storageClassName: *SITE_HEALTH_STORAGE_PLACEHOLDER
+

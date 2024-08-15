@@ -1,0 +1,6 @@
+dependencies:
+- name: cs-adminapp-be
+  repository: http://172.16.3.175:8081/repository/charts/
+  version: 1.163.0
+digest: sha256:e24060f3da9a119ff6d90a800366cb19fb4fbb823f50bd2633f8e3edde33b870
+generated: "2023-11-09T14:49:52.825102589+02:00"
