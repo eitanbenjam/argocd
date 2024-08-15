@@ -12,5 +12,5 @@ metadata:
     app.kubernetes.io/version: "1.0"
     app.kubernetes.io/name: topology-config-map
 data:
-  conductor_ip:  {{ .Values.conductor_ip }} 
+  conductor_ip:  {{ .Values.global.conductorVip }} 
 {{ end }}
