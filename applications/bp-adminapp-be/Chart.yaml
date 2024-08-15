@@ -4,6 +4,9 @@ dependencies:
 - name: cs-adminapp-be
   repository: http://172.16.3.175:8081/repository/charts/
   version: 1.284.0
+- name: shared-templates
+  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+  version: 1.0.0
 description: cs-adminapp-be
 name: cs-adminapp-be
 version: 13.09.04
