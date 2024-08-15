@@ -1,6 +1,0 @@
-dependencies:
-- name: cs-oam
-  repository: http://172.16.3.175:8081/repository/charts/
-  version: 1.560.0
-digest: sha256:c0d3622a39d4cf99f8a9f1f9ceb4af35cf4dda405587fe6594f3d636d3432116
-generated: "2023-11-09T11:38:52.172829537+02:00"

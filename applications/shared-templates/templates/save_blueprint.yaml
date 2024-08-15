@@ -23,7 +23,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: post-install-job
-        image: "{{ .Values.global.docker_registry }}/ace-cd:{{ .Values.ace-cd-tag }}"
+        image: "{{ .Values.global.docker_registry }}/ace-cd:{{ .Values.ace_cd_tag }}"
         #command: ["echo","post-install hook"]
         command: ["bash", "ps_tools/argocd/save_blueprint.sh"]
         env:
