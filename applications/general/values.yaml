@@ -10,7 +10,7 @@ NAMESPACE: &NAMESPACE production
 CONDUCTOR_VIP: &CONDUCTOR_VIP internal-argocdRadcomBEALB-2065376002.us-east-2.elb.amazonaws.com
 VERSION: &VERSION 13.09.000.05.00
 shared-templates:
-  ace-cd-tag: argo
+  ace_cd_tag: argo
 
 repository: *DOCKER_REGISTRY
 global:
