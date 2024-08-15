@@ -25,7 +25,7 @@ spec:
         image: "{{ .Values.global.docker_registry }}/ace-cd:{{ .Values.ace_cd_tag }}"
         command: ["bash", "ps_tools/argocd/wait_for_ace_orch.sh"]
         env:
-        - name: CONDUCTOR_IP
+        - name: RADCOM_CONDUCTOR_IP
           valueFrom:
             configMapKeyRef:
               name: topology-config-map
