@@ -28,6 +28,6 @@ spec:
         - name: CONDUCTOR_IP
           valueFrom:
             configMapKeyRef:
-              name: topology-config-map
+              name: "topology-config-map"
               key: conductor_ip
 {{ end }}

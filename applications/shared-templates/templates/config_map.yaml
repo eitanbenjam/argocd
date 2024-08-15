@@ -1,4 +1,4 @@
-{{- if .Values.wait_for_ace_orchestrator }}
+{{- if or ( .Values.wait_for_ace_orchestrator) ( .Values.save_blueprint ) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,7 +10,7 @@ metadata:
 
   labels:
     app.kubernetes.io/version: "1.0"
-    app.kubernetes.io/name: values-cm
+    app.kubernetes.io/name: topology-config-map
 data:
   conductor_ip:  {{ .Values.conductor_ip }} 
 {{ end }}
