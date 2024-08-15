@@ -8,6 +8,10 @@ ace-cd-chart:
   source_control: "configmap"  # can be s3:// , configmap, http:// , file://  
   srp_ip: None
   ansible_check: yes
+  kuberiq_type: kuberiq
+  kuberiq_cluster_name: Kuberiq_reg
+  site_type: national # cdf
+
 
   resources:
     limits:
