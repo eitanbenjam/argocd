@@ -3,8 +3,7 @@ SITE_ELASTIC_STORAGE_PLACEHOLDER: &SITE_ELASTIC_STORAGE_PLACEHOLDER local-storag
 SITE_HEALTH_STORAGE_PLACEHOLDER: &SITE_HEALTH_STORAGE_PLACEHOLDER local-storage
 shared-templates:
   wait_for_ace_orchestrator: false
-  wait_for_ace_orchestrator_on_post: true
-  add_blueprints: true
+  save_blueprints: true
 cs-oam-agent:
   
   wait_for_ace_orchestrator: false
