@@ -21,9 +21,11 @@ spec:
         helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     spec:
       restartPolicy: Never
+      restartPolicy: Never
       containers:
       - name: post-install-job
         image: "{{ .Values.global.docker_registry }}/ace-cd:{{ .Values.ace_cd_tag }}"
+        pullPolicy: Always
         #command: ["echo","post-install hook"]
         command: ["bash", "ps_tools/argocd/save_blueprint.sh"]
         env:
@@ -32,7 +34,7 @@ spec:
         - name: RADCOM_REVISION
           value: "{{ .Release.Revision }}"
         - name: RADCOM_VERSION
-          value: "{{ .Chart.Version }}"
+          value: "{{ .Values.global.maveriq_version }}"
         - name: RADCOM_APPNAME
           value: "{{ .Chart.Name }}"
         volumeMounts:
