@@ -1,10 +1,11 @@
 SITE_HEALTH_STORAGE_PLACEHOLDER: &SITE_HEALTH_STORAGE_PLACEHOLDER local-storage
 shared-templates:
   save_blueprint: true
-grafana-helm-chart:
-  persistence:
-    storageClass: *SITE_HEALTH_STORAGE_PLACEHOLDER
-grafana-helm-chart:
-  persistence:
-    storageClassName: *SITE_HEALTH_STORAGE_PLACEHOLDER
+cs-adminapp-be:
+  grafana-helm-chart:
+    persistence:
+      storageClass: *SITE_HEALTH_STORAGE_PLACEHOLDER
+  grafana-helm-chart:
+    persistence:
+      storageClassName: *SITE_HEALTH_STORAGE_PLACEHOLDER
 

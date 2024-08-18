@@ -41,42 +41,58 @@ def main(script_args):
         if os.path.exists(git_folder_name):
             print (f"**** Start working on blueprint {bp_name}, bp_type: {bp_type} ***")
             bp_chart_file = os.path.join(script_args.git_folder, "applications", bp_type, "Chart.yaml")
-            bp_chart_data = read_yaml_file(bp_chart_file)
-            for chartset in bp['chartsets']:
-                cs_version = chartset['chartsetVersion']
-                cs_name = chartset['chartsetName']
-                chart_set_values_file_name = chartset['chartsetConfigurationName']
-                if chart_set_values_file_name != "":
-                    bp_argo_file = os.path.join(script_args.git_folder, "applications", bp_type, "argo_manifast.yaml")
-                    bp_argo_data = read_yaml_file(bp_argo_file)
-                    
-                    print (f"will copy file {chart_set_values_file_name} to {git_folder_name}")
-                    git_blueprint_folder = os.path.join(git_folder_name, "blueprint_value")
-                    if not os.path.exists(git_blueprint_folder):
-                        os.mkdir(git_blueprint_folder)
-                    chart_set_values_file=os.path.join(script_args.blueprints_folder, bp_type,"configuration",f"{chart_set_values_file_name}.yaml")
-                    
-                    shutil.copy(chart_set_values_file, git_blueprint_folder)
-                    bp_argo_data['spec']['sources'][0]['helm']['valueFiles'] = [f'blueprint_value/{chart_set_values_file_name}.yaml','../general/values.yaml' ,'values.yaml']
-                    
+            try:
+                bp_chart_data = read_yaml_file(bp_chart_file)
+                for chartset in bp['chartsets']:
+                    print (f"INFP:******{bp_name}, {bp_type}, {chartset}")
+                    cs_version = chartset['chartsetVersion']
+                    cs_name = chartset['chartsetName']
+                    chart_set_values_file_name = chartset['chartsetConfigurationName']
+                    if chart_set_values_file_name != "":
+                        bp_argo_file = os.path.join(script_args.git_folder, "applications", bp_type, "argo_manifast.yaml")
+                        bp_argo_data = read_yaml_file(bp_argo_file)
+                        
+                        print (f"will copy file {chart_set_values_file_name} to {git_folder_name}")
+                        git_blueprint_folder = os.path.join(git_folder_name, "blueprint_value")
+                        
+                        if not os.path.exists(git_blueprint_folder):
+                            os.mkdir(git_blueprint_folder)
+                        chart_set_values_file=os.path.join(script_args.blueprints_folder, bp_type,"configuration",f"{chart_set_values_file_name}.yaml")
+                        bp_data = read_yaml_file(chart_set_values_file)
+                        bp_data = { f'{cs_name}': bp_data }
+                        #write_to_yaml_file(bp_data, os.path.join(script_args.git_folder,git_blueprint_folder, chart_set_values_file_name))
+                        #import pdb;pdb.set_trace()
+                        shutil.copy(chart_set_values_file, git_blueprint_folder)
+                        bp_argo_data['spec']['sources'][0]['helm']['valueFiles'] = [f'blueprint_value/{chart_set_values_file_name}.yaml','../general/values.yaml' ,'values.yaml']
+                        
 
-                    print (f"Saving argo_manifast to {bp_argo_file}")
-                    write_to_yaml_file(bp_argo_file, bp_argo_data)
-                #Version
-                
-                for cs_dep in bp_chart_data['dependencies']:
-                    if cs_dep['name'] == cs_name:
-                        print (f"Setting chartset {cs_name} to version:{cs_version} on blueprint:{bp_name}")
-                        cs_dep['version'] = cs_version
+                        print (f"Saving argo_manifast to {bp_argo_file}")
+                        write_to_yaml_file(bp_argo_file, bp_argo_data)
+                        
+                        argo_values_data = read_yaml_file(os.path.join(script_args.git_folder, "applications", bp_type, "values.yaml"))
+                        argo_values_data['chartsetConfigurationName'] = f"{chart_set_values_file_name}.yaml"
+                        write_to_yaml_file(os.path.join(script_args.git_folder, "applications", bp_type, "values.yaml"), argo_values_data)
+                        #
+
+                    #Version
                     
-            
-            print (f"Setting blueprint {bp_name} to version:{bp_version}")
-            bp_chart_data['version'] = bp_version
-            write_to_yaml_file(bp_chart_file, bp_chart_data)
+                    for cs_dep in bp_chart_data['dependencies']:
+                        if cs_dep['name'] == cs_name:
+                            print (f"Setting chartset {cs_name} to version:{cs_version} on blueprint:{bp_name}")
+                            cs_dep['version'] = cs_version
+                        
+                
+                print (f"Setting blueprint {bp_name} to version:{bp_version}")
+                bp_chart_data['version'] = bp_version
+                write_to_yaml_file(bp_chart_file, bp_chart_data)
+            except FileNotFoundError:
+                print (f"cant open Cahrt.yaml {bp_name}")
 
 
                 
         else:
+            if not os.path.exists(git_folder_name):
+                os.mkdir(git_folder_name)
             print (f"blueprint {bp_type} not exist in git, skipping , {git_folder_name}")   
 
 

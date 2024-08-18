@@ -8,9 +8,9 @@ metadata:
   annotations:
     # This is what defines this resource as a hook. Without this line, the
     # job is considered part of the release.
-    "helm.sh/hook": post-install
-    "helm.sh/hook-weight": "-1"
-    "helm.sh/hook-delete-policy": hook-succeeded
+    #"helm.sh/hook": post-install
+    #"helm.sh/hook-weight": "-1"
+    #"helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
     metadata:
@@ -22,7 +22,7 @@ spec:
     spec:
       restartPolicy: Never
       containers:
-      - name: add-blueprints-post-install-job
+      - name: add-blueprints-job
         image: "{{ .Values.global.docker_registry }}/ace-cd:{{ .Values.ace_cd_tag }}"
         #command: ["echo","post-install hook"]
         command: ["bash", "ps_tools/argocd/add_blueprints.sh"]

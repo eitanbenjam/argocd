@@ -4,82 +4,83 @@ global:
   chartSet: cs-event-bus
   eventbusStorageClass: stc-eventbus
 
-kafka-chart:
-  enabled: true
-  fullnameOverride: eventbus-kafka
-  commonLabels:
-    site: '{{ .Values.global.site }}'
-    sitetype: '{{ .Values.global.siteType }}'
-    blueprinttype: '{{ .Values.global.blueprinttype }}'
-    blueprintdeployment: '{{ .Release.Name }}'
-  extraConfig:
-    deleteTopicEnable: true
-    ### rollout segment when reaches 1GB or 1 hour
-    ### check every 5 minutes and mark to delete the inactive segments if partition reaches logRetentionBytes+logSegmentBytes=1.5GB or data inside is older than 20 min.
-    ### data is deleted after 1 minute after it was marked
-    ### logRetentionBytes issue - https://issues.apache.org/jira/browse/KAFKA-8534
-    logRetentionBytes: _536870912
-    logRetentionCheckIntervalMs: 300000
-    logSegmentBytes: _1073741824
-    logsDirs: /bitnami/kafka/data
-    maxMessageBytes: _104857600
-    offsetsTopicReplicationFactor: 3
-    defaultReplicationFactor: 3
-    numPartitions: 1
-    controller.quorum.fetch.timeout.ms: 4000
-    controller.quorum.request.timeout.ms: 4000
-  listeners:
-    client:
-      protocol: PLAINTEXT
-    controller:
-      protocol: PLAINTEXT
-    interbroker:
-      protocol: PLAINTEXT
-    external:
-      protocol: PLAINTEXT
-  controller:
-    replicaCount: 3
-    resources:
-      requests: {}
-      limits:
-        cpu: 500m
-        memory: 2048Mi
-    persistence:
-      enabled: false
-      size: 20Gi
-      mountPath: /bitnami/kafka
-    logPersistence:
-      enabled: false
-      size: 8Gi
-      mountPath: /opt/bitnami/kafka/logs
-  extraEnvVars:
-    - name: KAFKA_CFG_LOG_ROLL_HOURS
-      value: "1"
-    - name: KAFKA_CFG_LOG_RETENTION_MINUTES
-      value: "20"
-  service:
-    ports:
-      external: 30201
-  externalAccess:
+cs-event-bus:
+  kafka-chart:
     enabled: true
+    fullnameOverride: eventbus-kafka
+    commonLabels:
+      site: '{{ .Values.global.site }}'
+      sitetype: '{{ .Values.global.siteType }}'
+      blueprinttype: '{{ .Values.global.blueprinttype }}'
+      blueprintdeployment: '{{ .Release.Name }}'
+    extraConfig:
+      deleteTopicEnable: true
+      ### rollout segment when reaches 1GB or 1 hour
+      ### check every 5 minutes and mark to delete the inactive segments if partition reaches logRetentionBytes+logSegmentBytes=1.5GB or data inside is older than 20 min.
+      ### data is deleted after 1 minute after it was marked
+      ### logRetentionBytes issue - https://issues.apache.org/jira/browse/KAFKA-8534
+      logRetentionBytes: _536870912
+      logRetentionCheckIntervalMs: 300000
+      logSegmentBytes: _1073741824
+      logsDirs: /bitnami/kafka/data
+      maxMessageBytes: _104857600
+      offsetsTopicReplicationFactor: 3
+      defaultReplicationFactor: 3
+      numPartitions: 1
+      controller.quorum.fetch.timeout.ms: 4000
+      controller.quorum.request.timeout.ms: 4000
+    listeners:
+      client:
+        protocol: PLAINTEXT
+      controller:
+        protocol: PLAINTEXT
+      interbroker:
+        protocol: PLAINTEXT
+      external:
+        protocol: PLAINTEXT
     controller:
-      service:
-        type: ClusterIP
-        ports:
-          external: 30202
-        domain: eventbus.primary.com
-  metrics:
-    jmx:
+      replicaCount: 3
+      resources:
+        requests: {}
+        limits:
+          cpu: 500m
+          memory: 2048Mi
+      persistence:
+        enabled: false
+        size: 20Gi
+        mountPath: /bitnami/kafka
+      logPersistence:
+        enabled: false
+        size: 8Gi
+        mountPath: /opt/bitnami/kafka/logs
+    extraEnvVars:
+      - name: KAFKA_CFG_LOG_ROLL_HOURS
+        value: "1"
+      - name: KAFKA_CFG_LOG_RETENTION_MINUTES
+        value: "20"
+    service:
+      ports:
+        external: 30201
+    externalAccess:
       enabled: true
-      config: |-
-        jmxUrl: service:jmx:rmi:///jndi/rmi://127.0.0.1:5555/jmxrmi
-        lowercaseOutputName: true
-        lowercaseOutputLabelNames: true
-        ssl: false
-    serviceMonitor:
+      controller:
+        service:
+          type: ClusterIP
+          ports:
+            external: 30202
+          domain: eventbus.primary.com
+    metrics:
+      jmx:
+        enabled: true
+        config: |-
+          jmxUrl: service:jmx:rmi:///jndi/rmi://127.0.0.1:5555/jmxrmi
+          lowercaseOutputName: true
+          lowercaseOutputLabelNames: true
+          ssl: false
+      serviceMonitor:
+        enabled: true
+    kraft:
       enabled: true
-  kraft:
-    enabled: true
-    clusterId: "02AGTQZbRaGWGVECG-8KtA"
-  zookeeper:
-    enabled: false
+      clusterId: "02AGTQZbRaGWGVECG-8KtA"
+    zookeeper:
+      enabled: false

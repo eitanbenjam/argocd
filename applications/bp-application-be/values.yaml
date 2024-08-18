@@ -101,191 +101,192 @@ global:
         - "vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com"
         - "s3.atlngatl.objstor.wnsnet.attws.com"
 
-traces-ms-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
-  radcomConfiguration:
-    tracesmsDeployment:
-      resources:
-        limits:
-          cpu: 500m
-          memory: 750M
-        requests:
-          cpu: 100m
-          memory: 75M
+cs-application-be:
+  traces-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      tracesmsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 750M
+          requests:
+            cpu: 100m
+            memory: 75M
 
-executer-ms-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
-  radcomConfiguration:
-    executermsDeployment:
-      resources:
-        limits:
-          cpu: 500m
-          memory: 512M
-        requests:
-          cpu: 100m
-          memory: 25M
+  executer-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      executermsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512M
+          requests:
+            cpu: 100m
+            memory: 25M
 
-provisioning-ms-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
-  radcomConfiguration:
-    provisioningmsDeployment:
-      resources:
-        limits:
-          cpu: 500m
-          memory: 512M
-        requests:
-          cpu: 100m
-          memory: 25M
+  provisioning-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      provisioningmsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512M
+          requests:
+            cpu: 100m
+            memory: 25M
 
-preferences-ms-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
-  radcomConfiguration:
-    preferencesmsDeployment:
-      resources:
-        limits:
-          cpu: 500m
-          memory: 1G
-        requests:
-          cpu: 100m
-          memory: 25M
+  preferences-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      preferencesmsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1G
+          requests:
+            cpu: 100m
+            memory: 25M
 
-data-ms-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
+  data-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
 
-data-ms-manager-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
-  radcomConfiguration:
-    datamsDeployment:
-      resources:
-        limits:
-          cpu: 4
-          memory: 4096M
-        requests:
-          cpu: 1
-          memory: 1G
+  data-ms-manager-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      datamsDeployment:
+        resources:
+          limits:
+            cpu: 4
+            memory: 4096M
+          requests:
+            cpu: 1
+            memory: 1G
 
-storage-ms-chart:
-  enabled: true
-  deployments:
-    storagemsDeployment:
-      replicas: 2
-  image:
-    pullPolicy: IfNotPresent
-  radcomConfiguration:
-    storagemsDeployment:
-      resources:
-        limits:
-          cpu: 4
-          memory: 4096M
-        requests:
-          cpu: 1
-          memory: 1.5G
+  storage-ms-chart:
+    enabled: true
+    deployments:
+      storagemsDeployment:
+        replicas: 2
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      storagemsDeployment:
+        resources:
+          limits:
+            cpu: 4
+            memory: 4096M
+          requests:
+            cpu: 1
+            memory: 1.5G
 
-export-ms-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
-  radcomConfiguration:
-    exportmsDeployment:
-      resources:
-        limits:
-          cpu: 500m
-          memory: 512M
-        requests:
-          cpu: 100m
-          memory: 75M
+  export-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      exportmsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512M
+          requests:
+            cpu: 100m
+            memory: 75M
 
-template-ms-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
-  radcomConfiguration:
-    templatemsDeployment:
-      resources:
-        limits:
-          cpu: 500m
-          memory: 750M
-        requests:
-          cpu: 100m
-          memory: 750M
+  template-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      templatemsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 750M
+          requests:
+            cpu: 100m
+            memory: 750M
 
-dashboard-ms-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
+  dashboard-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
 
-metrics-ms-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
+  metrics-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
 
-enrichments-ms-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
-  radcomConfiguration:
-    enrichmentsmsDeployment:
-      resources:
-        limits:
-          cpu: 500m
-          memory: 2G
-        requests:
-          cpu: 100m
-          memory: 512M
+  enrichments-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      enrichmentsmsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 2G
+          requests:
+            cpu: 100m
+            memory: 512M
 
-scheme-ms-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
-  radcomConfiguration:
-    schememsDeployment:
-      resources:
-        limits:
-          cpu: 500m
-          memory: 750M
-        requests:
-          cpu: 100m
-          memory: 500M
+  scheme-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      schememsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 750M
+          requests:
+            cpu: 100m
+            memory: 500M
 
-expressionbuilder-ms-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
-  radcomConfiguration:
-    expressionbuildermsDeployment:
-      resources:
-        limits:
-          cpu: 500m
-          memory: 750M
-        requests:
-          cpu: 100m
-          memory: 512M
+  expressionbuilder-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      expressionbuildermsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 750M
+          requests:
+            cpu: 100m
+            memory: 512M
 
-sessions-data-ms-chart:
-  enabled: true
-  image:
-    pullPolicy: IfNotPresent
-  radcomConfiguration:
-    sessionsdatamsDeployment:
-      resources:
-        limits:
-          cpu: 4000m
-          memory: 3G
-        requests:
-          cpu: 2000m
-          memory: 2G
+  sessions-data-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      sessionsdatamsDeployment:
+        resources:
+          limits:
+            cpu: 4000m
+            memory: 3G
+          requests:
+            cpu: 2000m
+            memory: 2G
 
-qinsight-db-chart:
-  enabled: true
+  qinsight-db-chart:
+    enabled: true
