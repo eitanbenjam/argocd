@@ -38,7 +38,7 @@ spec:
         - name: RADCOM_REVISION
           value: "{{ .Release.Revision }}"
         - name: RADCOM_VERSION
-          value: "{{ .Chart.Version }}"
+          value: "{{ .Values.global.maveriq_version }}"
         - name: RADCOM_APPNAME
           value: "{{ .Chart.Name }}"
 {{ end }}
