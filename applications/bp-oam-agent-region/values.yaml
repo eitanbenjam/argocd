@@ -1,35 +1,34 @@
-CONDUCTOR_VIP_PLACEHOLDER: 172.29.170.103
-SITE_ELASTIC_STORAGE_PLACEHOLDER: local-storage
-SITE_HEALTH_STORAGE_PLACEHOLDER: local-storage
-chartsetConfigurationName: conf-region-oam-agent.yaml
+CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER 172.29.170.103
+SITE_ELASTIC_STORAGE_PLACEHOLDER: &SITE_ELASTIC_STORAGE_PLACEHOLDER local-storage
+SITE_HEALTH_STORAGE_PLACEHOLDER: &SITE_ELASTIC_STORAGE_PLACEHOLDER local-storage
 cs-oam-agent:
   auto-discovery-chart:
     autoDiscovery:
-      condcutorDnsName: 172.29.170.103
+      condcutorDnsName: *CONDUCTOR_VIP_PLACEHOLDER
   elasticsearch-chart:
     data:
       persistence:
-        storageClass: local-storage
+        storageClass: *SITE_ELASTIC_STORAGE_PLACEHOLDER
     master:
       persistence:
-        storageClass: local-storage
+        storageClass: *SITE_ELASTIC_STORAGE_PLACEHOLDER
   prometheus-operator-chart:
     alertmanager:
       alertmanagerSpec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-storage
+              storageClassName: *SITE_HEALTH_STORAGE_PLACEHOLDER
     prometheus:
       prometheusSpec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-storage
+              storageClassName: *SITE_HEALTH_STORAGE_PLACEHOLDER
   service-access-config-chart:
     radcomConfiguration:
-      conductorIp: 172.29.170.103
+      conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
   wait_for_ace_orchestrator: false
 shared-templates:
   save_blueprint: true
-  wait_for_ace_orchestrator: false
+  wait_for_ace_orchestrator: true
