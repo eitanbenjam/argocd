@@ -40,11 +40,4 @@ spec:
           value: "{{ .Chart.Version }}"
         - name: RADCOM_APPNAME
           value: "{{ .Chart.Name }}"
-        volumeMounts:
-        - name: values-volume
-          mountPath: /values
-      volumes:
-      - name: values-volume
-        configMap:
-          name: values-cm
 {{ end }}
