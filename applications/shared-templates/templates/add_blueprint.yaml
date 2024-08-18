@@ -24,6 +24,7 @@ spec:
       containers:
       - name: add-blueprints-job
         image: "{{ .Values.global.docker_registry }}/ace-cd:{{ .Values.ace_cd_tag }}"
+        pullPolicy: Always
         #command: ["echo","post-install hook"]
         command: ["bash", "ps_tools/argocd/add_blueprints.sh"]
         env:
