@@ -59,10 +59,20 @@ def main(script_args):
                             os.mkdir(git_blueprint_folder)
                         chart_set_values_file=os.path.join(script_args.blueprints_folder, bp_type,"configuration",f"{chart_set_values_file_name}.yaml")
                         bp_data = read_yaml_file(chart_set_values_file)
+                        try:
+                            global_bp_data = bp_data['global']
+                            del bp_data['global']
+                        except KeyError:
+                            global_bp_data = None
                         bp_data = { f'{cs_name}': bp_data }
-                        #write_to_yaml_file(bp_data, os.path.join(script_args.git_folder,git_blueprint_folder, chart_set_values_file_name))
+                        if global_bp_data:
+                            bp_data['global'] = global_bp_data
+
+                        
                         #import pdb;pdb.set_trace()
-                        shutil.copy(chart_set_values_file, git_blueprint_folder)
+                        write_to_yaml_file(os.path.join(script_args.git_folder,git_blueprint_folder, f"{chart_set_values_file_name}.yaml"), bp_data)
+                        #
+                        #shutil.copy(chart_set_values_file, git_blueprint_folder)
                         bp_argo_data['spec']['sources'][0]['helm']['valueFiles'] = [f'blueprint_value/{chart_set_values_file_name}.yaml','../general/values.yaml' ,'values.yaml']
                         
 

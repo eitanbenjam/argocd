@@ -1,11 +1,8 @@
-SITE_HEALTH_STORAGE_PLACEHOLDER: &SITE_HEALTH_STORAGE_PLACEHOLDER local-storage
-shared-templates:
-  save_blueprint: true
+SITE_HEALTH_STORAGE_PLACEHOLDER: local-storage
+chartsetConfigurationName: conf-national-nifi.yaml
 cs-adminapp-be:
   grafana-helm-chart:
     persistence:
-      storageClass: *SITE_HEALTH_STORAGE_PLACEHOLDER
-  grafana-helm-chart:
-    persistence:
-      storageClassName: *SITE_HEALTH_STORAGE_PLACEHOLDER
-
+      storageClassName: local-storage
+shared-templates:
+  save_blueprint: true

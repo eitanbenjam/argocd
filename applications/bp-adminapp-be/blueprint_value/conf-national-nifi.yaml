@@ -1,3 +1,4 @@
-nifi-chart:
-  enabled: true
-  replicaCount: 1
+cs-adminapp-be:
+  nifi-chart:
+    enabled: true
+    replicaCount: 1

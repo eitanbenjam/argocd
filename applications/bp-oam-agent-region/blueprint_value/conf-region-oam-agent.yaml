@@ -1,196 +1,184 @@
-global:
-# These values are handled by Orchestration team, and
-# should not be modified !
-  site: "default" # provided by external parameter
-  blueprinttype: bp-oam-agent
-  siteType: regional
-###
-  vaultConfig:
-    vaultDataServicePath: "http://kuberiq-np-vip/secretsms"
-    vaultPathPrefix: "v1/radcom"
-
-persistence-volume-exporter-chart:
-  enabled: true
-  pvclocalpaths:
-    - name: storage
-      path: /var/radcom/storage
-    - name: volume
-      path: /var/radcom/volume
-  service:
-    type: ClusterIP
-    port: 8081
-
-oam-agent-chart:
-  enabled: true
-  radcomConfiguration:
-    repoType: K8S
-    kafka:
-      kafkaPort: 30201
-      kafkaDnsName: eventbus-oam-primary
-    kbrip: kuberiq-np-vip/orchestrator
-    resources:
-        requestsCpu: 100m
-        requestsMemory: 500Mi
+cs-oam-agent:
+  daemon-chart:
+    daemonConfig:
+      api_gw_ip: kuberiq-np-vip
+      api_gw_port: 80/configManager
+      scribe_ip: kuberiq-np-vip
+      scribe_port: 80/configManager
+  database-loader-chart:
+    loaderConfig:
+      api_gw_ip: kuberiq-np-vip
+      api_gw_port: 80/configManager
+      scribe_ip: kuberiq-np-vip
+      scribe_port: 80/configManager
+  database-sync-chart:
+    enabled: true
+  oam-agent-chart:
+    enabled: true
+    radcomConfiguration:
+      kafka:
+        kafkaDnsName: eventbus-oam-primary
+        kafkaPort: 30201
+      kbrip: kuberiq-np-vip/orchestrator
+      repoType: K8S
+      resources:
         limitsCpu: 1600m
         limitsMemory: 500Mi
-storageclass-exporter-chart:
-  enabled: true
-  pvclocalpaths:
+        requestsCpu: 100m
+        requestsMemory: 500Mi
+  persistence-volume-exporter-chart:
+    enabled: true
+    pvclocalpaths:
     - name: storage
       path: /var/radcom/storage
     - name: volume
       path: /var/radcom/volume
-
-  configMap:
-    kafkaGroupId: conductor.aceagent.topology
-    kafkaTopic: conductor.topology.update
-    kafkaServer: eventbus-oam-primary:30201
-    topologyManagerService: kuberiq-np-vip/topologyManager
-    retryPeriod: 2000
-    retryAttempts: 15
-    frontendMachineTypes: vprobe,vLB,vLBAgent
-
-  logConfig:
-    logLevel: INFO
-
-schema-builder-chart:
-  enabled: true
-
-  schemaBuilderConfig:
-    api_gw_ip: kuberiq-np-vip
-    api_gw_port: 80
-    api_gw_service_path: /configManager
-    scribe_ip: kuberiq-np-vip
-    scribe_port: 80/configManager
-    xmltemplates_api: "http://kuberiq-np-vip/api/v1/CentralConfigurationMS/ConfigFiles/GetSpecificConfigurationFile"
-
-database-loader-chart:
-  loaderConfig:
-    api_gw_ip: kuberiq-np-vip
-    api_gw_port: 80/configManager
-    scribe_ip: kuberiq-np-vip
-    scribe_port: 80/configManager
-
-daemon-chart:
-  daemonConfig:
-    api_gw_ip: kuberiq-np-vip
-    api_gw_port: 80/configManager
-    scribe_ip: kuberiq-np-vip
-    scribe_port: 80/configManager
-
-database-sync-chart:
-  enabled: true
-
-service-access-config-chart:
-  radcomConfiguration:
-    topologyManagerSvc: kuberiq-np-vip/topologyManager
-    aceOrchestratorSvc: kuberiq-np-vip/orchestrator
-  legacyConf:
-  - name: "kafka"
-    type: "kafka"
-    port: "9092"
-    siteType: "primary"
-    interface: "int_beinterconnect"
-    preferredIp: "v4"
-    ipType: "ip"
-  - name: "kafka-ext"
-    type: "kafka"
-    port: "9093"
-    siteType: "primary"
-    interface: "oam_direct"
-    ipType: "ip"
-  - name: "vertica"
-    type: "vertica"
-    port: "5433"
-    siteType: "home"
-    interface: "int_beinterconnect"
-    ipType: "ip"
-  - name: "vertica-np"
-    type: "vertica"
-    port: "5433"
-    siteType: "primary"
-    interface: "int_beinterconnect"
-    ipType: "ip"
-  - name: "kuberiq-vip"
-    type: "kuberiq"
-    port: "80"
-    siteType: "home"
-    interface: "oam_direct"
-    ipType: 'vip'
-  - name: "kuberiq-np-vip"
-    type: "kuberiq"
-    port: "80"
-    siteType: "primary"
-    interface: "oam_direct"
-    ipType: 'vip'
-  - name: "kuberiq-home-vip"
-    type: "kuberiq_region"
-    port: "80"
-    siteType: "home"
-    interface: "oam_direct"
-    ipType: 'vip'
-  - name: "conductor-vip"
-    type: "conductor"
-    port: "80"
-    siteType: "primary"
-    interface: "oam_direct"
-    ipType: 'vip'
-  - name: "mongodb"
-    type: "mongodb"
-    port: "27017"
-    siteType: "all"
-    interface: "oam_direct"
-    ipType: "ip"
-  - name: "eventbus-oam-primary"
-    type: "kuberiq"
-    port: "30201"
-    siteType: "primary"
-    interface: "oam_direct"
-    ipType: 'vip'
-  - name: "eventbus-bic-primary"
-    type: "kuberiq"
-    port: "9092"
-    siteType: "primary"
-    interface: "int_beinterconnect"
-    ipType: "ip"
-  - name: "eventbus-traffic-primary"
-    type: "kuberiq"
-    port: "9094"
-    siteType: "primary"
-    interface: "oam_direct"
-    ipType: 'vip'
-  - name: "eventbus-oam-secondary"
-    type: "kuberiq"
-    port: "30201"
-    siteType: "secondary"
-    interface: "oam_direct"
-  - name: "eventbus-bic-secondary"
-    type: "kuberiq"
-    port: "9092"
-    siteType: "secondary"
-    interface: "int_beinterconnect"
-    ipType: "ip"
-  - name: "eventbus-traffic-secondary"
-    type: "kuberiq"
-    port: "9094"
-    siteType: "secondary"
-    interface: "cdr_direct"
-    ipType: "ip"
-  - name: "kuberiq-primary"
-    type: "kuberiq"
-    port: "80"
-    siteType: "primary"
-    interface: "oam_direct"
-    ipType: 'vip'
-  - name: "kuberiq-secondary"
-    type: "kuberiq"
-    port: "80"
-    siteType: "secondary"
-    interface: "oam_direct"
-    ipType: 'vip'
-  - name: "kuberiq-local"
-    type: "kuberiq_region"
-    siteType: "home"
-    port: "80"
-    interface: "oam_direct"
-    ipType: 'vip'
+    service:
+      port: 8081
+      type: ClusterIP
+  schema-builder-chart:
+    enabled: true
+    schemaBuilderConfig:
+      api_gw_ip: kuberiq-np-vip
+      api_gw_port: 80
+      api_gw_service_path: /configManager
+      scribe_ip: kuberiq-np-vip
+      scribe_port: 80/configManager
+      xmltemplates_api: http://kuberiq-np-vip/api/v1/CentralConfigurationMS/ConfigFiles/GetSpecificConfigurationFile
+  service-access-config-chart:
+    legacyConf:
+    - interface: int_beinterconnect
+      ipType: ip
+      name: kafka
+      port: '9092'
+      preferredIp: v4
+      siteType: primary
+      type: kafka
+    - interface: oam_direct
+      ipType: ip
+      name: kafka-ext
+      port: '9093'
+      siteType: primary
+      type: kafka
+    - interface: int_beinterconnect
+      ipType: ip
+      name: vertica
+      port: '5433'
+      siteType: home
+      type: vertica
+    - interface: int_beinterconnect
+      ipType: ip
+      name: vertica-np
+      port: '5433'
+      siteType: primary
+      type: vertica
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-vip
+      port: '80'
+      siteType: home
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-np-vip
+      port: '80'
+      siteType: primary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-home-vip
+      port: '80'
+      siteType: home
+      type: kuberiq_region
+    - interface: oam_direct
+      ipType: vip
+      name: conductor-vip
+      port: '80'
+      siteType: primary
+      type: conductor
+    - interface: oam_direct
+      ipType: ip
+      name: mongodb
+      port: '27017'
+      siteType: all
+      type: mongodb
+    - interface: oam_direct
+      ipType: vip
+      name: eventbus-oam-primary
+      port: '30201'
+      siteType: primary
+      type: kuberiq
+    - interface: int_beinterconnect
+      ipType: ip
+      name: eventbus-bic-primary
+      port: '9092'
+      siteType: primary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: eventbus-traffic-primary
+      port: '9094'
+      siteType: primary
+      type: kuberiq
+    - interface: oam_direct
+      name: eventbus-oam-secondary
+      port: '30201'
+      siteType: secondary
+      type: kuberiq
+    - interface: int_beinterconnect
+      ipType: ip
+      name: eventbus-bic-secondary
+      port: '9092'
+      siteType: secondary
+      type: kuberiq
+    - interface: cdr_direct
+      ipType: ip
+      name: eventbus-traffic-secondary
+      port: '9094'
+      siteType: secondary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-primary
+      port: '80'
+      siteType: primary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-secondary
+      port: '80'
+      siteType: secondary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-local
+      port: '80'
+      siteType: home
+      type: kuberiq_region
+    radcomConfiguration:
+      aceOrchestratorSvc: kuberiq-np-vip/orchestrator
+      topologyManagerSvc: kuberiq-np-vip/topologyManager
+  storageclass-exporter-chart:
+    configMap:
+      frontendMachineTypes: vprobe,vLB,vLBAgent
+      kafkaGroupId: conductor.aceagent.topology
+      kafkaServer: eventbus-oam-primary:30201
+      kafkaTopic: conductor.topology.update
+      retryAttempts: 15
+      retryPeriod: 2000
+      topologyManagerService: kuberiq-np-vip/topologyManager
+    enabled: true
+    logConfig:
+      logLevel: INFO
+    pvclocalpaths:
+    - name: storage
+      path: /var/radcom/storage
+    - name: volume
+      path: /var/radcom/volume
+global:
+  blueprinttype: bp-oam-agent
+  site: default
+  siteType: regional
+  vaultConfig:
+    vaultDataServicePath: http://kuberiq-np-vip/secretsms
+    vaultPathPrefix: v1/radcom
