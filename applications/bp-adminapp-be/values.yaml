@@ -1,4 +1,4 @@
-SITE_HEALTH_STORAGE_PLACEHOLDER: local-storage
+SITE_HEALTH_STORAGE_PLACEHOLDER: &SITE_HEALTH_STORAGE_PLACEHOLDER gp3
 chartsetConfigurationName: conf-national-nifi.yaml
 cs-adminapp-be:
   grafana-helm-chart:

@@ -28,6 +28,8 @@ spec:
         #command: ["echo","post-install hook"]
         command: ["bash", "ps_tools/argocd/save_blueprint.sh"]
         env:
+        - name: RADCOM_CONDUCTOR_IP
+          value: "{{ .Values.global.conductorVip }}"
         - name: RADCOM_DEPLOYMENTNAME
           value: {{ .Release.Name }}
         - name: RADCOM_VERSION

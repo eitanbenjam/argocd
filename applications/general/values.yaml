@@ -25,3 +25,4 @@ global:
   site: *SITE
   conductorVip: *CONDUCTOR_VIP
   maveriq_version: *VERSION
+  appreleaseversion: *VERSION

@@ -1,168 +1,12 @@
-shared-templates:
-  save_blueprint: true
-global:  
-  chartSet: cs-application-be
-
-  mongoPort: 27017
-  mongoUserName: root
-  mongoDataBase: admin
-  mongoPassword: 2108a185c5b4969394c9cc18308c72a9
-  mongoComponentName: mongodb
-  mongoHosts: 1.1.1.1
-  mongoNoAddressConnectionStringFormat: mongodb://root:2108a185c5b4969394c9cc18308c72a9@%s/admin?ssl=false&retrywrites=false&maxIdleTimeMS=120000&appName=@root@
-  mongoShouldUseK8SEndpoints: true
-  mongoDNSServiceName: mongodb
-  GuardianServiceName: system-db-mock-chart-svc
-  QLBServiceName: system-db-mock-chart-svc
-  
-  kafkaPort: 9092
-  
-  s3bucketName: radcom-packets
-  s3accessKey: AKIAIOSFODNN7EXAMPLE
-  s3secretKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-  s3regionName: us-east-2
-  s3EndPoint: http://cs-minio-minio-chart:9000
-  s3NetworkDefinition: nameserver 8.8.8.8
-  s3NetworkFile: /etc/resolv.conf
-  s3isPathStyle: true
-  s3connectionCheckerTimeoutInMs: 20000
-  s3socketCheckerTimeoutInMs: 20000
-  s3multiPartConnectionTimeoutInMs: 5000
-  s3multiPartSocketTimeoutInMs: 60000
-  s3multiPartMaxErrorRetry: 10
-  s3multiPartMaxConnections: 100
-  
-  runUpperBytesLimit: "1073741824"
-  runUpperPacketsLimit: "5000000"
-
-  verticaUserName: dbadmin
-  verticaPassword: dbadmin
-  verticaPort: 5433
-  verticaDatabase: vdb
-  verticaSchema: omniq
-  verticaHost: 172.29.13.156
-  verticaDNSServiceName: vertica
-  verticaAddress: ""
-
-  childTraceSizeInBytes: "524288000"
-
-  oraclePort: 1521
-
-  apigw_vip: apigw-vip
-  qtracelb_vip: qtracelb-vip
-  icp_master: 172.29.41.102
-  master: kuberiq-vip
-  mongodb: mongodb
-  kafka:
-    epName: kafka
-  oracle: oracle
-  analyst_vip: analyst-vip
-  conductor_vip: conductor-vip
-  vertica: vertica
-  
-  dnsLookupScheduledIntervalInMs: 300000
-  digDnsCommand: dig @%s %s.production.svc.cluster.local +short
-  getServerDnsCommand: dig |grep SERVER
-  
-  buildDateName: deployment_date
-  artifactVersionName: artifactVersion
-  loadBackgroundToDataMS: false
-  
-  trafficGroupsPrefix: TrafficGroup
-
-  ioGraphTraceIdSuffix: _iograph
-
-  sessionTypePrefix: cdr
-  packetsAndStatsTopicName: packetsAndStats
-  volatileTracesDataTopicName: volatileTracesData
-  packetsTopicName: packets
-  features: "ONLINE_MODE_PAM=OnlineModePacketAnalyzer,enabled:True,defaultValue:True;ONLINE_MODE_SAM=OnlineModeSessionAnalyzer,enabled:True,defaultValue:True;RTP_PLAYBACK=RTP_Playback,enabled:True,defaultValue:True;VIEWING_SMS_TEXT_MESSAGE=MessagingFullContent,enabled:True,defaultValue:True"
-
-  hostAliases_enabled: false
-  hostAliases:
-    - ip: "1.1.1.1"
-      hostnames:
-        - "vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com"
-        - "s3.atlngatl.objstor.wnsnet.attws.com"
-    - ip: "2.2.2.2"
-      hostnames:
-        - "vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com"
-        - "s3.atlngatl.objstor.wnsnet.attws.com"
-    - ip: "3.3.3.3"
-      hostnames:
-        - "vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com"
-        - "s3.atlngatl.objstor.wnsnet.attws.com"
-    - ip: "4.4.4.4"
-      hostnames:
-        - "vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com"
-        - "s3.atlngatl.objstor.wnsnet.attws.com"
-    - ip: "5.5.5.5"
-      hostnames:
-        - "vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com"
-        - "s3.atlngatl.objstor.wnsnet.attws.com"
-
 cs-application-be:
-  traces-ms-chart:
+  dashboard-ms-chart:
     enabled: true
     image:
       pullPolicy: IfNotPresent
-    radcomConfiguration:
-      tracesmsDeployment:
-        resources:
-          limits:
-            cpu: 500m
-            memory: 750M
-          requests:
-            cpu: 100m
-            memory: 75M
-
-  executer-ms-chart:
-    enabled: true
-    image:
-      pullPolicy: IfNotPresent
-    radcomConfiguration:
-      executermsDeployment:
-        resources:
-          limits:
-            cpu: 500m
-            memory: 512M
-          requests:
-            cpu: 100m
-            memory: 25M
-
-  provisioning-ms-chart:
-    enabled: true
-    image:
-      pullPolicy: IfNotPresent
-    radcomConfiguration:
-      provisioningmsDeployment:
-        resources:
-          limits:
-            cpu: 500m
-            memory: 512M
-          requests:
-            cpu: 100m
-            memory: 25M
-
-  preferences-ms-chart:
-    enabled: true
-    image:
-      pullPolicy: IfNotPresent
-    radcomConfiguration:
-      preferencesmsDeployment:
-        resources:
-          limits:
-            cpu: 500m
-            memory: 1G
-          requests:
-            cpu: 100m
-            memory: 25M
-
   data-ms-chart:
     enabled: true
     image:
       pullPolicy: IfNotPresent
-
   data-ms-manager-chart:
     enabled: true
     image:
@@ -176,62 +20,6 @@ cs-application-be:
           requests:
             cpu: 1
             memory: 1G
-
-  storage-ms-chart:
-    enabled: true
-    deployments:
-      storagemsDeployment:
-        replicas: 2
-    image:
-      pullPolicy: IfNotPresent
-    radcomConfiguration:
-      storagemsDeployment:
-        resources:
-          limits:
-            cpu: 4
-            memory: 4096M
-          requests:
-            cpu: 1
-            memory: 1.5G
-
-  export-ms-chart:
-    enabled: true
-    image:
-      pullPolicy: IfNotPresent
-    radcomConfiguration:
-      exportmsDeployment:
-        resources:
-          limits:
-            cpu: 500m
-            memory: 512M
-          requests:
-            cpu: 100m
-            memory: 75M
-
-  template-ms-chart:
-    enabled: true
-    image:
-      pullPolicy: IfNotPresent
-    radcomConfiguration:
-      templatemsDeployment:
-        resources:
-          limits:
-            cpu: 500m
-            memory: 750M
-          requests:
-            cpu: 100m
-            memory: 750M
-
-  dashboard-ms-chart:
-    enabled: true
-    image:
-      pullPolicy: IfNotPresent
-
-  metrics-ms-chart:
-    enabled: true
-    image:
-      pullPolicy: IfNotPresent
-
   enrichments-ms-chart:
     enabled: true
     image:
@@ -245,21 +33,32 @@ cs-application-be:
           requests:
             cpu: 100m
             memory: 512M
-
-  scheme-ms-chart:
+  executer-ms-chart:
     enabled: true
     image:
       pullPolicy: IfNotPresent
     radcomConfiguration:
-      schememsDeployment:
+      executermsDeployment:
         resources:
           limits:
             cpu: 500m
-            memory: 750M
+            memory: 512M
           requests:
             cpu: 100m
-            memory: 500M
-
+            memory: 25M
+  export-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      exportmsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512M
+          requests:
+            cpu: 100m
+            memory: 75M
   expressionbuilder-ms-chart:
     enabled: true
     image:
@@ -273,7 +72,51 @@ cs-application-be:
           requests:
             cpu: 100m
             memory: 512M
-
+  metrics-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+  preferences-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      preferencesmsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1G
+          requests:
+            cpu: 100m
+            memory: 25M
+  provisioning-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      provisioningmsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512M
+          requests:
+            cpu: 100m
+            memory: 25M
+  qinsight-db-chart:
+    enabled: true
+  scheme-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      schememsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 750M
+          requests:
+            cpu: 100m
+            memory: 500M
   sessions-data-ms-chart:
     enabled: true
     image:
@@ -287,6 +130,133 @@ cs-application-be:
           requests:
             cpu: 2000m
             memory: 2G
-
-  qinsight-db-chart:
+  storage-ms-chart:
+    deployments:
+      storagemsDeployment:
+        replicas: 2
     enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      storagemsDeployment:
+        resources:
+          limits:
+            cpu: 4
+            memory: 4096M
+          requests:
+            cpu: 1
+            memory: 1.5G
+  template-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      templatemsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 750M
+          requests:
+            cpu: 100m
+            memory: 750M
+  traces-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      tracesmsDeployment:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 750M
+          requests:
+            cpu: 100m
+            memory: 75M
+global:
+  GuardianServiceName: system-db-mock-chart-svc
+  QLBServiceName: system-db-mock-chart-svc
+  analyst_vip: analyst-vip
+  apigw_vip: apigw-vip
+  artifactVersionName: artifactVersion
+  buildDateName: deployment_date
+  chartSet: cs-application-be
+  childTraceSizeInBytes: '524288000'
+  conductor_vip: conductor-vip
+  digDnsCommand: dig @%s %s.production.svc.cluster.local +short
+  dnsLookupScheduledIntervalInMs: 300000
+  features: ONLINE_MODE_PAM=OnlineModePacketAnalyzer,enabled:True,defaultValue:True;ONLINE_MODE_SAM=OnlineModeSessionAnalyzer,enabled:True,defaultValue:True;RTP_PLAYBACK=RTP_Playback,enabled:True,defaultValue:True;VIEWING_SMS_TEXT_MESSAGE=MessagingFullContent,enabled:True,defaultValue:True
+  getServerDnsCommand: dig |grep SERVER
+  hostAliases:
+  - hostnames:
+    - vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com
+    - s3.atlngatl.objstor.wnsnet.attws.com
+    ip: 1.1.1.1
+  - hostnames:
+    - vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com
+    - s3.atlngatl.objstor.wnsnet.attws.com
+    ip: 2.2.2.2
+  - hostnames:
+    - vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com
+    - s3.atlngatl.objstor.wnsnet.attws.com
+    ip: 3.3.3.3
+  - hostnames:
+    - vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com
+    - s3.atlngatl.objstor.wnsnet.attws.com
+    ip: 4.4.4.4
+  - hostnames:
+    - vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com
+    - s3.atlngatl.objstor.wnsnet.attws.com
+    ip: 5.5.5.5
+  hostAliases_enabled: false
+  icp_master: 172.29.41.102
+  ioGraphTraceIdSuffix: _iograph
+  kafka:
+    epName: kafka
+  kafkaPort: 9092
+  loadBackgroundToDataMS: false
+  master: kuberiq-vip
+  mongoComponentName: mongodb
+  mongoDNSServiceName: mongodb
+  mongoDataBase: admin
+  mongoHosts: 1.1.1.1
+  mongoNoAddressConnectionStringFormat: mongodb://root:2108a185c5b4969394c9cc18308c72a9@%s/admin?ssl=false&retrywrites=false&maxIdleTimeMS=120000&appName=@root@
+  mongoPassword: 2108a185c5b4969394c9cc18308c72a9
+  mongoPort: 27017
+  mongoShouldUseK8SEndpoints: true
+  mongoUserName: root
+  mongodb: mongodb
+  oracle: oracle
+  oraclePort: 1521
+  packetsAndStatsTopicName: packetsAndStats
+  packetsTopicName: packets
+  qtracelb_vip: qtracelb-vip
+  runUpperBytesLimit: '1073741824'
+  runUpperPacketsLimit: '5000000'
+  s3EndPoint: http://cs-minio-minio-chart:9000
+  s3NetworkDefinition: nameserver 8.8.8.8
+  s3NetworkFile: /etc/resolv.conf
+  s3accessKey: AKIAIOSFODNN7EXAMPLE
+  s3bucketName: radcom-packets
+  s3connectionCheckerTimeoutInMs: 20000
+  s3isPathStyle: true
+  s3multiPartConnectionTimeoutInMs: 5000
+  s3multiPartMaxConnections: 100
+  s3multiPartMaxErrorRetry: 10
+  s3multiPartSocketTimeoutInMs: 60000
+  s3regionName: us-east-2
+  s3secretKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  s3socketCheckerTimeoutInMs: 20000
+  sessionTypePrefix: cdr
+  trafficGroupsPrefix: TrafficGroup
+  vertica: vertica
+  verticaAddress: ''
+  verticaDNSServiceName: vertica
+  verticaDatabase: vdb
+  verticaHost: 172.29.13.156
+  verticaPassword: dbadmin
+  verticaPort: 5433
+  verticaSchema: omniq
+  verticaUserName: dbadmin
+  volatileTracesDataTopicName: volatileTracesData
+shared-templates:
+  save_blueprint: true

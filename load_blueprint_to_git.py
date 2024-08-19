@@ -1,12 +1,34 @@
-import argparse
-import yaml, os
-import shutil
+import argparse,os
+import yaml
+import sys
+import ruamel.yaml
+
+
+
+def read_text_file(file_path):
+    f = open(file_path, "r")
+    data = f.readlines()
+    return data 
+
+
+
+def read_yaml_file2(file_path):
+    yaml = ruamel.yaml.YAML()
+
+    with open(file_path) as ifp:
+        data = yaml.load(ifp)
+    return data
+
+def write_to_yaml_file(file_path, parsed_yaml):
+    with open('config.yaml', 'w') as ofp:
+        yaml.dump(parsed_yaml, ofp)
+
 
 
 def read_yaml_file(file_path):
     with open(file_path, "r") as stream:
         try:
-            return yaml.safe_load(stream)
+            return yaml.load(stream)
         except yaml.YAMLError as exc:
             print("Cant load yaml file to %s" % file_path)
             print(exc)
@@ -31,13 +53,32 @@ def write_to_yaml_file(file_path, parsed_yaml):
 def main(script_args):
 
     blueprint_json = read_yaml_file(script_args.blueprints_json)
+    #argo_values_general_data = read_yaml_file(os.path.join(script_args.git_folder, "applications", "general", "values.yaml"))
+    
     for bp in blueprint_json:
         bp_type = bp['blueprintType']
         bp_version = ".".join([bp['version'].split(".")[0],bp['version'].split(".")[1],bp['version'].split(".")[-1]])
-
         bp_name = bp['blueprintName']
         git_folder_name = os.path.join(script_args.git_folder, "applications", bp_type)
-        #import pdb;pdb.set_trace()
+        #****  Setting values.yaml placeholder
+        #try:
+        #    argo_values_data = read_yaml_file(os.path.join(script_args.git_folder, "applications", bp_type, "values.yaml"))
+            
+        #    placeholder_keys = [ x.split('_PLACEHOLDER')[0] for x in argo_values_data.keys() if x.endswith("_PLACEHOLDER") ]
+        #    for placeholder in placeholder_keys:
+        #        try:
+        #            general_placeholder_value = argo_values_general_data[placeholder]
+        #            argo_values_data[f"{placeholder}_PLACEHOLDER"] = argo_values_general_data[placeholder]
+        #        except KeyError:
+        #            print (f"ERROR: {placeholder} not exist in general values.yaml file")
+        #            sys.exit(1)
+                
+        #    write_to_yaml_file(os.path.join(script_args.git_folder, "applications", bp_type, "values.yaml"), argo_values_data)
+        #except FileNotFoundError:
+        #    print ("no values.yaml file")
+        #****
+        
+        
         if os.path.exists(git_folder_name):
             print (f"**** Start working on blueprint {bp_name}, bp_type: {bp_type} ***")
             bp_chart_file = os.path.join(script_args.git_folder, "applications", bp_type, "Chart.yaml")
@@ -79,9 +120,9 @@ def main(script_args):
                         print (f"Saving argo_manifast to {bp_argo_file}")
                         write_to_yaml_file(bp_argo_file, bp_argo_data)
                         
-                        argo_values_data = read_yaml_file(os.path.join(script_args.git_folder, "applications", bp_type, "values.yaml"))
-                        argo_values_data['chartsetConfigurationName'] = f"{chart_set_values_file_name}.yaml"
-                        write_to_yaml_file(os.path.join(script_args.git_folder, "applications", bp_type, "values.yaml"), argo_values_data)
+                        #argo_values_data = read_yaml_file(os.path.join(script_args.git_folder, "applications", bp_type, "values.yaml"))
+                        #argo_values_data['chartsetConfigurationName'] = f"{chart_set_values_file_name}.yaml"
+                        #write_to_yaml_file(os.path.join(script_args.git_folder, "applications", bp_type, "values.yaml"), argo_values_data)
                         #
 
                     #Version
