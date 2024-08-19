@@ -12,4 +12,5 @@ cs-k8s-infra:
     enabled: false
 shared-templates:
   add_blueprints: false
+  save_blueprint: false
   wait_for_ace_orchestrator: false
