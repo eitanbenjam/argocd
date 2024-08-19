@@ -9,4 +9,5 @@ dependencies:
   repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
   version: 1.0.0
 description: bp-monitoring-tools
+name: cs-monitoring-tools
 version: 13.09.04
