@@ -1,0 +1,16 @@
+cs-applications:
+  dashboard-ui-ms-chart:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+    radcomConfiguration:
+      dashboarduims:
+        resources:
+          limits:
+            cpu: 700m
+            memory: 512M
+          requests:
+            cpu: 100m
+            memory: 50M
+
+

@@ -1,0 +1,12 @@
+shared-templates:
+  add_blueprints: true
+  save_blueprint: true
+  wait_for_ace_orchestrator: false
+  wait_for_ace_orchestrator_on_post: true
+
+
+
+cs-monitoring-tools:
+  prometheus-operator-chart:
+    prometheus.prometheusSpec:
+      retentionSize: 12G
