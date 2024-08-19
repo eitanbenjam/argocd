@@ -43,5 +43,5 @@ spec:
       volumes:
       - name: values-volume
         configMap:
-          name: values-cm
+          name: {{ .Release.Name }}-save-blueprints-values
 {{ end }}
