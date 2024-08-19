@@ -11,5 +11,5 @@ cs-k8s-infra:
   radcom-ingress-nginx-chart:
     enabled: false
 shared-templates:
-  add_blueprint: false
+  add_blueprints: false
   wait_for_ace_orchestrator: false
