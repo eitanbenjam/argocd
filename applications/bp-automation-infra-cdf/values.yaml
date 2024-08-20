@@ -1,0 +1,14 @@
+shared-templates:
+  add_blueprints: false
+  save_blueprint: true
+  wait_for_ace_orchestrator_on_post: true
+
+
+
+
+cs-automation-infra-cdf:
+  automation-infra-chart:
+    enabled: false
+    automationinfraDeployment:
+      serviceAccount:
+        name: automation-sa
