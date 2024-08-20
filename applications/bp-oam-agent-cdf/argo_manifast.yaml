@@ -17,7 +17,7 @@ spec:
   - helm:
       ignoreMissingValueFiles: false
       valueFiles:
-      - blueprint_value/conf-region-oam-agent.yaml
+      - blueprint_value/conf-cdf-oam-agent.yaml
       - ../general/values.yaml
       - values.yaml
       version: v3
