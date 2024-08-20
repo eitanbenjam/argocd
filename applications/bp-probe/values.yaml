@@ -28,7 +28,7 @@ cs-probe:
     deployments:
       probecoremsDeployment:
         podAnnotations:
-          "k8s\.v1\.cni\.cncf\.io/networks": dpdk-net-internal-probe-$BLUEPRINT_PROBE_ID
+          "k8s.v1.cni.cncf.io/networks": dpdk-net-internal-probe-$BLUEPRINT_PROBE_ID
         containers:
           probecoremsContainer:
             env:
