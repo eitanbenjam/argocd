@@ -1,0 +1,51 @@
+DOCKER_REGISTRY_PLACEHOLDER: &DOCKER_REGISTRY_PLACEHOLDER 571789434150.dkr.ecr.us-east-2.amazonaws.com
+shared-templates:
+  add_blueprints: false
+  save_blueprint: true
+  wait_for_ace_orchestrator: true
+
+
+
+cs-probe:
+  probe-core-ms-chart:
+    conductorIp: X.Y.X.X
+    configMap:
+      cdfGroup: ''
+      versionNumber: ''
+      storageClassName: ''
+      interfaceNames: ''
+      useNetworkAttachmentDefinition: 'yes'
+      siteName: 'haifa'
+      defaultInterfacePref: AWS_RADCOM_DEFAULT
+      packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
+      packetInternalInterfacePref: AWS_RADCOM_PACKET_INTERNAL
+      oamDirectInterfacePref: AWS_RADCOM_OAM_DIRECT
+      cdfControlInterfacePref: AWS_RADCOM_CDF_CONTROL
+      trafficDataInterfacePref: AWS_RADCOM_TRAFFIC_DATA
+      nfManagerInterfacePref: AWS_RADCOM_NF_MANAGER
+      qrouterIp: XXXXXXXXXXXXXX
+      qrouterIp: XXXXXXXXXXXXXXX
+    deployments:
+      probecoremsDeployment:
+        podAnnotations:
+          "k8s\.v1\.cni\.cncf\.io/networks": dpdk-net-internal-probe-$BLUEPRINT_PROBE_ID
+        containers:
+          probecoremsContainer:
+            env:
+              AWS_RADCOM_DEFAULT_INTF_NAMES: eth0
+              AWS_RADCOM_PACKET_INTERNAL_INTF_NAMES: eth1
+              AWS_RADCOM_OAM_DIRECT_INTF_NAMES: eth0
+              AWS_RADCOM_CDF_CONTROL_INTF_NAMES: eth1
+              AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
+              AWS_RADCOM_NF_MANAGER_INTF_NAMES: eth0
+    resources:
+      requests:
+        memory: 8Gi
+        hugepages1Gi: 1Gi
+        cpu: 6000m
+      limit:
+        memory: 8Gi
+        hugepages1Gi: 1Gi
+        cpu: 6000m
+        
+
