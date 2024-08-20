@@ -1,0 +1,9 @@
+dependencies:
+- name: cs-k8s-infra
+  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+  version: 1.99.0
+- name: shared-templates
+  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+  version: 1.0.0
+digest: sha256:d43a58f19f503a480241c07c8af18ac393f18d48a0d2ff04448d29a53ae2eb67
+generated: "2024-08-14T15:29:34.913284989+03:00"

@@ -1,13 +1,13 @@
-HELM_REGISTRY_PLACEHOLDER: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+HELM_REGISTRY_PLACEHOLDER: 571789434150.dkr.ecr.us-east-2.amazonaws.com
 apiVersion: v1
 appVersion: '1.0'
 dependencies:
-- name: cs-adminapp-be
+- name: cs-k8s-infra
   repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
-  version: 1.284.0
+  version: 1.99.0
 - name: shared-templates
   repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
   version: 1.0.0
-description: bp-adminapp-be
-name: bp-adminapp-be
+description: cs-k8s-infra-cdf
+name: cs-k8s-infra-cdf
 version: 13.09.04

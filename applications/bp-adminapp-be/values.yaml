@@ -1,8 +1,5 @@
-SITE_HEALTH_STORAGE_PLACEHOLDER: &SITE_HEALTH_STORAGE_PLACEHOLDER gp3
-chartsetConfigurationName: conf-national-nifi.yaml
-cs-adminapp-be:
-  grafana-helm-chart:
-    persistence:
-      storageClassName: local-storage
 shared-templates:
+  add_blueprints: false
   save_blueprint: true
+  wait_for_ace_orchestrator_on_post: true
+
