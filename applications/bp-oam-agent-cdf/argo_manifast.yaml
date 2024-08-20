@@ -4,8 +4,8 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: bp-oam-agent
-  name: bp-oam-agent
+    name: bp-oam-agent-cdf
+  name: bp-oam-agent-cdf
   namespace: argocd
 spec:
   destination:
