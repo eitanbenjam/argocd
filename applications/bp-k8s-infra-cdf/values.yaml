@@ -3,7 +3,7 @@ cs-k8s-infra:
   maveriq-dns-chart:
     enabled: false
   multus-chart:
-    enabled: false
+    enabled: true
   persistence-volume-provisioner-chart:
     enabled: false
   radcom-crds-chart:
