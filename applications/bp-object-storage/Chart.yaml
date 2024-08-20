@@ -1,0 +1,13 @@
+HELM_REGISTRY_PLACEHOLDER: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v1
+appVersion: '1.0'
+dependencies:
+- name: cs-object-storage
+  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+  version: 1.49.0
+- name: shared-templates
+  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+  version: 1.0.0
+description: bp-object-storage
+name: bp-object-storage
+version: 13.09.04
