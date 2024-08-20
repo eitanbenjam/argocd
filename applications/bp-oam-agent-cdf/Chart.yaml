@@ -1,0 +1,13 @@
+HELM_REGISTRY_PLACEHOLDER: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v1
+appVersion: '1.0'
+dependencies:
+- name: cs-oam-agent
+  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+  version: 1.1001.0
+- name: shared-templates
+  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+  version: 1.0.0
+description: cs-oam-agent-cdf
+name: cs-oam-agent-cdf
+version: 13.09.04
