@@ -12,7 +12,7 @@ def read_text_file(file_path):
 
 
 
-def write_to_yaml_file(file_path, parsed_yaml):
+def write_to_yaml_file(file_path, parsed_yaml, argo_values_general_data):
     anchor_keys = [ k for k in parsed_yaml.keys() if k.endswith("_PLACEHOLDER")]
     anchor_data = {}
     for anchor in anchor_keys: 
@@ -21,9 +21,11 @@ def write_to_yaml_file(file_path, parsed_yaml):
     file_lines=filestr.splitlines()
     output=[]
     for line in file_lines:
+
         for anchor_key, anchor_value in anchor_data.items():
+            anchor_key_general_name = anchor_key.split("_PLACEHOLDER")[0]
             if line.startswith(anchor):
-                output.append(f"{anchor_key}: &{anchor_key} {anchor_value}")
+                output.append(f"{anchor_key}: &{anchor_key} {argo_values_general_data[anchor_key_general_name]}")
                 break
             elif anchor_value in line:
                 output.append(line.replace(anchor_value, f"*{anchor_key}"))
@@ -122,7 +124,7 @@ def main(script_args):
                             
 
                             destination_file_name = os.path.join(script_args.git_folder,git_blueprint_folder, f"{chart_set_values_file_name}.yaml")
-                            write_to_yaml_file(destination_file_name, bp_data)
+                            write_to_yaml_file(destination_file_name, bp_data, argo_values_general_data)
                             bp_argo_data['spec']['sources'][0]['helm']['valueFiles'] = [f'blueprint_value/{chart_set_values_file_name}.yaml','../general/values.yaml' ,'values.yaml']
                             git_msg.append(f"git add {destination_file_name}")
                     #Version
@@ -135,7 +137,7 @@ def main(script_args):
                 
                 #print (f"Setting blueprint {bp_name} to version:{bp_version}")
                 bp_chart_data['version'] = bp_version
-                write_to_yaml_file(bp_chart_file, bp_chart_data)
+                write_to_yaml_file(bp_chart_file, bp_chart_data, argo_values_general_data)
             except FileNotFoundError:
                 print (f"cant open Cahrt.yaml {bp_name}")
 
