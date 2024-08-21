@@ -1,32 +1,27 @@
-
-
 ace-cd-chart:
-  tag: 1.120.0
-  replicas: 1   # for deployment
-  pullPolicy: Always
-  env_id: radcom
-  source_control: "configmap"  # can be s3:// , configmap, http:// , file://  
-  srp_ip: None
-  ansible_check: yes
-  kuberiq_type: kuberiq
-  kuberiq_cluster_name: Kuberiq_reg
-  site_type: national # cdf
-
-
-  resources:
-    limits:
-      cpu: '500m'
-      memory: '512M'
-
+  ansible_check: false
   cloud:
-    type: local
-    service_account_name: cicd-cluster-eks-role
+    aws_extra_params:
+      arn_role: arn:aws:iam::XXXXXXX:role:radcom/-eks-role
     robin_extra_params:
       robin_server_ip: 2001:1:2:3::4
-      robin_server_username: admin
       robin_server_password: Radmin1
-    aws_extra_params:
-      arn_role: "arn:aws:iam::XXXXXXX:role:radcom/-eks-role"
+      robin_server_username: admin
+    service_account_name: cicd-cluster-eks-role
+    type: local
+  env_id: radcom
   image:
-    tag: argo
     helm_repository_tag: latest
+    tag: argo
+  kuberiq_cluster_name: Kuberiq_reg
+  kuberiq_type: kuberiq
+  pullPolicy: Always
+  replicas: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512M
+  site_type: national
+  source_control: configmap
+  srp_ip: None
+  tag: 1.120.0

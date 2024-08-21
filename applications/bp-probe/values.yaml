@@ -1,52 +1,46 @@
 CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argocdRadcomBEALB-2065376002.us-east-2.elb.amazonaws.com
 SITE_PLACEHOLDER: &SITE_PLACEHOLDER telaviv
-shared-templates:
-  add_blueprints: false
-  save_blueprint: true
-  wait_for_ace_orchestrator: true
-
-
-
 cs-probe:
   probe-core-ms-chart:
     conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
     configMap:
-      cdfGroup: ''
-      versionNumber: ''
-      storageClassName: ''
-      interfaceNames: ''
-      useNetworkAttachmentDefinition: 'yes'
-      siteName: *SITE_PLACEHOLDER
-      defaultInterfacePref: AWS_RADCOM_DEFAULT
-      packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
-      packetInternalInterfacePref: AWS_RADCOM_PACKET_INTERNAL
-      oamDirectInterfacePref: AWS_RADCOM_OAM_DIRECT
       cdfControlInterfacePref: AWS_RADCOM_CDF_CONTROL
-      trafficDataInterfacePref: AWS_RADCOM_TRAFFIC_DATA
+      cdfGroup: ''
+      defaultInterfacePref: AWS_RADCOM_DEFAULT
+      interfaceNames: ''
       nfManagerInterfacePref: AWS_RADCOM_NF_MANAGER
-      qrouterIp: XXXXXXXXXXXXXX
+      oamDirectInterfacePref: AWS_RADCOM_OAM_DIRECT
+      packetInternalInterfacePref: AWS_RADCOM_PACKET_INTERNAL
+      packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
       qrouterIp: XXXXXXXXXXXXXXX
+      siteName: *SITE_PLACEHOLDER
+      storageClassName: ''
+      trafficDataInterfacePref: AWS_RADCOM_TRAFFIC_DATA
+      useNetworkAttachmentDefinition: 'yes'
+      versionNumber: ''
     deployments:
       probecoremsDeployment:
-        podAnnotations:
-          "k8s.v1.cni.cncf.io/networks": dpdk-net-internal-probe-$BLUEPRINT_PROBE_ID
         containers:
           probecoremsContainer:
             env:
-              AWS_RADCOM_DEFAULT_INTF_NAMES: eth0
-              AWS_RADCOM_PACKET_INTERNAL_INTF_NAMES: eth1
-              AWS_RADCOM_OAM_DIRECT_INTF_NAMES: eth0
               AWS_RADCOM_CDF_CONTROL_INTF_NAMES: eth1
-              AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
+              AWS_RADCOM_DEFAULT_INTF_NAMES: eth0
               AWS_RADCOM_NF_MANAGER_INTF_NAMES: eth0
+              AWS_RADCOM_OAM_DIRECT_INTF_NAMES: eth0
+              AWS_RADCOM_PACKET_INTERNAL_INTF_NAMES: eth1
+              AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
+        podAnnotations:
+          k8s.v1.cni.cncf.io/networks: dpdk-net-internal-probe-$BLUEPRINT_PROBE_ID
     resources:
-      requests:
-        memory: 8Gi
-        hugepages1Gi: 1Gi
-        cpu: 6000m
       limit:
-        memory: 8Gi
-        hugepages1Gi: 1Gi
         cpu: 6000m
-        
-
+        hugepages1Gi: 1Gi
+        memory: 8Gi
+      requests:
+        cpu: 6000m
+        hugepages1Gi: 1Gi
+        memory: 8Gi
+shared-templates:
+  add_blueprints: false
+  save_blueprint: true
+  wait_for_ace_orchestrator: true

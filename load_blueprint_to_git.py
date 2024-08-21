@@ -12,31 +12,59 @@ def read_text_file(file_path):
 
 
 
-def write_to_yaml_file(file_path, parsed_yaml, argo_values_general_data):
+def write_to_yaml_file(file_path, parsed_yaml, argo_values_general_data, debug=False):
+    def update_line_with_value(line, used_anchors_values):
+        for value in used_anchors_values:
+            line = line.replace(f" {value['anchor_value']}", f" *{value['anchor_name']}_PLACEHOLDER")
+        return line
     anchor_keys = [ k for k in parsed_yaml.keys() if k.endswith("_PLACEHOLDER")]
-    anchor_data = {}
-    for anchor in anchor_keys: 
-       anchor_data[anchor] = parsed_yaml[anchor] 
-    filestr=yaml.dump(parsed_yaml)
-    file_lines=filestr.splitlines()
-    output=[]
-    for line in file_lines:
-
-        for anchor_key, anchor_value in anchor_data.items():
-            anchor_key_general_name = anchor_key.split("_PLACEHOLDER")[0]
-            if line.startswith(anchor):
-                output.append(f"{anchor_key}: &{anchor_key} {argo_values_general_data[anchor_key_general_name]}")
-                break
-            elif anchor_value in line:
-                output.append(line.replace(anchor_value, f"*{anchor_key}"))
-                break
-            else:
-                output.append(line)
+    if len(anchor_keys) > 0:
         
-    #import pdb;pdb.set_trace()
-    f = open(file_path, "w")
-    f.write("\n".join(output))
-    f.close()
+        anchor_data = {}
+        used_anchors_values = []
+        for anchor in anchor_keys: 
+            anchor_data[anchor] = parsed_yaml[anchor] 
+            filestr=yaml.dump(parsed_yaml)
+            file_lines=filestr.splitlines()
+            output=[]
+            for line in file_lines:
+                anchor_key = line.split(":")[0]
+                if anchor_key in anchor_keys:
+                    anchor_key_general_name = anchor_key.split("_PLACEHOLDER")[0]
+                    output.append(f"{anchor_key}: &{anchor_key} {argo_values_general_data[anchor_key_general_name]}")
+                    used_anchors_values.append({"anchor_name": anchor_key_general_name, "anchor_value": argo_values_general_data[anchor_key_general_name]})
+                else:
+                    output.append(update_line_with_value(line, used_anchors_values))
+                #print (f"line is {line}, output is:")
+                #print (f"{output}")            
+
+
+
+                #for anchor_key, anchor_value in anchor_data.items():
+                #    anchor_key_general_name = anchor_key.split("_PLACEHOLDER")[0]
+                #    if debug:
+                #        import pdb;pdb.set_trace()
+                #    if line.startswith(f"{anchor}"):
+                #        output.append(f"{anchor_key}: &{anchor_key} {argo_values_general_data[anchor_key_general_name]}")
+                #        break
+                #    elif anchor_value in line:
+                #        output.append(line.replace(anchor_value, f"*{anchor_key}"))
+                #        break
+                #    else:
+                #        output.append(line)
+                
+        print(f"wring file {file_path}")
+        if debug:
+            import pdb;pdb.set_trace()
+        f = open(file_path, "w")
+        file_output = "\n".join(output)
+        #for value in used_anchors_values:
+        #    file_output.replace(f" {value['anchor_value']} ", f" {value['anchor_name']} ")
+
+        f.write("\n".join(output))
+        f.close()
+    else:
+        write_to_yaml_file_regular(file_path, parsed_yaml)
     
 
 
@@ -82,6 +110,11 @@ def main(script_args):
         bp_name = bp['blueprintName']
         git_folder_name = os.path.join(script_args.git_folder, "applications", bp_type)
         bp_argo_file = os.path.join(script_args.git_folder, "applications", bp_type, "argo_manifast.yaml")
+        bp_helm_file = os.path.join(script_args.git_folder, "applications", bp_type, "values.yaml")
+        if os.path.exists(bp_helm_file):
+            bp_helm_file_data = read_yaml_file(bp_helm_file)
+            write_to_yaml_file(bp_helm_file, bp_helm_file_data, argo_values_general_data, False)
+        
         print (f"**** Start working on blueprint {bp_name}, bp_type: {bp_type} ***")
         
         
@@ -149,8 +182,8 @@ def main(script_args):
             print (f"blueprint {bp_type} not exist in git, skipping , {git_folder_name}")   
         print (f"Saving argo_manifast to {bp_argo_file}")
         write_to_yaml_file_regular(bp_argo_file, bp_argo_data)
-        print ("GIT CMDS:")
-        print ("\n".join(git_msg))
+    print ("GIT CMDS:")
+    print ("\n".join(git_msg))
          
             
 if __name__ == "__main__":
