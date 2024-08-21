@@ -68,7 +68,7 @@ def write_to_yaml_file_regular(file_path, parsed_yaml):
 
 def main(script_args):
 
-  
+    git_msg = []
     blueprint_json = read_yaml_file(script_args.blueprints_json)
     argo_values_general_data = read_yaml_file(os.path.join(script_args.git_folder, "applications", "general", "values.yaml"))
     argo_git = argo_values_general_data['GIT']
@@ -103,23 +103,28 @@ def main(script_args):
                         
                         print (f"will copy file {chart_set_values_file_name} to {git_folder_name}")
                         git_blueprint_folder = os.path.join(git_folder_name, "blueprint_value")
-                        
                         if not os.path.exists(git_blueprint_folder):
                             os.mkdir(git_blueprint_folder)
                         chart_set_values_file=os.path.join(script_args.blueprints_folder, bp_type,"configuration",f"{chart_set_values_file_name}.yaml")
                         bp_data = read_yaml_file(chart_set_values_file)
-                        try:
-                            global_bp_data = bp_data['global']
-                            del bp_data['global']
-                        except KeyError:
-                            global_bp_data = None
-                        bp_data = { f'{cs_name}': bp_data }
-                        if global_bp_data:
-                            bp_data['global'] = global_bp_data
+                        if bp_data:
+                            try:
+                                global_bp_data = bp_data['global']
+                                del bp_data['global']
+                            except KeyError:
+                                global_bp_data = None
+                            except TypeError:
+                                import pdb;pdb.set_trace()
+                            bp_data = { f'{cs_name}': bp_data }
+                            if global_bp_data:
+                                bp_data['global'] = global_bp_data
 
-                        
-                        write_to_yaml_file(os.path.join(script_args.git_folder,git_blueprint_folder, f"{chart_set_values_file_name}.yaml"), bp_data)
-                        bp_argo_data['spec']['sources'][0]['helm']['valueFiles'] = [f'blueprint_value/{chart_set_values_file_name}.yaml','../general/values.yaml' ,'values.yaml']
+                            
+
+                            destination_file_name = os.path.join(script_args.git_folder,git_blueprint_folder, f"{chart_set_values_file_name}.yaml")
+                            write_to_yaml_file(destination_file_name, bp_data)
+                            bp_argo_data['spec']['sources'][0]['helm']['valueFiles'] = [f'blueprint_value/{chart_set_values_file_name}.yaml','../general/values.yaml' ,'values.yaml']
+                            git_msg.append(f"git add {destination_file_name}")
                     #Version
                     
                     for cs_dep in bp_chart_data['dependencies']:
@@ -142,7 +147,8 @@ def main(script_args):
             print (f"blueprint {bp_type} not exist in git, skipping , {git_folder_name}")   
         print (f"Saving argo_manifast to {bp_argo_file}")
         write_to_yaml_file_regular(bp_argo_file, bp_argo_data)
-
+        print ("GIT CMDS:")
+        print ("\n".join(git_msg))
          
             
 if __name__ == "__main__":
