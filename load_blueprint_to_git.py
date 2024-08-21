@@ -77,13 +77,24 @@ def main(script_args):
 
   
     blueprint_json = read_yaml_file(script_args.blueprints_json)
-    #argo_values_general_data = read_yaml_file(os.path.join(script_args.git_folder, "applications", "general", "values.yaml"))
-    
+    argo_values_general_data = read_yaml_file(os.path.join(script_args.git_folder, "applications", "general", "values.yaml"))
+    argo_git = argo_values_general_data['GIT']
+    argo_branch = argo_values_general_data['GIT_BRANCH']
+
     for bp in blueprint_json:
         bp_type = bp['blueprintType']
         bp_version = ".".join([bp['version'].split(".")[0],bp['version'].split(".")[1],bp['version'].split(".")[-1]])
         bp_name = bp['blueprintName']
         git_folder_name = os.path.join(script_args.git_folder, "applications", bp_type)
+        bp_argo_file = os.path.join(script_args.git_folder, "applications", bp_type, "argo_manifast.yaml")
+        try:
+            bp_argo_data = read_yaml_file(bp_argo_file)
+        except FileNotFoundError:
+            print (f"No manifast for {bp_type}")
+            break
+        bp_argo_data['spec']['sources'][0]['repoURL'] = argo_git
+        bp_argo_data['spec']['sources'][0]['targetRevision'] = argo_branch
+        #import pdb;pdb.set_trace()
         #****  Setting values.yaml placeholder
         #try:
         #    argo_values_data = read_yaml_file(os.path.join(script_args.git_folder, "applications", bp_type, "values.yaml"))
@@ -114,8 +125,7 @@ def main(script_args):
                     cs_name = chartset['chartsetName']
                     chart_set_values_file_name = chartset['chartsetConfigurationName']
                     if chart_set_values_file_name != "":
-                        bp_argo_file = os.path.join(script_args.git_folder, "applications", bp_type, "argo_manifast.yaml")
-                        bp_argo_data = read_yaml_file(bp_argo_file)
+                        
                         
                         print (f"will copy file {chart_set_values_file_name} to {git_folder_name}")
                         git_blueprint_folder = os.path.join(git_folder_name, "blueprint_value")
@@ -141,8 +151,7 @@ def main(script_args):
                         bp_argo_data['spec']['sources'][0]['helm']['valueFiles'] = [f'blueprint_value/{chart_set_values_file_name}.yaml','../general/values.yaml' ,'values.yaml']
                         
 
-                        print (f"Saving argo_manifast to {bp_argo_file}")
-                        write_to_yaml_file_regular(bp_argo_file, bp_argo_data)
+                        
                         
                         #argo_values_data = read_yaml_file(os.path.join(script_args.git_folder, "applications", bp_type, "values.yaml"))
                         #argo_values_data['chartsetConfigurationName'] = f"{chart_set_values_file_name}.yaml"
@@ -169,7 +178,8 @@ def main(script_args):
             if not os.path.exists(git_folder_name):
                 os.mkdir(git_folder_name)
             print (f"blueprint {bp_type} not exist in git, skipping , {git_folder_name}")   
-
+        print (f"Saving argo_manifast to {bp_argo_file}")
+        write_to_yaml_file_regular(bp_argo_file, bp_argo_data)
 
             #import pdb;pdb.set_trace()
     #for root, dirs, files in os.walk(script_args.blueprints_folder, topdown=False):
