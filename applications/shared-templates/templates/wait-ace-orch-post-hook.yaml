@@ -26,8 +26,5 @@ spec:
         command: ["bash", "ps_tools/argocd/wait_for_ace_orch.sh"]
         env:
         - name: RADCOM_CONDUCTOR_IP
-          valueFrom:
-            configMapKeyRef:
-              name: topology-config-map
-              key: conductor_ip
+          value: "{{ .Values.global.conductorVip }}"
 {{ end }}
