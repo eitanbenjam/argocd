@@ -11,10 +11,14 @@ CONDUCTOR_VIP: &CONDUCTOR_VIP internal-argocdRadcomBEALB-2065376002.us-east-2.el
 VERSION: &VERSION 13.09.00.000.04
 CLOUD: &CLOUD aws
 GIT: https://github.com/eitanbenjam/argocd
-GIT_BRANCH: BRANCH
+GIT_BRANCH: main
 shared-templates:
   ace_cd_tag: argo
 
+
+
+
+###############################################
 repository: *DOCKER_REGISTRY
 global:
   namespace: *NAMESPACE

@@ -23,7 +23,7 @@ spec:
     path: applications/bp-applications
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
-    targetRevision: BRANCH
+    targetRevision: main
   syncPolicy:
     automated:
       allowEmpty: false
