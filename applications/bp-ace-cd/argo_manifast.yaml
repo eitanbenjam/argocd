@@ -18,7 +18,7 @@ spec:
   sources:
     - repoURL: https://github.com/eitanbenjam/argocd # repoURL: 571789434150.dkr.ecr.us-east-2.amazonaws.com  # Can point to either a Helm chart repo or a git repo.
       targetRevision: main  # For Helm, this refers to the chart version.
-      path: applications/external-orch-chart # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
+      path: applications/bp-ace-cd # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
       ref: my-repo  # For Helm, acts as a reference to this source for fetching values files from this source. Has no meaning when under `source` field
 
 

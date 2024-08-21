@@ -16,25 +16,50 @@ def read_yaml_file2(file_path):
     yaml = ruamel.yaml.YAML()
 
     with open(file_path) as ifp:
-        data = yaml.load(ifp)
+        data = yaml.load_safe(ifp)
     return data
 
-def write_to_yaml_file(file_path, parsed_yaml):
-    with open('config.yaml', 'w') as ofp:
-        yaml.dump(parsed_yaml, ofp)
+def write_to_yaml_file_with_alias(file_path, parsed_yaml):
+    anchor_keys = [ k for k in parsed_yaml.keys() if k.endswith("_PLACEHOLDER")]
+    anchor_data = {}
+    for anchor in anchor_keys: 
+       anchor_data[anchor] = parsed_yaml[anchor] 
+    filestr=yaml.dump(parsed_yaml)
+    file_lines=filestr.splitlines()
+    output=[]
+    for line in file_lines:
+        print (f"line is:{line}")
+        #import pdb;pdb.set_trace()
+        for anchor_key, anchor_value in anchor_data.items():
+            if line.startswith(anchor):
+                output.append(f"{anchor_key}: &{anchor_key} {anchor_value}")
+                break
+            elif anchor_value in line:
+                output.append(line.replace(anchor_value, f"*{anchor_key}"))
+                break
+            else:
+                output.append(line)
+        
+    #import pdb;pdb.set_trace()
+    f = open(file_path, "a")
+    f.write("\n".join(output))
+    f.close()
+    
+
+
 
 
 
 def read_yaml_file(file_path):
     with open(file_path, "r") as stream:
         try:
-            return yaml.load(stream)
+            return yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             print("Cant load yaml file to %s" % file_path)
             print(exc)
             return None
 
-def write_to_yaml_file(file_path, parsed_yaml):
+def write_to_yaml_file2(file_path, parsed_yaml):
     """
     This function creates new yaml file
     :param file_path: The path to the yaml file
@@ -44,13 +69,17 @@ def write_to_yaml_file(file_path, parsed_yaml):
     with open(file_path, 'w') as yamlFile:
         try:
             noalias_dumper = yaml.dumper.SafeDumper
-            noalias_dumper.ignore_aliases = lambda self, data: True
+            #noalias_dumper.ignore_aliases = lambda self, data: True
             yamlFile.write(yaml.dump(parsed_yaml, default_flow_style=False, Dumper=noalias_dumper))
         except yaml.YAMLError as exc:
             print(exc)
 
 
 def main(script_args):
+
+    test = read_yaml_file("Chart.yaml")
+    write_to_yaml_file_with_alias("Chart2.yaml", test)
+    sys.exit(0)
 
     blueprint_json = read_yaml_file(script_args.blueprints_json)
     #argo_values_general_data = read_yaml_file(os.path.join(script_args.git_folder, "applications", "general", "values.yaml"))

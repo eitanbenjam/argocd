@@ -1,4 +1,6 @@
 DOCKER_REGISTRY_PLACEHOLDER: &DOCKER_REGISTRY_PLACEHOLDER 571789434150.dkr.ecr.us-east-2.amazonaws.com
+CONDUCTOR_VIP: &CONDUCTOR_VIP internal-argocdRadcomBEALB-2065376002.us-east-2.elb.amazonaws.com
+SITE: &SITE telaviv
 shared-templates:
   add_blueprints: false
   save_blueprint: true
@@ -8,14 +10,14 @@ shared-templates:
 
 cs-probe:
   probe-core-ms-chart:
-    conductorIp: X.Y.X.X
+    conductorIp: *CONDUCTOR_VIP
     configMap:
       cdfGroup: ''
       versionNumber: ''
       storageClassName: ''
       interfaceNames: ''
       useNetworkAttachmentDefinition: 'yes'
-      siteName: 'haifa'
+      siteName: *SITE
       defaultInterfacePref: AWS_RADCOM_DEFAULT
       packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
       packetInternalInterfacePref: AWS_RADCOM_PACKET_INTERNAL

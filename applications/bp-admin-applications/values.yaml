@@ -1,3 +1,5 @@
+SITE_GENERAL_STORAGE: &SITE_GENERAL_STORAGE gp3
+
 shared-templates:
   add_blueprints: false
   save_blueprint: true
@@ -7,7 +9,7 @@ shared-templates:
 cs-admin-applications:
   grafana-helm-chart:
     persistence:
-      storageClass: XXX
-      storageClassName: XXX
+      storageClass: *SITE_GENERAL_STORAGE
+      storageClassName: *SITE_GENERAL_STORAGE
 
 

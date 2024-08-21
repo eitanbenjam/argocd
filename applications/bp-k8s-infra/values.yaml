@@ -1,4 +1,3 @@
-DOCKER_REGISTRY_PLACEHOLDER: &DOCKER_REGISTRY_PLACEHOLDER 571789434150.dkr.ecr.us-east-2.amazonaws.com
 cs-k8s-infra:
   maveriq-dns-chart:
     enabled: false
