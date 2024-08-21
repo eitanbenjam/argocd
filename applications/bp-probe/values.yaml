@@ -1,6 +1,5 @@
-DOCKER_REGISTRY_PLACEHOLDER: &DOCKER_REGISTRY_PLACEHOLDER 571789434150.dkr.ecr.us-east-2.amazonaws.com
-CONDUCTOR_VIP: &CONDUCTOR_VIP internal-argocdRadcomBEALB-2065376002.us-east-2.elb.amazonaws.com
-SITE: &SITE telaviv
+CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argocdRadcomBEALB-2065376002.us-east-2.elb.amazonaws.com
+SITE_PLACEHOLDER: &SITE_PLACEHOLDER telaviv
 shared-templates:
   add_blueprints: false
   save_blueprint: true
@@ -10,14 +9,14 @@ shared-templates:
 
 cs-probe:
   probe-core-ms-chart:
-    conductorIp: *CONDUCTOR_VIP
+    conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
     configMap:
       cdfGroup: ''
       versionNumber: ''
       storageClassName: ''
       interfaceNames: ''
       useNetworkAttachmentDefinition: 'yes'
-      siteName: *SITE
+      siteName: *SITE_PLACEHOLDER
       defaultInterfacePref: AWS_RADCOM_DEFAULT
       packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
       packetInternalInterfacePref: AWS_RADCOM_PACKET_INTERNAL
