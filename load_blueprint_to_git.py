@@ -57,7 +57,7 @@ def read_yaml_file(file_path):
             print(exc)
             return None
 
-def write_to_yaml_file2(file_path, parsed_yaml):
+def write_to_yaml_file_regular(file_path, parsed_yaml):
     """
     This function creates new yaml file
     :param file_path: The path to the yaml file
@@ -67,7 +67,7 @@ def write_to_yaml_file2(file_path, parsed_yaml):
     with open(file_path, 'w') as yamlFile:
         try:
             noalias_dumper = yaml.dumper.SafeDumper
-            #noalias_dumper.ignore_aliases = lambda self, data: True
+            noalias_dumper.ignore_aliases = lambda self, data: True
             yamlFile.write(yaml.dump(parsed_yaml, default_flow_style=False, Dumper=noalias_dumper))
         except yaml.YAMLError as exc:
             print(exc)
@@ -142,7 +142,7 @@ def main(script_args):
                         
 
                         print (f"Saving argo_manifast to {bp_argo_file}")
-                        write_to_yaml_file(bp_argo_file, bp_argo_data)
+                        write_to_yaml_file_regular(bp_argo_file, bp_argo_data)
                         
                         #argo_values_data = read_yaml_file(os.path.join(script_args.git_folder, "applications", bp_type, "values.yaml"))
                         #argo_values_data['chartsetConfigurationName'] = f"{chart_set_values_file_name}.yaml"
