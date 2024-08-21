@@ -1,5 +1,4 @@
 {{- if .Values.wait_for_ace_orchestrator }}
-{{- if  or ( .Values.save_blueprint) (.Values.add_blueprints) }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -31,6 +30,5 @@ spec:
             configMapKeyRef:
               name: "topology-config-map"
               key: conductor_ip
-{{ end }}
 {{ end }}
 

@@ -1,7 +1,7 @@
 global:
   docker_registry: localhost:5000
   conductorVip: 1.2.3.4
-add_blueprint: true
+add_blueprint: false
 save_blueprint: true
 wait_for_ace_orchestrator: true
 wait_for_ace_orchestrator_on_post: false
