@@ -19,7 +19,7 @@ def read_yaml_file2(file_path):
         data = yaml.load_safe(ifp)
     return data
 
-def write_to_yaml_file_with_alias(file_path, parsed_yaml):
+def write_to_yaml_file(file_path, parsed_yaml):
     anchor_keys = [ k for k in parsed_yaml.keys() if k.endswith("_PLACEHOLDER")]
     anchor_data = {}
     for anchor in anchor_keys: 
@@ -28,8 +28,6 @@ def write_to_yaml_file_with_alias(file_path, parsed_yaml):
     file_lines=filestr.splitlines()
     output=[]
     for line in file_lines:
-        print (f"line is:{line}")
-        #import pdb;pdb.set_trace()
         for anchor_key, anchor_value in anchor_data.items():
             if line.startswith(anchor):
                 output.append(f"{anchor_key}: &{anchor_key} {anchor_value}")
@@ -41,7 +39,7 @@ def write_to_yaml_file_with_alias(file_path, parsed_yaml):
                 output.append(line)
         
     #import pdb;pdb.set_trace()
-    f = open(file_path, "a")
+    f = open(file_path, "w")
     f.write("\n".join(output))
     f.close()
     
@@ -77,10 +75,7 @@ def write_to_yaml_file2(file_path, parsed_yaml):
 
 def main(script_args):
 
-    test = read_yaml_file("Chart.yaml")
-    write_to_yaml_file_with_alias("Chart2.yaml", test)
-    sys.exit(0)
-
+  
     blueprint_json = read_yaml_file(script_args.blueprints_json)
     #argo_values_general_data = read_yaml_file(os.path.join(script_args.git_folder, "applications", "general", "values.yaml"))
     
