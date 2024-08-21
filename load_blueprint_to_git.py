@@ -15,7 +15,11 @@ def read_text_file(file_path):
 def write_to_yaml_file(file_path, parsed_yaml, argo_values_general_data, debug=False):
     def update_line_with_value(line, used_anchors_values):
         for value in used_anchors_values:
-            line = line.replace(f" {value['anchor_value']}", f" *{value['anchor_name']}_PLACEHOLDER")
+            #print (line)
+            #import pdb;pdb.set_trace()
+            #if line.startswith("      siteName"):
+            #    import pdb;pdb.set_trace()
+            line = line.replace(f" {value['org_anchor_value']}", f" *{value['anchor_name']}_PLACEHOLDER")
         return line
     anchor_keys = [ k for k in parsed_yaml.keys() if k.endswith("_PLACEHOLDER")]
     if len(anchor_keys) > 0:
@@ -32,7 +36,7 @@ def write_to_yaml_file(file_path, parsed_yaml, argo_values_general_data, debug=F
                 if anchor_key in anchor_keys:
                     anchor_key_general_name = anchor_key.split("_PLACEHOLDER")[0]
                     output.append(f"{anchor_key}: &{anchor_key} {argo_values_general_data[anchor_key_general_name]}")
-                    used_anchors_values.append({"anchor_name": anchor_key_general_name, "anchor_value": argo_values_general_data[anchor_key_general_name]})
+                    used_anchors_values.append({"anchor_name": anchor_key_general_name,"org_anchor_value": line.split()[-1], "anchor_value": argo_values_general_data[anchor_key_general_name]})
                 else:
                     output.append(update_line_with_value(line, used_anchors_values))
                 #print (f"line is {line}, output is:")
