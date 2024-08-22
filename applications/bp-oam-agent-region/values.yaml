@@ -31,4 +31,4 @@ cs-oam-agent:
   wait_for_ace_orchestrator: false
 shared-templates:
   save_blueprint: true
-  wait_for_ace_orchestrator: true
+  wait_for_ace_orchestrator: false
