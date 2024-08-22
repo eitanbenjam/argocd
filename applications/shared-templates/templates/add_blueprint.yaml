@@ -29,10 +29,7 @@ spec:
         command: ["bash", "ps_tools/argocd/add_blueprints.sh"]
         env:
         - name: RADCOM_CONDUCTOR_IP
-          valueFrom:
-            configMapKeyRef:
-              name: topology-config-map
-              key: conductor_ip
+          value: "{{ .Values.global.conductorVip }}"
         - name: DEPLOYMENTNAME
           value: {{ .Release.Name }}
         - name: RADCOM_REVISION
