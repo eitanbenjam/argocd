@@ -1,0 +1,34 @@
+CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argocdRadcomBEALB-2065376002.us-east-2.elb.amazonaws.com
+SITE_ELASTIC_STORAGE_PLACEHOLDER: &SITE_ELASTIC_STORAGE_PLACEHOLDER gp3
+SITE_HEALTH_STORAGE_PLACEHOLDER: &SITE_HEALTH_STORAGE_PLACEHOLDER gp3
+cs-oam-agent:
+  auto-discovery-chart:
+    autoDiscovery:
+      condcutorDnsName: *CONDUCTOR_VIP_PLACEHOLDER
+  elasticsearch-chart:
+    data:
+      persistence:
+        storageClass: *SITE_ELASTIC_STORAGE_PLACEHOLDER
+    master:
+      persistence:
+        storageClass: *SITE_ELASTIC_STORAGE_PLACEHOLDER
+  prometheus-operator-chart:
+    alertmanager:
+      alertmanagerSpec:
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: *SITE_ELASTIC_STORAGE_PLACEHOLDER
+    prometheus:
+      prometheusSpec:
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: *SITE_ELASTIC_STORAGE_PLACEHOLDER
+  service-access-config-chart:
+    radcomConfiguration:
+      conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
+  wait_for_ace_orchestrator: false
+shared-templates:
+  save_blueprint: true
+  wait_for_ace_orchestrator: false
