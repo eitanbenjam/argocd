@@ -1,3 +1,8 @@
+SITE_ELASTIC_STORAGE_PLACEHOLDER: &SITE_ELASTIC_STORAGE_PLACEHOLDER gp3
+cs-application-be:
+  qinsight-db-chart:
+    persistence:
+      storageClass: *SITE_ELASTIC_STORAGE_PLACEHOLDER
 shared-templates:
   add_blueprints: false
   save_blueprint: true
