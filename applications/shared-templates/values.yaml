@@ -6,4 +6,5 @@ save_blueprint: true
 wait_for_ace_orchestrator: true
 wait_for_ace_orchestrator_on_post: false
 create_cluster_role: false
+wait_for_event_bus: false
 ace_cd_tag: latest

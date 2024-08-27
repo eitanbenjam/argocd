@@ -32,3 +32,4 @@ cs-oam-agent:
 shared-templates:
   save_blueprint: true
   wait_for_ace_orchestrator: true
+  wait_for_event_bus: true
