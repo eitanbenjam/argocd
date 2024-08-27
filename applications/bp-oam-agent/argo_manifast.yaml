@@ -17,13 +17,14 @@ spec:
   - helm:
       ignoreMissingValueFiles: false
       valueFiles:
+      - blueprint_value/conf-national-oam-agent.yaml
       - ../general/values.yaml
       - values.yaml
       version: v3
     path: applications/bp-oam-agent
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
-    targetRevision: eitan
+    targetRevision: main
   syncPolicy:
     automated:
       allowEmpty: false
