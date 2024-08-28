@@ -1,4 +1,4 @@
-import argparse,os
+import argparse,os, traceback
 import yaml
 import sys
 #import ruamel.yaml
@@ -176,6 +176,7 @@ def main(script_args):
                 bp_chart_data['version'] = bp_version
                 write_to_yaml_file(bp_chart_file, bp_chart_data, argo_values_general_data)
             except FileNotFoundError:
+
                 print (f"cant open Cahrt.yaml {bp_name}")
 
 
