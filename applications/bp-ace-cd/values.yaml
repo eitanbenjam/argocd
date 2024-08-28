@@ -1,5 +1,6 @@
 ace-cd-chart:
   ansible_check: false
+  cronjob_name: service-access-config
   cloud:
     aws_extra_params:
       arn_role: arn:aws:iam::XXXXXXX:role:radcom/-eks-role
