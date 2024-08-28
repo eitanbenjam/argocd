@@ -24,7 +24,7 @@ spec:
     path: applications/bp-oam-agent
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
-    targetRevision: main
+    targetRevision: shai
   syncPolicy:
     automated:
       allowEmpty: false

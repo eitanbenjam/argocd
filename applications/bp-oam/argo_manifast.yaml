@@ -23,7 +23,7 @@ spec:
     path: applications/bp-oam
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
-    targetRevision: main
+    targetRevision: shai
   syncPolicy:
     automated:
       allowEmpty: false
