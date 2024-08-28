@@ -1,6 +1,5 @@
 ace-cd-chart:
   ansible_check: false
-  cronjob_name: service-access-config
   cloud:
     aws_extra_params:
       arn_role: arn:aws:iam::XXXXXXX:role:radcom/-eks-role
@@ -10,6 +9,7 @@ ace-cd-chart:
       robin_server_username: admin
     service_account_name: cicd-cluster-eks-role
     type: local
+  cronjob_name: service-access-config
   env_id: radcom
   image:
     helm_repository_tag: latest

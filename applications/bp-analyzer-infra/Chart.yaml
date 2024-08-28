@@ -4,7 +4,7 @@ appVersion: '1.0'
 dependencies:
 - name: cs-analyzer-infra
   repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.330.5
+  version: 1.327.31
 - name: shared-templates
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.0.0

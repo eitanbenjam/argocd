@@ -4,7 +4,7 @@ appVersion: '1.0'
 dependencies:
 - name: cs-monitoring-tools
   repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.227.11
+  version: 1.227.14
 - name: shared-templates
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.0.0
