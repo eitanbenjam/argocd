@@ -4,8 +4,8 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: bp-oam-agent
-  name: bp-oam-agent
+    name: bp-session-analyzer
+  name: bp-session-analyzer
   namespace: argocd
 spec:
   destination:
@@ -17,11 +17,10 @@ spec:
   - helm:
       ignoreMissingValueFiles: false
       valueFiles:
-      - blueprint_value/conf-national-oam-agent.yaml
       - ../general/values.yaml
       - values.yaml
       version: v3
-    path: applications/bp-oam-agent
+    path: applications/bp-session-analyzer
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
     targetRevision: main

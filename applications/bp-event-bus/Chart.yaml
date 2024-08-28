@@ -7,4 +7,4 @@ dependencies:
   version: 1.44.0
 description: cs-k8s-infra
 name: cs-k8s-infra
-version: 13.09.04
+version: 13.09.00
