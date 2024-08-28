@@ -4,10 +4,10 @@ appVersion: '1.0'
 dependencies:
 - name: cs-application-be
   repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.805.12
+  version: 1.805.0
 - name: shared-templates
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.0.0
 description: bp-application-be
 name: bp-application-be
-version: 13.09.00
+version: 13.09.04
