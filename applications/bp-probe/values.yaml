@@ -31,6 +31,10 @@ cs-probe:
               AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
 #        podAnnotations:
 #          k8s.v1.cni.cncf.io/networks: dpdk-net-internal-probe-$BLUEPRINT_PROBE_ID
+    dataPVC:
+      storageSize: 20Gi
+    configPVC:
+      storageSize: 2Gi
     resources:
       limit:
         cpu: 6000m
