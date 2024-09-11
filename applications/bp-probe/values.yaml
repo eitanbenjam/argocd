@@ -29,8 +29,6 @@ cs-probe:
               AWS_RADCOM_OAM_DIRECT_INTF_NAMES: eth0
               AWS_RADCOM_PACKET_INTERNAL_INTF_NAMES: eth1
               AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
-        podAnnotations:
-          k8s.v1.cni.cncf.io/networks: dpdk-net-internal-probe-$BLUEPRINT_PROBE_ID
     dataPVC:
       storageSize: 20Gi
     configPVC:
