@@ -5,19 +5,19 @@ cs-probe:
     conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
     configMap:
       cdfControlInterfacePref: AWS_RADCOM_CDF_CONTROL
-      cdfGroup: ''
+      cdfGroup: 'group1'
       defaultInterfacePref: AWS_RADCOM_DEFAULT
-      interfaceNames: ''
+      interfaceNames: 'tcp'
       nfManagerInterfacePref: AWS_RADCOM_NF_MANAGER
       oamDirectInterfacePref: AWS_RADCOM_OAM_DIRECT
       packetInternalInterfacePref: AWS_RADCOM_PACKET_INTERNAL
       packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
       qrouterIp: XXXXXXXXXXXXXXX
       siteName: *SITE_PLACEHOLDER
-      storageClassName: ''
+      storageClassName: 'gp2'
       trafficDataInterfacePref: AWS_RADCOM_TRAFFIC_DATA
-      useNetworkAttachmentDefinition: 'yes'
-      versionNumber: ''
+      useNetworkAttachmentDefinition: 'no'
+      versionNumber: &VERSION
     deployments:
       probecoremsDeployment:
         containers:
@@ -29,8 +29,8 @@ cs-probe:
               AWS_RADCOM_OAM_DIRECT_INTF_NAMES: eth0
               AWS_RADCOM_PACKET_INTERNAL_INTF_NAMES: eth1
               AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
-        podAnnotations:
-          k8s.v1.cni.cncf.io/networks: dpdk-net-internal-probe-$BLUEPRINT_PROBE_ID
+#        podAnnotations:
+#          k8s.v1.cni.cncf.io/networks: dpdk-net-internal-probe-$BLUEPRINT_PROBE_ID
     resources:
       limit:
         cpu: 6000m
