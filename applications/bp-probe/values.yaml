@@ -16,7 +16,7 @@ cs-probe:
       packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
       qrouterIp: XXXXXXXXXXXXXXX
       siteName: *SITE_PLACEHOLDER
-      storageClassName: 'gp3'
+      storageClassName: 'gp3-persistent'
       trafficDataInterfacePref: AWS_RADCOM_TRAFFIC_DATA
       useNetworkAttachmentDefinition: 'no'
       versionNumber: *VERSION
