@@ -1,5 +1,7 @@
 CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argocdRadcomBEALB-2065376002.us-east-2.elb.amazonaws.com
 SITE_PLACEHOLDER: &SITE_PLACEHOLDER argotlv
+VERSION: &VERSION 13.09.00.005.00
+
 cs-probe:
   probe-core-ms-chart:
     conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
@@ -14,10 +16,10 @@ cs-probe:
       packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
       qrouterIp: XXXXXXXXXXXXXXX
       siteName: *SITE_PLACEHOLDER
-      storageClassName: 'gp2'
+      storageClassName: 'gp3'
       trafficDataInterfacePref: AWS_RADCOM_TRAFFIC_DATA
       useNetworkAttachmentDefinition: 'no'
-      versionNumber: &VERSION
+      versionNumber: *VERSION
     deployments:
       probecoremsDeployment:
         containers:
