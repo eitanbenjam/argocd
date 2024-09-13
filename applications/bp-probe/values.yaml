@@ -19,7 +19,7 @@ cs-probe:
       storageClassName: 'gp3-persistent'
       trafficDataInterfacePref: AWS_RADCOM_TRAFFIC_DATA
       useNetworkAttachmentDefinition: 'no'
-      versionNumber: "13.09.00.005.00"
+      versionNumber: "13.09.00.000.04"
     deployments:
       probecoremsDeployment:
         containers:
