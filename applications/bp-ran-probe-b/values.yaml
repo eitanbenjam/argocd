@@ -1,7 +1,7 @@
 CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argocdRadcomBEALB-2065376002.us-east-2.elb.amazonaws.com
 SITE_PLACEHOLDER: &SITE_PLACEHOLDER argotlv
 VERSION: 13.09.00.000.04
-bp-ran-probe-b:
+cs-ran:
   ran-core-ms-chart:
     cdrPVC:
       storageSize: 2Gi
