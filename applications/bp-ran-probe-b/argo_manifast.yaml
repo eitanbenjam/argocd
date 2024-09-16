@@ -4,8 +4,8 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: external-orch
-  name: external-orch
+    name: bp-ran-probe-b
+  name: bp-ran-probe-b
   namespace: argocd
 spec:
   destination:
@@ -21,10 +21,10 @@ spec:
       - ../general/values.yaml
       - values.yaml
       version: v3
-    path: applications/bp-ace-cd
+    path: applications/bp-ran-probe-b
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
-    targetRevision: main
+    targetRevision: marian
   syncPolicy:
     automated:
       allowEmpty: false

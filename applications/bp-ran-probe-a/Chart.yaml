@@ -2,12 +2,12 @@ HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://571789434150.dkr.ecr
 apiVersion: v1
 appVersion: '1.0'
 dependencies:
-- name: cs-probe
+- name: cs-ran
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.558.13
 - name: shared-templates
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.0.0
-description: bp-probe
-name: bp-probe
+description: bp-ran-probe-a
+name: bp-ran-probe-a
 version: 13.09.04
