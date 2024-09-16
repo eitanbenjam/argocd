@@ -2,6 +2,9 @@ CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argocdRadcomBEALB
 SITE_PLACEHOLDER: &SITE_PLACEHOLDER argotlv
 VERSION: 13.09.00.000.04
 cs-ran:
+  global:
+    configMap:
+      probeId: '100'
   ran-core-ms-chart:
     cdrPVC:
       storageSize: 2Gi
