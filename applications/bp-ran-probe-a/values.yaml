@@ -15,6 +15,7 @@ cs-ran:
       networkIpMode: ipv4
       packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
       trafficMirrorNetworkGateway: ''
+      siteName: *SITE_PLACEHOLDER
     deployments:
       rancoremsDeployment:
         containers:
@@ -48,6 +49,8 @@ cs-ran:
         type: NodePort
     storagePVC:
       storageSize: 20Gi
+    image:
+      pullPolicy: IfNotPresent
 shared-templates:
   add_blueprints: false
   save_blueprint: true
