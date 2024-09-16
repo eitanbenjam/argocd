@@ -4,8 +4,8 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: bp-ran-probe-b
-  name: bp-ran-probe-b
+    name: bp-ran-probe-a
+  name: bp-ran-probe-a
   namespace: argocd
 spec:
   destination:
