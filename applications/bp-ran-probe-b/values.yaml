@@ -26,6 +26,10 @@ cs-ran:
               AWS_RADCOM_PACKET_INTERNAL_INTF_NAMES: net1
               AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
     resources:
+      requests:
+        cpu: 10000m
+        hugepages1Gi: 1
+        memory: 8Gi
       limits:
         cpu: 10000m
         hugepages1Gi: 1
