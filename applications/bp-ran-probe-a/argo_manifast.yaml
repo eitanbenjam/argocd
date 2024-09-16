@@ -17,6 +17,7 @@ spec:
   - helm:
       ignoreMissingValueFiles: false
       valueFiles:
+      - blueprint_value/conf-ran-a.yaml
       - ../general/values.yaml
       - values.yaml
       version: v3
