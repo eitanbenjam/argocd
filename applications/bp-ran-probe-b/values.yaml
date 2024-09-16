@@ -5,8 +5,6 @@ cs-ran:
   global:
     configMap:
       probeId: '100'
-  image:
-    pullPolicy: IfNotPresent
   ran-core-ms-chart:
     cdrPVC:
       storageSize: 2Gi
