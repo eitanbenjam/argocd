@@ -17,7 +17,7 @@ spec:
   - helm:
       ignoreMissingValueFiles: false
       valueFiles:
-      - blueprint_value/conf-cdf-probe.yaml
+      - blueprint_value/conf-cdf-probe-lb-agent.yaml
       - ../general/values.yaml
       - values.yaml
       version: v3
