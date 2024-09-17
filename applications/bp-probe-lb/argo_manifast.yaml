@@ -4,8 +4,8 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: bp-probe
-  name: bp-probe
+    name: bp-probe-lb
+  name: bp-probe-lb
   namespace: argocd
 spec:
   destination:
@@ -17,14 +17,14 @@ spec:
   - helm:
       ignoreMissingValueFiles: false
       valueFiles:
-      - blueprint_value/conf-cdf-probe.yaml
+      - blueprint_value/conf-cdf-probe-lb.yaml
       - ../general/values.yaml
       - values.yaml
       version: v3
-    path: applications/bp-probe
+    path: applications/bp-probe-lb
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
-    targetRevision: main
+    targetRevision: marian
   syncPolicy:
     automated:
       allowEmpty: false
