@@ -24,7 +24,7 @@ spec:
     path: applications/bp-probe-lb-agent
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
-    targetRevision: main
+    targetRevision: marian
   syncPolicy:
     automated:
       allowEmpty: false
