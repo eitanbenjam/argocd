@@ -4,8 +4,8 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: bp-probe
-  name: bp-probe
+    name: bp-probe-lb-agent
+  name: bp-probe-lb-agent
   namespace: argocd
 spec:
   destination:
@@ -21,7 +21,7 @@ spec:
       - ../general/values.yaml
       - values.yaml
       version: v3
-    path: applications/bp-probe
+    path: applications/bp-probe-lb-agent
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
     targetRevision: main
