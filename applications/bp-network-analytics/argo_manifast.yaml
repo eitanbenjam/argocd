@@ -4,7 +4,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: bp-oam
+    name: bp-network-analytics
   name: bp-network-analytics
   namespace: argocd
 spec:

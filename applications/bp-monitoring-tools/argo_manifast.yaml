@@ -4,7 +4,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: bp-oam
+    name: bp-monitoring-tools
   name: bp-monitoring-tools
   namespace: argocd
 spec:

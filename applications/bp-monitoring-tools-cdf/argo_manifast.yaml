@@ -4,8 +4,8 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: bp-oam
-  name: bp-monitoring-tools
+    name: bp-monitoring-tools-cdf
+  name: bp-monitoring-tools-cdf
   namespace: argocd
 spec:
   destination:
@@ -20,7 +20,7 @@ spec:
       - ../general/values.yaml
       - values.yaml
       version: v3
-    path: applications/bp-monitoring-tools
+    path: applications/bp-monitoring-tools-cdf
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
     targetRevision: marian
