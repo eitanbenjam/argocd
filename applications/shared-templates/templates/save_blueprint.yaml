@@ -24,7 +24,7 @@ spec:
       containers:
       - name: {{ .Release.Name }}-save-blueprint
         image: "{{ .Values.global.docker_registry }}/ace-cd:{{ .Values.ace_cd_tag }}"
-        pullPolicy: Always
+        #pullPolicy: Always
         #command: ["echo","post-install hook"]
         command: ["bash", "ps_tools/argocd/save_blueprint.sh"]
         env:
