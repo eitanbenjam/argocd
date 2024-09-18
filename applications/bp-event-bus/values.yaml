@@ -4,4 +4,4 @@ global:
   eventbusStorageClass: *SITE_EVENT_BUS_STORAGE_PLACEHOLDER
 shared-templates:
   add_blueprint: false
-  save_blueprint: true
+  save_blueprint: false

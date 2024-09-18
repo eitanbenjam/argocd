@@ -30,6 +30,6 @@ cs-oam-agent:
       conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
   wait_for_ace_orchestrator: false
 shared-templates:
-  save_blueprint: true
+  save_blueprint: false
   wait_for_ace_orchestrator: false
   wait_for_event_bus: true
