@@ -1,0 +1,55 @@
+CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argocdRadcomBEALB-2065376002.us-east-2.elb.amazonaws.com
+SITE_PLACEHOLDER: &SITE_PLACEHOLDER argotlv
+VERSION: 13.09.00.000.04
+cs-ran:
+  global:
+    configMap:
+      probeId: '10'
+  ran-core-ms-chart:
+    cdrPVC:
+      storageSize: 2Gi
+    configMap:
+      clusterName: RAN
+      machineType: RAN-probe-a
+      name: ranProbe-a
+      networkIpMode: ipv4
+      packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
+      trafficMirrorNetworkGateway: ''
+      siteName: *SITE_PLACEHOLDER
+    deployments:
+      rancoremsDeployment:
+        containers:
+          rancoremsContainer:
+            envs:
+              AWS_RADCOM_CDF_CONTROL_INTF_NAMES: eth0
+              AWS_RADCOM_DEFAULT_INTF_NAMES: eth0
+              AWS_RADCOM_NF_MANAGER_INTF_NAMES: eth0
+              AWS_RADCOM_OAM_DIRECT_INTF_NAMES: eth0
+              AWS_RADCOM_PACKET_MIRROR_INTF_NAMES: net1
+              AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
+    resources:
+      requests:
+        cpu: 10000m
+        hugepages1Gi: 1
+        memory: 8Gi
+      limits:
+        cpu: 10000m
+        hugepages1Gi: 1
+        memory: 8Gi
+    services:
+      ranprobe-trafficdata:
+        externalTrafficPolicy: Cluster
+        name: ran-srv-trafficdata-{{ .Values.global.configMap.probeId}}
+        ports:
+        - name: trafficdata
+          port: 7004
+          protocol: TCP
+          targetPort: 7004
+        sessionAffinity: None
+        type: NodePort
+    storagePVC:
+      storageSize: 20Gi
+shared-templates:
+  add_blueprints: false
+  save_blueprint: false
+  wait_for_ace_orchestrator: true

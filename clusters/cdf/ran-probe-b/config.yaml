@@ -1,9 +1,9 @@
 application:
-  name: "aws-nginx-ingress"
+  name: "ran-probe-b"
   namespace: "production"
 target:
   targetRevision: "marian"
-  path: "helmcharts/aws-nginx-ingress"
+  path: "helmcharts/ran-probe-b"
 deploy: false
 cluster:
   name: cdf

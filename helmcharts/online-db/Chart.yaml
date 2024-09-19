@@ -1,0 +1,13 @@
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v1
+appVersion: '1.0'
+dependencies:
+- name: cs-online-db
+  repository: *HELM_REGISTRY_PLACEHOLDER
+  version: 1.49.0
+- name: shared-templates
+  repository: *HELM_REGISTRY_PLACEHOLDER
+  version: 1.0.0
+description: online-db
+name: online-db
+version: 13.09.04

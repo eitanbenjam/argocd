@@ -1,9 +1,9 @@
 application:
-  name: "aws-nginx-ingress"
+  name: "probe-lb-agent"
   namespace: "production"
 target:
   targetRevision: "marian"
-  path: "helmcharts/aws-nginx-ingress"
+  path: "helmcharts/probe-lb-agent"
 deploy: false
 cluster:
   name: cdf

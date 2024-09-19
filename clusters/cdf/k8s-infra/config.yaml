@@ -1,9 +1,9 @@
 application:
-  name: "bp-oam-agent-cdf"
+  name: "k8s-infra"
   namespace: "production"
 target:
   targetRevision: "marian"
-  path: "helmcharts/bp-oam-agent-cdf"
+  path: "helmcharts/k8s-infra"
 deploy: true
 cluster:
   name: cdf

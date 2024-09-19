@@ -1,9 +1,9 @@
 application:
-  name: "aws-nginx-ingress"
+  name: "analyzer-infra"
   namespace: "production"
 target:
   targetRevision: "marian"
-  path: "helmcharts/aws-nginx-ingress"
+  path: "helmcharts/analyzer-infra"
 deploy: false
 cluster:
   name: cdf

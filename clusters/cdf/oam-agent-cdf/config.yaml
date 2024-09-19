@@ -1,10 +1,10 @@
 application:
-  name: "aws-nginx-ingress"
+  name: "oam-agent-cdf"
   namespace: "production"
 target:
   targetRevision: "marian"
-  path: "helmcharts/aws-nginx-ingress"
-deploy: false
+  path: "helmcharts/oam-agent-cdf"
+deploy: true
 cluster:
   name: cdf
   adress: "https://kubernetes.default.svc"
