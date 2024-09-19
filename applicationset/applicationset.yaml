@@ -8,7 +8,7 @@ spec:
   goTemplateOptions: ["missingkey=invalid"]
   generators:
     - git:
-        repoURL:  https://github.com/eitanbenjam/argocd.git
+        repoURL:  https://github.com/eitanbenjam/argocd
         revision: marian
         files:
           - path: 'clusters/**/config.yaml'
@@ -31,7 +31,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/eitanbenjam/argocd.git
+        repoURL: https://github.com/eitanbenjam/argocd
         targetRevision: '{{.target.targetRevision}}'
         path: '{{.target.path}}'
         helm:
