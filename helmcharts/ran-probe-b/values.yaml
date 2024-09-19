@@ -60,5 +60,5 @@ cs-ran:
       storageSize: 20Gi
 shared-templates:
   add_blueprints: false
-  save_blueprint: true
+  save_blueprint: false
   wait_for_ace_orchestrator: true
