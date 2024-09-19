@@ -20,6 +20,17 @@ cs-probe:
       trafficDataInterfacePref: AWS_RADCOM_TRAFFIC_DATA
       useNetworkAttachmentDefinition: 'no'
       versionNumber: "13.09.00.000.04"
+      name: cProbe
+      clusterName: "CProbe"
+      machineType: "cProbe"
+      cprobeStandAlone: disable
+      tenant: probe
+      vprobeType: "mix"
+      networkIpMode: "ipv4"
+      prometheusPort: '10090' 
+      prometheusAllPort: '10091'
+      cdfSubType: ''
+      cdfConfigurationName: ''
     deployments:
       probecoremsDeployment:
         containers:
