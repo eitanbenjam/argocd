@@ -1,9 +1,9 @@
 application:
-  name: "infra-cdf"
+  name: "k8s-infra-cdf"
   namespace: "production"
 target:
   targetRevision: "marian"
-  path: "helmcharts/infra-cdf"
+  path: "helmcharts/k8s-infra-cdf"
 deploy: true
 cluster:
   name: cdf
