@@ -48,5 +48,5 @@ cs-probe:
         memory: 8Gi
 shared-templates:
   add_blueprints: false
-  save_blueprint: true
+  save_blueprint: false
   wait_for_ace_orchestrator: false
