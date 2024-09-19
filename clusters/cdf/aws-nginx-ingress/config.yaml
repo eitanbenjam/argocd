@@ -1,0 +1,14 @@
+application:
+  name: "aws-nginx-ingress"
+  namespace: "production"
+  # ignoreDifferences:
+  #   group: ""
+  #   kind: Service
+  #   jqPathExpressions: ".status.loadBalancer.ingress[].ipMode"
+target:
+  targetRevision: "marian"
+  path: "helmcharts/aws-nginx-ingress"
+deploy: false
+cluster:
+  name: cdf
+  adress: "https://kubernetes.default.svc"

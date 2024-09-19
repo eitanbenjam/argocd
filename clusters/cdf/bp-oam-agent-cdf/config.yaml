@@ -1,0 +1,10 @@
+application:
+  name: "bp-oam-agent-cdf"
+  namespace: "production"
+target:
+  targetRevision: "marian"
+  path: "helmcharts/bp-oam-agent-cdf"
+deploy: true
+cluster:
+  name: cdf
+  adress: "https://kubernetes.default.svc"
