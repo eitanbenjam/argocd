@@ -8,6 +8,6 @@ dependencies:
 - name: shared-templates
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.0.0
-description: ran-probe-b
-name: ran-probe-b
+description: bp-ran-probe-b
+name: bp-ran-probe-b
 version: 13.09.04

@@ -8,6 +8,6 @@ dependencies:
 - name: shared-templates
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.0.0
-description: network-analytics
+description: bp-network-analytics
 name: cs-network-analytics
 version: 13.09.04

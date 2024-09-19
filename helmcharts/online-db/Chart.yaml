@@ -8,6 +8,6 @@ dependencies:
 - name: shared-templates
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.0.0
-description: online-db
-name: online-db
+description: bp-online-db
+name: bp-online-db
 version: 13.09.04

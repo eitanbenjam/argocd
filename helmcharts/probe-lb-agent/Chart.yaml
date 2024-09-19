@@ -8,6 +8,6 @@ dependencies:
 - name: shared-templates
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.0.0
-description: probe-lb-agent
-name: probe-lb-agent
+description: bp-probe-lb-agent
+name: bp-probe-lb-agent
 version: 13.09.00
