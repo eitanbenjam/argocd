@@ -5,5 +5,5 @@ cs-application-be:
       storageClass: *SITE_ELASTIC_STORAGE_PLACEHOLDER
 shared-templates:
   add_blueprints: false
-  save_blueprint: true
+  save_blueprint: false
   wait_for_ace_orchestrator_on_post: true

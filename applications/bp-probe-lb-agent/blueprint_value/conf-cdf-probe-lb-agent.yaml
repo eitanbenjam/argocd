@@ -1,0 +1,27 @@
+cs-probe:
+  probe-core-ms-chart:
+    configMap:
+      cdfConfigurationName: ''
+      cdfSubType: ''
+      clusterName: cLBA
+      cprobeStandAlone: disable
+      machineType: cLBA
+      name: clba-values
+      networkIpMode: ipv4
+      prometheusAllPort: '10091'
+      prometheusPort: '10090'
+      tenant: probe
+      vprobeType: mix
+    configPVC:
+      storageSize: 2Gi
+    dataPVC:
+      storageSize: 20Gi
+    deployments:
+      probecoremsDeployment:
+        annotations:
+          k8s.v1.cni.cncf.io/networks: probe-network
+    resources:
+      limits:
+        cpu: 6000m
+        hugepages1Gi: 1
+        memory: 8Gi

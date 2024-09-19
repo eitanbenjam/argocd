@@ -1,0 +1,10 @@
+application:
+  name: "ran-probe-a"
+  namespace: "production"
+target:
+  targetRevision: "marian"
+  path: "helmcharts/ran-probe-a"
+deploy: true
+cluster:
+  name: cdf
+  adress: "https://kubernetes.default.svc"

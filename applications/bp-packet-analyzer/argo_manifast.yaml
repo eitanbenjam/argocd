@@ -23,7 +23,7 @@ spec:
     path: applications/bp-packet-analyzer
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
-    targetRevision: main
+    targetRevision: marian
   syncPolicy:
     automated:
       allowEmpty: false

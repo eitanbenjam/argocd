@@ -17,14 +17,13 @@ spec:
   - helm:
       ignoreMissingValueFiles: false
       valueFiles:
-      - blueprint_value/conf-cdf-probe.yaml
       - ../general/values.yaml
       - values.yaml
       version: v3
     path: applications/bp-probe
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
-    targetRevision: main
+    targetRevision: marian
   syncPolicy:
     automated:
       allowEmpty: false

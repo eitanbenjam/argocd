@@ -4,7 +4,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: bp-oam
+    name: bp-network-analytics
   name: bp-network-analytics
   namespace: argocd
 spec:
@@ -23,7 +23,7 @@ spec:
     path: applications/bp-network-analytics
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
-    targetRevision: main
+    targetRevision: marian
   syncPolicy:
     automated:
       allowEmpty: false
