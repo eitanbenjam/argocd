@@ -26,6 +26,10 @@ spec:
   template:
     metadata:
       name: '{{.application.name}}{{or .application.nameSuffix "" | replace "/" "-"}}'
+      finalizers:
+      - resources-finalizer.argocd.argoproj.io
+      labels:
+        name: '{{.application.name}}{{or .application.nameSuffix "" | replace "/" "-"}}'
     spec:
       project: default
       source:
