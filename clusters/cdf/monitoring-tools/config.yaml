@@ -1,0 +1,10 @@
+application:
+  name: "monitoring-tools"
+  namespace: "production"
+target:
+  targetRevision: "marian"
+  path: "helmcharts/monitoring-tools"
+deploy: false
+cluster:
+  name: cdf
+  adress: "https://kubernetes.default.svc"
