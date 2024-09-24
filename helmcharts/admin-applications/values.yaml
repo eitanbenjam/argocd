@@ -1,0 +1,10 @@
+SITE_GENERAL_STORAGE_PLACEHOLDER: &SITE_GENERAL_STORAGE_PLACEHOLDER gp3
+cs-admin-applications:
+  grafana-helm-chart:
+    persistence:
+      storageClass: *SITE_GENERAL_STORAGE_PLACEHOLDER
+      storageClassName: *SITE_GENERAL_STORAGE_PLACEHOLDER
+shared-templates:
+  add_blueprints: false
+  save_blueprint: false
+  wait_for_ace_orchestrator_on_post: true
