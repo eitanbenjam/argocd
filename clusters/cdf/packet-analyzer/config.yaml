@@ -1,0 +1,10 @@
+application:
+  name: "packet-analyzer "
+  namespace: "production"
+target:
+  targetRevision: "marian"
+  path: "helmcharts/packet-analyzer"
+deploy: true
+cluster:
+  name: cdf
+  adress: "https://kubernetes.default.svc"
