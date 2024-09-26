@@ -8,7 +8,7 @@ cs-monitoring-tools:
   elasticsearch-chart:
     enabled: false
   fluentd-chart:
-    enabled: true
+    enabled: false
   prometheus-operator-chart:
     prometheus.prometheusSpec:
       retentionSize: 12G
