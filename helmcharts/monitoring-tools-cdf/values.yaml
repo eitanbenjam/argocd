@@ -17,3 +17,4 @@ shared-templates:
   save_blueprint: false
   wait_for_ace_orchestrator: false
   wait_for_ace_orchestrator_on_post: false
+
