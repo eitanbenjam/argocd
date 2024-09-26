@@ -1,0 +1,10 @@
+application:
+  name: "k8s-infra"
+  namespace: "production"
+target:
+  targetRevision: "marian"
+  path: "helmcharts/k8s-infra"
+deploy: true
+cluster:
+  name: cdf
+  adress: "https://kubernetes.default.svc"
