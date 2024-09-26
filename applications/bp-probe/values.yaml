@@ -40,7 +40,7 @@ cs-probe:
         cpu: 6000m
         hugepages1Gi: 1Gi
         memory: 8Gi
-shared-templates:
-  add_blueprints: false
-  save_blueprint: true
-  wait_for_ace_orchestrator: true
+#shared-templates:
+#  add_blueprints: false
+#  save_blueprint: true
+#  wait_for_ace_orchestrator: true

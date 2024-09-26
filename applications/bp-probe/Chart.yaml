@@ -1,13 +1,14 @@
-HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+#HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER nexus3-prod.radcom.co.il:8081
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER http://nexus3-prod.radcom.co.il:8081/repository/charts/
 apiVersion: v1
 appVersion: '1.0'
 dependencies:
 - name: cs-probe
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.558.0
-- name: shared-templates
-  repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.0.0
+#- name: shared-templates
+#  repository: *HELM_REGISTRY_PLACEHOLDER
+#  version: 1.0.0
 description: bp-probe
 name: bp-probe
 version: 13.09.04

@@ -4,11 +4,12 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: bp-admin-applications
-  name: bp-admin-applications
-  namespace: argocd
+    name: koksinel1
+  name: koksinel1
+  namespace: openshift-gitops-operator
 spec:
   destination:
+    #namespace: openshift-gitops-operator
     namespace: production
     server: https://kubernetes.default.svc
   project: default
