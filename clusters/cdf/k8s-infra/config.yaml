@@ -4,7 +4,7 @@ application:
 target:
   targetRevision: "marian"
   path: "helmcharts/k8s-infra"
-deploy: true
+deploy: false
 cluster:
   name: cdf
   adress: "https://kubernetes.default.svc"
