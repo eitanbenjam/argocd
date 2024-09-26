@@ -4,7 +4,7 @@ cs-monitoring-tools:
   application-authentication-chart:
     enabled: false
   kibana-chart:
-    enabled: true
+    enabled: false
   elasticsearch-chart:
     enabled: false
   fluentd-chart:
