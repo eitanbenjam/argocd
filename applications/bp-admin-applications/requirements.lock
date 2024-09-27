@@ -1,0 +1,6 @@
+dependencies:
+- name: cs-admin-applications
+  repository: http://nexus3-prod.radcom.co.il:8081/repository/charts/
+  version: 1.560.0
+digest: sha256:54ad6fe4389a7932323aa1d1315d8c25d44a3e8ef824d423ada1ef077228857a
+generated: "2024-09-26T14:20:53.715777075Z"

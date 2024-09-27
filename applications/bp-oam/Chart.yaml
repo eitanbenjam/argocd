@@ -5,9 +5,9 @@ dependencies:
 - name: cs-oam
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.1030.0
-#- name: shared-templates
-#  repository: *HELM_REGISTRY_PLACEHOLDER
-#  version: 1.0.0
+- name: shared-templates
+  repository: *HELM_REGISTRY_PLACEHOLDER
+  version: 1.0.0
 description: cs-oam
 name: cs-oam
 version: 13.09.04

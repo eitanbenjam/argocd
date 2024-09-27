@@ -4,9 +4,9 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: bp-aim
-  name: bp-aim
-  namespace: argocd
+    name: bp-aim-test2
+  name: bp-aim-test2
+  namespace: openshift-gitops-operator
 spec:
   destination:
     namespace: production

@@ -1,0 +1,6 @@
+dependencies:
+- name: cs-probe
+  repository: http://nexus3-prod.radcom.co.il:8081/repository/charts/
+  version: 1.558.0
+digest: sha256:7871135fefcf827d95c4bc58c999ad44e39edd923facbf9516e48f5f17cd1b46
+generated: "2024-09-26T14:01:06.930911273Z"

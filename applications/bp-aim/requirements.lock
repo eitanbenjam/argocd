@@ -1,0 +1,9 @@
+dependencies:
+- name: cs-aim
+  repository: http://nexus3-prod.radcom.co.il:8081/repository/charts/
+  version: 1.388.0
+- name: shared-templates
+  repository: http://nexus3-prod.radcom.co.il:8081/repository/charts/
+  version: 1.0.0
+digest: sha256:4a9e4c63be64d7dd167b765ab0de0bdbc4d5d588dbb72698ccae723fb7260ad0
+generated: "2024-09-27T10:34:17.007945041Z"
