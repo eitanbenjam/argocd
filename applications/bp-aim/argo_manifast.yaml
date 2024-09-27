@@ -4,12 +4,12 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: bp-aim-test2
-  name: bp-aim-test2
+    name: bp-aim-test4
+  name: bp-aim-test4
   namespace: openshift-gitops-operator
 spec:
   destination:
-    namespace: production
+    namespace: default
     server: https://kubernetes.default.svc
   project: default
   revisionHistoryLimit: 10
