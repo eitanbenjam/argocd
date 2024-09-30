@@ -1,0 +1,179 @@
+cs-oam-agent:
+  cdf-network-manager-chart:
+    configMap:
+      cdfClusterName: ''
+    enabled: false
+    resources:
+      limits:
+        cpu: 1
+        memory: 1Gi
+      requests:
+        cpu: 1
+        memory: 1Gi
+  daemon-chart:
+    enabled: false
+  database-loader-chart:
+    enabled: false
+  database-sync-chart:
+    enabled: false
+  oam-agent-chart:
+    enabled: true
+    radcomConfiguration:
+      kafka:
+        kafkaDnsName: eventbus-oam-primary
+        kafkaPort: 30201
+      kbrip: kuberiq-np-vip/orchestrator
+      repoType: K8S
+      resources:
+        limitsCpu: 1600m
+        limitsMemory: 500Mi
+        requestsCpu: 100m
+        requestsMemory: 500Mi
+  persistence-volume-exporter-chart:
+    enabled: true
+    pvclocalpaths:
+    - name: storage
+      path: /var/radcom/storage
+    - name: volume
+      path: /var/radcom/volume
+    service:
+      port: 8081
+      type: ClusterIP
+  schema-builder-chart:
+    enabled: false
+  service-access-config-chart:
+    legacyConf:
+    - interface: int_beinterconnect
+      ipType: ip
+      name: kafka
+      port: '9092'
+      preferredIp: v4
+      siteType: primary
+      type: kafka
+    - interface: oam_direct
+      ipType: ip
+      name: kafka-ext
+      port: '9093'
+      siteType: primary
+      type: kafka
+    - interface: int_beinterconnect
+      ipType: ip
+      name: vertica
+      port: '5433'
+      siteType: home
+      type: vertica
+    - interface: int_beinterconnect
+      ipType: ip
+      name: vertica-np
+      port: '5433'
+      siteType: primary
+      type: vertica
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-vip
+      port: '80'
+      siteType: home
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-np-vip
+      port: '80'
+      siteType: primary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-home-vip
+      port: '80'
+      siteType: home
+      type: kuberiq_cdf
+    - interface: oam_direct
+      ipType: vip
+      name: conductor-vip
+      port: '80'
+      siteType: primary
+      type: conductor
+    - interface: oam_direct
+      ipType: ip
+      name: mongodb
+      port: '27017'
+      siteType: all
+      type: mongodb
+    - interface: oam_direct
+      ipType: vip
+      name: eventbus-oam-primary
+      port: '30201'
+      siteType: primary
+      type: kuberiq
+    - interface: int_beinterconnect
+      ipType: ip
+      name: eventbus-bic-primary
+      port: '9092'
+      siteType: primary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: eventbus-traffic-primary
+      port: '9094'
+      siteType: primary
+      type: kuberiq
+    - interface: oam_direct
+      name: eventbus-oam-secondary
+      port: '30201'
+      siteType: secondary
+      type: kuberiq
+    - interface: int_beinterconnect
+      ipType: ip
+      name: eventbus-bic-secondary
+      port: '9092'
+      siteType: secondary
+      type: kuberiq
+    - interface: cdr_direct
+      ipType: ip
+      name: eventbus-traffic-secondary
+      port: '9094'
+      siteType: secondary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-primary
+      port: '80'
+      siteType: primary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-secondary
+      port: '80'
+      siteType: secondary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-local
+      port: '80'
+      siteType: home
+      type: kuberiq_cdf
+    radcomConfiguration:
+      aceOrchestratorSvc: kuberiq-np-vip/orchestrator
+      topologyManagerSvc: kuberiq-np-vip/topologyManager
+  storageclass-exporter-chart:
+    configMap:
+      frontendMachineTypes: vprobe,vLB,vLBAgent
+      kafkaGroupId: conductor.aceagent.topology
+      kafkaServer: eventbus-oam-primary:30201
+      kafkaTopic: conductor.topology.update
+      retryAttempts: 15
+      retryPeriod: 2000
+      topologyManagerService: kuberiq-np-vip/topologyManager
+    enabled: true
+    logConfig:
+      logLevel: INFO
+    pvclocalpaths:
+    - name: storage
+      path: /var/radcom/storage
+    - name: volume
+      path: /var/radcom/volume
+global:
+  blueprinttype: bp-oam-agent
+  ipFamilies:
+  - ipv4
+  site: default
+  siteType: CDF
