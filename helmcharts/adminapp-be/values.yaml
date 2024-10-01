@@ -3,5 +3,4 @@ shared-templates:
   save_blueprint: false
   wait_for_ace_orchestrator_on_post: false
 adminapp-be:
-  shared-templates:
-    wait_for_ace_orchestrator_on_post: false
+  wait_for_ace_orchestrator_on_post: false
