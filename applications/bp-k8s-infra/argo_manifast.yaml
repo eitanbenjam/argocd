@@ -6,7 +6,7 @@ metadata:
   labels:
     name: bp-k8s-infra
   name: bp-k8s-infra
-  namespace: argocd
+  namespace: openshift-gitops-operator
 spec:
   destination:
     namespace: production
