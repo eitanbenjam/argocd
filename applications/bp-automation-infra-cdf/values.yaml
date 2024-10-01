@@ -7,4 +7,4 @@ cs-automation-infra-cdf:
 shared-templates:
   add_blueprints: false
   save_blueprint: false
-  wait_for_ace_orchestrator_on_post: true
+  wait_for_ace_orchestrator_on_post: false
