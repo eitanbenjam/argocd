@@ -24,6 +24,9 @@ spec:
           operator: In
           values:
             - "true"
+  ignoreApplicationDifferences:
+    - jsonPointers:
+      - /spec/syncPolicy
   template:
     metadata:
       name: '{{.application.name}}{{or .application.nameSuffix "" | replace "/" "-"}}'
