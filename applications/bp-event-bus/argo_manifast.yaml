@@ -6,7 +6,7 @@ metadata:
   labels:
     name: event-bus
   name: event-bus
-  namespace: argocd
+  namespace: openshift-gitops-operator
 spec:
   destination:
     namespace: production
