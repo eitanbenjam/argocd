@@ -15,6 +15,6 @@ cs-monitoring-tools:
 shared-templates:
   add_blueprints: false
   save_blueprint: false
-  wait_for_ace_orchestrator: true
+  wait_for_ace_orchestrator: false
   wait_for_ace_orchestrator_on_post: false
 

@@ -3,7 +3,7 @@ global:
   conductorVip: 1.2.3.4
 add_blueprint: false
 save_blueprint: false
-wait_for_ace_orchestrator: true
+wait_for_ace_orchestrator: false
 wait_for_ace_orchestrator_on_post: false
 create_cluster_role: false
 wait_for_event_bus: false
