@@ -1,0 +1,22 @@
+backend_ic_net_ip_0: ip_addr
+backend_ic_net_mac: None
+cluster_name: Conductor
+conductor_index: 0
+conductor_node_count: 1
+distributedlock_node_count: 0
+initial_site_list: '[{name: default, role: national, full_name: , siteType: national}]'
+is_fencing_enabled: 'False'
+is_primary: 'True'
+machine_index: 0
+machine_type: conductor
+ntp_config_server: '[127.127.1.0]'
+oam_protected_cidr: None
+oam_protected_net_ip_0: ip_addr
+oam_protected_net_mac: None
+rsyslog_port: '514'
+rsyslog_server: None
+tenant: robin
+vnf_name: Conductor
+vprobes_mgmt_int_net_ip_0: ip_addr
+vprobes_mgmt_int_net_mac: None
+#node_selector_hostname: 00-50-56-9d-c1-4b

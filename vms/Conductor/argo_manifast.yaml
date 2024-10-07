@@ -20,7 +20,7 @@ spec:
       - ../general/values.yaml
       - values.yaml
       version: v3
-    path: vms/Conductor
+    path: applications/bp-ace-cd
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
     targetRevision: main
