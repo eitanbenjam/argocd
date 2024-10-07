@@ -5,9 +5,9 @@ dependencies:
 - name: cs-analyzer-infra
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.327.0
-- name: shared-templates
-  repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.0.0
+#- name: shared-templates
+#  repository: *HELM_REGISTRY_PLACEHOLDER
+#  version: 1.0.0
 description: bp-analyzer-infra
 name: cs-analyzer-infra
 version: 13.09.04

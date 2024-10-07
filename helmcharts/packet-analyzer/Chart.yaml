@@ -5,9 +5,9 @@ dependencies:
 - name: cs-packet-analyzer
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.382.0
-- name: shared-templates
-  repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.0.0
+#- name: shared-templates
+#  repository: *HELM_REGISTRY_PLACEHOLDER
+#  version: 1.0.0
 description: bp-packet-analyzer
 name: bp-packet-analyzer
 version: 13.09.04

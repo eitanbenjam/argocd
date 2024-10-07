@@ -5,9 +5,9 @@ dependencies:
 - name: cs-object-storage
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.49.0
-- name: shared-templates
-  repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.0.0
+#- name: shared-templates
+#  repository: *HELM_REGISTRY_PLACEHOLDER
+#  version: 1.0.0
 description: bp-object-storage
 name: bp-object-storage
 version: 13.09.04

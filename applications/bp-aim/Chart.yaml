@@ -5,9 +5,9 @@ dependencies:
 - name: cs-aim
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.388.0
-- name: shared-templates
-  repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.0.0
+#- name: shared-templates
+#  repository: *HELM_REGISTRY_PLACEHOLDER
+#  version: 1.0.0
 description: bp-aim
 name: bp-aim
 version: 13.09.04

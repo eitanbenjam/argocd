@@ -5,9 +5,9 @@ dependencies:
 - name: cs-ran
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.2.4
-- name: shared-templates
-  repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.0.0
+#- name: shared-templates
+#  repository: *HELM_REGISTRY_PLACEHOLDER
+#  version: 1.0.0
 description: bp-ran-probe-b
 name: bp-ran-probe-b
 version: 13.09.04

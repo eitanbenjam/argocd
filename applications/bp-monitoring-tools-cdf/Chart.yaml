@@ -5,9 +5,9 @@ dependencies:
 - name: cs-monitoring-tools
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.227.0
-- name: shared-templates
-  repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.0.0
+#- name: shared-templates
+#  repository: *HELM_REGISTRY_PLACEHOLDER
+#  version: 1.0.0
 description: bp-monitoring-tools
 name: cs-monitoring-tools
 version: 13.09.04

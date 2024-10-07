@@ -5,9 +5,9 @@ dependencies:
 - name: cs-applications
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.477.0
-- name: shared-templates
-  repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.0.0
+#- name: shared-templates
+#  repository: *HELM_REGISTRY_PLACEHOLDER
+#  version: 1.0.0
 description: bp-applications
 name: bp-applications
 version: 13.09.04
