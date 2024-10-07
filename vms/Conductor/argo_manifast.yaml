@@ -9,7 +9,7 @@ metadata:
   namespace: openshift-gitops-operator
 spec:
   destination:
-    namespace: production
+    namespace: openshift-gitops-operator
     server: https://kubernetes.default.svc
   project: default
   revisionHistoryLimit: 10
