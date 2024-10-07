@@ -60,8 +60,8 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true
-          - ServerSideDiff=true
+          - ServerSideApply=false
+          - ServerSideDiff=false
         retry:
           limit: 2
   # add template https://github.com/argoproj/argo-cd/issues/17637
