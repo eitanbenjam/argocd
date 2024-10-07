@@ -1,0 +1,3 @@
+nifi-chart:
+  enabled: true
+  replicaCount: 1

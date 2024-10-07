@@ -1,0 +1,130 @@
+global:
+  dockerRegistry: srp.radcom-registry.com:5000
+  docker_registry: srp.radcom-registry.com:5000
+  imageRegistry: srp.radcom-registry.com:5000
+  namespace: production
+  chartSet: cs-application-be
+
+# These values are handled by Orchestration team, and
+# should not be modified !
+  site: "default" # provided by external parameter 
+  blueprinttype: bp-application-be
+  siteType: national
+####
+
+  sessionsDataMsTraceInactivityTimeInMinutes: 10
+  mongoPort: 27017
+  mongoUserName: root
+  mongoDataBase: admin
+  mongoPassword: 2108a185c5b4969394c9cc18308c72a9
+  mongoComponentName: mongodb
+  mongoHosts: 1.1.1.1
+  mongoNoAddressConnectionStringFormat: mongodb://root:2108a185c5b4969394c9cc18308c72a9@%s/admin?ssl=false&retrywrites=false&maxIdleTimeMS=120000&appName=%s
+  mongoNoCredentialsAndAddressConnectionStringFormat: mongodb://{0}:{1}@%s/admin?ssl=false&retrywrites=false&maxIdleTimeMS=120000&appName={2}
+  mongoShouldUseK8SEndpoints: true
+  mongoDNSServiceName: mongodb
+  GuardianServiceName: system-db-mock-chart-svc
+  QLBServiceName: system-db-mock-chart-svc
+  kafkaPort: 9092
+  
+  s3bucketName: radcom-packets
+  s3accessKey: AKIAIOSFODNN7EXAMPLE
+  s3secretKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  s3regionName: us-east-2
+  s3EndPoint: http://cs-minio-minio-chart:9000
+  s3NetworkDefinition: nameserver 8.8.8.8
+  s3NetworkFile: /etc/resolv.conf
+  s3isPathStyle: true
+  s3connectionCheckerTimeoutInMs: 20000
+  s3socketCheckerTimeoutInMs: 20000
+  s3multiPartConnectionTimeoutInMs: 1000
+  s3multiPartSocketTimeoutInMs: 300000
+  s3multiPartMaxErrorRetry: 3
+  s3multiPartMaxConnections: 100
+
+  restTemplateConnectionRequestTimeoutInMs: 5000
+  restTemplateConnectionTimeoutInMs: 5000
+  restTemplateMaxRouteConnection: 75
+  restTemplateMaxTotalConnection: 150
+  restTemplateDefaultConnectionKeepAliveTimeInMs: 5000
+  restTemplateCloseIdleConnectionWaitTimeInSeconds: 30
+
+  restTemplateLowSocketTimeoutInMs: 30000
+  restTemplateMediumSocketTimeoutInMs: 60000
+  restTemplateHighSocketTimeoutInMs: 288000
+
+  runUpperBytesLimit: "1073741824"
+  runUpperPacketsLimit: "5000000"
+
+  verticaUserName: dbadmin
+  verticaPassword: dbadmin
+  verticaPort: 5433
+  verticaDatabase: vdb
+  verticaSchema: omniq
+  verticaHost: 172.29.13.156
+  verticaDNSServiceName: vertica
+  verticaAddress: ""
+
+  childTraceSizeInBytes: "524288000"
+
+  oraclePort: 1521
+
+  apigw_vip: apigw-vip
+  qtracelb_vip: qtracelb-vip
+  icp_master: 172.29.41.102
+  master: kuberiq-vip
+  mongodb: mongodb
+  kafka:
+    epName: kafka
+    replicas: 3
+  oracle: oracle
+  analyst_vip: analyst-vip
+  conductor_vip: conductor-vip
+  vertica: vertica
+
+  cAnalyzerEnabled: false
+
+  dnsLookupScheduledIntervalInMs: 300000
+  digDnsCommand: dig @%s %s.production.svc.cluster.local +short
+  getServerDnsCommand: dig |grep SERVER
+  
+  buildDateName: deployment_date
+  artifactVersionName: artifactVersion
+  loadBackgroundToDataMS: false
+  
+  trafficGroupsPrefix: TrafficGroup
+
+  ioGraphTraceIdSuffix: _iograph
+
+  sessionTypePrefix: cdr
+  packetsAndStatsTopicName: packetsAndStats
+  volatileTracesDataTopicName: volatileTracesData
+  packetsTopicName: packets
+  features: "ONLINE_MODE_PAM=OnlineModePacketAnalyzer,enabled:True,defaultValue:True;ONLINE_MODE_SAM=OnlineModeSessionAnalyzer,enabled:True,defaultValue:True;RTP_PLAYBACK=RTP_Playback,enabled:True,defaultValue:True;VIEWING_SMS_TEXT_MESSAGE=MessagingFullContent,enabled:True,defaultValue:True;GROUP_SHARE_PACKET_TRACE=GroupSharingPacketTracePrivilege,enabled:True,defaultValue:True;LINK_SHARE_PACKET_TRACE=LinkSharingPacketTracePrivilege,enabled:True,defaultValue:True;GROUP_SHARE_SESSION_TRACE=GroupSharingSessionTracePrivilege,enabled:True,defaultValue:True;LINK_SHARE_SESSION_TRACE=LinkSharingSessionTracePrivilege,enabled:True,defaultValue:True;GLOBAL_CONFIGURATION_PROFILE_PACKET_TRACE=GlobalConfigurationProfilePacketAnalyzer,enabled:True,defaultValue:False;GLOBAL_CONFIGURATION_PROFILE_SESSION_TRACE=GlobalConfigurationProfileSessionAnalyzer,enabled:True,defaultValue:False;DOWNLOAD_SESSIONS_WITH_PACKETS_PRIVILEGE=DownloadSessionsWithPacketsPrivilege,enabled:True,defaultValue:True"
+
+  hostAliases_enabled: false
+  hostAliases:
+    - ip: "1.1.1.1"
+      hostnames:
+        - "vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com"
+        - "s3.atlngatl.objstor.wnsnet.attws.com"
+    - ip: "2.2.2.2"
+      hostnames:
+        - "vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com"
+        - "s3.atlngatl.objstor.wnsnet.attws.com"
+    - ip: "3.3.3.3"
+      hostnames:
+        - "vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com"
+        - "s3.atlngatl.objstor.wnsnet.attws.com"
+    - ip: "4.4.4.4"
+      hostnames:
+        - "vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com"
+        - "s3.atlngatl.objstor.wnsnet.attws.com"
+    - ip: "5.5.5.5"
+      hostnames:
+        - "vprobe-0.s3.atlngatl.objstor.wnsnet.attws.com"
+        - "s3.atlngatl.objstor.wnsnet.attws.com"
+
+qinsight-db-chart:
+  enabled: true
+

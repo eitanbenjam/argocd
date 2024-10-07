@@ -1,0 +1,10 @@
+grafana-helm-chart:
+  enabled: false
+application-authentication-chart:
+  enabled: false
+kibana-chart:
+  enabled: false
+elasticsearch-chart:
+  enabled: false
+fluentd-chart:
+  enabled: false

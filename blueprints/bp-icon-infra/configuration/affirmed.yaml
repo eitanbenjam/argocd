@@ -1,0 +1,119 @@
+global:
+  dockerRegistry: srp.radcom-registry.com:5000
+  pullPolicy: IfNotPresent
+  affirmed: true
+  samsung: false
+  prometheus:
+    serviceMonitor:
+      namespace: production
+      namespaceSelector: production
+      label:
+        release: prom-operator
+flink-chart:
+  resources:
+    jobmanager:
+      limits:
+        cpu: 8000m
+        memory: 8000Mi
+      requests:
+        cpu: 8000m
+        memory: 8000Mi
+    taskmanager:
+      replicas: 2
+      limits:
+        memory: 8000Mi
+      requests:
+        memory: 8000Mi       
+  imagePullPolicy: IfNotPresent
+  flink:
+    jobmanager:
+      heap_mb: 6144m
+    taskmanager:
+      heap_mb: 6144m
+      memory: 5120m
+    job:
+      edr:
+        events:
+          Affirmed:
+            - name: 1
+              toStream: true              
+              zmq:
+                host: cs-icon-affirmed-inputapi-service
+                port: 5555
+                hwm: 2
+                topics:
+                - affirmed-topic-1
+                - affirmed-topic-2                
+                - affirmed-topic-3                
+            - name: 2
+              toStream: true              
+              zmq:
+                host: cs-icon-affirmed-inputapi-service
+                port: 5555
+                hwm: 2
+                topics:
+                - affirmed-topic-4
+                - affirmed-topic-5                
+                - affirmed-topic-6                
+          Samsung:
+            - name: 1
+              toStream: false
+        s3:
+          endpoint: http://cs-minio-minio-chart:9000
+          access: AKIAIOSFODNN7EXAMPLE
+          secret: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  flinksrv:
+    ports:
+      nodePort_query: 30025
+      nodePort_ui: 30081
+
+inputapi-chart:
+  image:
+    imagePullPolicy: IfNotPresent # k8s image pull policy
+
+  affirmed:
+    enabled: true ## If false, affirmed will not be installed
+    inputapi:
+      replicas: 1
+      ZeroMqTopicName: affirmed-topic-1,affirmed-topic-2,affirmed-topic-3,affirmed-topic-4,affirmed-topic-5,affirmed-topic-6
+      tcpNumOfThreads: 3
+      numOfWorkers: 3
+  samsung:
+    enabled: false ## If false, samsung will not be installed
+
+hive-metastore-chart:
+  conf:
+    hdfsSite:
+      s3:
+        endpoint: http://cs-minio-minio-chart:9000
+        keysSecretName: cs-minio-minio-chart
+
+retention-daemon-chart:
+  samsung:
+    schedule: "*/1 * * * *"
+    days2Purge: 2d
+    bucket2Purge: samsung
+    capacity: 50G
+    hwm: 85
+    lwm: 40
+  affirmed:
+    schedule: "*/1 * * * *"
+    days2Purge: 2d
+    bucket2Purge: affirmed
+    capacity: 1G
+    hwm: 85
+    lwm: 40
+
+presto-chart:
+  server:
+    workers: 2
+  connectors:
+    hive:
+      s3:
+        endpoint: http://cs-minio-minio-chart:9000
+        keysSecretName: cs-minio-minio-chart
+  service:
+    type: NodePort
+    port: 8080
+    nodePort: 30033
+    annotations: {}

@@ -1,0 +1,82 @@
+{{- define "radcom.pvc.tpl" -}}
+{{- $enabled := true }}
+{{- if eq (kindOf .Values.enabled) "bool"  }}
+  {{- $enabled = .Values.enabled }}
+{{- end }}
+{{- if $enabled }}
+{{- $root := . -}}
+{{- $name := include "radcom.name" $root }}
+{{- $fullName := include "radcom.fullname" $root }}
+{{- $namespace := "production" }}
+{{- if $root.Values.global }}
+  {{- with $root.Values.global.namespace }}
+    {{- $namespace = . }}
+  {{- end }}
+{{- end }}
+{{- range $deployment := .Values.deployments }}
+{{- range $container := $deployment.containers -}}
+{{- if $container.persistenceVolumes }}
+{{- range $pvc := $container.persistenceVolumes }}
+{{- $metadataLabelName := $pvc.metadataLabelName | default $name }}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+{{- if $pvc.claimName }}
+  name: {{ tpl $pvc.claimName $root }}
+{{- else }}
+  name: {{ tpl $pvc.name $root }}
+{{- end }}
+  namespace: {{ $namespace }}
+{{- with $pvc.annotations  }}
+  annotations: {{ toYaml . | nindent 4 }}
+{{- end }}
+  labels:
+{{- include "radcom.labels" $root | nindent 4 }}
+{{- include "radcom.selectorLabels" (dict "root" $root "name" $metadataLabelName) | nindent 4 }}
+{{- with $root.Values.podAdditionalLabels }}
+  {{- tpl (toYaml .) $root | nindent 4 }}
+{{- end }}
+spec:
+{{- with $pvc.storageClassName }}
+  storageClassName: {{ tpl . $root }}
+{{- end }}
+{{- with $pvc.volumeName }}
+  volumeName: {{ tpl . $root }}
+{{- end }}
+{{- with $pvc.volumeMode }}
+  volumeMode: {{ tpl . $root }}
+{{- end }}
+{{- with $pvc.accessModes }}
+  accessModes:
+    - {{ tpl . $root }}
+{{- end }}
+  resources:
+    requests:
+      storage: {{ tpl (required "A valid spec.resources.requests.storage is required" $pvc.storage) $root }}
+{{- with $pvc.dataSource }}
+  dataSource:
+    name: {{ tpl .name $root }}
+    kind: {{ tpl .kind $root }}
+  {{- if .apiGroup }}
+    apiGroup: {{ tpl .apiGroup $root }}
+  {{- end }}
+{{- end }}
+{{- with $pvc.dataSourceRef }}
+  dataSourceRef:
+    name: {{ tpl .name $root }}
+    kind: {{ tpl .kind $root }}
+  {{- if .apiGroup }}
+    apiGroup: {{ tpl .apiGroup $root }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- define "radcom.pvc" -}}
+{{- template "radcom.merge" (append . "radcom.pvc.tpl") -}}
+{{- end -}}

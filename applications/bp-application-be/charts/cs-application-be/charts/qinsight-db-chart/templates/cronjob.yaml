@@ -1,0 +1,41 @@
+{{- if .Values.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Values.cronjob.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  schedule: "{{ .Values.cronjob.schedule }}"
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: {{ .Values.cronjob.name }}-volume
+              persistentVolumeClaim:
+                claimName: {{ .Values.cronjob.name }}-volume
+          containers:
+            - name: {{ .Values.cronjob.name }}
+              image: {{ template "postgresql.image" . }}
+              #image: radcombi/qinsight-db:15.2.0-11-r11
+              imagePullPolicy: Always
+              env:
+                - name: POSTGRESQL_PASSWORD
+                  value: Radmin1
+              volumeMounts:
+                - name: {{ .Values.cronjob.name }}-volume
+                  mountPath: /Backup
+              command:
+                - /bin/bash
+                - -c
+                - d1=`date +%d%m%Y`; PGPASSWORD="Radmin1" pg_dump -U postgres -h qinsight-db-srv -p 5432 -d qinsight-db > /Backup/qinsight-db_$d1.sql; PGPASSWORD="Radmin1" pg_dump -U postgres -h qinsight-db-srv -p 5432 -d qinsight-db_Warehouse > /Backup/qinsight-db_Warehouse_$d1.sql; find /Backup/ -type f -mtime +15 -name '*.sql' -delete
+              resources:
+                limits:
+                  cpu: 500m
+                  memory: 512Mi
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+          restartPolicy: OnFailure
+{{- end }}

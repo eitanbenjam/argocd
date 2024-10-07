@@ -1,0 +1,8 @@
+annotations:
+  dependencies: |
+    - name: radcom-library
+apiVersion: v1
+appVersion: "1.0"
+description: cs-application-be
+name: cs-application-be
+version: 1.805.0

@@ -1,0 +1,402 @@
+{{- define "radcom.cronjob.tpl" -}}
+{{- $enabled := true }}
+{{- if eq (kindOf .Values.enabled) "bool" }}
+  {{- $enabled = .Values.enabled }}
+{{- end }}
+{{- if $enabled }}
+{{- $root := . -}}
+{{- range $cronJob := $root.Values.deployments -}}
+{{- $deploymentType := "Deployment" }}
+{{- if $cronJob.deploymentType }}
+  {{- $deploymentType = $cronJob.deploymentType }}
+{{- end }}
+{{- if eq $deploymentType "CronJob" }}
+{{- $name := include "radcom.name" $root }}
+{{- $fullName := include "radcom.fullname" $root }}
+{{- $namespace := "production" }}
+{{- if $root.Values.global }}
+  {{- with $root.Values.global.namespace }}
+    {{- $namespace = . }}
+  {{- end }}
+{{- end }}
+{{- $imageRepository := "srp.radcom-registry.com:5000" }}
+{{- if $root.Values.global }}
+  {{- with $root.Values.global.dockerRegistry }}
+    {{- $imageRepository = . }}
+  {{- end }}
+{{- end }}
+{{- $imageUser := "" }}
+{{- $imageName := $root.Chart.Name | replace "-chart" "" }}
+{{- $imageTag := $root.Chart.AppVersion }}
+{{- $pullPolicy := "IfNotPresent" }}
+{{- $autoscaling := false }}
+{{- with $cronJob.autoscaling }}
+  {{- $autoscaling = .enabled }}
+{{- end }}
+{{- $defaultMode := 420 }}
+{{- with $cronJob.defaultMode }}
+  {{- $defaultMode = . }}
+{{- end }}
+{{- $ports := include "getContainersPorts" $root }}
+{{- $defineAutomaticallyPorts := true }}
+{{- $sliceString := "" }}
+{{- $releaseName := $root.Release.Name }}
+{{- $cronJobName := "" }}
+{{- with $cronJob.name }}
+  {{- $cronJobName = . }}
+{{- end }}
+{{- $metadataName := nospace (((tpl $cronJobName $) | default $fullName)) }}
+{{- $createVolumes := dict }}
+{{- $configItems := dict }}
+{{- range $container := $cronJob.containers }}
+  {{- if $container.configFiles }}
+    {{- range $file, $content := $container.configFiles.files }}
+      {{- if $content.items }}
+        {{- $_ := set $configItems $file $content.items }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- $metadataLabelName := $cronJob.metadataLabelName | default $name }}
+{{- $multipleCMVolumes := false }}
+{{- if and $cronJob.multipleCMVolumes (eq ($cronJob.multipleCMVolumes | toString) "true") }}
+  {{- $multipleCMVolumes = true }}
+{{- end }}
+{{- $createConfigEnvsVolume := true }}
+{{- if and (not $cronJob.createConfigEnvsVolume) (eq ($cronJob.createConfigEnvsVolume | toString) "false") }}
+  {{- $createConfigEnvsVolume = false }}
+{{- end }}
+
+---
+{{ if semverCompare ">=1.21-0" $.Capabilities.KubeVersion.GitVersion }}
+apiVersion: batch/v1
+{{- else -}}
+apiVersion: batch/v1beta1
+{{- end }}
+kind: CronJob
+metadata:
+  name: {{ $metadataName }}
+  namespace: {{ $namespace }}
+  labels:
+{{- include "radcom.labels" $root | nindent 4 }}
+{{- include "radcom.selectorLabels" (dict "root" $root "name" $metadataLabelName) | nindent 4 }}
+{{- with $root.Values.podAdditionalLabels }}
+  {{- tpl (toYaml .) $root | nindent 4 }}
+{{- end }}
+{{- if $cronJob.annotations }}
+  annotations:
+  {{- tpl (toYaml $cronJob.annotations ) $root | nindent 4 }}
+{{- end }}
+spec:
+  schedule: {{ tpl (required "A valid spec.schedule is required" ($cronJob.schedule | quote)) $root }}
+  concurrencyPolicy: {{ tpl $cronJob.concurrencyPolicy $root | default "Allow" }}
+  successfulJobsHistoryLimit: {{ $cronJob.successfulJobsHistoryLimit | default 3 }}
+  failedJobsHistoryLimit: {{ $cronJob.failedJobsHistoryLimit | default 1 }}
+{{- with $cronJob.startingDeadlineSeconds }}
+  startingDeadlineSeconds: {{ . }}
+{{- end }}
+{{- with $cronJob.suspend }}
+  suspend: {{ . }}
+{{- end }}
+  jobTemplate:
+    spec:
+{{- with $cronJob.ttlSecondsAfterFinished }}
+      ttlSecondsAfterFinished: {{ . }}
+{{- end }}
+      template:
+{{- if or $cronJob.podAnnotations $cronJob.templateLabels }}
+        metadata:
+  {{- with $cronJob.podAnnotations }}
+          annotations:
+    {{- tpl (toYaml .) $root | nindent 12 }}
+  {{- end }}
+  {{- with $cronJob.templateLabels }}
+          labels:
+    {{- tpl (toYaml .) $root | nindent 12 }}
+  {{- end }}
+{{- end }}
+        spec:
+          restartPolicy: {{ $cronJob.restartPolicy | default "Always" }}
+          serviceAccountName: {{ include "radcom.serviceAccountName" (dict "root" $root "serviceAccount" $cronJob.serviceAccount) }}
+{{- with $cronJob.podSecurityContext }}
+          securityContext:
+  {{- tpl (toYaml .) $root | nindent 12 }}
+{{- end }}
+          containers:
+{{- range $container := $cronJob.containers }}
+  {{- if $container.image }}
+    {{- if eq (kindOf $container.image.user) "string"  }}
+      {{- $imageUser = $container.image.user }}
+    {{- end }}
+    {{- with $container.image.name }}
+      {{- $imageName = tpl . $root }}
+    {{- end }}
+    {{- with $container.image.tag }}
+      {{- $imageTag = tpl . $root }}
+    {{- end }}
+    {{- with $container.image.pullPolicy }}
+      {{- $pullPolicy = tpl . $root }}
+    {{- end }}
+  {{- end }}
+  {{- if regexMatch "-SNAPSHOT$" $imageTag }}
+    {{- $pullPolicy = "Always" }}
+  {{- end }}
+  {{- if $imageUser }}
+    {{- $imageUser = printf "%s%s" $imageUser "/" }}
+  {{- end }}
+            - name: cont-{{ tpl $container.name $root | default $name }}
+              image: "{{ $imageRepository }}/{{ $imageUser }}{{ $imageName }}:{{ $imageTag }}"
+              imagePullPolicy: {{ $pullPolicy }}
+  {{- with $container.command }}
+              command: {{ toYaml . | nindent 16 }}
+  {{- end }}
+  {{- with $container.args }}
+              args:
+    {{- if eq (kindOf $container.args) "map" }}
+      {{- range $key, $value := $container.args }}
+        {{- if $value }}
+                - {{ $key }}={{ tpl ($value | quote) $ }}
+        {{- else }}
+                - {{ $key }}
+        {{- end }}
+      {{- end }}
+    {{- else }}
+      {{- tpl ($container.args | toYaml) $ | nindent 16 }}
+    {{- end }}
+  {{- end }}
+  {{- if and $container.defineAutomaticallyPorts (eq ($container.defineAutomaticallyPorts | toString) "true") }}
+    {{- $defineAutomaticallyPorts = true }}
+  {{- else if and (not $container.defineAutomaticallyPorts) (eq ($container.defineAutomaticallyPorts | toString) "false") }}
+    {{- $defineAutomaticallyPorts = false }}
+  {{- end }}
+  {{- if $defineAutomaticallyPorts }}
+    {{- if ne (len $ports) 0 }}
+              ports: {{ $ports | nindent 16 }}
+    {{- end }}
+  {{- else if and (not $defineAutomaticallyPorts) $container.ports }}
+              ports: {{ toYaml $container.ports | nindent 16 }}
+  {{- end }}
+  {{- if or $container.envs $container.configEnvs $root.Values.secrets }}
+              env:
+    {{- range $key, $value := $container.envs }}
+                - name: {{ $key }}
+      {{- if eq (kindOf $value) "map" }}
+        {{ tpl (toYaml $value) $ | nindent 18 }}
+      {{- else if eq (kindOf $value) "slice" }}
+        {{- range $envSlice := $value }}
+          {{- $sliceStringEnv := $envSlice }}
+          {{- $sliceString = cat $sliceString $sliceStringEnv }}
+        {{- end }}
+                  value: {{ tpl (trimPrefix " " $sliceString) $root }}
+      {{- else }}
+        {{- if contains " " (tpl $value $root) }}
+                  value: {{ tpl $value $root }}
+        {{- else }}
+                  value: {{ tpl (toYaml $value) $root }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+    {{- if $container.configEnvs }}
+      {{- $_ := set $createVolumes "configEnvs" $container.configEnvs }}
+    {{- end }}
+    {{- range $key, $values := $container.configEnvs }}
+      {{- if eq $values.type "data"}}
+        {{- range $subkey, $subvalues := $values.value }}
+                - name: {{ $subkey }}
+                  valueFrom:
+                    configMapKeyRef:
+                      name: configmap-{{ $values.configMapName | default $fullName }}
+                      key: {{ $subkey }}
+        {{- end }}
+      {{- end }}
+      {{- if eq $values.type "file"}}
+                - name: {{ $key }}
+                  valueFrom:
+                    configMapKeyRef:
+                      name: configmap-{{ $values.configMapName | default $fullName }}
+                      key: {{ $key }}
+      {{- end }}
+    {{- end }}
+    {{- range $key, $value := $root.Values.secrets }}
+      {{- if and $value.envParam (eq (kindOf $value.envParam) "map") }}
+        {{- range $subKey, $subValue := $value.envParam }}
+                - name: {{ $subKey }}
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ $value.secretName }}
+                      key: {{ tpl $subKey $root }}
+        {{- end}}
+      {{- end }}
+      {{- if and $value.envParam (eq (kindOf $value.envParam) "slice") }}
+        {{- range $env := $value.envParam }}
+                - name: {{ $env }}
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ $value.secretName }}
+                      key: {{ tpl $env $root }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- with $container.resources }}
+              resources: {{ tpl (toYaml .) $root | nindent 16 }}
+  {{- end }}
+  {{- if or $container.configFiles $container.secretFiles $container.hostPaths $container.persistenceVolumes $container.emptyDirs }}
+              volumeMounts:
+    {{- if $container.configFiles }}
+      {{- $_ := set $createVolumes "configFiles" $container.configFiles }}
+      {{- if ne $container.configFiles.podMount "dummy" }}
+                - name: configmap-{{ $fullName }}
+                  mountPath: {{ tpl $container.configFiles.podMount $root }}
+        {{- with $container.configFiles.readOnly }}
+                  readOnly: {{ . }}
+        {{- end }}
+      {{- end }}
+      {{- range $key, $value := $container.configFiles.files }}
+        {{- if $value.podMount }}
+                - name: configmap-{{ $value.configMapName | default $fullName }}
+          {{- with $value.podMount }}
+                  mountPath: {{ tpl . $root }}
+          {{- end }}
+          {{- with $value.subPath }}
+                  subPath: {{ . }}
+          {{- end }}
+          {{- with $value.readOnly }}
+                  readOnly: {{ . }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+    {{- if $container.secretFiles }}
+      {{- $_ := set $createVolumes "secretFiles" $container.secretFiles }}
+    {{- end }}
+    {{- range $secretFile := $container.secretFiles }}
+                - name: {{ $secretFile.name | default "secret-files" }}
+                  mountPath: {{ $secretFile.mountPath }}
+      {{- if $secretFile.subPath }}
+                  subPath: {{ $secretFile.subPath }}
+      {{- end }}
+      {{- if $secretFile.readOnly }}
+                  readOnly: {{ $secretFile.readOnly }}
+      {{- end }}
+    {{- end }}
+    {{- if $container.hostPaths }}
+      {{- $_ := set $createVolumes "hostPaths" $container.hostPaths }}
+    {{- end }}
+    {{- range $key, $value := $container.hostPaths }}
+                - name: {{ $key }}
+                  mountPath: {{ tpl $value.mountPath $root }}
+      {{- if $value.readOnly }}
+                  readOnly: {{ $value.readOnly }}
+      {{- end }}
+    {{- end }}
+    {{- if $container.persistenceVolumes }}
+      {{- $_ := set $createVolumes "persistenceVolumes" $container.persistenceVolumes }}
+    {{- end }}
+    {{- range $pvc:= $container.persistenceVolumes }}
+                - name: {{ tpl $pvc.name $root }}
+                  mountPath: {{ $pvc.mountPath }}
+    {{- end }}
+    {{- if $container.emptyDirs }}
+      {{- $_ := set $createVolumes "emptyDirs" $container.emptyDirs }}
+    {{- end }}
+    {{- range $directory := $container.emptyDirs }}
+                - name: {{ tpl $directory.name $root }}
+                  mountPath: {{ tpl $directory.mountPath $root }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- with $cronJob.nodeSelector }}
+          nodeSelector: {{ toYaml . | nindent 12 }}
+{{- end }}
+{{- with  $cronJob.affinity }}
+          affinity: {{ toYaml . | nindent 12 }}
+{{- end }}
+{{- with $cronJob.tolerations }}
+          tolerations: {{ toYaml . | nindent 12 }}
+{{- end }}
+{{- if or (hasKey $createVolumes "secretFiles") (hasKey $createVolumes "configFiles") (hasKey $createVolumes "hostPaths") (and (hasKey $createVolumes "configEnvs") $createConfigEnvsVolume) (hasKey $createVolumes "persistenceVolumes") (hasKey $createVolumes "emptyDirs") }}
+          volumes:
+  {{- if or (hasKey $createVolumes "configFiles") (hasKey $createVolumes "configEnvs") }}
+    {{- if eq $multipleCMVolumes false }}
+            - name: configmap-{{ $fullName }}
+              configMap:
+                name: configmap-{{ $fullName }}
+                defaultMode: {{ $defaultMode }}
+      {{- if ne (len $configItems) 0 }}
+                items:
+        {{- range $item := $configItems }}
+          {{- toYaml $item | nindent 18 }}
+        {{- end }}
+      {{- end }}
+    {{- else if eq $multipleCMVolumes true }}
+      {{- $configFiles := get $createVolumes "configFiles" }}
+      {{- range $key, $value := $configFiles.files }}
+            - name: configmap-{{ $value.configMapName | default $fullName }}
+              configMap:
+                name: configmap-{{ $value.configMapName | default $fullName }}
+                defaultMode: {{ $defaultMode }}
+        {{- if ne (len $configItems) 0 }}
+                items:
+          {{- range $item := $configItems }}
+            {{- toYaml $item | nindent 14 }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if hasKey $createVolumes "secretFiles" }}
+    {{- range $key, $value := get $createVolumes "secretFiles" }}
+            - name: {{ $value.name | default "secret-files" }}
+              secret:
+                secretName: {{ $value.secretName | default $fullName }}
+      {{- if $value.defaultMode }}
+                defaultMode: {{ $value.defaultMode }}
+      {{- end }}
+      {{- if $value.items }}
+                items:
+        {{- range $item := $value.items }}
+                  - key: {{ $item.key }}
+                    path: {{ $item.path }}
+          {{- with $item.mode }}
+                    mode: {{ . }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if (hasKey $createVolumes "hostPaths") }}
+    {{- range $key, $value := get $createVolumes "hostPaths" }}
+            - name: {{ $key }}
+      {{- if  $value.type }}
+        {{ toYaml $value.type | nindent 14 }}
+      {{- else }}
+              hostPath:
+                path: {{ $value.path }}
+        {{- with $value.hostType }}
+                type: {{ . }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if (hasKey $createVolumes "persistenceVolumes") }}
+    {{- range $pvc := get $createVolumes "persistenceVolumes" }}
+            - name: {{ tpl $pvc.name $root }}
+              persistentVolumeClaim:
+                claimName: {{ tpl $pvc.name $root }}
+    {{- end }}
+  {{- end }}
+  {{- if (hasKey $createVolumes "emptyDirs") }}
+    {{- range $directoryName, $directory := get $createVolumes "emptyDirs" }}
+            - name: {{ tpl $directory.name $root | default $directoryName }}
+              emptyDir: {}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- define "radcom.cronjob" -}}
+{{- template "radcom.merge" (append . "radcom.cronjob.tpl") -}}
+{{- end -}}

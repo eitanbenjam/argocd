@@ -1,0 +1,145 @@
+---
+# Source: cs-application-be/charts/qinsight-auth-chart/templates/qinsightauth_configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-qinsightauth
+  namespace: production
+  labels:
+    helm.sh/chart: qinsight-auth-chart-1.0.0
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: qinsightauth
+    app.kubernetes.io/instance: RELEASE-NAME
+    radcom.com/chartSet: "cs-application-be"
+data:
+  config.json: |-
+    {
+      "MongoDBconn": "mongodb://root:2108a185c5b4969394c9cc18308c72a9@172.29.101.136:27017/membershipDb?authMechanism=SCRAM-SHA-1&authSource=admin"
+    }
+---
+# Source: cs-application-be/charts/qinsight-auth-chart/templates/qinsightauth_service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: qinsightauth-srv
+  namespace: production
+  labels:
+    helm.sh/chart: qinsight-auth-chart-1.0.0
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: qinsightauth
+    app.kubernetes.io/instance: RELEASE-NAME
+    radcom.com/chartSet: "cs-application-be"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+      name: http
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: qinsightauth
+    app.kubernetes.io/instance: RELEASE-NAME
+    radcom.com/chartSet: "cs-application-be"
+---
+# Source: cs-application-be/charts/qinsight-auth-chart/templates/qinsightauth_deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: RELEASE-NAME-qinsightauth
+  namespace: production
+  labels:
+    helm.sh/chart: qinsight-auth-chart-1.0.0
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: qinsightauth
+    app.kubernetes.io/instance: RELEASE-NAME
+    radcom.com/chartSet: "cs-application-be"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: qinsightauth
+      app.kubernetes.io/instance: RELEASE-NAME
+      radcom.com/chartSet: "cs-application-be"
+  template:
+    metadata:
+      annotations:
+        checksum/config: 13d6e888a091ddab22002c696935de118d9d75ecff77576079b0ecca1ab0ba57
+      labels:
+        app.kubernetes.io/name: qinsightauth
+        app.kubernetes.io/instance: RELEASE-NAME
+        radcom.com/chartSet: "cs-application-be"
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      serviceAccountName: default
+      containers:
+        - name: cont-qinsightauth
+          image: "srp.radcom-registry.com:5000/qinsightauth:1.0.0"
+          imagePullPolicy: IfNotPresent
+          ports: 
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          volumeMounts:
+            - name: configmap-qinsightauth
+              mountPath: /tmp
+      volumes:
+        - name: configmap-qinsightauth
+          configMap:
+            name: configmap-qinsightauth
+            defaultMode: 420
+---
+# Source: cs-application-be/charts/qinsight-auth-chart/templates/qinsightauth_ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qinsightauth-ing
+  namespace: production
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite /(qinsightauth)/(.*)$ /$1//$2 break;
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-next-upstream-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+    nginx.org/client-max-body-size: 1024m
+    nginx.ingress.kubernetes.io/auth-response-headers: iv-user, iv-groups, iv-remote-address
+    nginx.ingress.kubernetes.io/auth-signin: https://$host/authenticationms/?link=https://$host/guardian/portal
+    nginx.ingress.kubernetes.io/auth-snippet: |
+      proxy_set_header iv-remote-address $remote_addr;
+      proxy_set_header X-Real-IP $remote_addr;
+      if ($http_cookie ~* "jwt=([^;]+)(?:;|$)") {
+          set $token "$1";
+      }
+      proxy_set_header jwt $token;
+    nginx.ingress.kubernetes.io/auth-url: http://authenticationms-srv.production.svc.cluster.local/api/v1/Authentication/authenticateToken
+spec:
+  tls:
+    - hosts:
+      - kuberiq.com
+      secretName: tls-secret
+  rules:
+    - host: kuberiq.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: qinsightauth-srv
+                port: 
+                  number: 80
+            path: /qinsightauth
+            pathType: Prefix
+    - http:
+        paths:
+          - backend:
+              service:
+                name: qinsightauth-srv
+                port: 
+                  number: 80
+            path: /qinsightauth
+            pathType: Prefix

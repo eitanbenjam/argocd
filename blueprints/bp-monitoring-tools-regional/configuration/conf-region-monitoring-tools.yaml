@@ -1,0 +1,4 @@
+grafana-helm-chart:
+  enabled: false
+application-authentication-chart:
+  enabled: false

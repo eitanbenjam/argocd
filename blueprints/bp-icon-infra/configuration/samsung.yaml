@@ -1,0 +1,119 @@
+global:
+  dockerRegistry: srp.radcom-registry.com:5000
+  pullPolicy: IfNotPresent
+  affirmed: false
+  samsung: true
+  prometheus:
+    serviceMonitor:
+      namespace: production
+      namespaceSelector: production
+      label:
+        release: prom-operator
+flink-chart: 
+  resources:
+    jobmanager:
+      limits:
+        cpu: 8000m
+        memory: 8000Mi
+      requests:
+        cpu: 8000m
+        memory: 8000Mi
+    taskmanager:
+      replicas: 1 
+      limits:
+        memory: 8000Mi
+      requests:
+        memory: 8000Mi     
+  imagePullPolicy: IfNotPresent
+  flink:
+    jobmanager:
+      heap_mb: 6144m
+    taskmanager:
+      heap_mb: 6144m
+      memory: 5120m  
+    job:
+      edr:
+        events:
+          Affirmed:
+            - name: 1
+              toStream: false
+          Samsung:
+            - name: 1
+              toStream: true
+              zmq:
+                host: cs-icon-samsung-inputapi-service
+                port: 5566
+                hwm: 2
+                topics:
+                - samsung-topic-1
+                - samsung-topic-2                                 
+                - samsung-topic-3                                 
+            - name: 2
+              toStream: true
+              zmq:
+                host: cs-icon-samsung-inputapi-service
+                port: 5566
+                hwm: 2
+                topics:
+                - samsung-topic-4
+                - samsung-topic-5                                 
+                - samsung-topic-6                                 
+        s3:
+          endpoint: http://cs-minio-minio-chart:9000
+          access: AKIAIOSFODNN7EXAMPLE
+          secret: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  flinksrv:
+    ports:
+      nodePort_query: 30025
+      nodePort_ui: 30081
+
+inputapi-chart:
+  image:
+    imagePullPolicy: IfNotPresent # k8s image pull policy
+
+  affirmed:
+    enabled: false ## If false, affirmed will not be installed
+  samsung:
+    enabled: true ## If false, samsung will not be installed
+    inputapi:
+      replicas: 1
+      ZeroMqTopicName: samsung-topic-1,samsung-topic-2,samsung-topic-3,samsung-topic-4,samsung-topic-5,samsung-topic-6
+      tcpNumOfThreads: 3
+      numOfWorkers: 3
+
+hive-metastore-chart:
+  conf:
+    hdfsSite:
+      s3:
+        endpoint: http://cs-minio-minio-chart:9000
+        keysSecretName: cs-minio-minio-chart
+
+retention-daemon-chart:
+  samsung:
+    schedule: "*/1 * * * *"
+    days2Purge: 2d
+    bucket2Purge: samsung
+    capacity: 50G
+    hwm: 85
+    lwm: 40
+  affirmed:
+    schedule: "*/1 * * * *"
+    days2Purge: 2d
+    bucket2Purge: affirmed
+    capacity: 1G
+    hwm: 85
+    lwm: 40
+
+presto-chart:
+  server:
+    workers: 2
+  connectors:
+    hive:
+      s3:
+        endpoint: http://cs-minio-minio-chart:9000
+        keysSecretName: cs-minio-minio-chart
+  service:
+    type: NodePort
+    port: 8080
+    nodePort: 30033
+    annotations: {}

@@ -1,0 +1,51 @@
+global:
+  isNational: false
+# These values are handled by Orchestration team, and
+# should not be modified !
+  site: "default" # provided by external parameter 
+  blueprinttype: bp-session-analyzer
+  siteType: regional
+####
+  kafka:
+    port: 9092
+    endpoint: kafka
+query-executor-ms-chart:
+  enabled: true
+  edrModelEnable: false
+  profile:
+    mode: vertica
+  global:
+    vault:
+      path: https://kuberiq-np-vip/secretsms
+online-filter-ms-chart:
+  enabled: true
+  deployments:
+    onlinefilterDeployment:
+      containers:
+        onlinefilterContainer:
+          livenessProbe:
+            initialDelaySeconds: 15
+            periodSeconds: 60
+          readinessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 60
+sam-ui-ms-chart:
+  enabled: false
+correlation-rule-ms-chart:
+  enabled: false
+sessions-data-ms-chart:
+  enabled: false
+radcom-api-ms-chart:
+  enabled: false
+correlation-rule-exe-ms-chart:
+  enabled: false
+packet-retrieval-ms-chart:
+  enabled: false
+trace-manager-ms-chart:
+  enabled: false
+trace-executor-ms-chart:
+  enabled: false
+session-exporter-ms-chart:
+  enabled: false
+sessions-uploader-ms-chart:
+  enabled: false

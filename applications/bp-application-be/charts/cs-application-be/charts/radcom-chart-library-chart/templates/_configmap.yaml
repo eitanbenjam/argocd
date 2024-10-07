@@ -1,0 +1,92 @@
+{{- define "radcom.configMap.tpl" -}}
+{{- $enabled := true }}
+{{- if eq (kindOf .Values.enabled) "bool"  }}
+  {{- $enabled = .Values.enabled }}
+{{- end }}
+{{- if $enabled }}
+{{- $root := . -}}
+{{- $configs := dict  }}
+{{- range $deployment := .Values.deployments -}}
+{{- $deploymentType := "Deployment" }}
+{{- if $deployment.deploymentType }}
+  {{- $deploymentType = $deployment.deploymentType }}
+{{- end }}
+{{- if ne $deploymentType "CronJob" }}
+{{- $name := include "radcom.name" $root }}
+{{- $fullName := include "radcom.fullname" $root }}
+{{- $metadataLabelName := $deployment.metadataLabelName | default $name }}
+{{- $configs = dict  }}
+{{- range $container := $deployment.containers }}
+{{- if eq (kindOf $container.configEnvs) "map"  }}
+  {{- $configs = merge $configs $container.configEnvs }}
+{{- end }}
+{{- if eq (kindOf $container.configFiles) "map"  }}
+  {{- $configs = merge $configs $container.configFiles.files }}
+{{- end }}
+{{- if eq (kindOf $container.envFrom) "map" }}
+  {{- $configs = merge $configs $container.envFrom.configMap }}
+{{- end }}
+{{- end }}
+{{- $namespace := "production" }}
+{{- if $root.Values.global }}
+  {{- with $root.Values.global.namespace }}
+    {{- $namespace = . }}
+  {{- end }}
+{{- end }}
+{{- if $configs }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-{{ include "radcom.fullname" $root }}
+  namespace: {{ $namespace }}
+  labels:
+{{- include "radcom.labels" $root | nindent 4 }}
+{{- include "radcom.selectorLabels" (dict "root" $root "name" $metadataLabelName) | nindent 4 }}
+{{- with $root.Values.podAdditionalLabels }}
+  {{- tpl (toYaml .) $root | nindent 4 }}
+{{- end }}
+data:
+  {{- range $file, $data := $configs }}
+  {{- $cmType := $data.type }}
+  {{- if eq $cmType "file"}}
+{{ base $file |indent 2}}: |-
+  {{- end }}  
+    {{- if and (eq (ext $file) ".properties") (eq (kindOf $data) "map") }}
+      {{- if eq $cmType "data" }}
+{{ base $file |indent 2}}: |-
+        {{- range $key, $value := $data.value }}
+{{ $key| indent 4}}={{ tpl ($value | toString) $ }} 
+        {{- end }}
+      {{- else if eq $cmType "file" }}
+{{ tpl ($.Files.Get (printf "%s" $data.path)) $ | indent 4 }}
+      {{- end }}
+    {{- else if and (eq (ext $file) ".json") (eq (kindOf $data) "map") }}
+      {{- if eq $cmType "data" }}
+        {{- range $key, $value := $data.value }}
+{{- tpl ($value | toJson) $  | nindent 4 }}
+        {{- end }}
+      {{- else if eq $cmType "file" }}
+{{ tpl ($.Files.Get (printf "%s" $data.path)) $ | indent 4 }}
+      {{- end }}
+    {{- else }}
+      {{- if eq $cmType "data" }}
+        {{- range $key, $value := $data.value }}
+{{ $key| indent 2}}: {{ tpl ($value | quote ) $ }}
+        {{- end }}
+      {{- else if eq $cmType "file" }}
+{{ tpl ($.Files.Get (printf "%s" $data.path)) $ | indent 4 }}
+      {{- else if eq $cmType "filedata" }}
+{{ tpl ($.Files.Get (printf "%s" $data.path)) $ | indent 2 }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end }}
+{{- end }}
+{{- define "radcom.configMap" -}}
+{{- template "radcom.merge" (append . "radcom.configMap.tpl") -}}
+{{- end -}}

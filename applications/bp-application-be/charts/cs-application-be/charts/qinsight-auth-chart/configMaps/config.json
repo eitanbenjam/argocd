@@ -1,0 +1,9 @@
+{
+  "dundas_secret" : "cbf3IHJKkljhlkjsh*(asdasdfasgdsgsg0yc3284-@#Q$^%^#$#@cc9-82be5d273e24",
+  "dundas_service" : "qinsight-ui-srv",
+  "dundas_port" : 9088,
+  "dundas_node_ip" : "",
+  "dundas_acc_user" : "api_auth",
+  "dundas_acc_password" : "Radmin1",
+  "dundas_ip_version" : "{{ .Values.radcomConfiguration.ipversion }}"
+}

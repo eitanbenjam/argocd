@@ -1,0 +1,120 @@
+#!/bin/bash
+cat > /var/tmp/meta.yaml << EOL
+metadata:
+   backend_ic_net_cidr: {{ .Values.general.backend_ic_net_cidr }}
+   backend_ic_net_ip_0: backend_ic_net_ip_0
+   backend_ic_net_vip_0: {{ .Values.general.conductor_backend_ic_net_vip_0 }}
+   backend_ic_net_method: dhcp
+   cluster_name: {{ .Values.cluster_name }}
+   conductor_cluster_name: {{ .Values.general.conductor_cluster_name }}
+   conductor_index: {{ .Values.machine_index }}
+   conductor_node_count: {{ .Values.conductor_node_count }}
+   conductor_oam_direct_ip: {{ .Values.general.conductor_oam_direct_ip }}
+   distributedlock_cluster_name: {{ .Values.general.distributedlock_cluster_name }}
+   distributedlock_node_count: {{ .Values.distributedlock_node_count }}
+   domain_name: {{ .Values.general.domain_name }}
+   global_mtu: {{ .Values.general.global_mtu }}
+   initial_site_list: [{name: default, role: national, full_name: , siteType: national}]
+   backend_ic_net_gateway: {{ .Values.general.backend_ic_net_gateway }}
+   backend_ic_net_mac: None
+   backend_ic_net_route_cidrs: {{ .Values.general.backend_ic_net_route_cidrs }}
+   vprobes_mgmt_int_net_cidr: {{ .Values.general.vprobes_mgmt_int_net_cidr }}
+   is_fencing_enabled: False
+   is_primary: True
+   machine_index: {{ .Values.machine_index }}
+   machine_name: conductor-{{ .Values.machine_index }}
+   machine_type: conductor
+   mgmt_version_number: {{ .Values.general.version_number }}
+   
+   
+   ntp_config_server: [127.127.1.0]
+   ntp_timezone: {{ .Values.general.ntp_timezone }}
+   oam_protected_cidr: None
+   oam_protected_net_gateway: {{ .Values.general.oam_protected_net_gateway }}
+   oam_protected_net_ip_0: oam_protected_net_ip_0
+   oam_protected_net_cidr: {{ .Values.general.oam_protected_net_cidr }}
+   oam_protected_net_mac: None
+   oam_protected_net_method: dhcp
+   oam_protected_net_vip_0: {{ .Values.general.conductor_oam_protected_net_vip_0 }}
+   oam_protected_net_route_cidrs: {{ .Values.general.oam_protected_net_route_cidrs }}
+   repo_ip: {{ .Values.general.repo_ip }}
+   rsyslog_port: 514
+   rsyslog_server: None
+   settingsandhealthdb_cluster_name: {{ .Values.general.settingsandhealthdb_cluster_name }}
+   site_name: {{ .Values.general.site_name }}
+   tenant: robin
+   vertica_cluster_name: {{ .Values.general.vertica_cluster_name }}
+   vnf_name: Conductor
+   vprobes_mgmt_int_net_gateway: {{ .Values.general.vprobes_mgmt_int_net_gateway }}
+   vprobes_mgmt_int_net_ip_0: vprobes_mgmt_int_net_ip_0
+   vprobes_mgmt_int_net_vip_0: {{ .Values.general.conductor_vprobes_mgmt_int_net_vip_0 }}
+   vprobes_mgmt_int_net_mac: None
+   vprobes_mgmt_int_net_route_cidrs: {{ .Values.general.vprobes_mgmt_int_net_route_cidrs }}
+   vprobes_mgmt_int_net_method: dhcp
+  
+   mount_colon__slash_config: 1
+   mount_colon__slash_log: 1
+  
+EOL
+
+cat > /etc/yum.repos.d/Base_Repo.repo << EOL
+[Base_Repo]
+baseurl = https://srp-1/os/\$os_name/\$subreleasever
+enabled = 1
+gpgcheck = 0
+name = Base Repo
+sslclientcert = /var/lib/yum/yum.cert
+sslclientkey = /var/lib/yum/yum.key
+sslverify = 0
+EOL
+
+cat > /etc/yum.repos.d/Radcom.repo << EOL
+[Radcom]
+baseurl = https://srp-1/repo/radcom
+enabled = 1
+gpgcheck = 0
+name = Radcom Repo
+sslclientcert = /var/lib/yum/yum.cert
+sslclientkey = /var/lib/yum/yum.key
+sslverify = 0
+EOL
+
+my_disk="/dev/"$(lsblk -no PKNAME $(df /boot|awk '{print $1}'|grep -v Filesystem))
+my_disk=$(basename $my_disk)
+echo "my_disk:"$my_disk
+lsblk -o NAME,SIZE,TYPE|grep disk$|grep -v ${my_disk}|grep ^sd|awk '{print $1" "$2}' > /tmp/disks
+echo "Setting Volumes"
+arr=($(grep mount_colon__slash_ /var/tmp/meta.yaml|awk '{print $1}'))
+for m in "${arr[@]}";do
+	mount_point=$(echo ${m}  | sed "s/mount_colon__slash_//g" | sed "s/_slash_/\//g")
+        value=$(grep ${m} /var/tmp/meta.yaml|awk '{print $2}')
+        echo "mount: ${mount_point}, value=${value}"
+        disk_name=$(grep ${value}G$ /tmp/disks |head -1|awk '{print $1}')
+        if [ "X${disk_name}" == "X" ];then
+        	echo "Cant find disk with size ${value}"
+        	exit 1
+        fi
+        sed -i "/^${disk_name}.*/d" /tmp/disks
+        cd /dev/disk/by-id
+        links=$(find . -type l | grep scsi-SATA)
+        for l in ${links[@]};do
+                linkpath=$(realpath ${l})
+                if [ ${linkpath} == "/dev/${disk_name}" ];then
+                        uuid=$(basename $l|sed "s/scsi-//g")
+			sed -i "s%${m}.*%mount_colon__slash_${mount_point} ${uuid}%g" /var/tmp/meta.yaml
+                        break
+                fi
+        done
+done
+
+srp_file_path="srp_files/"
+srp_ip={{ .Values.general.repo_ip }}
+if (! grep srp-1 /etc/hosts);then echo ${srp_ip} srp-1 |tee -a /etc/hosts;fi
+echo "INFO(GenericGloudConfig.yaml): Setting ip P_vprobes_mgmt_int_net_ip_0_P to machine" | tee -a /var/log/cloud-init-generic.log
+echo python /root/network_config.py -a P_vprobes_mgmt_int_net_method_P -p P_vprobes_mgmt_int_net_ip_0_P -m P_vprobes_mgmt_int_net_mac_P -s P_vprobes_mgmt_int_net_cidr_P -g P_vprobes_mgmt_int_net_gateway_P -u
+echo "INFO(GenericGloudConfig.yaml): Downloading functions.sh" | tee -a /var/log/cloud-init-generic.log
+while ( ! wget http://srp-1/${srp_file_path}/general/functions.sh -O  /tmp/functions.sh);do echo "waiting for srp to download http://srp-1/${srp_file_path}/general/functions.sh" | tee -a /var/log/cloud-init-generic.log; sleep 10;done
+echo "INFO(GenericGloudConfig.yaml): Loading /tmp/functions.sh"
+source /tmp/functions.sh
+echo "INFO(GenericGloudConfig.yaml): Start running main function: start_cloud_init $(echo conductor | tr [:upper:] [:lower:])"
+start_cloud_init $(echo conductor | tr [:upper:] [:lower:]) | tee -a /var/log/cloud-init-generic.log

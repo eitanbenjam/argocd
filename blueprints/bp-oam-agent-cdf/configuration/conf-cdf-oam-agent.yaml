@@ -1,0 +1,192 @@
+global:
+# These values are handled by Orchestration team, and
+# should not be modified !
+  site: "default" # provided by external parameter
+  blueprinttype: bp-oam-agent
+  siteType: CDF
+####
+  ipFamilies:
+    - ipv4
+  siteType: CDF
+
+daemon-chart:
+  enabled: false
+schema-builder-chart:
+  enabled: false
+database-loader-chart:
+  enabled: false
+database-sync-chart:
+  enabled: false
+
+persistence-volume-exporter-chart:
+  enabled: true
+  pvclocalpaths:
+    - name: storage
+      path: /var/radcom/storage
+    - name: volume
+      path: /var/radcom/volume
+  service:
+    type: ClusterIP
+    port: 8081
+
+oam-agent-chart:
+  enabled: true
+  radcomConfiguration:
+    repoType: K8S
+    kafka:
+      kafkaPort: 30201
+      kafkaDnsName: eventbus-oam-primary
+    kbrip: kuberiq-np-vip/orchestrator
+    resources:
+        requestsCpu: 100m
+        requestsMemory: 500Mi
+        limitsCpu: 1600m
+        limitsMemory: 500Mi
+
+storageclass-exporter-chart:
+  enabled: true
+  pvclocalpaths:
+    - name: storage
+      path: /var/radcom/storage
+    - name: volume
+      path: /var/radcom/volume
+
+  configMap:
+    kafkaGroupId: conductor.aceagent.topology
+    kafkaTopic: conductor.topology.update
+    kafkaServer: eventbus-oam-primary:30201
+    topologyManagerService: kuberiq-np-vip/topologyManager
+    retryPeriod: 2000
+    retryAttempts: 15
+    frontendMachineTypes: vprobe,vLB,vLBAgent
+
+  logConfig:
+    logLevel: INFO
+
+cdf-network-manager-chart:
+  enabled: false
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: 1
+    limits:
+      memory: "1Gi"
+      cpu: 1
+  configMap:
+    # Required for interface discovery
+    cdfClusterName: ""
+
+service-access-config-chart:
+  radcomConfiguration:
+    topologyManagerSvc: kuberiq-np-vip/topologyManager
+    aceOrchestratorSvc: kuberiq-np-vip/orchestrator
+  legacyConf:
+  - name: "kafka"
+    type: "kafka"
+    port: "9092"
+    siteType: "primary"
+    interface: "int_beinterconnect"
+    preferredIp: "v4"
+    ipType: "ip"
+  - name: "kafka-ext"
+    type: "kafka"
+    port: "9093"
+    siteType: "primary"
+    interface: "oam_direct"
+    ipType: "ip"
+  - name: "vertica"
+    type: "vertica"
+    port: "5433"
+    siteType: "home"
+    interface: "int_beinterconnect"
+    ipType: "ip"
+  - name: "vertica-np"
+    type: "vertica"
+    port: "5433"
+    siteType: "primary"
+    interface: "int_beinterconnect"
+    ipType: "ip"
+  - name: "kuberiq-vip"
+    type: "kuberiq"
+    port: "80"
+    siteType: "home"
+    interface: "oam_direct"
+    ipType: 'vip'
+  - name: "kuberiq-np-vip"
+    type: "kuberiq"
+    port: "80"
+    siteType: "primary"
+    interface: "oam_direct"
+    ipType: 'vip'
+  - name: "kuberiq-home-vip"
+    type: "kuberiq_cdf"
+    port: "80"
+    siteType: "home"
+    interface: "oam_direct"
+    ipType: 'vip'
+  - name: "conductor-vip"
+    type: "conductor"
+    port: "80"
+    siteType: "primary"
+    interface: "oam_direct"
+    ipType: 'vip'
+  - name: "mongodb"
+    type: "mongodb"
+    port: "27017"
+    siteType: "all"
+    interface: "oam_direct"
+    ipType: "ip"
+  - name: "eventbus-oam-primary"
+    type: "kuberiq"
+    port: "30201"
+    siteType: "primary"
+    interface: "oam_direct"
+    ipType: 'vip'
+  - name: "eventbus-bic-primary"
+    type: "kuberiq"
+    port: "9092"
+    siteType: "primary"
+    interface: "int_beinterconnect"
+    ipType: "ip"
+  - name: "eventbus-traffic-primary"
+    type: "kuberiq"
+    port: "9094"
+    siteType: "primary"
+    interface: "oam_direct"
+    ipType: 'vip'
+  - name: "eventbus-oam-secondary"
+    type: "kuberiq"
+    port: "30201"
+    siteType: "secondary"
+    interface: "oam_direct"
+  - name: "eventbus-bic-secondary"
+    type: "kuberiq"
+    port: "9092"
+    siteType: "secondary"
+    interface: "int_beinterconnect"
+    ipType: "ip"
+  - name: "eventbus-traffic-secondary"
+    type: "kuberiq"
+    port: "9094"
+    siteType: "secondary"
+    interface: "cdr_direct"
+    ipType: "ip"
+  - name: "kuberiq-primary"
+    type: "kuberiq"
+    port: "80"
+    siteType: "primary"
+    interface: "oam_direct"
+    ipType: 'vip'
+  - name: "kuberiq-secondary"
+    type: "kuberiq"
+    port: "80"
+    siteType: "secondary"
+    interface: "oam_direct"
+    ipType: 'vip'
+  - name: "kuberiq-local"
+    type: "kuberiq_cdf"
+    siteType: "home"
+    port: "80"
+    interface: "oam_direct"
+    ipType: 'vip'
+

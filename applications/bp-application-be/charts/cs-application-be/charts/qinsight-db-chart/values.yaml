@@ -1,0 +1,233 @@
+enabled: true
+global:
+  postgresql: {}
+  dockerRegistry: srp.radcom-registry.com:5000
+image:
+  repository: qinsight-db
+  tag: 1.40.0
+  pullPolicy: IfNotPresent
+  debug: false
+volumePermissions:
+  enabled: false
+  image:
+    registry: docker.io
+    repository: bitnami/bitnami-shell
+    tag: 10-debian-10-r98
+    pullPolicy: Always
+  securityContext:
+    runAsUser: 0
+securityContext:
+  enabled: true
+  fsGroup: 1001
+containerSecurityContext:
+  enabled: true
+  runAsUser: 1001
+serviceAccount:
+  enabled: false
+psp:
+  create: false
+rbac:
+  create: false
+replication:
+  enabled: false
+  user: repl_user
+  password: repl_password
+  readReplicas: 1
+  synchronousCommit: 'off'
+  numSynchronousReplicas: 0
+  applicationName: my_application
+postgresqlUsername: postgres
+postgresqlPassword: Radmin1
+postgresqlDataDir: /bitnami/postgresql/data
+extraEnv: []
+primaryAsStandBy:
+  enabled: false
+audit:
+  logHostname: false
+  logConnections: false
+  logDisconnections: false
+  pgAuditLog: ''
+  pgAuditLogCatalog: 'off'
+  clientMinMessages: error
+  logLinePrefix: ''
+  logTimezone: ''
+postgresqlSharedPreloadLibraries: pgaudit
+postgresqlMaxConnections: null
+postgresqlPostgresConnectionLimit: null
+postgresqlDbUserConnectionLimit: null
+postgresqlTcpKeepalivesInterval: null
+postgresqlTcpKeepalivesIdle: null
+postgresqlTcpKeepalivesCount: null
+postgresqlStatementTimeout: null
+postgresqlPghbaRemoveFilters: null
+ldap:
+  enabled: false
+  url: ''
+  server: ''
+  port: ''
+  prefix: ''
+  suffix: ''
+  baseDN: ''
+  bindDN: ''
+  bind_password: null
+  search_attr: ''
+  search_filter: ''
+  scheme: ''
+  tls: {}
+service:
+  type: ClusterIP
+  port: 5432
+  annotations: {}
+shmVolume:
+  enabled: true
+  chmod:
+    enabled: true
+persistence:
+  enabled: true
+  mountPath: /bitnami/postgresql
+  subPath: ''
+  storageClass: local-storage
+  accessModes:
+  - ReadWriteOnce
+  size: 10Gi
+  annotations: {}
+  selector: {}
+updateStrategy:
+  type: RollingUpdate
+primary:
+  podAffinityPreset: ''
+  podAntiAffinityPreset: soft
+  nodeAffinityPreset:
+    type: ''
+    key: ''
+    values: []
+  affinity: {}
+  nodeSelector: {}
+  tolerations: []
+  labels: {}
+  annotations: {}
+  podLabels: {}
+  podAnnotations: {}
+  priorityClassName: ''
+  extraInitContainers: []
+  extraVolumeMounts: []
+  extraVolumes: []
+  sidecars: []
+  service: {}
+readReplicas:
+  podAffinityPreset: ''
+  podAntiAffinityPreset: soft
+  nodeAffinityPreset:
+    type: ''
+    key: ''
+    values: []
+  affinity: {}
+  nodeSelector: {}
+  tolerations: []
+  labels: {}
+  annotations: {}
+  podLabels: {}
+  podAnnotations: {}
+  priorityClassName: ''
+  extraInitContainers: []
+  extraVolumeMounts: []
+  extraVolumes: []
+  sidecars: []
+  service: {}
+  persistence:
+    enabled: true
+  resources: {}
+resources:
+  requests:
+    memory: 4Gi
+    cpu: 250m
+  limits:
+    memory: 8Gi
+    cpu: 2
+commonAnnotations: {}
+networkPolicy:
+  enabled: false
+  allowExternal: true
+  explicitNamespacesSelector: {}
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 30
+  periodSeconds: 15
+  timeoutSeconds: 5
+  failureThreshold: 10
+  successThreshold: 1
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+customStartupProbe: {}
+customLivenessProbe: {}
+customReadinessProbe: {}
+tls:
+  enabled: false
+  preferServerCiphers: true
+  certificatesSecret: ''
+  certFilename: ''
+  certKeyFilename: ''
+  certCAFilename: null
+  crlFilename: null
+metrics:
+  enabled: false
+  service:
+    type: ClusterIP
+    annotations:
+      prometheus.io/scrape: 'true'
+      prometheus.io/port: '9187'
+    loadBalancerIP: null
+  serviceMonitor:
+    enabled: false
+    additionalLabels: {}
+  prometheusRule:
+    enabled: false
+    additionalLabels: {}
+    namespace: ''
+    rules: []
+  image:
+    registry: docker.io
+    repository: bitnami/postgres-exporter
+    tag: 0.9.0-debian-10-r83
+    pullPolicy: IfNotPresent
+  extraEnvVars: {}
+  securityContext:
+    enabled: false
+    runAsUser: 1001
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+extraDeploy: []
+cronjob:
+  name: qinsight-db-backup
+  schedule: 50 23 * * *
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi

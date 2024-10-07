@@ -1,0 +1,61 @@
+radcom-ctap-mgr:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 200Mi
+    requests:
+      cpu: 100m
+      memory: 200Mi
+
+  metrics:
+   prometheusPort: 10090
+
+  service:
+    port: 80
+
+  persistence:
+    storageClassName: standard
+    storageSize: 1Gi
+
+  config:
+    listen:
+      port: 80
+    vxlan_iface: "vxlan0"
+    vxlan_id: 100
+    vxlan_port: 4789
+    k8s_watched_namespaces:
+      - ns1
+      - ns2
+    k8s: null
+    # Options
+    LogLevel: "INFO" # DEBUG/INFO
+    NetworkIpMode: ipv6
+    SiteName: ""
+    SiteType: ""
+    ClusterName: ""
+
+
+radcom-ctap-agent:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 200Mi
+    requests:
+      cpu: 100m
+      memory: 200Mi
+
+  config:
+    mgr_host: "radcom-ctap-mgr"
+    mgr_port: 80
+
+    # The network interface on each node used to send packets
+    out_interface: eth0
+  
+    # Remote ip address for vxlan. If empty, use mgr_host's address
+    remote_ip: ""
+    poll_interval_s: 10.0
+    LogLevel: "INFO" # DEBUG/INFO
+    NetworkIpMode: ipv6
+    SiteName: ""
+    SiteType: ""
+    ClusterName: ""

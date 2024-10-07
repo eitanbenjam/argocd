@@ -1,0 +1,100 @@
+global:
+  isNational: true
+  dockerRepo: srp.radcom-registry.com:5000
+# These values are handled by Orchestration team, and
+# should not be modified !
+  site: "default" # provided by external parameter 
+  blueprinttype: bp-packet-analyzer
+  siteType: national
+####
+
+  traceEngineConfiguration:
+    maxTracesPerWorker: 15
+    maxPacketsPerWorker: 30
+  kafka:
+    port: 9092
+    endpoint: kafka
+    controlTopic:
+      name: tracecontrol
+      group: tracecontrol-group-1
+logging:
+  level:
+    root: INFO
+ppc-engine-chart:
+  enabled: true
+  dataservice:
+    configuration:
+      isSchemeMsMandatory: true
+    image:
+      pullPolicy: Always
+      port: 8082
+    startupProbe:
+      path: /version.json
+      port: 8082
+      failureThreshold: 30
+      periodSeconds: 10
+    livenessProbe:
+      path: /version.json
+      port: 8082
+      initialDelaySeconds: 10
+      periodSeconds: 60
+    readinessProbe:
+      path: /is_ready
+      port: 8082
+      initialDelaySeconds: 120
+      periodSeconds: 60
+  processor:
+    image:
+      pullPolicy: Always
+    startupProbe:
+      failureThreshold: 30
+      periodSeconds: 10
+    livenessProbe:
+      initialDelaySeconds: 15
+      periodSeconds: 60
+    service: null
+    type: NodePort
+    dataservice:
+      nodePort: 32701
+      port: 8082
+      targetPort: 8082
+ppc-gw-chart:
+  enabled: true
+  replicaCount: 1
+  image:
+    pullPolicy: Always
+    port: 8081
+  liveness:
+    path: /version.json
+    port: 8081
+    initialDelaySeconds: 30
+    periodSeconds: 300
+  service:
+    type: NodePort
+    nodePort: 32700
+    port: 8081
+    targetPort: 8081
+  spec:
+    rules:
+      host: kuberiq-vip
+packet-trace-executor-chart:
+  enabled: true
+  image:
+    pullPolicy: Always
+  startupProbe:
+    failureThreshold: 10
+    periodSeconds: 10
+packet-trace-manager-chart:
+  enabled: true
+  image:
+    pullPolicy: Always
+  startupProbe:
+    failureThreshold: 10
+    periodSeconds: 10
+packet-trace-analyzer-chart:
+  enabled: true
+  image:
+    pullPolicy: Always
+  startupProbe:
+    failureThreshold: 10
+    periodSeconds: 10

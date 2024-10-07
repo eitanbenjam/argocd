@@ -1,0 +1,546 @@
+{{- define "radcom.deployment.tpl" }}
+{{- $enabled := true }}
+{{- if eq (kindOf .Values.enabled) "bool" }}
+  {{- $enabled = .Values.enabled }}
+{{- end }}
+{{- if $enabled }}
+{{- $root := . -}}
+{{- $rollme := false }}
+{{- if eq (kindOf .Values.rollme) "bool" }}
+{{- $rollme = .Values.rollme }}
+{{- end }}
+{{- range $deployment := .Values.deployments -}}
+{{- $deploymentType := "Deployment" }}
+{{- with $deployment.deploymentType }}
+  {{- $deploymentType = . }}
+{{- end }}
+{{- if ne $deploymentType "CronJob" }}
+{{- $imageRepository := "srp.radcom-registry.com:5000" }}
+{{- if $root.Values.global }}
+  {{- with $root.Values.global.dockerRegistry }}
+    {{- $imageRepository = . }}
+  {{- end }}
+{{- end }}
+{{- $imageUser := "" }}
+{{- $imageName := $root.Chart.Name | replace "-chart" "" }}
+{{- $imageTag := $root.Chart.AppVersion }}
+{{- $namespace := "production" }}
+{{- if $root.Values.global }}
+  {{- with $root.Values.global.namespace }}
+    {{- $namespace = . }}
+  {{- end }}
+{{- end }}
+{{- $autoscaling := false }}
+{{- with $deployment.autoscaling }}
+  {{- $autoscaling = .enabled }}
+{{- end }}
+{{- $pullPolicy := "IfNotPresent" }}
+{{- $defaultMode := 420 }}
+{{- with $deployment.defaultMode }}
+  {{- $defaultMode = . }}
+{{- end }}
+{{- $apiVersion := "apps/v1" }}
+{{- if eq $deploymentType "Job" }}
+  {{- $apiVersion = "batch/v1" }}
+{{- end }}
+{{- $ports := include "getContainersPorts" $root }}
+{{- $defineAutomaticallyPorts := true }}
+{{- $sliceString := "" }}
+{{- $name := include "radcom.name" $root }}
+{{- $fullName := include "radcom.fullname" $root }}
+{{- $releaseName := $root.Release.Name }}
+{{- $deploymentName := "" }}
+{{- with $deployment.name }}
+  {{- $deploymentName = . }}
+{{- end }}
+{{- $metadataName := nospace (((tpl $deploymentName $) | default $fullName)) }}
+{{- if eq $deploymentType "Job" }}
+  {{- $metadataName = nospace (cat $metadataName "-job") }}
+{{- end }}
+{{- $createVolumes := dict }}
+{{- $checkConfigFiles := dict }}
+{{- $configItems := dict }}
+{{- range $container := $deployment.containers }}
+{{- $containerName := $container.name | default $name }}
+{{- if $container.configFiles }}
+  {{- $_ := set $checkConfigFiles $containerName "true" }}
+  {{- range $file, $content := $container.configFiles.files }}
+  {{- if $content.items }}
+    {{- $_ := set $configItems $file $content.items }}
+  {{- end }}
+  {{- end }}
+{{- else }}
+  {{- $_ := set $checkConfigFiles $containerName "false" }}
+{{- end }}
+{{- end }}
+{{- $vals := values $checkConfigFiles }}
+{{- $metadataLabelName := $deployment.metadataLabelName | default $name }}
+{{- $matchLabelName := $deployment.matchLabelName | default $name }}
+{{- $templateLabelName := $deployment.templateLabelName | default $name }}
+{{- $multipleCMVolumes := false }}
+{{- if and $deployment.multipleCMVolumes (eq ($deployment.multipleCMVolumes | toString) "true") }}
+  {{- $multipleCMVolumes = true }}
+{{- end }}
+{{- $createConfigEnvsVolume := true }}
+{{- if and (not $deployment.createConfigEnvsVolume) (eq ($deployment.createConfigEnvsVolume | toString) "false") }}
+  {{- $createConfigEnvsVolume = false }}
+{{- end }}
+{{- $volumeClaimTemplates := false }}
+{{- if and $deployment.volumeClaimTemplates (eq ($deployment.volumeClaimTemplates | toString) "true") }}
+  {{- $volumeClaimTemplates = true }}
+{{- end }}
+
+
+---
+apiVersion: {{ $apiVersion }}
+kind: {{ $deploymentType }}
+metadata:
+  name: {{ $metadataName }}
+  namespace: {{ $namespace }}
+  labels:
+{{- include "radcom.labels" $root | nindent 4 }}
+{{- include "radcom.selectorLabels" (dict "root" $root "name" $metadataLabelName) | nindent 4 }}
+{{- with $root.Values.podAdditionalLabels }}
+  {{- tpl (toYaml .) $root | nindent 4 }}
+{{- end }}
+{{- with $deployment.annotations }}
+  annotations:
+  {{- tpl (toYaml .) $root | nindent 4 }}
+{{- end }}
+spec:
+{{- if eq $deploymentType "Job" }}
+  {{- with $deployment.ttlSecondsAfterFinished }}
+  ttlSecondsAfterFinished: {{ . }}
+  {{- end }}
+{{- end }}
+{{- if eq $deploymentType "StatefulSet" }}
+  serviceName: {{ tpl $deployment.stateFulServiceName $ }}
+{{- end }}
+{{- if not $autoscaling }}
+  replicas: {{ $deployment.replicas | default 1 }}
+{{- end }}
+{{- with $deployment.strategy }}
+  strategy: {{ toYaml . | nindent 4 }}
+{{- end }}
+{{- if eq $deploymentType "Job" }}
+  backoffLimit: {{ $deployment.backoffLimit | default 6 }}
+{{- end }}
+{{- if not (eq $deploymentType "Job") }}
+  selector:
+    matchLabels:
+  {{- include "radcom.selectorLabels" (dict "root" $root "name" $matchLabelName) | nindent 6 }}
+  {{- with $deployment.podSelectorLabels }}
+    {{- tpl (toYaml .) $root | nindent 6 }}
+  {{- end }}
+  {{- with $root.Values.podAdditionalLabels }}
+    {{- tpl (toYaml .) $root | nindent 6 }}
+  {{- end }}
+{{- end }}
+{{- with $deployment.podManagementPolicy }}
+  podManagementPolicy: {{ tpl (. | quote) $root }}
+{{- end }}
+  template:
+    metadata:
+{{- if or $deployment.podAnnotations (has "true" $vals) $rollme }}
+      annotations:
+  {{- if (has "true" $vals) }}
+        checksum/config: {{ include "radcom.configmapChecksum" $root }}
+  {{- end }}
+  {{- if $rollme }}
+        rollme: {{ randAlphaNum 5 | quote }}
+  {{- end }}
+  {{- with $deployment.podAnnotations }}
+    {{- toYaml . | nindent 8 }}
+  {{- end }}
+{{- end }}
+      labels:
+{{- include "radcom.selectorLabels" (dict "root" $root "name" $templateLabelName) | nindent 8 }}
+{{- with $root.Values.podAdditionalLabels }}
+  {{- tpl (toYaml .) $root | nindent 8 }}
+{{- end }}
+{{- with $deployment.podTemplateLabels }}
+  {{- tpl (toYaml .) $root | nindent 8 }}
+{{- end }}
+{{- include "prometheus-targets.promlabels" $root | trim | nindent 8 }}
+    spec:
+      dnsPolicy: {{ $deployment.dnsPolicy | default "ClusterFirst" }}
+{{- with $deployment.hostAliases }}
+      hostAliases: {{ tpl (toYaml .) $root | nindent 8}}
+{{- end }}
+      restartPolicy: {{ $deployment.restartPolicy | default "Always" }}
+{{- with $deployment.dnsConfig }}
+      dnsConfig: {{ toYaml . | nindent 8 }}
+{{- end }}
+{{- with $deployment.imagePullSecrets }}
+      imagePullSecrets: {{ toYaml . | nindent 8 }}
+{{- end }}
+      serviceAccountName: {{ include "radcom.serviceAccountName" (dict "root" $root "serviceAccount" $deployment.serviceAccount) }}
+{{- with $deployment.podSecurityContext }}
+      securityContext: {{ toYaml . | nindent 8 }}
+{{- end }}
+      containers:
+{{- range $container := $deployment.containers }}
+{{- $containerName := tpl $container.name $root | default $name }}
+        - name: cont-{{ $containerName }}
+{{- with $container.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+{{- end }}
+{{- if $container.image }}
+  {{- if eq (kindOf $container.image.user) "string"  }}
+    {{- $imageUser = $container.image.user }}
+  {{- end }}
+  {{- with $container.image.name }}
+    {{- $imageName = tpl . $root }}
+  {{- end }}
+  {{- with $container.image.tag }}
+    {{- $imageTag = tpl . $root }}
+  {{- end }}
+  {{- with $container.image.pullPolicy }}
+    {{- $pullPolicy = tpl . $root }}
+  {{- end }}
+{{- end }}
+{{- if regexMatch "-SNAPSHOT$" $imageTag }}
+  {{- $pullPolicy = "Always" }}
+{{- end }}
+{{- if $imageUser }}
+  {{- $imageUser = printf "%s%s" $imageUser "/" }}
+{{- end }}
+          image: "{{ $imageRepository }}/{{ $imageUser }}{{ $imageName }}:{{ $imageTag }}"
+          imagePullPolicy: {{ $pullPolicy }}
+{{- if $container.terminationMessagePath }}
+          terminationMessagePath: {{ tpl $container.terminationMessagePath $ }}
+{{- end }}
+{{- if $container.command }}
+          command: {{ toYaml $container.command | nindent 10 }}
+{{- end }}
+{{- if $container.args }}
+          args:
+  {{- if eq (kindOf $container.args) "map" }}
+    {{- range $key, $value := $container.args }}
+    {{- if $value }}
+            - {{ $key }}={{ tpl ($value | quote) $ }}
+    {{- else }}
+            - {{ $key }}
+    {{- end }}
+    {{- end }}
+  {{- else }}
+    {{- tpl ($container.args | toYaml) $ | nindent 12 }}
+  {{- end }}
+{{- end }}
+{{- if and $container.defineAutomaticallyPorts (eq ($container.defineAutomaticallyPorts | toString) "true") }}
+  {{- $defineAutomaticallyPorts = true }}
+{{- else if and (not $container.defineAutomaticallyPorts) (eq ($container.defineAutomaticallyPorts | toString) "false") }}
+  {{- $defineAutomaticallyPorts = false }}
+{{- end }}
+{{- if $defineAutomaticallyPorts }}
+  {{- if ne (len $ports) 0 }}
+          ports: {{ $ports | nindent 12 }}
+  {{- end }}
+{{- else if and (not $defineAutomaticallyPorts) $container.ports }}
+          ports: {{ toYaml $container.ports | nindent 12 }}
+{{- end }}
+{{- if or $container.envs $container.configEnvs $root.Values.secrets $container.podFields $container.containerFields }}
+          env:
+  {{- range $key, $value := $container.envs }}
+            - name: {{ $key }}
+  {{- if eq (kindOf $value) "map" }}
+    {{ tpl (toYaml $value) $ | nindent 14 }}
+  {{- else if eq (kindOf $value) "slice" }}
+    {{- range $envSlice := $value }}
+      {{- $sliceStringEnv := $envSlice }}
+      {{- $sliceString = cat $sliceString $sliceStringEnv }}
+    {{- end }}
+              value: {{ tpl (trimPrefix " " $sliceString) $root }}
+  {{- else }}
+    {{- if contains " " (tpl $value $) }}
+              value: {{ tpl $value $ }}
+    {{- else }}
+              value: {{ tpl (toYaml $value) $ }}
+    {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- if $container.configEnvs }}
+    {{- $_ := set $createVolumes "configEnvs" $container.configEnvs }}
+  {{- end }}
+  {{- range $key, $values := $container.configEnvs }}
+  {{- if eq $values.type "data"}}
+    {{- range $subkey, $subvalues := $values.value }}
+            - name: {{ $subkey }}
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-{{ $values.configMapName | default $fullName }}
+                  key: {{ $subkey }}
+    {{- end }}
+  {{- end }}
+  {{- if eq $values.type "file"}}
+            - name: {{ $key }}
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-{{ $values.configMapName | default $fullName }}
+                  key: {{ $key }}
+  {{- end }}
+  {{- end }}
+  {{- range $key, $value := $root.Values.secrets }}
+  {{- if and $value.envParam (eq (kindOf $value.envParam) "map") }}
+    {{- range $subKey, $subValue := $value.envParam }}
+            - name: {{ $subKey }}
+              valueFrom:                
+                secretKeyRef:
+                  name: {{ $value.secretName }}
+                  key: {{ tpl $subKey $root }}
+    {{- end}}
+  {{- end }}
+  {{- if and $value.envParam (eq (kindOf $value.envParam) "slice") }}
+    {{- range $env := $value.envParam }}
+            - name: {{ $env }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $value.secretName }}
+                  key: {{ tpl $env $root }}
+    {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- range $key, $value := $container.podFields }}
+            - name: {{ $key }}
+              valueFrom:
+                fieldRef:
+                  fieldPath: {{ $value }}
+  {{- end }}
+  {{- range $key, $value := $container.containerFields }}
+            - name: {{ $key }}
+              valueFrom:
+                resourceFieldRef:
+    {{- with $value.containerName }}
+                  containerName: {{ $value.containerName }}
+    {{- end }}
+    {{- with $value.resource }}
+                  resource: {{ $value.resource }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- if $container.envFrom }}
+          envFrom:
+  {{- range $key, $value := $container.envFrom }}
+  {{- if eq $key "configMap" }}
+    {{- range $cm := $value }}
+            - configMapRef:
+                name: configmap-{{ tpl $cm.configMapName $root | default $fullName }}
+    {{- end }}
+  {{- end }}
+  {{- if eq $key "secret" }}
+    {{- range $secret := $value }}
+            - secretRef:
+                name: {{ tpl $secret.secretName $root }}
+    {{- end }}
+  {{- end }}
+  {{- end }}
+{{- end }}
+{{- if or $container.configFiles $container.secretFiles $container.hostPaths $container.persistenceVolumes $container.emptyDirs }}
+          volumeMounts:
+  {{- if $container.configFiles }}
+    {{- $_ := set $createVolumes "configFiles" $container.configFiles }}
+    {{- if ne $container.configFiles.podMount "dummy" }}
+            - name: configmap-{{ $fullName }}
+              mountPath: {{ tpl $container.configFiles.podMount $root }}
+      {{- if and (or $container.configFiles.readOnly (eq ($container.configFiles.readOnly | toString) "false")) (eq (kindOf $container.configFiles.readOnly) "bool") }}
+              readOnly: {{ $container.configFiles.readOnly }}
+      {{- end }}
+    {{- end }}
+    {{- range $key, $value := $container.configFiles.files }}
+    {{- if $value.podMount }}
+            - name: configmap-{{ tpl ($value.configMapName | default $fullName) $root }}
+      {{- with $value.podMount }}
+              mountPath: {{ tpl . $root }}
+      {{- end }}
+      {{- with $value.subPath }}
+              subPath: {{ . }}
+      {{- end }}
+      {{- if and (or $value.readOnly (eq ($value.readOnly | toString) "false")) (eq (kindOf $value.readOnly) "bool") }}
+              readOnly: {{ $value.readOnly }}
+      {{- end }}
+    {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if $container.secretFiles }}
+    {{- $_ := set $createVolumes "secretFiles" $container.secretFiles }}
+  {{- end }}
+  {{- range $secretFile := $container.secretFiles }}
+            - name: {{ $secretFile.name | default "secret-files" }}
+              mountPath: {{ tpl $secretFile.mountPath $root }}
+  {{- if $secretFile.subPath }}
+              subPath: {{ $secretFile.subPath }}
+  {{- end }}
+  {{- if and (or $secretFile.readOnly (eq ($secretFile.readOnly | toString) "false")) (eq (kindOf $secretFile.readOnly) "bool") }}
+              readOnly: {{ $secretFile.readOnly }}
+  {{- end }}
+  {{- end }}
+  {{- if $container.hostPaths }}
+    {{- $_ := set $createVolumes "hostPaths" $container.hostPaths }}
+  {{- end }}
+  {{- range $key, $value := $container.hostPaths }}
+            - name: {{ $key }}
+              mountPath: {{ tpl $value.mountPath $root }}
+  {{- if and (or $value.readOnly (eq ($value.readOnly | toString) "false")) (eq (kindOf $value.readOnly) "bool") }}
+              readOnly: {{ $value.readOnly }}
+  {{- end }}
+  {{- end }}
+  {{- if $container.persistenceVolumes }}
+    {{- $_ := set $createVolumes "persistenceVolumes" $container.persistenceVolumes }}
+  {{- end }}
+  {{- range $pvc:= $container.persistenceVolumes }}
+            - name: {{ tpl $pvc.name $root }}
+              mountPath: {{ $pvc.mountPath }}
+  {{- end }}
+  {{- if $container.emptyDirs }}
+    {{- $_ := set $createVolumes "emptyDirs" $container.emptyDirs }}
+  {{- end }}
+  {{- range $directory := $container.emptyDirs }}
+            - name: {{ tpl $directory.name $ }}
+              mountPath: {{ tpl $directory.mountPath $ }}
+    {{- if and (or $directory.readOnly (eq ($directory.readOnly | toString) "false")) (eq (kindOf $directory.readOnly) "bool") }}
+              readOnly: {{ $directory.readOnly }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- with $container.livenessProbe }}
+          livenessProbe: {{ tpl (toYaml .) $root | nindent 12 }}
+{{- end }}
+{{- with $container.readinessProbe }}
+          readinessProbe: {{ tpl (toYaml .) $root | nindent 12 }}
+{{- end }}
+{{- with $container.startupProbe }}
+          startupProbe: {{ tpl (toYaml .) $root | nindent 12 }}
+{{- end }}
+{{- with $container.lifecycle }}
+          lifecycle: {{ toYaml . | nindent 12 }}
+{{- end }}
+{{- with $container.resources }}
+          resources: {{ tpl (toYaml . ) $ | nindent 12 }}
+{{- end }}
+{{- end }}
+{{- with $deployment.nodeSelector }}
+      nodeSelector: {{ toYaml . | nindent 8 }}
+{{- end }}
+{{- with $deployment.affinity }}
+      affinity: {{ toYaml . | nindent 8 }}
+{{- end }}
+{{- with $deployment.tolerations }}
+      tolerations: {{ toYaml . | nindent 8 }}
+{{- end }}
+{{- if or (hasKey $createVolumes "secretFiles") (hasKey $createVolumes "configFiles") (hasKey $createVolumes "hostPaths") (and (hasKey $createVolumes "configEnvs") $createConfigEnvsVolume ) (hasKey $createVolumes "persistenceVolumes") (hasKey $createVolumes "emptyDirs") }}
+      volumes:
+  {{- if or (hasKey $createVolumes "configFiles") (hasKey $createVolumes "configEnvs") }}
+    {{- if eq $multipleCMVolumes false }}
+        - name: configmap-{{ $fullName }}
+          configMap:
+            name: configmap-{{ $fullName }}
+            defaultMode: {{ $defaultMode }}
+      {{- if ne (len $configItems) 0 }}
+            items:
+        {{- range $item := $configItems }}
+          {{- toYaml $item | nindent 14 }}
+        {{- end }}
+      {{- end }}
+    {{- else if eq $multipleCMVolumes true }}
+      {{- $configFiles := get $createVolumes "configFiles" }}
+      {{- range $key, $value := $configFiles.files }}
+        - name: configmap-{{ tpl $value.configMapName $root | default $fullName }}
+          configMap:
+            name: configmap-{{ tpl $value.configMapName $root | default $fullName }}
+            defaultMode: {{ $defaultMode }}
+        {{- if ne (len $configItems) 0 }}
+            items:
+          {{- range $item := $configItems }}
+            {{- toYaml $item | nindent 14 }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if hasKey $createVolumes "secretFiles" }}
+    {{- range $key, $value := get $createVolumes "secretFiles" }}
+        - name: {{ $value.name | default "secret-files" }}
+          secret:
+            secretName: {{ tpl $value.secretName $root | default $fullName }}
+    {{- if $value.defaultMode }}
+            defaultMode: {{ $value.defaultMode }}
+    {{- end }}
+    {{- if $value.items }}
+            items:
+      {{- range $item := $value.items }}
+              - key: {{ $item.key }}
+                path: {{ $item.path }}
+        {{- with $item.mode }}
+                mode: {{ . }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if (hasKey $createVolumes "hostPaths") }}
+    {{- range $key, $value := get $createVolumes "hostPaths" }}
+        - name: {{ $key }}          
+      {{- if  $value.type }}
+        {{ toYaml $value.type | nindent 10 }}
+      {{- else }}
+          hostPath:
+            path: {{ $value.path }}
+        {{- with $value.hostType }}
+            type: {{ . }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if and (hasKey $createVolumes "persistenceVolumes") (eq $volumeClaimTemplates false) }}
+    {{- range $pvc := get $createVolumes "persistenceVolumes" }}
+        - name: {{ tpl $pvc.name $root }}
+          persistentVolumeClaim:
+      {{- if $pvc.claimName }}
+            claimName: {{ tpl $pvc.claimName $root }}
+      {{- else }}
+            claimName: {{ tpl $pvc.name $root }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if (hasKey $createVolumes "emptyDirs") }}
+    {{- range $directoryName, $directory := get $createVolumes "emptyDirs" }}
+        - name: {{ tpl $directory.name $root | default $directoryName }}
+      {{- if $directory.emptyDir }}
+          emptyDir:
+        {{- toYaml $directory.emptyDir | nindent 12 }}
+      {{- else }}
+          emptyDir: {}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- if and (eq $deploymentType "StatefulSet") (eq $volumeClaimTemplates true) }}
+  volumeClaimTemplates:
+  {{- range $pvc := get $createVolumes "persistenceVolumes" }}
+    - metadata:
+    {{- if $pvc.claimName }}
+        name: {{ tpl $pvc.claimName $root }}
+    {{- else }}
+        name: {{ tpl $pvc.name $root }}
+    {{- end }}
+      spec:
+    {{- with $pvc.accessModes }}
+        accessModes:
+          - {{ tpl . $root }}
+    {{- end }}
+    {{- with $pvc.storageClassName }}
+        storageClassName: {{ tpl . $root }}
+    {{- end }}
+        resources:
+          requests:
+            storage: {{ tpl ( required "A valid spec.volumeClaimTemplates.metadata.resources.requests.storage is required" $pvc.storage) $root }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- define "radcom.deployment" -}}
+{{- template "radcom.merge" (append . "radcom.deployment.tpl") -}}
+{{- end -}}
+

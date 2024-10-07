@@ -1,0 +1,40 @@
+global:
+# These values are handled by Orchestration team, and
+# should not be modified !
+  site: "default" # provided by external parameter 
+  blueprinttype: bp-probe
+  siteType: CDF
+####
+probe-core-ms-chart:
+  configMap:
+    name: cProbe
+    clusterName: "CProbe"
+    machineType: "cProbe"
+    cprobeStandAlone: disable
+    tenant: probe
+    vprobeType: "mix"
+    networkIpMode: "ipv4"
+    prometheusPort: '10090' 
+    prometheusAllPort: '10091'
+    cdfSubType: ''
+    cdfConfigurationName: ''
+
+  deployments:
+    probecoremsDeployment:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: probe-network
+
+  dataPVC:
+    storageSize: 20Gi
+
+  configPVC:
+    storageSize: 2Gi
+
+  resources:
+    limits:
+      memory: 8Gi
+      cpu: 6000m
+      hugepages1Gi: 1
+
+
+

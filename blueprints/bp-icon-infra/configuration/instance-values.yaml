@@ -1,0 +1,27 @@
+
+flink-chart:    
+  flinksrv:
+    ports:
+      nodePort_query: 30025
+      nodePort_ui: 30081
+
+inputapi-chart:
+
+  affirmed:
+    inputapi:
+      ZeroMqExternalNodePort: 30555  
+      httpServerExternalPort: 65534 
+      httpServerExternalNodePort: 30034 
+      inputApiExtListenPort: 32255 
+      
+  samsung:
+    inputapi:
+      ZeroMqExternalNodePort: 30066
+      httpServerExternalPort: 65532 
+      httpServerExternalNodePort: 30032 
+      inputApiExtListenPort: 32256
+
+
+presto-chart:
+  service:
+    nodePort: 31033

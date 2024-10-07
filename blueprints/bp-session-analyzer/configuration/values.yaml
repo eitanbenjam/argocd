@@ -1,0 +1,162 @@
+global:
+  isNational: true
+  dockerRepo: srp.radcom-registry.com:5000
+# These values are handled by Orchestration team, and
+# should not be modified !
+  site: "default" # provided by external parameter 
+  blueprinttype: bp-session-analyzer
+  siteType: national
+####
+  traceEngineConfiguration:
+    maxTracesPerWorker: 15
+    maxPacketsPerWorker: 30
+  kafka:
+    port: 9092
+    endpoint: kafka
+    controlTopic:
+      name: tracecontrol
+      group: tracecontrol-group-1
+    queryExecutor:
+      requestTopic: query-executor-topic
+logging:
+  level:
+    root: INFO
+trace-manager-ms-chart:
+  enabled: true
+  replicaCount: 1
+  image:
+    pullPolicy: Always
+  startupProbe:
+    failureThreshold: 30
+    periodSeconds: 10
+  livenessProbe:
+    path: /isAlive
+    port: 8081
+    initialDelaySeconds: 15
+    periodSeconds: 60
+  readinessProbe:
+    path: /isReady
+    port: 8081
+    initialDelaySeconds: 120
+    periodSeconds: 60
+  service:
+    type: NodePort
+    nodePort: 32702
+    port: 8081
+    tagetPort: 8081
+trace-executor-ms-chart:
+  enabled: true
+  replicaCount: 3
+  image:
+    pullPolicy: Always
+  startupProbe:
+    failureThreshold: 30
+    periodSeconds: 10
+  livenessProbe:
+    path: /isAlive
+    port: 8081
+    initialDelaySeconds: 10
+    periodSeconds: 60
+  readinessProbe:
+    path: /isReady
+    port: 8081
+    initialDelaySeconds: 10
+    periodSeconds: 60
+  service:
+    type: NodePort
+    nodePort: 32703
+    port: 8081
+    targetPort: 8081
+packet-retrieval-ms-chart:
+  enabled: true
+  replicaCount: 3
+  image:
+    pullPolicy: Always
+  startupProbe:
+    failureThreshold: 10
+    periodSeconds: 10
+  livenessProbe:
+    path: /isAlive
+    port: 8086
+    initialDelaySeconds: 10
+    periodSeconds: 60
+  readinessProbe:
+    path: /isReady
+    port: 8086
+    initialDelaySeconds: 10
+    periodSeconds: 30
+  service:
+    type: NodePort
+    nodePort: 32704
+    port: 8086
+    targetPort: 8086
+query-executor-ms-chart:
+  enabled: true
+  replicaCount: 1
+  image:
+    pullPolicy: Always
+  startupProbe:
+    failureThreshold: 30
+    periodSeconds: 10
+  livenessProbe:
+    path: /isAlive
+    port: 8081
+    initialDelaySeconds: 10
+    periodSeconds: 60
+  readinessProbe:
+    path: /isReady
+    port: 8081
+    initialDelaySeconds: 10
+    periodSeconds: 30
+  service:
+    type: NodePort
+    nodePort: 32705
+    port: 8081
+    tagetPort: 8081
+  edrModelEnable: false
+  profile:
+    mode: vertica
+online-filter-ms-chart:
+  enabled: true
+  replicaCount: 1
+  image:
+    pullPolicy: Always
+  startupProbe:
+    failureThreshold: 30
+    periodSeconds: 10
+  livenessProbe:
+    path: /isAlive
+    port: 80
+    initialDelaySeconds: 15
+    periodSeconds: 60
+  readinessProbe:
+    path: /isReady
+    port: 80
+    initialDelaySeconds: 120
+    periodSeconds: 60
+  service:
+    port: 80
+    tagetPort: 80
+correlation-rule-exe-ms-chart:
+  enabled: true
+  replicaCount: 1
+  image:
+    pullPolicy: Always
+  startupProbe:
+    failureThreshold: 10
+    periodSeconds: 10
+  livenessProbe:
+    path: /isAlive
+    port: 8081
+    initialDelaySeconds: 10
+    periodSeconds: 60
+  readinessProbe:
+    path: /isReady
+    port: 8081
+    initialDelaySeconds: 10
+    periodSeconds: 30
+  service:
+    type: NodePort
+    nodePort: 32712
+    port: 8081
+    targetPort: 8081

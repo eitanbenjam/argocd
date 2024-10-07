@@ -1,0 +1,11 @@
+persistence-volume-provisioner-chart:
+  nodePathMap:
+    - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
+      paths:
+        - /var/radcom/volume/elastic
+  configmap:
+    # specify the config map name
+    name: elastic-local-path-config
+  storageClass:
+    provisionerName: rancher.io/elastic-local-path
+    name: stc-elastic

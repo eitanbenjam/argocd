@@ -1,0 +1,44 @@
+global:
+  isNational: false
+# These values are handled by Orchestration team, and
+# should not be modified !
+  site: "default" # provided by external parameter 
+  blueprinttype: bp-session-analyzer
+  siteType: CDF
+####
+  kafka:
+    port: 9092
+    endpoint: kafka
+query-executor-ms-chart:
+  enabled: true
+  edrModelEnable: true
+  trino:
+    port: 8443
+    user: root
+    ssl: true
+    sslVerification: NONE
+    jdbcUrl: jdbc:trino://%s:%s/hive/default
+  profile:
+    mode: trino
+sam-ui-ms-chart:
+  enabled: false
+correlation-rule-ms-chart:
+  enabled: false
+sessions-data-ms-chart:
+  enabled: false
+radcom-api-ms-chart:
+  enabled: false
+correlation-rule-exe-ms-chart:
+  enabled: false
+packet-retrieval-ms-chart:
+  enabled: false
+trace-manager-ms-chart:
+  enabled: false
+trace-executor-ms-chart:
+  enabled: false
+online-filter-ms-chart:
+  enabled: false
+session-exporter-ms-chart:
+  enabled: false
+sessions-uploader-ms-chart:
+  enabled: false

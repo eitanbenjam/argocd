@@ -1,0 +1,3 @@
+{{- if .Values.enabled }}
+  {{- template "radcom.deployment.tpl" . -}}
+{{- end }}

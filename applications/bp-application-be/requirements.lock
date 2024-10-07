@@ -1,0 +1,9 @@
+dependencies:
+- name: cs-application-be
+  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+  version: 1.805.0
+- name: shared-templates
+  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+  version: 1.0.0
+digest: sha256:56b283d5347407be454b8003b615cea6a6f8f2d358eb79edf7f1a3976a5dbff9
+generated: "2024-08-27T17:16:20.679099447+03:00"

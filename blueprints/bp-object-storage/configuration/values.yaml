@@ -1,0 +1,3 @@
+minio-chart:
+  persistence:
+    storageClass: stc-objectstore

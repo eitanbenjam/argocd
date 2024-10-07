@@ -1,0 +1,11 @@
+persistence-volume-provisioner-chart:
+  nodePathMap:
+    - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
+      paths:
+        - /var/radcom/volume/objectstore 
+  configmap:
+    # specify the config map name
+    name: objectstore-local-path-config
+  storageClass:
+    provisionerName: rancher.io/objectstore-local-path
+    name: stc-objectstore 
