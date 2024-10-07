@@ -40,6 +40,7 @@ spec:
     spec:
       storage:
         storageClassName: {{ .Values.general.storageClassName }}
+        namespace: {{ .Values.namespace }}
         accessModes:
         - ReadWriteOnce
         resources:
