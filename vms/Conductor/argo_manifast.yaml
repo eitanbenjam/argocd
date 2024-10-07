@@ -20,10 +20,10 @@ spec:
       - ../general/values.yaml
       - values.yaml
       version: v3
-    path: applications/bp-ace-cd
+    path: vms/Conductor
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
-    targetRevision: main
+    targetRevision: eitan
   syncPolicy:
     automated:
       allowEmpty: false

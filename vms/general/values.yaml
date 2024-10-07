@@ -1,5 +1,5 @@
 general:
-  namespace: production
+  namespace: openshift-gitops-operator
   storageClassName: hostpath-csi
   rocky_pvc_name: rocky-9.4
   allow_cross_site_cluster: None
