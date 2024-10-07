@@ -5,9 +5,9 @@ dependencies:
 - name: cs-adminapp-be
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.284.0
-- name: shared-templates
-  repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.0.0
+# - name: shared-templates
+#   repository: *HELM_REGISTRY_PLACEHOLDER
+#   version: 1.0.0
 description: bp-adminapp-be
 name: bp-adminapp-be
 version: 13.09.04
