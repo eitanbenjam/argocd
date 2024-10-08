@@ -73,10 +73,10 @@ spec:
                 - {{ .Values.node_selector_hostname }}
       {{- end }}
       readinessProbe:
-        httpGet:
-          path: /MaveriQConductor/isReady
-          port: 8084
-          host: 10.0.2.2
+        exec:
+          command:
+            - curl
+            - http://10.0.2.2:8084/MaveriQConductor/isReady
         initialDelaySeconds: 10
         timeoutSeconds: 10
         periodSeconds: 10
