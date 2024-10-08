@@ -128,13 +128,8 @@ cs-oam-agent:
     - name: volume
       path: /var/radcom/volume
 global:
-  appreleaseversion: 13.03.00.000.01
   blueprinttype: bp-oam-agent
   chartSet: cs-oam-agent
-  dockerRegistry: srp.radcom-registry.com:5000
-  elasticStorageClass: stc-elastic
-  generalStorageClass: local-storage
-  healthStorageClass: stc-health
   ipFamilies:
   - ipv4
   mongoComponentName: mongodb
@@ -142,10 +137,6 @@ global:
   mongoPassword: 2108a185c5b4969394c9cc18308c72a9
   mongoPort: 27017
   mongoUserName: root
-  namespace: production
-  objectStorageClass: stc-objectstorage
-  site: default
-  siteType: national
   vaultConfig:
     vaultDataServicePath: http://kuberiq-home-vip/secretsms
     vaultPathPrefix: v1/radcom
