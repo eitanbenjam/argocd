@@ -76,6 +76,7 @@ spec:
         httpGet:
           path: /MaveriQConductor/isReady
           port: 8084
+          host: localhost
       domain:
         cpu:
           cores: 4
