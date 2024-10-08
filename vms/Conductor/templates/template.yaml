@@ -78,10 +78,6 @@ spec:
           port: 8084
           host: 10.0.2.2
         initialDelaySeconds: 30
-        periodSeconds: 30
-        timeoutSeconds: 1
-        successThreshold: 1
-        failureThreshold: 999999
       domain:
         cpu:
           cores: 4
