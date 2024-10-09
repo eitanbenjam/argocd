@@ -1,0 +1,54 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  labels:
+    name: conductor
+  name: conductor
+  namespace: openshift-gitops-operator
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  revisionHistoryLimit: 10
+  sources:
+  - helm:
+      ignoreMissingValueFiles: false
+      valueFiles:
+      - ../general/values.yaml
+      - values.yaml
+      version: v3
+    path: vms/Conductor
+    ref: my-repo
+    repoURL: https://github.com/eitanbenjam/argocd
+    targetRevision: eitan
+  syncPolicy:
+    automated:
+      allowEmpty: false
+      prune: true
+      selfHeal: false
+    managedNamespaceMetadata:
+      annotations:
+        annotations: on-the-namespace
+        applies: for
+        the: same
+      labels:
+        any: label
+        you: like
+    retry:
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+      limit: 5
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ServerSideApply=true
+                                                                                                                                                                      51,1          Bot
+
+
