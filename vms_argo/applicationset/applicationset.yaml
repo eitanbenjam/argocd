@@ -50,7 +50,7 @@ spec:
             - '../general/values.yaml'
             - 'values.yaml'
       destination:
-        name: "{{.cluster.adress}}"
+        name: "{{.cluster.name}}"
         namespace: "{{.application.namespace}}"
       syncPolicy:
         automated:
