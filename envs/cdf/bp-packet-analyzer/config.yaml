@@ -1,5 +1,5 @@
 application:
-  name: "packet-analyzer "
+  name: "packet_analyzer "
   namespace: "production"
 target:
   targetRevision: "marian"
