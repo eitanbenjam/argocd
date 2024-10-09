@@ -1,8 +1,8 @@
 application:
   name: "admin-applications"
-  namespace: "production"
+  namespace: "default"
 target:
-  targetRevision: "marian"
+  targetRevision: "eitan"
   path: "helmcharts/admin-applications"
 deploy: true
 cluster:
