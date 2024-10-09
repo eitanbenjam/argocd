@@ -4,8 +4,8 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
-    name: koksinel1
-  name: koksinel1
+    name: bp-admin-applications
+  name: bp-admin-applications
   namespace: openshift-gitops-operator
 spec:
   destination:
