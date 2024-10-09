@@ -13,7 +13,7 @@ spec:
               repoURL:  https://github.com/eitanbenjam/argocd
               revision: marian
               files:
-                - path: 'clusters/**/config.yaml'
+                - path: 'envs/**/config.yaml'
           - clusters:
               selector:
                 matchLabels:
