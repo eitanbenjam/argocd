@@ -1,0 +1,317 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vertica-{{ .Values.machine_index }}-cloudinit-secret
+  namespace: {{ .Values.general.namespace }}
+type: Opaque
+data:
+  userdata: {{ (tpl (.Files.Get "userdata/startup-script") . | b64enc ) }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vertica-{{ .Values.machine_index }}-service
+spec:
+  selector:
+    radcom-machine: vertica-{{ .Values.machine_index }}
+  ports:
+  - name: ssh
+    port: 22
+
+---           
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: vertica-{{ .Values.machine_index }}
+  annotations:
+    description: Vertica
+    k8s.v1.cni.cncf.io/networks: vertica-ic-net,backend-net,
+  labels:
+    app: vertica
+    os.template.kubevirt.io/fedora: 'true'
+  namespace: {{ .Values.general.namespace }}
+spec:
+  running: true
+  dataVolumeTemplates:
+  - metadata:
+      name: vertica-{{ .Values.machine_index }}-rootdisk
+    spec:
+      storage:
+        storageClassName: {{ .Values.general.storageClassName }}
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+      source:
+        pvc:
+          namespace: {{ .Values.general.namespace }}
+          name: {{ .Values.general.rocky_pvc_name }}
+
+  template:
+    metadata:
+      annotations:        
+        vm.kubevirt.io/os: Rocky9
+        vm.kubevirt.io/workload: server
+      labels:
+        app: vertica
+        radcom-machine: vertica-{{ .Values.machine_index }}
+        kubevirt.io/domain: radcom
+        kubevirt.io/size: small
+    spec:
+      {{- if .Values.node_selector_hostname }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution: 
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - {{ .Values.node_selector_hostname }}
+      {{- end }}
+      domain:
+        cpu:
+          cores: 4
+          sockets: 1
+          threads: 1
+        devices:
+          disks:
+            - disk:
+                bus: sata
+              bootOrder: 1
+              name: rootdisk
+            - disk:
+                bus: virtio
+              name: cloudinitdisk
+            
+            - disk:
+                bus: sata
+              name: vertica-{{ .Values.machine_index }}-catalog
+              serial: catalog
+           
+            - disk:
+                bus: sata
+              name: vertica-{{ .Values.machine_index }}-data
+              serial: data
+           
+            - disk:
+                bus: sata
+              name: vertica-{{ .Values.machine_index }}-qloader
+              serial: qloader
+             
+          interfaces:
+         
+           
+            - name: oam-direct
+              masquerade: {}
+              model: virtio              
+              
+         
+           
+            - bridge: {}
+              model: virtio
+              name: vertica-ic           
+        
+         
+           
+            - bridge: {}
+              model: virtio
+              name: backend           
+        
+         
+          networkInterfaceMultiqueue: true
+          rng: {}
+        features:
+          acpi: {}
+          smm:
+            enabled: true
+        machine:
+          type: q35
+        memory:
+          guest: 8192M
+      hostname: vertica-{{ .Values.machine_index }}
+      networks:
+       
+       
+       - name: oam-direct
+         pod: {}
+        
+        
+       
+       - name: vertica-ic
+         multus:
+           networkName: default/vertica-ic-net           
+        
+        
+       
+       - name: backend
+         multus:
+           networkName: default/backend-net           
+        
+        
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - dataVolume:
+            name: vertica-{{ .Values.machine_index }}-rootdisk
+          name: rootdisk
+  
+        
+        - name: vertica-{{ .Values.machine_index }}-catalog
+          persistentVolumeClaim:
+            claimName: vertica-{{ .Values.machine_index }}-catalog-pvc
+        
+        - name: vertica-{{ .Values.machine_index }}-data
+          persistentVolumeClaim:
+            claimName: vertica-{{ .Values.machine_index }}-data-pvc
+        
+        - name: vertica-{{ .Values.machine_index }}-qloader
+          persistentVolumeClaim:
+            claimName: vertica-{{ .Values.machine_index }}-qloader-pvc
+         
+        
+        - name: cloudinitdisk
+          cloudInitNoCloud:
+            secretRef:
+              name: vertica-{{ .Values.machine_index }}-cloudinit-secret
+
+
+
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: vertica-{{ .Values.machine_index }}-catalog-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem 
+  resources:
+    requests:
+      storage: 30Gi
+  storageClassName: {{ .Values.general.storageClassName }}
+  
+
+---
+{{- if .Values.node_selector_hostname }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: vertica-{{ .Values.machine_index }}-catalog-pv
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  claimRef:
+     namespace: {{ .Values.general.namespace }}
+     name: vertica-{{ .Values.machine_index }}-catalog-pvc
+
+  storageClassName: {{ .Values.general.storageClassName }}
+  local:
+    path: /mnt/data/vertica-{{ .Values.machine_index }}-catalog-pvc/
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - {{ .Values.node_selector_hostname }}
+{{- end }}
+---
+
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: vertica-{{ .Values.machine_index }}-data-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem 
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: {{ .Values.general.storageClassName }}
+  
+
+---
+{{- if .Values.node_selector_hostname }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: vertica-{{ .Values.machine_index }}-data-pv
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  claimRef:
+     namespace: {{ .Values.general.namespace }}
+     name: vertica-{{ .Values.machine_index }}-data-pvc
+
+  storageClassName: {{ .Values.general.storageClassName }}
+  local:
+    path: /mnt/data/vertica-{{ .Values.machine_index }}-data-pvc/
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - {{ .Values.node_selector_hostname }}
+{{- end }}
+---
+
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: vertica-{{ .Values.machine_index }}-qloader-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem 
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: {{ .Values.general.storageClassName }}
+  
+
+---
+{{- if .Values.node_selector_hostname }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: vertica-{{ .Values.machine_index }}-qloader-pv
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  claimRef:
+     namespace: {{ .Values.general.namespace }}
+     name: vertica-{{ .Values.machine_index }}-qloader-pvc
+
+  storageClassName: {{ .Values.general.storageClassName }}
+  local:
+    path: /mnt/data/vertica-{{ .Values.machine_index }}-qloader-pvc/
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - {{ .Values.node_selector_hostname }}
+{{- end }}
+---
+

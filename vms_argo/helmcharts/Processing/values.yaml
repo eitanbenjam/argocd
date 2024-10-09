@@ -1,0 +1,14 @@
+backend_ic_net_ip_0: ip_addr
+backend_ic_net_mac: None
+cdr_direct_net_ip_0: ip_addr
+cdr_direct_net_mac: None
+cluster_name: Processing
+machine_index: 0
+machine_type: processing
+oam_protected_net_ip_0: ip_addr
+oam_protected_net_mac: None
+processing_node_count: 1
+tenant: robin
+vnf_name: Processing
+vprobes_mgmt_int_net_ip_0: ip_addr
+vprobes_mgmt_int_net_mac: None

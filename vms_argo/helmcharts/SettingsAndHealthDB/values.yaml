@@ -1,0 +1,11 @@
+backend_ic_net_ip_0: ip_addr
+backend_ic_net_mac: None
+cluster_name: SettingsAndHealthDB
+machine_index: 0
+machine_type: SettingsAndHealthDB
+settingsandhealthdb_node_count: 1
+settingsandhealthdb_version_number: 7.0.4
+tenant: robin
+vnf_name: SettingsAndHealthDB
+vprobes_mgmt_int_net_ip_0: ip_addr
+vprobes_mgmt_int_net_mac: None

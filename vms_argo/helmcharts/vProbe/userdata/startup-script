@@ -1,0 +1,124 @@
+#!/bin/bash
+cat > /var/tmp/meta.yaml << EOL
+metadata:
+   AppDependencies: None
+   cdf_sub_type: 
+   cdf_configuration_name: 
+   ProbeInstance: None
+   cdr_direct_net_cidr: {{ .Values.general.cdr_direct_net_cidr }}
+   cdr_direct_net_ip_0: cdr_direct_net_ip_0
+   cluster_name: {{ .Values.cluster_name }}
+   conductor_oam_direct_ip: {{ .Values.general.conductor_oam_direct_ip }}
+   domain_name: {{ .Values.general.domain_name }}
+   enable_jumbo_frames: None
+   enable_ramdisk: None
+   qanalyzer_seperate_pool: None
+   global_mtu: {{ .Values.general.global_mtu }}
+   cdr_direct_net_gateway: {{ .Values.general.cdr_direct_net_gateway }}
+   cdr_direct_net_mac: None
+   cdr_direct_net_method: dhcp
+   cdr_direct_net_route_cidrs: {{ .Values.general.cdr_direct_net_route_cidrs }}
+   pktinternal_int_net_cidr: {{ .Values.general.pktinternal_int_net_cidr }}
+   pktinternal_int_net_ip_0: pktinternal_int_net_ip_0
+   pktinternal_int_net_mac: None
+   pktinternal_int_net_method: dhcp
+   is_5g_machine: None
+   machine_name: vprobe-{{ .Values.machine_index }}
+   machine_type: vProbe
+   maveriq_ntp_server: {{ .Values.general.maveriq_ntp_server }}
+   mgmt_version_number: {{ .Values.general.version_number }}
+   mlnx_enable: False
+   
+   
+   
+   ntp_timezone: {{ .Values.general.ntp_timezone }}
+   pktinternal_int_net_dpdk: None
+   probe_id: None
+   probe_name: None
+   probe_pod: 
+   qrouter_cluster_name: {{ .Values.general.qrouter_cluster_name }}
+   repo_ip: {{ .Values.general.repo_ip }}
+   site_name: {{ .Values.general.site_name }}
+   tenant: robin
+   vLB_node_count: {{ .Values.vLB_node_count }}
+   vProbe_node_count: {{ .Values.vProbe_node_count }}
+   vlb_cluster_name: {{ .Values.general.vlb_cluster_name }}
+   vlb_node_count: {{ .Values.vlb_node_count }}
+   vnf_name: vProbe
+   vprobe_cluster_name: {{ .Values.general.vprobe_cluster_name }}
+   vprobe_node_count: {{ .Values.vprobe_node_count }}
+   vprobe_topic: 0
+   vprobe_type: mme
+   vprobes_mgmt_int_net_gateway: {{ .Values.general.vprobes_mgmt_int_net_gateway }}
+   vprobes_mgmt_int_net_cidr: {{ .Values.general.vprobes_mgmt_int_net_cidr }}
+   vprobes_mgmt_int_net_ip_0: vprobes_mgmt_int_net_ip_0
+   vprobes_mgmt_int_net_mac: None
+   vprobes_mgmt_int_net_method: dhcp
+   vprobes_mgmt_int_net_route_cidrs: {{ .Values.general.vprobes_mgmt_int_net_route_cidrs }}
+  
+   mount_colon__slash_data: data
+   mount_colon__slash_log: log
+   mount_colon__slash_config: config
+  
+EOL
+
+cat > /etc/yum.repos.d/Base_Repo.repo << EOL
+[Base_Repo]
+baseurl = https://srp-1/os/\$os_name/\$subreleasever
+enabled = 1
+gpgcheck = 0
+name = Base Repo
+sslclientcert = /var/lib/yum/yum.cert
+sslclientkey = /var/lib/yum/yum.key
+sslverify = 0
+EOL
+
+cat > /etc/yum.repos.d/Radcom.repo << EOL
+[Radcom]
+baseurl = https://srp-1/repo/radcom
+enabled = 1
+gpgcheck = 0
+name = Radcom Repo
+sslclientcert = /var/lib/yum/yum.cert
+sslclientkey = /var/lib/yum/yum.key
+sslverify = 0
+EOL
+
+my_disk="/dev/"$(lsblk -no PKNAME $(df /boot|awk '{print $1}'|grep -v Filesystem))
+my_disk=$(basename $my_disk)
+echo "my_disk:"$my_disk
+echo "Setting Volumes"
+arr=($(grep mount_colon__slash_ /var/tmp/meta.yaml|awk '{print $1}'))
+for m in "${arr[@]}";do
+        mount_point=$(echo ${m} | awk -F'_' '{print $NF}')
+        value=$(grep ${m} /var/tmp/meta.yaml|awk '{print $2}')
+        disk_name=$(lsblk -o NAME,SERIAL | grep ${value}$|awk '{print $1}')
+        if [ "X${disk_name}" == "X" ];then
+                echo "Cant find disk with size ${value}"
+                exit 1
+        fi
+        echo "mount: ${mount_point}, value=${value} , disk_name=${disk_name}"
+        cd /dev/disk/by-id
+        links=$(find . -type l | grep scsi-SATA)
+        for l in ${links[@]};do
+                linkpath=$(realpath ${l})
+                if [ ${linkpath} == "/dev/${disk_name}" ];then
+                        uuid=$(basename $l|sed "s/scsi-//g")
+                        sed -i "s/${m}.*/mount_colon__slash_${mount_point} ${uuid}/g" /var/tmp/meta.yaml
+                        break
+                fi
+        done
+done
+
+
+srp_file_path="srp_files/"
+srp_ip={{ .Values.general.repo_ip }}
+if (! grep srp-1 /etc/hosts);then echo ${srp_ip} srp-1 |tee -a /etc/hosts;fi
+echo "INFO(GenericGloudConfig.yaml): Setting ip P_vprobes_mgmt_int_net_ip_0_P to machine" | tee -a /var/log/cloud-init-generic.log
+echo python /root/network_config.py -a P_vprobes_mgmt_int_net_method_P -p P_vprobes_mgmt_int_net_ip_0_P -m P_vprobes_mgmt_int_net_mac_P -s P_vprobes_mgmt_int_net_cidr_P -g P_vprobes_mgmt_int_net_gateway_P -u
+echo "INFO(GenericGloudConfig.yaml): Downloading functions.sh" | tee -a /var/log/cloud-init-generic.log
+while ( ! wget http://srp-1/${srp_file_path}/general/functions.sh -O  /tmp/functions.sh);do echo "waiting for srp to download http://srp-1/${srp_file_path}/general/functions.sh" | tee -a /var/log/cloud-init-generic.log; sleep 10;done
+echo "INFO(GenericGloudConfig.yaml): Loading /tmp/functions.sh"
+source /tmp/functions.sh
+echo "INFO(GenericGloudConfig.yaml): Start running main function: start_cloud_init $(echo vprobe | tr [:upper:] [:lower:])"
+start_cloud_init $(echo vprobe | tr [:upper:] [:lower:]) | tee -a /var/log/cloud-init-generic.log

@@ -1,0 +1,10 @@
+backend_ic_net_ip_0: ip_addr
+backend_ic_net_mac: None
+cluster_name: DistributedLock
+distributedlock_node_count: 1
+machine_index: 0
+machine_type: distributedlock
+tenant: robin
+vnf_name: DistributedLock
+vprobes_mgmt_int_net_ip_0: ip_addr
+vprobes_mgmt_int_net_mac: None

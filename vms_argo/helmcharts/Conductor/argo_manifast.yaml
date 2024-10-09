@@ -20,7 +20,7 @@ spec:
       - ../general/values.yaml
       - values.yaml
       version: v3
-    path: vms/Conductor
+    path: vms_argo/helmcharts/Conductor
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
     targetRevision: eitan

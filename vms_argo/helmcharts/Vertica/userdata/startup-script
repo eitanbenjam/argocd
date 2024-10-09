@@ -1,0 +1,108 @@
+#!/bin/bash
+cat > /var/tmp/meta.yaml << EOL
+metadata:
+   backend_ic_net_ip_0: backend_ic_net_ip_0
+   backend_ic_net_cidr: {{ .Values.general.backend_ic_net_cidr }}
+   backend_ic_net_vip_0: {{ .Values.general.vertica_backend_ic_net_vip_0 }}
+   cluster_name: {{ .Values.cluster_name }}
+   conductor_oam_direct_ip: {{ .Values.general.conductor_oam_direct_ip }}
+   domain_name: {{ .Values.general.domain_name }}
+   global_mtu: {{ .Values.general.global_mtu }}
+   backend_ic_net_gateway: {{ .Values.general.backend_ic_net_gateway }}
+   backend_ic_net_mac: None
+   backend_ic_net_method: dhcp
+   backend_ic_net_route_cidrs: {{ .Values.general.backend_ic_net_route_cidrs }}
+   vertica_ic_net_cidr: {{ .Values.general.vertica_ic_net_cidr }}
+   vertica_ic_net_gateway: {{ .Values.general.vertica_ic_net_gateway }}
+   vertica_ic_net_ip_0: vertica_ic_net_ip_0
+   vertica_ic_net_mac: None
+   vertica_ic_net_method: dhcp
+   vertica_ic_net_route_cidrs: {{ .Values.general.vertica_ic_net_route_cidrs }}
+   machine_name: vertica-{{ .Values.machine_index }}
+   machine_type: vertica
+   maveriq_ntp_server: {{ .Values.general.maveriq_ntp_server }}
+   mgmt_version_number: {{ .Values.general.version_number }}
+   
+   
+   
+   ntp_timezone: {{ .Values.general.ntp_timezone }}
+   repo_ip: {{ .Values.general.repo_ip }}
+   site_name: {{ .Values.general.site_name }}
+   tenant: robin
+   vertica_cluster_name: {{ .Values.general.vertica_cluster_name }}
+   vertica_node_count: {{ .Values.vertica_node_count }}
+   vertica_version_number: 24.3.0-0
+   vnf_name: Vertica
+   vprobes_mgmt_int_net_gateway: {{ .Values.general.vprobes_mgmt_int_net_gateway }}
+   vprobes_mgmt_int_net_ip_0: vprobes_mgmt_int_net_ip_0
+   vprobes_mgmt_int_net_cidr: {{ .Values.general.vprobes_mgmt_int_net_cidr }}
+   vprobes_mgmt_int_net_mac: None
+   vprobes_mgmt_int_net_method: dhcp
+   vprobes_mgmt_int_net_route_cidrs: {{ .Values.general.vprobes_mgmt_int_net_route_cidrs }}
+  
+   mount_colon__slash_catalog: catalog
+   mount_colon__slash_data: data
+   mount_colon__slash_qloader: qloader
+  
+EOL
+
+cat > /etc/yum.repos.d/Base_Repo.repo << EOL
+[Base_Repo]
+baseurl = https://srp-1/os/\$os_name/\$subreleasever
+enabled = 1
+gpgcheck = 0
+name = Base Repo
+sslclientcert = /var/lib/yum/yum.cert
+sslclientkey = /var/lib/yum/yum.key
+sslverify = 0
+EOL
+
+cat > /etc/yum.repos.d/Radcom.repo << EOL
+[Radcom]
+baseurl = https://srp-1/repo/radcom
+enabled = 1
+gpgcheck = 0
+name = Radcom Repo
+sslclientcert = /var/lib/yum/yum.cert
+sslclientkey = /var/lib/yum/yum.key
+sslverify = 0
+EOL
+
+my_disk="/dev/"$(lsblk -no PKNAME $(df /boot|awk '{print $1}'|grep -v Filesystem))
+my_disk=$(basename $my_disk)
+echo "my_disk:"$my_disk
+echo "Setting Volumes"
+arr=($(grep mount_colon__slash_ /var/tmp/meta.yaml|awk '{print $1}'))
+for m in "${arr[@]}";do
+        mount_point=$(echo ${m} | awk -F'_' '{print $NF}')
+        value=$(grep ${m} /var/tmp/meta.yaml|awk '{print $2}')
+        disk_name=$(lsblk -o NAME,SERIAL | grep ${value}$|awk '{print $1}')
+        if [ "X${disk_name}" == "X" ];then
+                echo "Cant find disk with size ${value}"
+                exit 1
+        fi
+        echo "mount: ${mount_point}, value=${value} , disk_name=${disk_name}"
+        cd /dev/disk/by-id
+        links=$(find . -type l | grep scsi-SATA)
+        for l in ${links[@]};do
+                linkpath=$(realpath ${l})
+                if [ ${linkpath} == "/dev/${disk_name}" ];then
+                        uuid=$(basename $l|sed "s/scsi-//g")
+                        sed -i "s/${m}.*/mount_colon__slash_${mount_point} ${uuid}/g" /var/tmp/meta.yaml
+                        break
+                fi
+        done
+done
+
+
+srp_file_path="srp_files/"
+srp_ip={{ .Values.general.repo_ip }}
+if (! grep srp-1 /etc/hosts);then echo ${srp_ip} srp-1 |tee -a /etc/hosts;fi
+echo "INFO(GenericGloudConfig.yaml): Setting ip P_vprobes_mgmt_int_net_ip_0_P to machine" | tee -a /var/log/cloud-init-generic.log
+echo python /root/network_config.py -a P_vprobes_mgmt_int_net_method_P -p P_vprobes_mgmt_int_net_ip_0_P -m P_vprobes_mgmt_int_net_mac_P -s P_vprobes_mgmt_int_net_cidr_P -g P_vprobes_mgmt_int_net_gateway_P -u
+echo "INFO(GenericGloudConfig.yaml): Downloading functions.sh" | tee -a /var/log/cloud-init-generic.log
+while ( ! wget http://srp-1/${srp_file_path}/general/functions.sh -O  /tmp/functions.sh);do echo "waiting for srp to download http://srp-1/${srp_file_path}/general/functions.sh" | tee -a /var/log/cloud-init-generic.log; sleep 10;done
+echo "INFO(GenericGloudConfig.yaml): Loading /tmp/functions.sh"
+source /tmp/functions.sh
+echo "INFO(GenericGloudConfig.yaml): Start running main function: start_cloud_init $(echo vertica | tr [:upper:] [:lower:])"
+start_cloud_init $(echo vertica | tr [:upper:] [:lower:]) | tee -a /var/log/cloud-init-generic.log
