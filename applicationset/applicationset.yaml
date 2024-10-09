@@ -50,7 +50,7 @@ spec:
             - '../general/values.yaml'
             - 'values.yaml'
             - 'blueprint_value/values.yaml'
-            - '../../clusters/{{.cluster.name}}/{{.application.name}}{{or .application.nameSuffix "" }}/values.yaml'
+            - '../../envs/{{.cluster.name}}/{{.application.name}}{{or .application.nameSuffix "" }}/values.yaml'
       destination:
         name: "{{.cluster.name}}"
         namespace: "{{.application.namespace}}"
