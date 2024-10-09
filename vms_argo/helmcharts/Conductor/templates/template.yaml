@@ -70,6 +70,15 @@ spec:
                 values:
                 - {{ .Values.node_selector_hostname }}
       {{- end }}
+      readinessProbe:
+        httpGet:
+          path: /MaveriQConductor/isReady
+          port: 8084
+        initialDelaySeconds: 300
+        periodSeconds: 30
+        timeoutSeconds: 5
+        successThreshold: 1
+        failureThreshold: -1
       domain:
         cpu:
           cores: 4
