@@ -89,7 +89,7 @@ spec:
              
             
             - disk:
-                bus: sata
+                bus: scsi
               name: conductor-{{ .Values.machine_index }}-config
               serial: config
            
