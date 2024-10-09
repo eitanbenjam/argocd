@@ -84,16 +84,19 @@ spec:
               bootOrder: 1
               name: rootdisk
             - disk:
-                bus: virtio
+                bus: sata
               name: cloudinitdisk
+             
             
             - disk:
                 bus: sata
               name: conductor-{{ .Values.machine_index }}-config
+              serial: config
            
             - disk:
                 bus: sata
               name: conductor-{{ .Values.machine_index }}-log
+              serial: log
              
           interfaces:
          
