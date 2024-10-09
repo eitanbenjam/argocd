@@ -59,7 +59,7 @@ cs-oam-agent:
     image:
       repository: health-target-discovery
       tag: 1.0.0
-    registry: srp.radcom-registry.com:5000
+    # registry: srp.radcom-registry.com:5000
     replicaCount: 1
     resources:
       limits:
@@ -131,7 +131,7 @@ global:
   appreleaseversion: 13.03.00.000.01
   blueprinttype: bp-oam-agent
   chartSet: cs-oam-agent
-  dockerRegistry: srp.radcom-registry.com:5000
+  # dockerRegistry: srp.radcom-registry.com:5000
   elasticStorageClass: stc-elastic
   generalStorageClass: local-storage
   healthStorageClass: stc-health
