@@ -42,7 +42,7 @@ metadata:
   
    mount_colon__slash_catalog: catalog
    mount_colon__slash_data: data
-   mount_colon__slash_radcom_slash_omniq_slash_QLoader: Qloader
+   mount_colon__slash_radcom_slash_omniq_slash_QLoader: qloader
   
 EOL
 
