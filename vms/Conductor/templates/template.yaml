@@ -89,12 +89,12 @@ spec:
              
             
             - disk:
-                bus: scsi
+                bus: sata
               name: conductor-{{ .Values.machine_index }}-config
               serial: config
            
             - disk:
-                bus: scsi
+                bus: sata
               name: conductor-{{ .Values.machine_index }}-log
               serial: log
              
