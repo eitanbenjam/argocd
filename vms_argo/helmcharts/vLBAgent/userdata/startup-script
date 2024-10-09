@@ -94,7 +94,7 @@ echo "my_disk:"$my_disk
 echo "Setting Volumes"
 arr=($(grep mount_colon__slash_ /var/tmp/meta.yaml|awk '{print $1}'))
 for m in "${arr[@]}";do
-        mount_point=$(echo ${m} | awk -F'_' '{print $NF}')
+        mount_point=$(echo ${m} | awk -F'mount_colon__slash_' '{print $2}')
         value=$(grep ${m} /var/tmp/meta.yaml|awk '{print $2}')
         disk_name=$(lsblk -o NAME,SERIAL | grep ${value}$|awk '{print $1}')
         if [ "X${disk_name}" == "X" ];then
