@@ -3,7 +3,7 @@ backend_ic_net_mac: None
 cluster_name: Conductor
 conductor_index: 0
 conductor_node_count: 1
-distributedlock_node_count: 0
+distributedlock_node_count: 1
 initial_site_list: '[{name: default, role: national, full_name: , siteType: national}]'
 is_fencing_enabled: 'False'
 is_primary: 'True'
@@ -19,4 +19,3 @@ tenant: robin
 vnf_name: Conductor
 vprobes_mgmt_int_net_ip_0: ip_addr
 vprobes_mgmt_int_net_mac: None
-#node_selector_hostname: 00-50-56-9d-c1-4b

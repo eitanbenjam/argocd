@@ -52,8 +52,8 @@ metadata:
    vprobes_mgmt_int_net_route_cidrs: {{ .Values.general.vprobes_mgmt_int_net_route_cidrs }}
    vprobes_mgmt_int_net_method: dhcp
   
-   mount_colon__slash_config: 1
-   mount_colon__slash_log: 1
+   mount_colon__slash_config: config
+   mount_colon__slash_log: log
   
 EOL
 
@@ -82,30 +82,29 @@ EOL
 my_disk="/dev/"$(lsblk -no PKNAME $(df /boot|awk '{print $1}'|grep -v Filesystem))
 my_disk=$(basename $my_disk)
 echo "my_disk:"$my_disk
-lsblk -o NAME,SIZE,TYPE|grep disk$|grep -v ${my_disk}|grep ^sd|awk '{print $1" "$2}' > /tmp/disks
 echo "Setting Volumes"
 arr=($(grep mount_colon__slash_ /var/tmp/meta.yaml|awk '{print $1}'))
 for m in "${arr[@]}";do
-	mount_point=$(echo ${m}  | sed "s/mount_colon__slash_//g" | sed "s/_slash_/\//g")
+        mount_point=$(echo ${m} | awk -F'_' '{print $NF}')
         value=$(grep ${m} /var/tmp/meta.yaml|awk '{print $2}')
-        echo "mount: ${mount_point}, value=${value}"
-        disk_name=$(grep ${value}G$ /tmp/disks |head -1|awk '{print $1}')
+        disk_name=$(lsblk -o NAME,SERIAL | grep ${value}$|awk '{print $1}')
         if [ "X${disk_name}" == "X" ];then
-        	echo "Cant find disk with size ${value}"
-        	exit 1
+                echo "Cant find disk with size ${value}"
+                exit 1
         fi
-        sed -i "/^${disk_name}.*/d" /tmp/disks
+        echo "mount: ${mount_point}, value=${value} , disk_name=${disk_name}"
         cd /dev/disk/by-id
         links=$(find . -type l | grep scsi-SATA)
         for l in ${links[@]};do
                 linkpath=$(realpath ${l})
                 if [ ${linkpath} == "/dev/${disk_name}" ];then
                         uuid=$(basename $l|sed "s/scsi-//g")
-			sed -i "s%${m}.*%mount_colon__slash_${mount_point} ${uuid}%g" /var/tmp/meta.yaml
+                        sed -i "s/${m}.*/mount_colon__slash_${mount_point} ${uuid}/g" /var/tmp/meta.yaml
                         break
                 fi
         done
 done
+
 
 srp_file_path="srp_files/"
 srp_ip={{ .Values.general.repo_ip }}

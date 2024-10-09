@@ -17,8 +17,6 @@ spec:
   ports:
   - name: ssh
     port: 22
-  - name: wildfly
-    port: 8084
 
 ---           
 apiVersion: kubevirt.io/v1
@@ -84,9 +82,8 @@ spec:
               bootOrder: 1
               name: rootdisk
             - disk:
-                bus: sata
+                bus: virtio
               name: cloudinitdisk
-             
             
             - disk:
                 bus: sata
