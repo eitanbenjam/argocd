@@ -42,7 +42,7 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 20Gi
+            storage: 30Gi
       source:
         pvc:
           namespace: {{ .Values.general.namespace }}

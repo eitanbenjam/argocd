@@ -17,6 +17,8 @@ spec:
   ports:
   - name: ssh
     port: 22
+  - name: wildfly
+    port: 8084
 
 ---           
 apiVersion: kubevirt.io/v1

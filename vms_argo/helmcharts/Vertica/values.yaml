@@ -7,7 +7,7 @@ tenant: robin
 vertica_ic_net_ip_0: ip_addr
 vertica_ic_net_mac: None
 vertica_node_count: 1
-vertica_version_number: 24.3.0-0
+vertica_version_number: 24.1.0-0
 vnf_name: Vertica
 vprobes_mgmt_int_net_ip_0: ip_addr
 vprobes_mgmt_int_net_mac: None
