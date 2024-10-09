@@ -1,0 +1,63 @@
+CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argocdRadcomBEALB-2065376002.us-east-2.elb.amazonaws.com
+SITE_PLACEHOLDER: &SITE_PLACEHOLDER argotlv
+VERSION: 13.09.00.000.04
+cs-probe:
+  probe-core-ms-chart:
+    conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
+    configMap:
+      cdfConfigurationName: ''
+      cdfControlInterfacePref: AWS_RADCOM_CDF_CONTROL
+      cdfGroup: group1
+      cdfSubType: ''
+      clusterName: cLBA
+      cprobeStandAlone: disable
+      defaultInterfacePref: AWS_RADCOM_DEFAULT
+      interfaceNames: tcp
+      machineType: cLBA
+      name: clba-values
+      networkIpMode: ipv4
+      nfManagerInterfacePref: AWS_RADCOM_NF_MANAGER
+      oamDirectInterfacePref: AWS_RADCOM_OAM_DIRECT
+      packetInternalInterfacePref: AWS_RADCOM_PACKET_INTERNAL
+      packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
+      prometheusAllPort: '10091'
+      prometheusPort: '10090'
+      qrouterIp: XXXXXXXXXXXXXXX
+      siteName: *SITE_PLACEHOLDER
+      storageClassName: gp3-persistent
+      tenant: probe
+      trafficDataInterfacePref: AWS_RADCOM_TRAFFIC_DATA
+      useNetworkAttachmentDefinition: 'no'
+      versionNumber: 13.09.00.000.04
+      vprobeType: mix
+    configPVC:
+      storageSize: 2Gi
+    dataPVC:
+      storageSize: 20Gi
+    deployments:
+      probecoremsDeployment:
+        annotations:
+          k8s.v1.cni.cncf.io/networks: probe-network
+        containers:
+          probecoremsContainer:
+            env:
+              AWS_RADCOM_CDF_CONTROL_INTF_NAMES: eth1
+              AWS_RADCOM_DEFAULT_INTF_NAMES: eth0
+              AWS_RADCOM_NF_MANAGER_INTF_NAMES: eth0
+              AWS_RADCOM_OAM_DIRECT_INTF_NAMES: eth0
+              AWS_RADCOM_PACKET_INTERNAL_INTF_NAMES: eth1
+              AWS_RADCOM_PACKET_MIRROR_INTF_NAMES: ''
+              AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
+    resources:
+      limit:
+        cpu: 6000m
+        hugepages1Gi: '1'
+        memory: 8Gi
+      requests:
+        cpu: 6000m
+        hugepages1Gi: '1'
+        memory: 8Gi
+shared-templates:
+  add_blueprints: false
+  save_blueprint: false
+  wait_for_ace_orchestrator: false

@@ -1,0 +1,10 @@
+application:
+  name: "probe"
+  namespace: "production"
+target:
+  targetRevision: "marian"
+  path: "helmcharts/bp-probe"
+deploy: false
+cluster:
+  name: cdf
+  adress: "https://kubernetes.default.svc"
