@@ -94,7 +94,7 @@ spec:
               serial: config
            
             - disk:
-                bus: sata
+                bus: scsi
               name: conductor-{{ .Values.machine_index }}-log
               serial: log
              
