@@ -3,7 +3,7 @@ application:
   namespace: "default"
 target:
   targetRevision: "eitan"
-  path: "helmcharts/Conductor"
+  path: "vms_argo/helmcharts/Conductor"
 deploy: true
 cluster:
   name: in-cluster
