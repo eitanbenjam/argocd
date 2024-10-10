@@ -13,7 +13,7 @@ spec:
               repoURL:  https://github.com/eitanbenjam/argocd
               revision: eitan
               files:
-                - path: 'clusters/vms/**/config.yaml'
+                - path: 'vms_argo/clusters/**/config.yaml'
           - clusters:
               selector:
                 matchLabels:
@@ -50,7 +50,7 @@ spec:
             - '../general/values.yaml'
             - 'values.yaml'
       destination:
-        server: "{{.cluster.adress}}"
+        server: "{{.cluster.address}}"
         namespace: "{{.application.namespace}}"
       syncPolicy:
         automated:
