@@ -6,7 +6,7 @@ SITE_HEALTH_STORAGE: &SITE_HEALTH_STORAGE gp3
 SITE: &SITE argotlv
 HELM_REGISTRY: &HELM_REGISTRY nexus3-prod.radcom.co.il:8081/repository/charts/
 DOCKER_REGISTRY: &DOCKER_REGISTRY nexus3-prod.radcom.co.il:8081/repository/docker/
-NAMESPACE: &NAMESPACE production
+NAMESPACE: &NAMESPACE default
 CONDUCTOR_VIP: &CONDUCTOR_VIP conductor-service
 VERSION: &VERSION 13.09.00.000.04
 CLOUD: &CLOUD openshift
