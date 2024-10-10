@@ -31,7 +31,7 @@ metadata:
    tenant: robin
    vertica_cluster_name: {{ .Values.general.vertica_cluster_name }}
    vertica_node_count: {{ .Values.vertica_node_count }}
-   vertica_version_number: 24.3.0-0
+   vertica_version_number: {{ .Values.vertica_version_number }}
    vnf_name: Vertica
    vprobes_mgmt_int_net_gateway: {{ .Values.general.vprobes_mgmt_int_net_gateway }}
    vprobes_mgmt_int_net_ip_0: vprobes_mgmt_int_net_ip_0
