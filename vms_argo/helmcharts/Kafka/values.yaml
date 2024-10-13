@@ -2,7 +2,7 @@ backend_ic_net_ip_0: ip_addr
 backend_ic_net_mac: None
 cluster_name: Kafka
 kafka_node_count: 1
-kafka_version_number: 2.13-3.7.0
+kafka_version_number: 2.13-3.2.0
 machine_index: 0
 machine_type: kafka
 tenant: robin
