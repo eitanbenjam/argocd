@@ -17,18 +17,18 @@ spec:
       - /spec/syncPolicy
   template:
     metadata:
-      name: '{{.application.name}}' #{{or .application.nameSuffix "" | replace "/" "-"}}'
+      name: "{{.application.name}}" #{{or .application.nameSuffix "" | replace "/" "-"}}'
       labels:
         app.kubernetes.io/component: argocd-vm
-        app.kubernetes.io/part-of: '{{.cluster.name}}'
+        app.kubernetes.io/part-of: "{{.cluster.name}}"
       finalizers:
       - resources-finalizer.argocd.argoproj.io
     spec:
       project: default
       source:
         repoURL: https://github.com/eitanbenjam/argocd
-        targetRevision: '{{.target.targetRevision}}'
-        path: '{{.target.path}}'
+        targetRevision: "{{.target.targetRevision}}"
+        path: "{{.target.path}}"
         helm:
           skipCrds: true
           releaseName: "{{.application.name}}"
