@@ -6,7 +6,7 @@ SITE_HEALTH_STORAGE: &SITE_HEALTH_STORAGE gp3
 SITE: &SITE argotlv
 HELM_REGISTRY: &HELM_REGISTRY http://nexus3-prod.radcom.co.il:8081/repository/charts/
 #HELM_REGISTRY: &HELM_REGISTRY nexus3-prod.radcom.co.il:8081/repository/charts/
-DOCKER_REGISTRY: &DOCKER_REGISTRY nexus3-prod.radcom.co.il:8088
+DOCKER_REGISTRY: &DOCKER_REGISTRY nexus3-prod.radcom.co.il:8084/repository/charts/
 NAMESPACE: &NAMESPACE default
 CONDUCTOR_VIP: &CONDUCTOR_VIP internal-argocdRadcomBEALB-2065376002.us-east-2.elb.amazonaws.com
 VERSION: &VERSION 13.09.00.000.04
