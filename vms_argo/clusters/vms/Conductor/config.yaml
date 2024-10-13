@@ -6,6 +6,5 @@ target:
   path: "vms_argo/helmcharts/Conductor"
 deploy: true
 cluster:
-  - name: in-cluster
-    address: "https://kubernetes.default.svc"
-dslfkjsdlkfjsdkljsdfklsdjflkj
+  name: in-cluster
+  address: "https://kubernetes.default.svc"
