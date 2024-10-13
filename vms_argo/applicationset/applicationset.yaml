@@ -7,23 +7,11 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=invalid"]
   generators:
-    - matrix:
-        generators:
-          - git:
-              repoURL:  https://github.com/eitanbenjam/argocd
-              revision: marian
-              files:
-                - path: 'vms_argo/clusters/**/config.yaml'
-          - clusters:
-              selector:
-                matchLabels:
-                  cluster: '{{.cluster.name}}'
-      selector:    
-        matchExpressions:
-        - key: deploy
-          operator: In
-          values:
-            - "true"
+  - git:
+      repoURL:  https://github.com/eitanbenjam/argocd
+      revision: marian
+      files:
+      - path: 'vms_argo/clusters/**/config.yaml'
   ignoreApplicationDifferences:
     - jsonPointers:
       - /spec/syncPolicy

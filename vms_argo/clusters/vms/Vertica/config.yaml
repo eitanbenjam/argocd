@@ -1,0 +1,10 @@
+application:
+  name: "vertica"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "vms_argo/helmcharts/Vertica"
+deploy: true
+cluster:
+  name: in-cluster
+  address: "https://kubernetes.default.svc"
