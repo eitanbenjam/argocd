@@ -9,9 +9,9 @@ spec:
   generators:
   - git:
       repoURL:  https://github.com/eitanbenjam/argocd
-      revision: marian
+      revision: eitan
       files:
-      - path: 'vms_argo/clusters/**/config.yaml'
+      - path: 'vms_argo/clusters/vms/**/config.json'
   ignoreApplicationDifferences:
     - jsonPointers:
       - /spec/syncPolicy
