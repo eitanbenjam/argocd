@@ -8,3 +8,4 @@ deploy: true
 cluster:
   - name: in-cluster
     address: "https://kubernetes.default.svc"
+dslfkjsdlkfjsdkljsdfklsdjflkj
