@@ -8,7 +8,7 @@ cs-k8s-infra:
   radcom-crds-chart:
     enabled: true
   radcom-ingress-nginx-chart:
-    enabled: false
+    enabled: true
 shared-templates:
   add_blueprints: false
   save_blueprint: false
