@@ -9,6 +9,14 @@ cs-k8s-infra:
     enabled: true
   radcom-ingress-nginx-chart:
     enabled: true
+    controller:
+      image:
+        registry: nexus3-prod.radcom.co.il:8084
+      admissionWebhooks:
+        path:
+          image:
+            registry: nexus3-prod.radcom.co.il:8084
+
 shared-templates:
   add_blueprints: false
   save_blueprint: false
