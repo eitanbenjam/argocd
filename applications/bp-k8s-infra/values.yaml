@@ -13,7 +13,7 @@ cs-k8s-infra:
       image:
         registry: nexus3-prod.radcom.co.il:8084
       admissionWebhooks:
-        path:
+        patch:
           image:
             registry: nexus3-prod.radcom.co.il:8084
 
