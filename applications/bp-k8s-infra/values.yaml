@@ -12,10 +12,12 @@ cs-k8s-infra:
     controller:
       image:
         registry: nexus3-prod.radcom.co.il:8084
+        digest: false
       admissionWebhooks:
         patch:
           image:
             registry: nexus3-prod.radcom.co.il:8084
+            digest: false
 
 shared-templates:
   add_blueprints: false
