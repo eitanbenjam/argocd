@@ -7,8 +7,10 @@ cs-k8s-infra:
     enabled: false
   radcom-crds-chart:
     enabled: true
-  radcom-ingress-nginx-chart:
+  aws-ingress-nginx-chart:
     enabled: true
+  radcom-ingress-nginx-chart:
+    enabled: false
     controller:
       image:
         registry: nexus3-prod.radcom.co.il:8084
