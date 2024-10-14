@@ -19,6 +19,9 @@ shared-templates:
 
 
 ###############################################
+cs-k8s-infra:
+  aws-ingress-nginx-chart:
+    repository: *DOCKER_REGISTRY
 repository: *DOCKER_REGISTRY
 global:
   namespace: *NAMESPACE
