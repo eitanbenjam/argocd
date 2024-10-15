@@ -3,3 +3,4 @@ shared-templates:
   save_blueprint: true
   wait_for_ace_orchestrator: false
   wait_for_ace_orchestrator_on_post: true
+  wait_for_event_bus: true
