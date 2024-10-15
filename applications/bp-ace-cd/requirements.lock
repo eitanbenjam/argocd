@@ -1,6 +1,0 @@
-dependencies:
-- name: ace-cd-chart
-  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
-  version: "99.99"
-digest: sha256:ef86428cd59d48e62bbc6967722d6663d5026b0774fc674a20b1fa2bbdfee093
-generated: "2024-08-28T12:38:40.090193559+03:00"
