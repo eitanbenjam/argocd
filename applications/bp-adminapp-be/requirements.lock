@@ -1,9 +1,0 @@
-dependencies:
-- name: cs-adminapp-be
-  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
-  version: 1.284.0
-- name: shared-templates
-  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
-  version: 1.0.0
-digest: sha256:64bdbca5efda893c3c04fcc977e873a9196ce4a665e8c4970706e43e294628d2
-generated: "2024-08-27T18:24:04.973695054+03:00"
