@@ -8,7 +8,7 @@ cs-k8s-infra:
   radcom-crds-chart:
     enabled: true
   aws-ingress-nginx-chart:
-    enabled: true
+    enabled: false
   radcom-ingress-nginx-chart:
     enabled: false
     controller:
