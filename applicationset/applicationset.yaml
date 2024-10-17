@@ -60,7 +60,7 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=false
+          - ServerSideApply=true
           - ServerSideDiff=false
         retry:
           limit: 2
