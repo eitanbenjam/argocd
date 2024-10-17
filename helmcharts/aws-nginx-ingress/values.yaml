@@ -21,6 +21,7 @@ cs-k8s-infra:
   aws-ingress-nginx-chart:
     enabled: true
     repository: *DOCKER_REGISTRY_PLACEHOLDER
+    # eks_subnets: subnet-08f63aa7cb0c3a30a,subnet-0643f3e7e6092944c
     eks_subnets: subnet-0e45d1c49eae48fe2,subnet-024dd1e5b4f30cd81
     deployment_name: argocd
     load_balancer_source_ranges: 0.0.0.0/0
