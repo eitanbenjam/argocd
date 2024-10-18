@@ -16,8 +16,11 @@ GIT_BRANCH: main
 shared-templates:
   ace_cd_tag: argo
 
+QROUTER_IP: &QROUTER_IP "10.8.39.16"
+BLUEPRINT_PROBE_ID: &BLUEPRINT_PROBE_ID "100001"
 
-
+#bp-oamn-agent-cdf-network-manage
+CDF_CLUSTER_NAME: &CDF_CLUSTER_NAME "argo_cdf1"
 
 ###############################################
 repository: *DOCKER_REGISTRY

@@ -1,8 +1,10 @@
+CDF_CLUSTER_NAME: &CDF_CLUSTER_NAME "argo_cdf1"
+
 cs-oam-agent:
   cdf-network-manager-chart:
     configMap:
-      cdfClusterName: ''
-    enabled: false
+      cdfClusterName: $CDF_CLUSTER_NAME
+    enabled: true
     resources:
       limits:
         cpu: 1
