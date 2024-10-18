@@ -48,7 +48,7 @@ cs-probe:
               AWS_RADCOM_PACKET_INTERNAL_INTF_NAMES: net1
               AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
         podAnnotations:
-          k8s.v1.cni.cncf.io/networks: dpdk-net-internal-probe-$BLUEPRINT_PROBE_ID
+          k8s.v1.cni.cncf.io/networks: "dpdk-net-internal-probe-100001"
     resources:
       limit:
         cpu: 6000m
@@ -60,7 +60,7 @@ cs-probe:
         memory: 8Gi
 global:
   configMap:
-    probeId: $BLUEPRINT_PROBE_ID
+    probeId: *BLUEPRINT_PROBE_ID
   # blueprinttype: bp-probe
   # site: default
   # siteType: CDF
