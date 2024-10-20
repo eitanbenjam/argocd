@@ -1,3 +1,7 @@
+bp-oam:
+  vault-unsealer-chart:
+    vault-unsealer-chart: cicd-cluster-eks-role
+
 shared-templates:
   add_blueprints: true
   save_blueprint: true
