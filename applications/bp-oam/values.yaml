@@ -1,6 +1,10 @@
-bp-oam:
+cs-oam:
   vault-unsealer-chart:
-    vault-unsealer-chart: cicd-cluster-eks-role
+    deployments:
+      vaultunsealerDeployment:
+        serviceAccount: 
+          name: cicd-cluster-eks-role
+          create: False
 
 shared-templates:
   add_blueprints: true
