@@ -1,0 +1,44 @@
+SITE_OBJECT_STORAGE: &SITE_OBJECT_STORAGE gp3
+SITE_ELASTIC_STORAGE: &SITE_ELASTIC_STORAGE gp3
+SITE_GENERAL_STORAGE: &SITE_GENERAL_STORAGE gp3
+SITE_EVENT_BUS_STORAGE: &SITE_EVENT_BUS_STORAGE gp3
+SITE_HEALTH_STORAGE: &SITE_HEALTH_STORAGE gp3
+SITE: &SITE argotlv
+HELM_REGISTRY: &HELM_REGISTRY oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+DOCKER_REGISTRY: &DOCKER_REGISTRY 571789434150.dkr.ecr.us-east-2.amazonaws.com
+NAMESPACE: &NAMESPACE production
+#CONDUCTOR_VIP: &CONDUCTOR_VIP internal-argoRadcomBEALB-674568957.us-east-2.elb.amazonaws.com
+CONDUCTOR_VIP: &CONDUCTOR_VIP internal-argoRadcomBEALB-674568957.us-east-2.elb.amazonaws.com
+VERSION: &VERSION 13.09.00.000.04
+CLOUD: &CLOUD aws
+GIT: https://github.com/eitanbenjam/argocd
+GIT_BRANCH: marian
+shared-templates:
+  ace_cd_tag: argo
+
+QROUTER_IP: &QROUTER_IP "10.8.39.88"
+MONGO_IP: &MONGO_IP "10.8.37.190"
+BLUEPRINT_PROBE_ID: &BLUEPRINT_PROBE_ID "100001"
+
+#bp-oamn-agent-cdf-network-manage
+CDF_CLUSTER_NAME: &CDF_CLUSTER_NAME "argo_cdf1"
+
+###############################################
+repository: *DOCKER_REGISTRY
+global:
+  namespace: *NAMESPACE
+  dockerRegistry: *DOCKER_REGISTRY
+  docker_registry: *DOCKER_REGISTRY
+  imageRegistry: *DOCKER_REGISTRY
+  objectStorageClass: *SITE_OBJECT_STORAGE
+  generalStorageClass: *SITE_GENERAL_STORAGE
+  healthStorageClass: *SITE_HEALTH_STORAGE
+  elasticStorageClass: *SITE_ELASTIC_STORAGE
+  site: *SITE
+  cloud_provider: *CLOUD
+  conductorVip: *CONDUCTOR_VIP
+  conductorIP: *CONDUCTOR_VIP
+  qrouterIp: *QROUTER_IP
+  mongoIp: *MONGO_IP
+  maveriq_version: *VERSION
+  appreleaseversion: *VERSION

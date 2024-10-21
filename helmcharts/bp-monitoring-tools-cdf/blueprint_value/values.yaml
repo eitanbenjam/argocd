@@ -1,0 +1,11 @@
+cs-monitoring-tools:
+  application-authentication-chart:
+    enabled: false
+  elasticsearch-chart:
+    enabled: false
+  fluentd-chart:
+    enabled: false
+  grafana-helm-chart:
+    enabled: false
+  kibana-chart:
+    enabled: false

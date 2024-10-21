@@ -1,0 +1,29 @@
+DOCKER_REGISTRY_PLACEHOLDER: &DOCKER_REGISTRY_PLACEHOLDER 571789434150.dkr.ecr.us-east-2.amazonaws.com
+add_blueprint: true
+## enable MS deployment
+#
+
+cs-k8s-infra:
+  persistence-volume-provisioner-chart:
+    enabled: false
+
+  radcom-ingress-nginx-chart:
+    enabled: false
+
+  radcom-crds-chart:
+    enabled: false
+
+  multus-chart:
+    enabled: false
+
+  maveriq-dns-chart:
+    enabled: false
+  aws-ingress-nginx-chart:
+    enabled: true
+    repository: *DOCKER_REGISTRY_PLACEHOLDER
+    # eks_subnets: subnet-08f63aa7cb0c3a30a,subnet-0643f3e7e6092944c
+    eks_subnets: subnet-0e45d1c49eae48fe2,subnet-024dd1e5b4f30cd81
+    deployment_name: argocd
+    load_balancer_source_ranges: 0.0.0.0/0
+    create_external_loadbalancer: false
+

@@ -1,0 +1,10 @@
+application:
+  name: "applications"
+  namespace: "production"
+target:
+  targetRevision: "marian"
+  path: "helmcharts/bp-applications"
+deploy: false
+cluster:
+  name: cdf
+  adress: "https://kubernetes.default.svc"

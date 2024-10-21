@@ -1,0 +1,151 @@
+cs-oam-agent:
+  alert-notification-ms-chart:
+    enabled: true
+    radcomConfiguration:
+      alertnotificationms:
+        resources:
+          limits:
+            cpu: 1
+            memory: 128Mi
+          requests:
+            cpu: 0.1
+            memory: 128Mi
+  daemon-chart:
+    affinity: {}
+    autoscaling:
+      enabled: false
+      maxReplicas: 100
+      minReplicas: 1
+      targetCPUUtilizationPercentage: 80
+    daemonConfig:
+      api_gw_ip: configmanager-srv
+      api_gw_port: 80
+      scribe_ip: configmanager-srv
+      scribe_port: 80
+      xmlRulesUrl: http://kuberiq-np-vip/api/v1/CentralConfigurationMS/DBConfiguration/GetXMLRules
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+      readOnly: true
+    nodeSelector: {}
+    podAnnotations: {}
+    radcomConfiguration:
+      daemonDeployment:
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 2048M
+          requests:
+            cpu: 100m
+            memory: 400M
+    securityContext: {}
+    tolerations: []
+  database-loader-chart:
+    databaseLoader:
+      enabled: true
+    radcomConfiguration:
+      databaseLoaderDeployment:
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 2048M
+          requests:
+            cpu: 100m
+            memory: 500M
+  database-sync-chart:
+    enabled: false
+  health-target-discovery-chart:
+    enabled: true
+    image:
+      repository: health-target-discovery
+      tag: 1.0.0
+    # registry: srp.radcom-registry.com:5000
+    replicaCount: 1
+    resources:
+      limits:
+        cpu: '1'
+        memory: 200Mi
+      requests:
+        cpu: '0.01'
+        memory: 15Mi
+    versionVM: 11.04.09.000.00
+  oam-agent-chart:
+    enabled: true
+    radcomConfiguration:
+      repoType: K8S
+      resources:
+        limitsCpu: 1600m
+        limitsMemory: 500Mi
+        requestsCpu: 100m
+        requestsMemory: 500Mi
+  persistence-volume-exporter-chart:
+    enabled: true
+  schema-builder-chart:
+    enabled: true
+    image:
+      containerName: schema-builder
+    radcomConfiguration:
+      schemaBuilderDeployment:
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 2048Mi
+          requests:
+            cpu: 100m
+            memory: 500Mi
+    schemaBuilderConfig:
+      api_gw_ip: kuberiq-home-vip
+      api_gw_port: 80
+      api_gw_service_path: /configManager
+      enableCdrReduction: 1
+      healthAggregationScriptsPath: /radcom/omniq/aggregation-scripts
+      healthAlarmDuration: 30000
+      healthCalcDuration: 300000
+      healthKpiDefinitionsPath: /radcom/omniq/aggregation-scripts/KpiDefinitions.json
+      healthMachineGeneralInfoScript: sudo /radcom/scripts/health_stats.py
+      healthMachineStatusScriptExecutorWatchdogTimeOut: 10
+      healthSampleFrequency: 1
+      scribe_ip: configmanager-srv
+      scribe_port: 80
+      securityBasicEnabled: false
+      securityPass: radcom
+      securityUser: omniq
+  storageclass-exporter-chart:
+    configMap:
+      frontendMachineTypes: vprobe,vLB,vLBAgent
+      kafkaGroupId: conductor.aceagent.topology
+      kafkaServer: eventbus-kafka:9092
+      kafkaTopic: conductor.topology.update
+      retryAttempts: 15
+      retryPeriod: 2000
+      topologyManagerService: topology-manager-srv
+    enabled: true
+    logConfig:
+      logLevel: INFO
+    pvclocalpaths:
+    - name: storage
+      path: /var/radcom/storage
+    - name: volume
+      path: /var/radcom/volume
+global:
+  appreleaseversion: 13.03.00.000.04
+  blueprinttype: bp-oam-agent
+  chartSet: cs-oam-agent
+  # dockerRegistry: srp.radcom-registry.com:5000
+  # elasticStorageClass: stc-elastic
+  # generalStorageClass: local-storage
+  # healthStorageClass: stc-health
+  ipFamilies:
+  - ipv4
+  mongoComponentName: mongodb
+  mongoDataBase: admin
+  mongoPassword: 2108a185c5b4969394c9cc18308c72a9
+  mongoPort: 27017
+  mongoUserName: root
+  # namespace: production
+  objectStorageClass: stc-objectstorage
+  # site: default
+  siteType: national
+  vaultConfig:
+    vaultDataServicePath: http://kuberiq-home-vip/secretsms
+    vaultPathPrefix: v1/radcom

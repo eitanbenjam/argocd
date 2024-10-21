@@ -1,0 +1,106 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: core-apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=invalid"]
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL:  https://github.com/eitanbenjam/argocd
+              revision: marian
+              files:
+                - path: 'envs/**/config.yaml'
+          - clusters:
+              selector:
+                matchLabels:
+                  cluster: '{{.cluster.name}}'
+      selector:    
+        matchExpressions:
+        - key: deploy
+          operator: In
+          values:
+            - "true"
+  ignoreApplicationDifferences:
+    - jsonPointers:
+      - /spec/syncPolicy
+  template:
+    metadata:
+      name: '{{.application.name}}{{or .application.nameSuffix "" | replace "/" "-"}}'
+      labels:
+        app.kubernetes.io/component: argocd-application
+        app.kubernetes.io/part-of: '{{.cluster.name}}'
+      finalizers:
+      - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/eitanbenjam/argocd
+        targetRevision: '{{.target.targetRevision}}'
+        path: '{{.target.path}}'
+        helm:
+          skipCrds: true
+          releaseName: "{{.application.name}}"
+          ignoreMissingValueFiles: true
+          valueFiles:
+            # https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository
+            - '../general/values.yaml'
+            - 'values.yaml'
+            - 'blueprint_value/values.yaml'
+            - '../../envs/{{.cluster.name}}/{{.application.name}}{{or .application.nameSuffix "" }}/values.yaml'
+      destination:
+        name: "{{.cluster.name}}"
+        namespace: "{{.application.namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+          - ServerSideDiff=false
+        retry:
+          limit: 2
+  # add template https://github.com/argoproj/argo-cd/issues/17637
+  templatePatch: |
+    {{- if or .application.syncPolicy.automated .application.ignoreDifferences.application.ignoreApplicationDifferences }}
+      spec:
+        {{- if .application.ignoreDifferences }}
+        ignoreDifferences:
+        {{- range .application.ignoreDifferences }}
+        - group: {{ .group }}
+          kind: {{ .kind }}
+          {{- if .jqPathExpressions }}
+          jqPathExpressions:
+          {{- range .jqPathExpressions }}
+          - {{ . }}
+          {{- end }}
+          {{- end }}
+        {{- end }}
+        {{- end }}
+        {{- if .application.ignoreApplicationDifferences }}
+        ignoreApplicationDifferences:
+        - jsonPointers:
+          - {{ .application.ignoreApplicationDifferences.jsonPointers }}
+        {{- end }}
+        {{- if .application.syncPolicy }}
+        syncPolicy:
+        {{- if .application.syncPolicy.automated }}
+        automated:
+          {{- if .application.syncPolicy.automated.allowEmpty }}
+          allowEmpty: {{ .application.syncPolicy.automated.allowEmpty }}
+          {{- end }}
+          {{- if .application.syncPolicy.automated.prune }}
+          prune: {{ .application.syncPolicy.automated.prune }}
+          {{- end }}
+          {{- if .application.syncPolicy.automated.selfHeal }}
+          selfHeal: {{ .application.syncPolicy.automated.selfHeal}}
+          {{- end }}
+        {{- end }}
+        {{- end }}
+    {{- end }}
+  syncPolicy:
+    applicationsSync: create-update

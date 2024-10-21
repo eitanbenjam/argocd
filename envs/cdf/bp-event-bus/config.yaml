@@ -1,0 +1,10 @@
+application:
+  name: "event-bus"
+  namespace: "production"
+target:
+  targetRevision: "marian"
+  path: "helmcharts/bp-event-bus"
+deploy: false
+cluster:
+  name: cdf
+  adress: "https://kubernetes.default.svc"
