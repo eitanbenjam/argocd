@@ -12,7 +12,7 @@ application:
     #     - '.spec.template.spec.containers[] | select(.env[]?.name == "POD_CPU_LIMIT" or .env[]?.name == "POD_CPU_REQUEST" or .env[]?.name == "POD_MEM_REQUEST").env[]?.valueFrom.resourceFieldRef.divisor'
   targetRevision: "marian"
   path: "helmcharts/bp-probe"
-deploy: false
+deploy: true
 cluster:
   name: cdf
   adress: "https://kubernetes.default.svc"
