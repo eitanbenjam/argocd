@@ -10,7 +10,7 @@ cs-k8s-infra:
   aws-ingress-nginx-chart:
     enabled: false
   radcom-ingress-nginx-chart:
-    enabled: true
+    enabled: false
     udp: {}
     tcp: {}
     controller:
