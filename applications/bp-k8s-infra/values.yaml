@@ -12,6 +12,8 @@ cs-k8s-infra:
   radcom-ingress-nginx-chart:
     enabled: true
     controller:
+      udp: {}
+      tcp: {}
       image:
         registry: nexus3-prod.radcom.co.il:8084
         digest: false
