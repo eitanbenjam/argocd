@@ -1,6 +1,15 @@
 application:
   name: "probe-lb"
   namespace: "production"
+  ignoreDifferences:
+    - group: 'k8s.cni.cncf.io'
+      kind: NetworkAttachmentDefinition
+      jsonPointers:
+      - /spec/config
+    - group: 'topology.radcom.com'
+      kind: vProbe
+      jsonPointers:
+      - /spec/customAttributes
 target:
   targetRevision: "marian"
   path: "helmcharts/bp-probe-lb"
