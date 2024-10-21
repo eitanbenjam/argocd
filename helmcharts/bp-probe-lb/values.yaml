@@ -26,6 +26,7 @@ cs-probe:
       prometheusAllPort: '10091'
       prometheusPort: '10090'
       qrouterIp: *QROUTER_IP
+      mongoIp: *MONGO_IP
       siteName: *SITE_PLACEHOLDER
       storageClassName: gp3-persistent
       tenant: probe
