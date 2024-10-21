@@ -1,7 +1,7 @@
 application:
   name: "probe"
   namespace: "production"
-  ignoreDifferences:
+  # ignoreDifferences:
     # - group: 'k8s.cni.cncf.io'
     #   kind: NetworkAttachmentDefinition
     # - group: 'topology.radcom.com'
