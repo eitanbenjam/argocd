@@ -8,6 +8,8 @@ application:
       - /spec/config
     - group: 'topology.radcom.com'
       kind: vProbe
+      jsonPointers:
+      - /spec/customAttributes
     - group: apps
       kind: StatefulSet
       jqPathExpressions:
