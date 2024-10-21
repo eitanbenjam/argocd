@@ -66,7 +66,7 @@ spec:
           limit: 2
   # add template https://github.com/argoproj/argo-cd/issues/17637
   templatePatch: |
-    {{- if or .application.syncPolicy.automated .application.ignoreDifferences.application.ignoreApplicationDifferences }}
+    {{- if or .application.syncPolicy.automated .application.ignoreDifferences }}
       spec:
         {{- if .application.ignoreDifferences }}
         ignoreDifferences:
@@ -80,11 +80,6 @@ spec:
           {{- end }}
           {{- end }}
         {{- end }}
-        {{- end }}
-        {{- if .application.ignoreApplicationDifferences }}
-        ignoreApplicationDifferences:
-        - jsonPointers:
-          - {{ .application.ignoreApplicationDifferences.jsonPointers }}
         {{- end }}
         {{- if .application.syncPolicy }}
         syncPolicy:
