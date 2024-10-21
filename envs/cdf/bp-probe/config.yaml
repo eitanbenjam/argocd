@@ -1,9 +1,11 @@
 application:
   name: "probe"
   namespace: "production"
-  ignoreApplicationDifferences:
-    group: 'k8s.cni.cncf.io/v1'
-    kind: NetworkAttachmentDefinition
+  ignoreDifferences:
+    - group: 'k8s.cni.cncf.io'
+      kind: NetworkAttachmentDefinition
+    - group: 'topology.radcom.com'
+      kind: vProbe
     # group: apps
     # kind: StatefulSet
     # jqPathExpressions:
