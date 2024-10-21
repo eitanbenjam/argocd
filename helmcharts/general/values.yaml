@@ -12,11 +12,11 @@ CONDUCTOR_VIP: &CONDUCTOR_VIP internal-argoRadcomBEALB-674568957.us-east-2.elb.a
 VERSION: &VERSION 13.09.00.000.04
 CLOUD: &CLOUD aws
 GIT: https://github.com/eitanbenjam/argocd
-GIT_BRANCH: main
+GIT_BRANCH: marian
 shared-templates:
   ace_cd_tag: argo
 
-QROUTER_IP: &QROUTER_IP "10.8.39.16"
+QROUTER_IP: &QROUTER_IP "10.8.39.88"
 BLUEPRINT_PROBE_ID: &BLUEPRINT_PROBE_ID "100001"
 
 #bp-oamn-agent-cdf-network-manage
