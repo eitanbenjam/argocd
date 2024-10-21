@@ -1,5 +1,8 @@
 CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argoRadcomBEALB-674568957.us-east-2.elb.amazonaws.com
 SITE_PLACEHOLDER: &SITE_PLACEHOLDER argotlv
+QROUTER_IP: &QROUTER_IP "10.8.39.88"
+MONGO_IP: &MONGO_IP "10.8.37.190"
+BLUEPRINT_PROBE_LB_ID: &BLUEPRINT_PROBE_LB_ID "100002"
 VERSION: 13.09.00.000.04
 cs-probe:
   probe-core-ms-chart:
@@ -9,11 +12,11 @@ cs-probe:
       cdfControlInterfacePref: AWS_RADCOM_CDF_CONTROL
       cdfGroup: group1
       cdfSubType: ''
-      clusterName: cLB
+      clusterName: CLBA,CLB,CProbe
       cprobeStandAlone: disable
       defaultInterfacePref: AWS_RADCOM_DEFAULT
       interfaceNames: tcp
-      machineType: cLB
+      machineType: CLBA,CLB,CProbe
       name: clb-values
       networkIpMode: ipv4
       nfManagerInterfacePref: AWS_RADCOM_NF_MANAGER
@@ -22,12 +25,12 @@ cs-probe:
       packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
       prometheusAllPort: '10091'
       prometheusPort: '10090'
-      qrouterIp: XXXXXXXXXXXXXXX
+      qrouterIp: *QROUTER_IP
       siteName: *SITE_PLACEHOLDER
       storageClassName: gp3-persistent
       tenant: probe
       trafficDataInterfacePref: AWS_RADCOM_TRAFFIC_DATA
-      useNetworkAttachmentDefinition: 'no'
+      useNetworkAttachmentDefinition: 'yes'
       versionNumber: 13.09.00.000.04
       vprobeType: mix
     configPVC:
@@ -37,15 +40,15 @@ cs-probe:
     deployments:
       probecoremsDeployment:
         annotations:
-          k8s.v1.cni.cncf.io/networks: probe-network
+          k8s.v1.cni.cncf.io/networks: "dpdk-net-internal-probe-100002"
         containers:
           probecoremsContainer:
             env:
-              AWS_RADCOM_CDF_CONTROL_INTF_NAMES: eth1
+              AWS_RADCOM_CDF_CONTROL_INTF_NAMES: eth0
               AWS_RADCOM_DEFAULT_INTF_NAMES: eth0
               AWS_RADCOM_NF_MANAGER_INTF_NAMES: eth0
               AWS_RADCOM_OAM_DIRECT_INTF_NAMES: eth0
-              AWS_RADCOM_PACKET_INTERNAL_INTF_NAMES: eth1
+              AWS_RADCOM_PACKET_INTERNAL_INTF_NAMES: net1
               AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
     resources:
       limit:
@@ -56,6 +59,9 @@ cs-probe:
         cpu: 6000m
         hugepages1Gi: '1'
         memory: 8Gi
+global:
+  configMap:
+    probeId: *BLUEPRINT_PROBE_LB_ID
 shared-templates:
   add_blueprints: false
   save_blueprint: false
