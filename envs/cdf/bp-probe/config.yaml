@@ -1,6 +1,11 @@
 application:
   name: "probe"
   namespace: "production"
+  ignoreApplicationDifferences:
+    group: apps
+    kind: StatefulSet
+    jqPathExpressions:
+      - '.spec.template.spec.containers[] | select(.name == "POD_CPU_LIMIT" or .name == "POD_CPU_REQUEST" or .name == "POD_MEM_REQUEST").valueFrom.resourceFieldRef.divisor'
 target:
   targetRevision: "marian"
   path: "helmcharts/bp-probe"

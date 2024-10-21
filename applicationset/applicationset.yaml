@@ -66,8 +66,20 @@ spec:
           limit: 2
   # add template https://github.com/argoproj/argo-cd/issues/17637
   templatePatch: |
-    {{- if or .application.syncPolicy.automated }}
+    {{- if or .application.syncPolicy.automated or .application.ignoreDifferences or .application.ignoreApplicationDifferences }}
     spec:
+      {{- if .application.ignoreDifferences }}
+      ignoreDifferences:
+        - group: {{ .application.ignoreDifferences.group }}
+          kind: {{ .application.ignoreDifferences.kind }}
+          jqPathExpressions:
+            - {{ .application.ignoreDifferences.jqPathExpressions }}
+      {{- end }}
+      {{- if .application.ignoreApplicationDifferences }}
+      ignoreApplicationDifferences:
+        - jsonPointers:
+          - {{ .application.IgnoreApplicationDifference.jsonPointers }}
+      {{- end }}
       {{- if .application.syncPolicy }}
       syncPolicy:
         {{- if .application.syncPolicy.automated }}
