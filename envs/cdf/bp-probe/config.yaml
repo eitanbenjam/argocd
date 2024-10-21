@@ -9,8 +9,7 @@ application:
     - group: apps
       kind: StatefulSet
       jqPathExpressions:
-        - '.spec.template.spec.containers[] | select(.name == "POD_CPU_LIMIT" or .name == "POD_CPU_REQUEST" or .name == "POD_MEM_REQUEST").valueFrom.resourceFieldRef.divisor'
-target:
+        - '.spec.template.spec.containers[] | select(.env[]?.name == "POD_CPU_LIMIT" or .env[]?.name == "POD_CPU_REQUEST" or .env[]?.name == "POD_MEM_REQUEST").env[]?.valueFrom.resourceFieldRef.divisor'
   targetRevision: "marian"
   path: "helmcharts/bp-probe"
 deploy: true
