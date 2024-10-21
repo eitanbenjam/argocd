@@ -79,6 +79,18 @@ spec:
           - {{ . }}
           {{- end }}
           {{- end }}
+          {{- if .jsonPointers }}
+          jsonPointers:
+          {{- range .jsonPointers }}
+          - {{ . }}
+          {{- end }}
+          {{- end }}
+          {{- if .managedFieldsManagers }}
+          managedFieldsManagers:
+          {{- range .managedFieldsManagers }}
+          - {{ . }}
+          {{- end }}
+          {{- end }}
         {{- end }}
       {{- end }}
       {{- if .application.syncPolicy }}

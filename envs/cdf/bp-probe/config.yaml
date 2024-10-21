@@ -4,6 +4,8 @@ application:
   ignoreDifferences:
     - group: 'k8s.cni.cncf.io'
       kind: NetworkAttachmentDefinition
+      jsonPointers:
+      - /spec/config
     - group: 'topology.radcom.com'
       kind: vProbe
     - group: apps
