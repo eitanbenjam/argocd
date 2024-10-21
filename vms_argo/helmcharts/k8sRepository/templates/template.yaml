@@ -125,7 +125,7 @@ spec:
        
        - name: oam-protected
          multus:
-           networkName: default/oam-protected-net           
+           networkName: {{ .Values.general.namespace }}/oam-protected-net           
         
         
       terminationGracePeriodSeconds: 10

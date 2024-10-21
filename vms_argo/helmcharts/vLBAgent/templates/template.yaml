@@ -147,19 +147,19 @@ spec:
        
        - name: pktmirror
          multus:
-           networkName: default/pktmirror-net           
+           networkName: {{ .Values.general.namespace }}/pktmirror-net           
         
         
        
        - name: pktinternal
          multus:
-           networkName: default/pktinternal-net           
+           networkName: {{ .Values.general.namespace }}/pktinternal-net           
         
         
        
        - name: cdr-direct
          multus:
-           networkName: default/cdr-direct-net           
+           networkName: {{ .Values.general.namespace }}/cdr-direct-net           
         
         
       terminationGracePeriodSeconds: 10

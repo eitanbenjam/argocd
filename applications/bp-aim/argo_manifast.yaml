@@ -6,10 +6,10 @@ metadata:
   labels:
     name: bp-aim
   name: bp-aim
-  namespace: argocd
+  namespace: openshift-gitops-operator
 spec:
   destination:
-    namespace: production
+    namespace: default
     server: https://kubernetes.default.svc
   project: default
   revisionHistoryLimit: 10

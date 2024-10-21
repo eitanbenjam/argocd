@@ -1,5 +1,5 @@
 ace-cd-chart:
-  cronjob_name: update-topology-cronjob
+  cronjob_name: service-access-config
   ansible_check: false
   cloud:
     aws_extra_params:

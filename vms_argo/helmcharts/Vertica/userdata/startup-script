@@ -22,6 +22,7 @@ metadata:
    machine_type: vertica
    maveriq_ntp_server: {{ .Values.general.maveriq_ntp_server }}
    mgmt_version_number: {{ .Values.general.version_number }}
+   node_index: {{ .Values.machine_index }}
    
    
    

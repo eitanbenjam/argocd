@@ -130,7 +130,7 @@ spec:
        
        - name: cdr-direct
          multus:
-           networkName: default/cdr-direct-net           
+           networkName: {{ .Values.general.namespace }}/cdr-direct-net           
         
         
       terminationGracePeriodSeconds: 10

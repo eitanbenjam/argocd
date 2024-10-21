@@ -135,7 +135,7 @@ spec:
        
        - name: pktinternal
          multus:
-           networkName: default/pktinternal-net           
+           networkName: {{ .Values.general.namespace }}/pktinternal-net           
         
         
       terminationGracePeriodSeconds: 10

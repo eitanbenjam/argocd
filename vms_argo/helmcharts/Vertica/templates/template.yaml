@@ -141,13 +141,13 @@ spec:
        
        - name: vertica-ic
          multus:
-           networkName: default/vertica-ic-net           
+           networkName: {{ .Values.general.namespace }}/vertica-ic-net           
         
         
        
        - name: backend
          multus:
-           networkName: default/backend-net           
+           networkName: {{ .Values.general.namespace }}/backend-net           
         
         
       terminationGracePeriodSeconds: 10

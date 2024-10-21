@@ -17,29 +17,29 @@ spec:
       - /spec/syncPolicy
   template:
     metadata:
-      name: "{{.application.name}}" #{{or .application.nameSuffix "" | replace "/" "-"}}'
+      name: "{{ .application.name }}" #{{ .r .application.nameSuffix "" | replace "/" "-" }}'
       labels:
         app.kubernetes.io/component: argocd-vm
-        app.kubernetes.io/part-of: "{{.cluster.name}}"
+        app.kubernetes.io/part-of: "{{ .cluster.name }}"
       finalizers:
       - resources-finalizer.argocd.argoproj.io
     spec:
       project: default
       source:
         repoURL: https://github.com/eitanbenjam/argocd
-        targetRevision: "{{.target.targetRevision}}"
-        path: "{{.target.path}}"
+        targetRevision: "{{ .target.targetRevision }}"
+        path: "{{ .target.path }}"
         helm:
           skipCrds: true
-          releaseName: "{{.application.name}}"
+          releaseName: "{{ .application.name }}"
           ignoreMissingValueFiles: true
           valueFiles:
             # https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository
             - '../general/values.yaml'
             - 'values.yaml'
       destination:
-        server: "https://kubernetes.default.svc" #"{{.cluster.address}}"
-        namespace: "{{.application.namespace}}"
+        server: "https://kubernetes.default.svc" #"{{ .cluster.address }}"
+        namespace: "{{ .application.namespace }}"
       syncPolicy:
         automated:
           prune: true
@@ -52,23 +52,23 @@ spec:
           limit: 1
   # add template https://github.com/argoproj/argo-cd/issues/17637
   templatePatch: |
-    {{- if or .application.syncPolicy.automated }}
+    {{ . if or .application.syncPolicy.automated  }}
     spec:
-      {{- if .application.syncPolicy }}
+      {{ . if .application.syncPolicy  }}
       syncPolicy:
-        {{- if .application.syncPolicy.automated }}
+        {{ . if .application.syncPolicy.automated  }}
         automated:
-          {{- if .application.syncPolicy.automated.allowEmpty }}
-          allowEmpty: {{ .application.syncPolicy.automated.allowEmpty }}
-          {{- end }}
-          {{- if .application.syncPolicy.automated.prune }}
-          prune: {{ .application.syncPolicy.automated.prune }}
-          {{- end }}
-          {{- if .application.syncPolicy.automated.selfHeal }}
-          selfHeal: {{ .application.syncPolicy.automated.selfHeal}}
-          {{- end }}
-        {{- end }}
-      {{- end }}
-    {{- end }}
+          {{ . if .application.syncPolicy.automated.allowEmpty  }}
+          allowEmpty: {{ ..application.syncPolicy.automated.allowEmpty  }}
+          {{ . end  }}
+          {{ . if .application.syncPolicy.automated.prune  }}
+          prune: {{ ..application.syncPolicy.automated.prune  }}
+          {{ . end  }}
+          {{ . if .application.syncPolicy.automated.selfHeal  }}
+          selfHeal: {{ ..application.syncPolicy.automated.selfHeal }}
+          {{ . end  }}
+        {{ . end  }}
+      {{ . end  }}
+    {{ . end  }}
   syncPolicy:
     applicationsSync: create-update

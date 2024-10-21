@@ -130,7 +130,7 @@ spec:
        
        - name: backend
          multus:
-           networkName: default/backend-net           
+           networkName: {{ .Values.general.namespace }}/backend-net           
         
         
       terminationGracePeriodSeconds: 10

@@ -27,5 +27,7 @@ spec:
         env:
         - name: RADCOM_CONDUCTOR_IP
           value: "{{ .Values.global.conductorVip }}"
+        - name: RADCOM_SITE
+          value: "{{ .Values.global.site }}"
 {{ end }}
 

@@ -6,10 +6,10 @@ metadata:
   labels:
     name: bp-adminapp-be
   name: bp-adminapp-be
-  namespace: argocd
+  namespace: openshift-gitops-operator
 spec:
   destination:
-    namespace: production
+    namespace: default
     server: https://kubernetes.default.svc
   project: default
   revisionHistoryLimit: 10

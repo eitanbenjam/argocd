@@ -137,19 +137,19 @@ spec:
        
        - name: backend
          multus:
-           networkName: default/backend-net           
+           networkName: {{ .Values.general.namespace }}/backend-net           
         
         
        
        - name: cdr-direct
          multus:
-           networkName: default/cdr-direct-net           
+           networkName: {{ .Values.general.namespace }}/cdr-direct-net           
         
         
        
        - name: oam-protected
          multus:
-           networkName: default/oam-protected-net           
+           networkName: {{ .Values.general.namespace }}/oam-protected-net           
         
         
       terminationGracePeriodSeconds: 10

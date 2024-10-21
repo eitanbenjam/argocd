@@ -131,13 +131,13 @@ spec:
        
        - name: pktinternal
          multus:
-           networkName: default/pktinternal-net           
+           networkName: {{ .Values.general.namespace }}/pktinternal-net           
         
         
        
        - name: cdr-direct
          multus:
-           networkName: default/cdr-direct-net           
+           networkName: {{ .Values.general.namespace }}/cdr-direct-net           
         
         
       terminationGracePeriodSeconds: 10

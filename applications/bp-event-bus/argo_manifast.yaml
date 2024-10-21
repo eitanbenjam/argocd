@@ -6,10 +6,10 @@ metadata:
   labels:
     name: event-bus
   name: event-bus
-  namespace: argocd
+  namespace: openshift-gitops-operator
 spec:
   destination:
-    namespace: production
+    namespace: default
     server: https://kubernetes.default.svc
   project: default
   revisionHistoryLimit: 10
