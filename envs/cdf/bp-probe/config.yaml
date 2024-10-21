@@ -6,13 +6,13 @@ application:
     #   kind: NetworkAttachmentDefinition
     # - group: 'topology.radcom.com'
     #   kind: vProbe
-    - group: apps
-      kind: StatefulSet
-      jqPathExpressions:
-        - '.spec.template.spec.containers[] | select(.env[]?.name == "POD_CPU_LIMIT" or .env[]?.name == "POD_CPU_REQUEST" or .env[]?.name == "POD_MEM_REQUEST").env[]?.valueFrom.resourceFieldRef.divisor'
+    # - group: apps
+    #   kind: StatefulSet
+    #   jqPathExpressions:
+    #     - '.spec.template.spec.containers[] | select(.env[]?.name == "POD_CPU_LIMIT" or .env[]?.name == "POD_CPU_REQUEST" or .env[]?.name == "POD_MEM_REQUEST").env[]?.valueFrom.resourceFieldRef.divisor'
   targetRevision: "marian"
   path: "helmcharts/bp-probe"
-deploy: true
+deploy: false
 cluster:
   name: cdf
   adress: "https://kubernetes.default.svc"
