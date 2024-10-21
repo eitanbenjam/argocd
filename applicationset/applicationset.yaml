@@ -68,7 +68,7 @@ spec:
   templatePatch: |
     {{- if or .application.syncPolicy.automated .application.ignoreDifferences }}
       spec:
-        {{- if .application.ignoreDifferences }}
+      {{- if .application.ignoreDifferences }}
         ignoreDifferences:
         {{- range .application.ignoreDifferences }}
         - group: {{ .group }}
@@ -80,22 +80,22 @@ spec:
           {{- end }}
           {{- end }}
         {{- end }}
-        {{- end }}
-        {{- if .application.syncPolicy }}
+      {{- end }}
+      {{- if .application.syncPolicy }}
         syncPolicy:
-        {{- if .application.syncPolicy.automated }}
-        automated:
+          {{- if .application.syncPolicy.automated }}
+          automated:
           {{- if .application.syncPolicy.automated.allowEmpty }}
-          allowEmpty: {{ .application.syncPolicy.automated.allowEmpty }}
+            allowEmpty: {{ .application.syncPolicy.automated.allowEmpty }}
           {{- end }}
           {{- if .application.syncPolicy.automated.prune }}
-          prune: {{ .application.syncPolicy.automated.prune }}
+            prune: {{ .application.syncPolicy.automated.prune }}
           {{- end }}
           {{- if .application.syncPolicy.automated.selfHeal }}
-          selfHeal: {{ .application.syncPolicy.automated.selfHeal}}
+            selfHeal: {{ .application.syncPolicy.automated.selfHeal}}
           {{- end }}
         {{- end }}
-        {{- end }}
+      {{- end }}
     {{- end }}
   syncPolicy:
     applicationsSync: create-update
