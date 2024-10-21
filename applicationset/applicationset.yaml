@@ -72,8 +72,10 @@ spec:
       ignoreDifferences:
         - group: {{ .application.ignoreDifferences.group }}
           kind: {{ .application.ignoreDifferences.kind }}
+          {{- if .application.ignoreDifferences.jqPathExpressions }}
           jqPathExpressions:
             - {{ .application.ignoreDifferences.jqPathExpressions }}
+          {{- end }}
       {{- end }}
       {{- if .application.ignoreApplicationDifferences }}
       ignoreApplicationDifferences:
