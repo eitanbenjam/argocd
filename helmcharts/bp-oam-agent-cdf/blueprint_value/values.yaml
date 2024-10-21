@@ -2,6 +2,8 @@ CDF_CLUSTER_NAME: &CDF_CLUSTER_NAME "argo_cdf1"
 
 cs-oam-agent:
   cdf-network-manager-chart:
+    image:
+      tag: 1.1.7
     configMap:
       cdfClusterName: *CDF_CLUSTER_NAME
     enabled: true
