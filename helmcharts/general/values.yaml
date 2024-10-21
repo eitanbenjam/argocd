@@ -17,6 +17,7 @@ shared-templates:
   ace_cd_tag: argo
 
 QROUTER_IP: &QROUTER_IP "10.8.39.88"
+MONGO_IP: &MONGO_IP "10.8.37.190"
 BLUEPRINT_PROBE_ID: &BLUEPRINT_PROBE_ID "100001"
 
 #bp-oamn-agent-cdf-network-manage
@@ -37,5 +38,7 @@ global:
   cloud_provider: *CLOUD
   conductorVip: *CONDUCTOR_VIP
   conductorIP: *CONDUCTOR_VIP
+  qrouterIp: *QROUTER_IP
+  mongoIp: *MONGO_IP
   maveriq_version: *VERSION
   appreleaseversion: *VERSION

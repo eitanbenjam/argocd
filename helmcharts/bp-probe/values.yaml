@@ -1,6 +1,7 @@
 CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argoRadcomBEALB-674568957.us-east-2.elb.amazonaws.com
 SITE_PLACEHOLDER: &SITE_PLACEHOLDER argotlv
 QROUTER_IP: &QROUTER_IP "10.8.39.88"
+MONGO_IP: &MONGO_IP "10.8.37.190"
 BLUEPRINT_PROBE_ID: &BLUEPRINT_PROBE_ID "100001"
 VERSION: 13.09.00.000.04
 cs-probe:
@@ -25,6 +26,7 @@ cs-probe:
       prometheusAllPort: '10091'
       prometheusPort: '10090'
       qrouterIp: *QROUTER_IP
+      mongoIp: *MONGO_IP
       siteName: *SITE_PLACEHOLDER
       storageClassName: gp3-persistent
       tenant: probe
