@@ -69,29 +69,7 @@ spec:
     {{- if or .application.syncPolicy.automated .application.ignoreDifferences }}
       spec:
       {{- if .application.ignoreDifferences }}
-        ignoreDifferences:
-        {{- range .application.ignoreDifferences }}
-        - group: {{ .group }}
-          kind: {{ .kind }}
-          {{- if .jqPathExpressions }}
-          jqPathExpressions:
-          {{- range .jqPathExpressions }}
-          - {{ . }}
-          {{- end }}
-          {{- end }}
-          {{- if .jsonPointers }}
-          jsonPointers:
-          {{- range .jsonPointers }}
-          - {{ . }}
-          {{- end }}
-          {{- end }}
-          {{- if .managedFieldsManagers }}
-          managedFieldsManagers:
-          {{- range .managedFieldsManagers }}
-          - {{ . }}
-          {{- end }}
-          {{- end }}
-        {{- end }}
+        ignoreDifferences: {{ .application.ignoreDifferences | toJson }}
       {{- end }}
       {{- if .application.syncPolicy }}
         syncPolicy:
