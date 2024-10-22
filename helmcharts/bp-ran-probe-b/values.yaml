@@ -45,7 +45,7 @@ cs-ran:
     services:
       ranprobe-srv-internal:
         clusterIP: None
-        name: {{ printf "ran-srv-internal-%s" .Values.global.configMap.probeId }}
+        name: "ran-srv-internal-100"
         ports:
         - name: srv-interanal
           port: 8010
@@ -55,7 +55,7 @@ cs-ran:
         type: ClusterIP
       ranprobe-trafficdata:
         externalTrafficPolicy: Cluster
-        name: {{ printf "ran-srv-trafficdata-%s" .Values.global.configMap.probeId }}
+        name: "ran-srv-trafficdata-100"
         ports:
         - name: trafficdata
           port: 7004

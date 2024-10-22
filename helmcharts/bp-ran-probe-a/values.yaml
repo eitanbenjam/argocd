@@ -46,7 +46,7 @@ cs-ran:
     services:
       ranprobe-trafficdata:
         externalTrafficPolicy: Cluster
-        name: {{ printf "ran-srv-trafficdata-%s" .Values.global.configMap.probeId }}
+        name: "ran-srv-trafficdata-10"
         ports:
         - name: trafficdata
           port: 7004
