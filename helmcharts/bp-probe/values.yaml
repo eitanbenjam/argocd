@@ -4,6 +4,11 @@ QROUTER_IP: &QROUTER_IP "10.8.39.88"
 MONGO_IP: &MONGO_IP "10.8.33.100"
 BLUEPRINT_PROBE_ID: &BLUEPRINT_PROBE_ID "100001"
 VERSION: 13.09.00.000.04
+
+global:
+  configMap:
+    probeId: *BLUEPRINT_PROBE_ID
+
 cs-probe:
   probe-core-ms-chart:
     configMap:
@@ -60,9 +65,7 @@ cs-probe:
         cpu: 6000m
         hugepages1Gi: '1'
         memory: 8Gi
-global:
-  configMap:
-    probeId: *BLUEPRINT_PROBE_ID
+
   # blueprinttype: bp-probe
   # site: default
   # siteType: CDF
