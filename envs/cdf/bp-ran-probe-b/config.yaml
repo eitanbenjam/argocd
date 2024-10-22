@@ -1,6 +1,19 @@
 application:
   name: "ran-probe-b"
   namespace: "production"
+  ignoreDifferences:
+    - group: 'k8s.cni.cncf.io'
+      kind: NetworkAttachmentDefinition
+      jsonPointers:
+      - /spec/config
+    - group: 'topology.radcom.com'
+      kind: vProbe
+      jsonPointers:
+      - /spec/customAttributes
+    - group: apps
+      kind: StatefulSet
+      jqPathExpressions:
+        - '.spec.template.spec.containers[] | select(.env[]?.name == "POD_CPU_LIMIT" or .env[]?.name == "POD_CPU_REQUEST" or .env[]?.name == "POD_MEM_REQUEST").env[]?.valueFrom.resourceFieldRef.divisor'
 target:
   targetRevision: "marian"
   path: "helmcharts/bp-ran-probe-b"
