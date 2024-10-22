@@ -15,6 +15,7 @@ cs-ran:
       networkIpMode: ipv4
       packetInternalInterfacePref: AWS_RADCOM_PACKET_INTERNAL
       siteName: *SITE_PLACEHOLDER
+      storageClassName: gp2-persistent
     deployments:
       rancoremsDeployment:
         containers:
@@ -58,7 +59,6 @@ cs-ran:
         type: NodePort
     storagePVC:
       storageSize: 20Gi
-    storageClassName: gp2-persistent
 shared-templates:
   add_blueprints: false
   save_blueprint: false

@@ -16,6 +16,7 @@ cs-ran:
       packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
       siteName: *SITE_PLACEHOLDER
       trafficMirrorNetworkGateway: ''
+      storageClassName: gp2-persistent
     deployments:
       rancoremsDeployment:
         containers:
