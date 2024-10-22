@@ -47,3 +47,4 @@ cs-ran:
         type: NodePort
     storagePVC:
       storageSize: 20Gi
+    storageClassName: gp2-persistent
