@@ -58,6 +58,7 @@ cs-ran:
         type: NodePort
     storagePVC:
       storageSize: 20Gi
+    storageClassName: gp2-persistent
 shared-templates:
   add_blueprints: false
   save_blueprint: false
