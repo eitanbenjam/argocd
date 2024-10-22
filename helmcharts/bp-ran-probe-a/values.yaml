@@ -1,5 +1,7 @@
 CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argoRadcomBEALB-674568957.us-east-2.elb.amazonaws.com
 SITE_PLACEHOLDER: &SITE_PLACEHOLDER argotlv
+QROUTER_IP: &QROUTER_IP "10.8.39.88"
+MONGO_IP: &MONGO_IP "10.8.33.100"
 VERSION: 13.09.00.000.04
 cs-ran:
   global:
@@ -15,6 +17,9 @@ cs-ran:
       networkIpMode: ipv4
       packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
       siteName: *SITE_PLACEHOLDER
+      conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
+      qrouterIp: *QROUTER_IP
+      mongoIp: *MONGO_IP
       trafficMirrorNetworkGateway: ''
       storageClassName: gp2-persistent
     deployments:
