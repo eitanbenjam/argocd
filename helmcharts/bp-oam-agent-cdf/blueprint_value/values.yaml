@@ -46,7 +46,6 @@ cs-oam-agent:
   schema-builder-chart:
     enabled: false
   service-access-config-chart:
-    enabled: true
     legacyConf:
     - interface: int_beinterconnect
       ipType: ip
