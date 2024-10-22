@@ -26,7 +26,6 @@ cs-oam-agent:
             spec:
               storageClassName: *SITE_ELASTIC_STORAGE_PLACEHOLDER
   service-access-config-chart:
-    enabled: true
     radcomConfiguration:
       conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
   wait_for_ace_orchestrator: false
