@@ -45,7 +45,6 @@ cs-probe:
         containers:
           probecoremsContainer:
             env:
-
               AWS_RADCOM_PACKET_MIRROR_INTF_NAMES: net1
               AWS_RADCOM_CDF_CONTROL_INTF_NAMES: eth0
               AWS_RADCOM_DEFAULT_INTF_NAMES: eth0

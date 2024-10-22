@@ -26,6 +26,8 @@ cs-ran:
       storageClassName: gp2-persistent
     deployments:
       rancoremsDeployment:
+        annotations:
+          k8s.v1.cni.cncf.io/networks: "dpdk-net-mirror-100"
         containers:
           rancoremsContainer:
             envs:
