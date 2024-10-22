@@ -45,7 +45,7 @@ cs-ran:
     services:
       ranprobe-srv-internal:
         clusterIP: None
-        name: ran-srv-internal-{{ .Values.global.configMap.probeId}}
+        name: ran-srv-internal-{{ .Values.global.configMap.probeId }}
         ports:
         - name: srv-interanal
           port: 8010
