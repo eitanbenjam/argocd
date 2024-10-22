@@ -4,10 +4,12 @@ QROUTER_IP: &QROUTER_IP "10.8.39.88"
 MONGO_IP: &MONGO_IP "10.8.33.100"
 BLUEPRINT_RAN_PROBE_A: &BLUEPRINT_RAN_PROBE_A "10"
 VERSION: 13.09.00.000.04
+
+global:
+  configMap:
+    probeId: *BLUEPRINT_RAN_PROBE_A
+
 cs-ran:
-  global:
-    configMap:
-      probeId: *BLUEPRINT_RAN_PROBE_A
   ran-core-ms-chart:
     cdrPVC:
       storageSize: 2Gi
