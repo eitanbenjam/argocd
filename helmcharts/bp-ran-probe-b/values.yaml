@@ -2,11 +2,12 @@ CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argoRadcomBEALB-6
 SITE_PLACEHOLDER: &SITE_PLACEHOLDER argotlv
 QROUTER_IP: &QROUTER_IP "10.8.39.88"
 MONGO_IP: &MONGO_IP "10.8.33.100"
+BLUEPRINT_RAN_PROBE_B: &BLUEPRINT_RAN_PROBE_B "100"
 VERSION: 13.09.00.000.04
 cs-ran:
   global:
     configMap:
-      probeId: '100'
+      probeId: *BLUEPRINT_RAN_PROBE_B
   ran-core-ms-chart:
     cdrPVC:
       storageSize: 2Gi
@@ -54,7 +55,7 @@ cs-ran:
         type: ClusterIP
       ranprobe-trafficdata:
         externalTrafficPolicy: Cluster
-        name: ran-srv-trafficdata-{{ .Values.global.configMap.probeId}}
+        name: ran-srv-trafficdata-{{.Values.global.configMap.probeId}}
         ports:
         - name: trafficdata
           port: 7004
