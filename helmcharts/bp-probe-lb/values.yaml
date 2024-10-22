@@ -41,7 +41,7 @@ cs-probe:
     deployments:
       probecoremsDeployment:
         annotations:
-          k8s.v1.cni.cncf.io/networks: "dpdk-net-internal-probe-{{ .Values.global.configMap.probeId }}"
+          k8s.v1.cni.cncf.io/networks: {{ printf "dpdk-net-internal-probe-%s" .Values.global.configMap.probeId }}
         containers:
           probecoremsContainer:
             env:

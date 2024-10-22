@@ -50,7 +50,7 @@ cs-probe:
               AWS_RADCOM_PACKET_INTERNAL_INTF_NAMES: net1
               AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
         podAnnotations:
-            k8s.v1.cni.cncf.io/networks: "dpdk-net-internal-probe-{{ .Values.global.configMap.probeId }}"
+          k8s.v1.cni.cncf.io/networks: {{ printf "dpdk-net-internal-probe-%s" .Values.global.configMap.probeId }}
     resources:
       limit:
         cpu: 6000m
