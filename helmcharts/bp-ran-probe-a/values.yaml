@@ -28,7 +28,7 @@ cs-ran:
     deployments:
       rancoremsDeployment:
         podAnnotations:
-          k8s.v1.cni.cncf.io/networks: "dpdk-net-mirror-10"
+          k8s.v1.cni.cncf.io/networks: "dpdk-net-mirror-ran-10"
         containers:
           rancoremsContainer:
             envs:
