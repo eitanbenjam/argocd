@@ -15,7 +15,7 @@ cs-k8s-infra:
     tcp: {}
     controller:
       service:
-        type: clusterIP
+        type: ClusterIP
       image:
         registry: nexus3-prod.radcom.co.il:8084
         digest: false
