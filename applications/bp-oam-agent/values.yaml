@@ -28,6 +28,7 @@ cs-oam-agent:
   service-access-config-chart:
     radcomConfiguration:
       conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
+      loggerLevel: debug
     legacyConf:
     - name: "kafka"
       type: "kafka"
