@@ -28,6 +28,7 @@ global:
   dockerRegistry: *DOCKER_REGISTRY
   docker_registry: *DOCKER_REGISTRY
   imageRegistry: *DOCKER_REGISTRY
+  storageClass: *SITE_OBJECT_STORAGE
   objectStorageClass: *SITE_OBJECT_STORAGE
   generalStorageClass: *SITE_GENERAL_STORAGE
   healthStorageClass: *SITE_HEALTH_STORAGE

@@ -17,6 +17,9 @@ spec:
   ports:
   - name: ssh
     port: 22
+  ports:
+  - name: mongodb
+    port: 27017
 
 ---           
 apiVersion: kubevirt.io/v1
