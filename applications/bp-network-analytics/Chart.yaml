@@ -1,4 +1,4 @@
-HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER http://nexus3-prod.radcom.co.il:8084/repository/charts/
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER http://nexus3-prod.radcom.co.il:8081/repository/charts/
 apiVersion: v1
 appVersion: '1.0'
 dependencies:
