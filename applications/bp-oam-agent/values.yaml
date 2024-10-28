@@ -29,122 +29,120 @@ cs-oam-agent:
     deployments:
       serviceAccessJob:
         serviceAccount:
+          create: false
           name: cicd-cluster-eks-role
-          create: False
-
+    legacyConf:
+    - interface: oam_direct
+      ipType: ip
+      name: kafka
+      port: '9092'
+      preferredIp: v4
+      siteType: home
+      type: kafka
+    - interface: oam_direct
+      ipType: ip
+      name: kafka-ext
+      port: '9093'
+      siteType: home
+      type: kafka
+    - interface: oam_direct
+      ipType: ip
+      name: vertica
+      port: '5433'
+      siteType: home
+      type: vertica
+    - interface: oam_direct
+      ipType: ip
+      name: vertica-np
+      port: '5433'
+      siteType: primary
+      type: vertica
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-vip
+      port: '80'
+      siteType: home
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-np-vip
+      port: '80'
+      siteType: primary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-home-vip
+      port: '80'
+      siteType: home
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: conductor-vip
+      port: '80'
+      siteType: primary
+      type: conductor
+    - interface: oam_direct
+      ipType: ip
+      name: mongodb
+      port: '27017'
+      siteType: all
+      type: mongodb
+    - interface: oam_direct
+      ipType: vip
+      name: eventbus-oam-primary
+      port: '30201'
+      siteType: primary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: ip
+      name: eventbus-bic-primary
+      port: '9092'
+      siteType: primary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: eventbus-traffic-primary
+      port: '9094'
+      siteType: primary
+      type: kuberiq
+    - interface: oam_direct
+      name: eventbus-oam-secondary
+      port: '30201'
+      siteType: secondary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: ip
+      name: eventbus-bic-secondary
+      port: '9092'
+      siteType: secondary
+      type: kuberiq
+    - interface: cdr_direct
+      ipType: ip
+      name: eventbus-traffic-secondary
+      port: '9094'
+      siteType: secondary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-primary
+      port: '80'
+      siteType: primary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-secondary
+      port: '80'
+      siteType: secondary
+      type: kuberiq
+    - interface: oam_direct
+      ipType: vip
+      name: kuberiq-local
+      port: '80'
+      siteType: home
+      type: kuberiq
     radcomConfiguration:
       conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
       loggerLevel: debug
-    legacyConf:
-    - name: "kafka"
-      type: "kafka"
-      port: "9092"
-      siteType: "home"
-      interface: "oam_direct"
-      preferredIp: "v4"
-      ipType: "ip"
-    - name: "kafka-ext"
-      type: "kafka"
-      port: "9093"
-      siteType: "home"
-      interface: "oam_direct"
-      ipType: "ip"
-    - name: "vertica"
-      type: "vertica"
-      port: "5433"
-      siteType: "home"
-      interface: "oam_direct"
-      ipType: "ip"
-    - name: "vertica-np"
-      type: "vertica"
-      port: "5433"
-      siteType: "primary"
-      interface: "oam_direct"
-      ipType: "ip"
-    - name: "kuberiq-vip"
-      type: "kuberiq"
-      port: "80"
-      siteType: "home"
-      interface: "oam_direct"
-      ipType: 'vip'
-    - name: "kuberiq-np-vip"
-      type: "kuberiq"
-      port: "80"
-      siteType: "primary"
-      interface: "oam_direct"
-      ipType: 'vip'
-    - name: "kuberiq-home-vip"
-      type: "kuberiq"
-      port: "80"
-      siteType: "home"
-      interface: "oam_direct"
-      ipType: 'vip'
-    - name: "conductor-vip"
-      type: "conductor"
-      port: "80"
-      siteType: "primary"
-      interface: "oam_direct"
-      ipType: 'vip'
-    - name: "mongodb"
-      type: "mongodb"
-      port: "27017"
-      siteType: "all"
-      interface: "oam_direct"
-      ipType: "ip"
-    - name: "eventbus-oam-primary"
-      type: "kuberiq"
-      port: "30201"
-      siteType: "primary"
-      interface: "oam_direct"
-      ipType: 'vip'
-    - name: "eventbus-bic-primary"
-      type: "kuberiq"
-      port: "9092"
-      siteType: "primary"
-      interface: "oam_direct"
-      ipType: "ip"
-    - name: "eventbus-traffic-primary"
-      type: "kuberiq"
-      port: "9094"
-      siteType: "primary"
-      interface: "oam_direct"
-      ipType: 'vip'
-    - name: "eventbus-oam-secondary"
-      type: "kuberiq"
-      port: "30201"
-      siteType: "secondary"
-      interface: "oam_direct"
-    - name: "eventbus-bic-secondary"
-      type: "kuberiq"
-      port: "9092"
-      siteType: "secondary"
-      interface: "oam_direct"
-      ipType: "ip"
-    - name: "eventbus-traffic-secondary"
-      type: "kuberiq"
-      port: "9094"
-      siteType: "secondary"
-      interface: "cdr_direct"
-      ipType: "ip"
-    - name: "kuberiq-primary"
-      type: "kuberiq"
-      port: "80"
-      siteType: "primary"
-      interface: "oam_direct"
-      ipType: 'vip'
-    - name: "kuberiq-secondary"
-      type: "kuberiq"
-      port: "80"
-      siteType: "secondary"
-      interface: "oam_direct"
-      ipType: 'vip'
-    - name: "kuberiq-local"
-      type: "kuberiq"
-      siteType: "home"
-      port: "80"
-      interface: "oam_direct"
-      ipType: 'vip'
-
   wait_for_ace_orchestrator: false
 shared-templates:
   save_blueprint: true

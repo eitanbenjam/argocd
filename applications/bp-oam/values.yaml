@@ -2,10 +2,9 @@ cs-oam:
   vault-unsealer-chart:
     deployments:
       vaultunsealerDeployment:
-        serviceAccount: 
+        serviceAccount:
+          create: false
           name: cicd-cluster-eks-role
-          create: False
-
 shared-templates:
   add_blueprints: true
   save_blueprint: true
