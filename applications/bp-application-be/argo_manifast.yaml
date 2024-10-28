@@ -6,7 +6,7 @@ metadata:
   labels:
     name: bp-application-be
   name: bp-application-be
-  namespace: argocd
+  namespace: openshift-gitops-operator
 spec:
   destination:
     namespace: production
