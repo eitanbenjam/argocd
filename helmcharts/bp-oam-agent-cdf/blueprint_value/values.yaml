@@ -179,5 +179,5 @@ global:
   blueprinttype: bp-oam-agent
   ipFamilies:
   - ipv4
-  site: default
+  site: jerus
   siteType: CDF
