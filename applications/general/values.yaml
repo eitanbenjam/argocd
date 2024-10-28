@@ -24,6 +24,7 @@ cs-k8s-infra:
     repository: *DOCKER_REGISTRY
 repository: *DOCKER_REGISTRY
 global:
+  digDnsCommand: "dig @%s %s.default.svc.cluster.local +short"
   namespace: *NAMESPACE
   dockerRegistry: *DOCKER_REGISTRY
   docker_registry: *DOCKER_REGISTRY
