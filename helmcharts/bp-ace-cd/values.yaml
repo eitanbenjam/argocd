@@ -10,6 +10,7 @@ ace-cd-chart:
       arn_role: arn:aws:iam::571789434150:role/role-argo-ace-cd
       service_account_name: cicd-cluster-eks-role
     type: aws
+  service_account_name: cicd-cluster-eks-role  
   env_id: argo
   create_log_pvc: true
   conductor_ip: *CONDUCTOR_VIP_PLACEHOLDER
