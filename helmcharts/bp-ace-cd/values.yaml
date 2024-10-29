@@ -29,6 +29,5 @@ ace-cd-chart:
   srp_ip: *SRP_IP
   sites: jerus
   storage_class: gp3
-  node_port: "32141"
-  # tag: 1.120.0
+  cronjob_name: service-access-config
 
