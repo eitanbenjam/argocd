@@ -1,14 +1,20 @@
+CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argoRadcomBEALB-674568957.us-east-2.elb.amazonaws.com
+SITE_PLACEHOLDER: &SITE_PLACEHOLDER argotlv
+QROUTER_IP: &QROUTER_IP "10.8.39.88"
+MONGO_IP: &MONGO_IP "10.8.33.100"
+SRP_IP: &SRP_IP "10.8.33.252"
 ace-cd-chart:
   ansible_check: false
   cloud:
     aws_extra_params:
-      arn_role: arn:aws:iam::XXXXXXX:role:radcom/-eks-role
+      arn_role: arn:aws:iam::571789434150:role/role-argo-ace-cd
+      service_account_name: cicd-cluster-eks-role
     robin_extra_params:
       robin_server_ip: 2001:1:2:3::4
       robin_server_password: Radmin1
       robin_server_username: admin
     service_account_name: cicd-cluster-eks-role
-    type: local
+    type: aws
   cronjob_name: service-access-config
   env_id: radcom
   image:
@@ -22,7 +28,9 @@ ace-cd-chart:
     limits:
       cpu: 500m
       memory: 512M
-  site_type: national
+  site_type: telaviv
   source_control: configmap
-  srp_ip: None
-  tag: 1.120.0
+  srp_ip: *SRP_IP
+  conductor_ip: *CONDUCTOR_VIP_PLACEHOLDER
+  storage_class: gp3
+  # tag: 1.120.0
