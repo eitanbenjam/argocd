@@ -13,17 +13,17 @@ ace-cd-chart:
       robin_server_ip: 2001:1:2:3::4
       robin_server_password: Radmin1
       robin_server_username: admin
-    service_account_name: cicd-cluster-eks-role
     type: aws
-  cronjob_name: service-access-config
-  env_id: radcom
+  env_id: argo
+  create_log_pvc: true
+  conductor_ip: *CONDUCTOR_VIP_PLACEHOLDER
   image:
     helm_repository_tag: latest
     tag: argo
   kuberiq_cluster_name: Kuberiq_reg
   kuberiq_type: kuberiq
   pullPolicy: Always
-  replicas: 1
+  replicas: 0
   resources:
     limits:
       cpu: 500m
@@ -32,6 +32,6 @@ ace-cd-chart:
   source_control: configmap
   srp_ip: *SRP_IP
   sites: jerus
-  conductor_ip: *CONDUCTOR_VIP_PLACEHOLDER
   storage_class: gp3
   # tag: 1.120.0
+
