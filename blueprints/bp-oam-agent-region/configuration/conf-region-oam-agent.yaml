@@ -79,7 +79,7 @@ daemon-chart:
     scribe_port: 80/configManager
 
 database-sync-chart:
-  enabled: true
+  enabled: false
 
 service-access-config-chart:
   radcomConfiguration:

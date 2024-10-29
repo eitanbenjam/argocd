@@ -12,7 +12,7 @@ cs-oam-agent:
       scribe_ip: kuberiq-np-vip
       scribe_port: 80/configManager
   database-sync-chart:
-    enabled: true
+    enabled: false
   oam-agent-chart:
     enabled: true
     radcomConfiguration:

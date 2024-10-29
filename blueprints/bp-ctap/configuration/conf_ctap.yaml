@@ -1,4 +1,4 @@
-radcom-ctap-mgr:
+ctap-mgr-ms-chart:
   resources:
     limits:
       cpu: 100m
@@ -8,10 +8,15 @@ radcom-ctap-mgr:
       memory: 200Mi
 
   metrics:
-   prometheusPort: 10090
+    prometheusPort: 10090
 
   service:
     port: 80
+
+  bp_registration:
+    enabled: false
+    ip: ""
+    version: ""
 
   persistence:
     storageClassName: standard
@@ -20,22 +25,16 @@ radcom-ctap-mgr:
   config:
     listen:
       port: 80
-    vxlan_iface: "vxlan0"
-    vxlan_id: 100
-    vxlan_port: 4789
-    k8s_watched_namespaces:
-      - ns1
-      - ns2
-    k8s: null
+    k8s_watched_namespaces: []
     # Options
     LogLevel: "INFO" # DEBUG/INFO
-    NetworkIpMode: ipv6
+    NetworkIpMode: ipv6 #uvicorn host will be "::" when NetworkIpMode = ipv6 or "0.0.0.0" if NetworkIpMode = ipv4
     SiteName: ""
     SiteType: ""
     ClusterName: ""
 
 
-radcom-ctap-agent:
+ctap-agent-ms-chart:
   resources:
     limits:
       cpu: 100m
@@ -45,15 +44,10 @@ radcom-ctap-agent:
       memory: 200Mi
 
   config:
-    mgr_host: "radcom-ctap-mgr"
-    mgr_port: 80
-
     # The network interface on each node used to send packets
     out_interface: eth0
-  
-    # Remote ip address for vxlan. If empty, use mgr_host's address
-    remote_ip: ""
-    poll_interval_s: 10.0
+
+    k8s_watched_namespaces: []
     LogLevel: "INFO" # DEBUG/INFO
     NetworkIpMode: ipv6
     SiteName: ""
