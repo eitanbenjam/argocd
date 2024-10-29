@@ -45,10 +45,10 @@ general:
   pktmirror_int_net_cidr: '10.60.0.0/24'
   processing_cluster_name: Processing
   qrouter_cluster_name: QRouter
-  repo_ip: 172.29.169.166
+  repo_ip: 172.29.169.117
   settingsandhealthdb_cluster_name: SettingsAndHealthDB
   site_name: default
-  version_number: 13.09.00.000.04
+  version_number: 13.09.00.000.06
   vertica_aggs_cluster_name: VerticaDB
   vertica_backend_ic_net_vip_0: vertica-service
   vertica_cluster_name: VerticaDB
