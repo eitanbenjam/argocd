@@ -9,10 +9,6 @@ ace-cd-chart:
     aws_extra_params:
       arn_role: arn:aws:iam::571789434150:role/role-argo-ace-cd
       service_account_name: cicd-cluster-eks-role
-    robin_extra_params:
-      robin_server_ip: 2001:1:2:3::4
-      robin_server_password: Radmin1
-      robin_server_username: admin
     type: aws
   env_id: argo
   create_log_pvc: true
