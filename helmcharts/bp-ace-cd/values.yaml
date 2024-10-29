@@ -28,10 +28,10 @@ ace-cd-chart:
     limits:
       cpu: 500m
       memory: 512M
-  site_type: national
+  site_type: CDF
   source_control: configmap
   srp_ip: *SRP_IP
-  sites: telaviv
+  sites: jerus
   conductor_ip: *CONDUCTOR_VIP_PLACEHOLDER
   storage_class: gp3
   # tag: 1.120.0
