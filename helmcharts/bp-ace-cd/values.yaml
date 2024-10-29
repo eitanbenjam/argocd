@@ -7,8 +7,8 @@ ace-cd-chart:
   ansible_check: false
   cloud:
     aws_extra_params:
-      arn_role: arn:aws:iam::571789434150:role/role-argo-ace-cd
-      service_account_name: cicd-cluster-eks-role
+      arn_role: "arn:aws:iam::571789434150:role/role-argo-ace-cd"
+      service_account_name: "cicd-cluster-eks-role"
     type: aws
   env_id: argo
   create_log_pvc: true
@@ -30,4 +30,5 @@ ace-cd-chart:
   sites: jerus
   storage_class: gp3
   cronjob_name: service-access-config
+  service_account_name: "cicd-cluster-eks-role"
 
