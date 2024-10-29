@@ -8,7 +8,7 @@ HELM_REGISTRY: &HELM_REGISTRY http://nexus3-prod.radcom.co.il:8081/repository/ch
 DOCKER_REGISTRY: &DOCKER_REGISTRY nexus3-prod.radcom.co.il:8084
 NAMESPACE: &NAMESPACE default
 CONDUCTOR_VIP: &CONDUCTOR_VIP conductor-service
-VERSION: &VERSION 13.09.00.000.04
+VERSION: &VERSION 13.09.00.000.06
 CLOUD: &CLOUD openshift
 GIT: https://github.com/eitanbenjam/argocd
 GIT_BRANCH: eitan
