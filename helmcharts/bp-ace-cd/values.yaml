@@ -28,9 +28,10 @@ ace-cd-chart:
     limits:
       cpu: 500m
       memory: 512M
-  site_type: telaviv
+  site_type: national
   source_control: configmap
   srp_ip: *SRP_IP
+  sites: telaviv
   conductor_ip: *CONDUCTOR_VIP_PLACEHOLDER
   storage_class: gp3
   # tag: 1.120.0
