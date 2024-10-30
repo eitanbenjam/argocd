@@ -1,6 +1,0 @@
-dependencies:
-- name: cs-k8s-infra
-  repository: oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
-  version: 1.99.0
-digest: sha256:3b6b320c671fee673b220995f2424801d2a8d2464f41896203b3cb2571ee42c6
-generated: "2024-08-07T15:44:20.792232528+03:00"
