@@ -31,6 +31,7 @@ CDF_CLUSTER_NAME: &CDF_CLUSTER_NAME "argo_cdf1"
 repository: *DOCKER_REGISTRY
 global:
   namespace: *NAMESPACE
+  repository: *DOCKER_REGISTRY
   dockerRegistry: *DOCKER_REGISTRY
   docker_registry: *DOCKER_REGISTRY
   imageRegistry: *DOCKER_REGISTRY
