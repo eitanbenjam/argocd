@@ -21,9 +21,10 @@ cs-k8s-infra:
         digest: false
         registry: nexus3-prod.radcom.co.il:8084
       publishService:
-        enabled: true
+        enabled: false
       service:
         enabled: true
+        externalTrafficPolicy: Local
         type: LoadBalancer
         nodePorts:
           https: 30443

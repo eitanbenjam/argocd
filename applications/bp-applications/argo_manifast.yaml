@@ -6,7 +6,7 @@ metadata:
   labels:
     name: bp-applications
   name: bp-applications
-  namespace: openshift-gitops-operator
+  namespace: openshift-gitops
 spec:
   destination:
     namespace: default

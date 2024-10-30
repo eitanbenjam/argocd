@@ -6,7 +6,7 @@ metadata:
   labels:
     name: external-orch
   name: external-orch
-  namespace: openshift-gitops-operator
+  namespace: openshift-gitops
 spec:
   destination:
     namespace: default
