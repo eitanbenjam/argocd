@@ -4,7 +4,7 @@ appVersion: '1.0'
 dependencies:
 - name: ace-cd-chart
   repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.0.0
+  version: 99.98
 description: ace-cd
 name: ace-cd-argo
 version: 13.09.04
