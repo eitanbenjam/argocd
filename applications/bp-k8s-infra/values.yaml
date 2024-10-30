@@ -21,7 +21,7 @@ cs-k8s-infra:
         digest: false
         registry: nexus3-prod.radcom.co.il:8084
       publishService:
-        enabled: false
+        enabled: true
       service:
         enabled: true
         type: LoadBalancer
