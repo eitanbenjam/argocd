@@ -1,4 +1,5 @@
 CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argoRadcomBEALB-674568957.us-east-2.elb.amazonaws.com
+DOCKER_REGISTRY: &DOCKER_REGISTRY 571789434150.dkr.ecr.us-east-2.amazonaws.com
 SITE_PLACEHOLDER: &SITE_PLACEHOLDER argotlv
 QROUTER_IP: &QROUTER_IP "10.8.39.88"
 MONGO_IP: &MONGO_IP "10.8.33.100"
@@ -32,4 +33,4 @@ ace-cd-chart:
   storage_class: gp3
   cronjob_name: service-access-config
   namespace: production
-
+  repository: *DOCKER_REGISTRY
