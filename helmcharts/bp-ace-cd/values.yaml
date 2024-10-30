@@ -15,6 +15,9 @@ ace-cd-chart:
     type: aws
     service_account_name: "cicd-cluster-eks-role"
   env_id: argo
+  image:
+    helm_repository_tag: latest
+    tag: argo
   create_log_pvc: true
   conductor_ip: *CONDUCTOR_VIP_PLACEHOLDER
   pullPolicy: Always
