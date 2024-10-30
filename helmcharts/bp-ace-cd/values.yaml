@@ -31,4 +31,5 @@ ace-cd-chart:
   sites: jerus
   storage_class: gp3
   cronjob_name: service-access-config
+  namespace: production
 
