@@ -8,7 +8,7 @@ ace-cd-chart:
   cloud:
     aws_extra_params:
       arn_role: "arn:aws:iam::571789434150:role/role-argo-ace-cd"
-      service_account_name: "cicd-cluster-eks-role"
+      service_account_name: "ace-cd-cluster-role"
     type: aws
     service_account_name: "ace-cd-cluster-role"
   env_id: argo
