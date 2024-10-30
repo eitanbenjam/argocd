@@ -8,7 +8,7 @@ cs-k8s-infra:
   persistence-volume-provisioner-chart:
     enabled: false
   radcom-crds-chart:
-    enabled: true
+    enabled: false
   radcom-ingress-nginx-chart:
     controller:
       admissionWebhooks:
@@ -24,7 +24,12 @@ cs-k8s-infra:
         enabled: false
       service:
         enabled: true
-        type: ClusterIP
+        type: LoadBalancer
+        nodePorts:
+          https: 30443
+          http: 30080
+        annotations:
+          metallb.universe.tf/address-pool: openshiftpoc-ip-pools
     enabled: true
     tcp: {}
     udp: {}
