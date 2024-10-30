@@ -5,6 +5,7 @@ QROUTER_IP: &QROUTER_IP "10.8.39.88"
 MONGO_IP: &MONGO_IP "10.8.33.100"
 SRP_IP: &SRP_IP "10.8.33.252"
 ace-cd-chart:
+  repository: *DOCKER_REGISTRY
   ansible_check: "no"
   cloud:
     aws_extra_params:
