@@ -1,0 +1,10 @@
+application:
+  name: "packet-analyzer "
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/packet-analyzer"
+deploy: false
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

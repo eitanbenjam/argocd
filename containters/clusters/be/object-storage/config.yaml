@@ -1,0 +1,10 @@
+application:
+  name: "object-storage"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/object-storage"
+deploy: false
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

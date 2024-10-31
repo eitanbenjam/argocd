@@ -1,0 +1,10 @@
+application:
+  name: "oam"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/oam"
+deploy: false
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

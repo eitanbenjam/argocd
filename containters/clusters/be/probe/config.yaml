@@ -1,0 +1,10 @@
+application:
+  name: "probe"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/probe"
+deploy: false
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

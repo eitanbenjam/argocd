@@ -1,0 +1,10 @@
+application:
+  name: "oam-agent"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/oam-agent"
+deploy: false
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

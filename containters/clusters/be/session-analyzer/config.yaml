@@ -1,0 +1,10 @@
+application:
+  name: "session-analyzer"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/session-analyzer"
+deploy: false
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

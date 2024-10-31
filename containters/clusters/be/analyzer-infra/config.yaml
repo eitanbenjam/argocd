@@ -1,0 +1,10 @@
+application:
+  name: "analyzer-infra"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/analyzer-infra"
+deploy: false
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

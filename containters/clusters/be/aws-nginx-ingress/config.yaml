@@ -1,0 +1,10 @@
+application:
+  name: "aws-nginx-ingress"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/aws-nginx-ingress"
+deploy: false
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

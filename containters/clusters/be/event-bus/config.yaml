@@ -1,0 +1,10 @@
+application:
+  name: "event-bus"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/event-bus"
+deploy: false
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

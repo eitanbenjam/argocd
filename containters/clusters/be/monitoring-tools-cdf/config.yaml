@@ -1,0 +1,10 @@
+application:
+  name: "monitoring-tools-cdf"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/monitoring-tools-cdf"
+deploy: false
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"
