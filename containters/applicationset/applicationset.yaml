@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: core-apps
-  namespace: argocd
+  namespace: openshift-gitops
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=invalid"]
@@ -11,9 +11,9 @@ spec:
         generators:
           - git:
               repoURL:  https://github.com/eitanbenjam/argocd
-              revision: marian
+              revision: eitan
               files:
-                - path: 'containters/clusters/**/config.yaml'
+                - path: 'containters/clusters/be/**/config.yaml'
           - clusters:
               selector:
                 matchLabels:
