@@ -1,0 +1,19 @@
+application:
+  ignoreDifferences:
+    - group: 'kubevirt.io'
+      kind: VirtualMachine
+      jsonPointers:
+      - /spec
+    - group: ''
+      kind: Secret
+      jsonPointers:
+      - /spec
+  name: "rpmrepository"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "vms_argo/helmcharts/RpmRepository"
+deploy: true
+cluster:
+  name: in-cluster
+  address: "https://kubernetes.default.svc"

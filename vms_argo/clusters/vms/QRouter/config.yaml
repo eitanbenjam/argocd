@@ -1,0 +1,19 @@
+application:
+  ignoreDifferences:
+    - group: 'kubevirt.io'
+      kind: VirtualMachine
+      jsonPointers:
+      - /spec
+    - group: ''
+      kind: Secret
+      jsonPointers:
+      - /spec
+  name: "qrouter"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "vms_argo/helmcharts/QRouter"
+deploy: true
+cluster:
+  name: in-cluster
+  address: "https://kubernetes.default.svc"
