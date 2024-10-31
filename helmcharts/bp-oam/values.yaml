@@ -1,3 +1,19 @@
+ggsn-distribution:
+  services:
+    ggsnDistributionMsActuatorService:
+      ports:
+        - port: 80
+          targetPort: 8085
+          name: http-actuator
+
+config-distribution:
+  services:
+    configDistributionService:
+      ports:
+        - port: 80
+          targetPort: 8085
+          name: http-actuator
+
 shared-templates:
   add_blueprints: true
   save_blueprint: true
