@@ -1,5 +1,5 @@
 cs-oam:
-  ggsn-distribution:
+  ggsn-distribution-chart:
     services:
       ggsnDistributionMsActuatorService:
         ports:
@@ -7,7 +7,7 @@ cs-oam:
             targetPort: 8085
             name: http-actuator
 
-  config-distribution:
+  config-distribution-chart:
     services:
       configDistributionService:
         ports:
