@@ -7,7 +7,7 @@ SRP_IP: &SRP_IP "10.8.33.252"
 
 ace-cd-chart:
   repository: *DOCKER_REGISTRY
-  ansible_check: "no"
+  ansible_check: false
   cloud:
     aws_extra_params:
       arn_role: "arn:aws:iam::571789434150:role/role-argo-ace-cd"
@@ -18,6 +18,8 @@ ace-cd-chart:
   image:
     helm_repository_tag: latest
     tag: argo
+  kuberiq_cluster_name: Kuberiq_reg
+  kuberiq_type: kuberiq
   create_log_pvc: true
   conductor_ip: *CONDUCTOR_VIP_PLACEHOLDER
   pullPolicy: Always
