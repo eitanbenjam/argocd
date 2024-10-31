@@ -1,6 +1,11 @@
 application:
   name: "oam"
   namespace: "production"
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - '.spec.template.spec.containers[] | select(name == "cont-config-distribution" or name == "cont-ggsn-distribution-ms" ).ports'
 target:
   targetRevision: "marian"
   path: "helmcharts/bp-oam"
