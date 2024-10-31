@@ -20,7 +20,7 @@ ace-cd-chart:
     tag: argo
   kuberiq_cluster_name: Kuberiq_reg
   kuberiq_type: kuberiq
-  create_log_pvc: true
+  # create_log_pvc: true
   conductor_ip: *CONDUCTOR_VIP_PLACEHOLDER
   pullPolicy: Always
   replicas: 1
