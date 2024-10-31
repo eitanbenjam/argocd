@@ -1,4 +1,9 @@
 application:
+  ignoreDifferences:
+    - group: 'kubevirt.io/v1'
+      kind: VirtualMachine
+      jsonPointers:
+      - /spec/config
   name: "conductor"
   namespace: "default"
 target:
