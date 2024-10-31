@@ -1,0 +1,19 @@
+application:
+  ignoreDifferences:
+    - group: 'kubevirt.io/v1'
+      kind: VirtualMachine
+      jsonPointers:
+      - /spec
+    - group: 'v1'
+      kind: Service
+      jsonPointers:
+      - /spec
+  name: "dtl"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "vms_argo/helmcharts/DistributedLock"
+deploy: true
+cluster:
+  name: in-cluster
+  address: "https://kubernetes.default.svc"
