@@ -3,7 +3,11 @@ application:
     - group: 'kubevirt.io/v1'
       kind: VirtualMachine
       jsonPointers:
-      - /spec/config
+      - /spec
+    - group: 'v1'
+      kind: Service
+      jsonPointers:
+      - /spec
   name: "conductor"
   namespace: "default"
 target:
