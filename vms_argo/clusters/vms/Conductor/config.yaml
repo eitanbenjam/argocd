@@ -1,11 +1,11 @@
 application:
   ignoreDifferences:
-    - group: 'kubevirt.io/v1'
+    - group: 'kubevirt.io'
       kind: VirtualMachine
       jsonPointers:
       - /spec
-    - group: 'v1'
-      kind: Service
+    - group: ''
+      kind: Secret
       jsonPointers:
       - /spec
   name: "conductor"
