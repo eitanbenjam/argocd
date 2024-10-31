@@ -47,4 +47,3 @@ global:
   mongoIp: *MONGO_IP
   maveriq_version: *VERSION
   appreleaseversion: *VERSION
-: 
