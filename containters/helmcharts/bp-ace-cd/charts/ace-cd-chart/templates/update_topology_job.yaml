@@ -1,0 +1,58 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: update-topology-job
+  namespace: {{ .Values.global.namespace }}  
+  labels:
+    app.kubernetes.io/name: update-topology-job
+spec:
+  parallelism: 1
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: "Never"
+      serviceAccountName: "{{ .Values.cloud.aws_extra_params.service_account_name }}"
+      containers:
+      - name: update-topology-job
+        image: "{{ .Values.global.dockerRegistry }}/ace-cd:{{ .Values.image.tag }}"
+        imagePullPolicy: IfNotPresent
+        command: ["bash", "/external_orch/ps_tools/argocd/update_topology.sh"]
+        env:
+        - name: RADCOM_CRONJOB_NAME
+          value: "{{ .Values.cronjob_name }}"
+        - name: RADCOM_CONDUCTOR_IP
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-ace-cd-task
+              key: conductor_ip
+        - name: RADCOM_SRP_IP
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-ace-cd-task
+              key: srp_ip
+        - name: RADCOM_SITE
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-ace-cd-task
+              key: site
+        - name: RADCOM_CLUSTER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-ace-cd-task
+              key: kuberiq_cluster_name
+        - name: RADCOM_MACHINE_TYPE
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-ace-cd-task
+              key: kuberiq_type
+        - name: RADCOM_SITE_TYPE
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-ace-cd-task
+              key: site_type
+        - name: RADCOM_VERSION
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-ace-cd-task
+              key: maveriq_version
+        

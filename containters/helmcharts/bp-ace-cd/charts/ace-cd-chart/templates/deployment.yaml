@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ace-cd-task-deployment
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: ace-cd-deployment
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ace-cd-task-deployment
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ace-cd-task-deployment
+    spec:
+      serviceAccountName: "{{ .Values.cloud.aws_extra_params.service_account_name }}"
+      restartPolicy: "{{ .Values.pullPolicy }}"
+      containers:
+        - name: ace-cd-task
+          image: "{{ .Values.global.dockerRegistry }}/ace-cd:{{ .Values.image.tag }}"
+          imagePullPolicy: "{{ .Values.pullPolicy }}"
+          #command: ["python", "/external_orch/main.py", "-env", "$(ENV_ID)", "-disable_instance_create", "-conductor", "$(CONDUCTOR_IP)", "-srp", "$(SRP_IP)", "-t", "/dev/null"]
+          command: ['bash', '-c', 'sleep  100000']
+          #command: ["bash","/external_orch/ps_tools/start_service.sh", "deployment"]
+          #args: ["while true; do sleep 5; done;"]
+          ports: 
+            - containerPort: 9996
+              name: http
+              protocol: TCP
+          env:
+            - name: RADCOM_CONDUCTOR_IP
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-ace-cd-task
+                  key: conductor_ip
+            - name: RADCOM_SRP_IP
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-ace-cd-task
+                  key: srp_ip
+            - name: RADCOM_SITE
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-ace-cd-task
+                  key: site
+            - name: RADCOM_CLUSTER_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-ace-cd-task
+                  key: kuberiq_cluster_name
+            - name: RADCOM_MACHINE_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-ace-cd-task
+                  key: kuberiq_type
+            - name: RADCOM_SITE_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-ace-cd-task
+                  key: site_type
+            - name: RADCOM_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-ace-cd-task
+                  key: maveriq_version
+
+          resources: 
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              cpu: '100m'
+              memory: '50M'
+
+
+
+

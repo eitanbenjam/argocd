@@ -1,0 +1,9 @@
+dependencies:
+- name: cs-admin-applications
+  repository: http://nexus3-prod.radcom.co.il:8081/repository/charts/
+  version: 1.560.0
+- name: shared-templates
+  repository: http://nexus3-prod.radcom.co.il:8081/repository/charts/
+  version: 1.0.0
+digest: sha256:e31288255e29c4e25608c9821241f8744ba11457c68333b65349a5fed2d25148
+generated: "2024-10-28T13:51:25.480683243+02:00"

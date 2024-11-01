@@ -1,0 +1,6 @@
+dependencies:
+- name: ace-cd-chart
+  repository: http://nexus3-prod.radcom.co.il:8081/repository/charts/
+  version: 1.9.9
+digest: sha256:61c413fe965babf900a67a13a3da0192dda7d53dcb4d3b57fbc6bfe5f04e619d
+generated: "2024-10-15T16:07:43.401679419+03:00"

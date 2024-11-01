@@ -1,0 +1,15 @@
+{{- if eq .Values.create_cluster_role true}}
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ace-cd-clusterrole-access
+  namespace: {{ .Values.global.namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ace-cd-clusterrole
+subjects:
+- kind: ServiceAccount
+  namespace: {{ .Values.global.namespace }}
+  name: "{{ .Values.cloud.service_account_name }}"
+{{- end }}

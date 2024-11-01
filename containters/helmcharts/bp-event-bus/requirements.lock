@@ -1,0 +1,6 @@
+dependencies:
+- name: cs-event-bus
+  repository: http://nexus3-prod.radcom.co.il:8081/repository/charts/
+  version: 1.44.0
+digest: sha256:57cc62949ae4cae6c71b18b013f4d8a4f632871fb861300863a330679e25f8f4
+generated: "2024-10-15T16:14:01.932459533+03:00"
