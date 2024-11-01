@@ -3,7 +3,7 @@ application:
   namespace: "default"
 target:
   targetRevision: "eitan"
-  path: "containters/helmcharts/event-bus"
+  path: "containters/helmcharts/bp-event-bus"
 deploy: true
 cluster:
   name: in-cluster
