@@ -4,7 +4,7 @@ application:
 target:
   targetRevision: "eitan"
   path: "containters/helmcharts/k8s-infra"
-deploy: false
+deploy: true
 cluster:
   name: in-cluster
   adress: "https://kubernetes.default.svc"
