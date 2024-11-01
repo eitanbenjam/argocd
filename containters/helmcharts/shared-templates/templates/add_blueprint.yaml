@@ -38,4 +38,6 @@ spec:
           value: "{{ .Values.global.maveriq_version }}"
         - name: RADCOM_APPNAME
           value: "{{ .Chart.Name }}"
+        - name: RADCOM_SITE
+          value: "{{ .Values.global.site }}"
 {{ end }}
