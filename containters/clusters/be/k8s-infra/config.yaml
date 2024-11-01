@@ -3,7 +3,7 @@ application:
   namespace: "default"
 target:
   targetRevision: "eitan"
-  path: "containters/helmcharts/k8s-infra"
+  path: "containters/helmcharts/bp-k8s-infra"
 deploy: true
 cluster:
   name: in-cluster
