@@ -3,8 +3,8 @@ application:
   namespace: "default"
 target:
   targetRevision: "eitan"
-  path: "containters/helmcharts/application-be"
-deploy: false
+  path: "containters/helmcharts/be-application-be"
+deploy: true
 cluster:
   name: in-cluster
   adress: "https://kubernetes.default.svc"

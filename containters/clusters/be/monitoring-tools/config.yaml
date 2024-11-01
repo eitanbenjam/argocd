@@ -3,8 +3,8 @@ application:
   namespace: "default"
 target:
   targetRevision: "eitan"
-  path: "containters/helmcharts/monitoring-tools"
-deploy: false
+  path: "containters/helmcharts/bp-monitoring-tools"
+deploy: true
 cluster:
   name: in-cluster
   adress: "https://kubernetes.default.svc"
