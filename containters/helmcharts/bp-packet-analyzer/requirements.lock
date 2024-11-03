@@ -1,9 +1,0 @@
-dependencies:
-- name: cs-packet-analyzer
-  repository: http://nexus3-prod.radcom.co.il:8081/repository/charts/
-  version: 1.382.0
-- name: shared-templates
-  repository: http://nexus3-prod.radcom.co.il:8081/repository/charts/
-  version: 1.0.0
-digest: sha256:6a5d555deb33f8dd9f9b3f37eddcfb46158dd1ad9425c9be60574b6b6a7a0198
-generated: "2024-10-28T15:51:41.271987591+02:00"
