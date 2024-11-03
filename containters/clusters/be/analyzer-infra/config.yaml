@@ -4,7 +4,7 @@ application:
 target:
   targetRevision: "eitan"
   path: "containters/helmcharts/bp-analyzer-infra"
-deploy: true
+deploy: false
 cluster:
   name: in-cluster
   adress: "https://kubernetes.default.svc"
