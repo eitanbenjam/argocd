@@ -6,7 +6,7 @@ metadata:
   labels:
     name: bp-oam
   name: bp-network-analytics
-  namespace: openshift-gitops-operator
+  namespace: openshift-gitops
 spec:
   destination:
     namespace: default

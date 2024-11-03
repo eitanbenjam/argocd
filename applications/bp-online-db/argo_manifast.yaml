@@ -6,7 +6,7 @@ metadata:
   labels:
     name: bp-online-db
   name: bp-online-db
-  namespace: openshift-gitops-operator
+  namespace: openshift-gitops
 spec:
   destination:
     namespace: default

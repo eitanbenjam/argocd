@@ -6,7 +6,7 @@ metadata:
   labels:
     name: bp-analyzer-infra
   name: bp-analyzer-infra
-  namespace: openshift-gitops-operator
+  namespace: openshift-gitops
 spec:
   destination:
     namespace: default

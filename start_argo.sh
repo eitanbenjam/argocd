@@ -9,6 +9,7 @@ be="aws-nginx-ingress bp-k8s-infra bp-ace-cd bp-oam bp-oam-agent bp-monitoring-t
 fe="bp-k8s-infra bp-oam-agent-cdf bp-monitoring-tools-cdf bp-probe bp-probe-lb bp-probe-lb-agent bp-ran-probe-a bp-ran-probe-b"
 
 type=$1
+mode=$2
 
 if [ "X${type}" == "Xbe" ];then
 	arr=($(echo "${be}"))
@@ -19,11 +20,11 @@ else
 	exit 1
 fi
 for  b in "${arr[@]}";do
-	echo "Launch app $b"
+	#echo "Launch app $b"
 	cd applications/$b
-	kubectl create -f argo_manifast.yaml  -n argocd
+	echo kubectl ${mode} -f argo_manifast.yaml 
 	cd -
-	sleep 2
+	#sleep 2
 done
 
 
