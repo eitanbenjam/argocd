@@ -3,8 +3,8 @@ application:
   namespace: "default"
 target:
   targetRevision: "eitan"
-  path: "containters/helmcharts/packet-analyzer"
-deploy: false
+  path: "containters/helmcharts/bp-packet-analyzer"
+deploy: true
 cluster:
   name: in-cluster
   adress: "https://kubernetes.default.svc"
