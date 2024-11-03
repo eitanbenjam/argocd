@@ -1,5 +1,5 @@
 application:
-  name: "packet-analyzer "
+  name: "packet-analyzer"
   namespace: "default"
 target:
   targetRevision: "eitan"
