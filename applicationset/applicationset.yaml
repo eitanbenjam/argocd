@@ -61,7 +61,7 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
-          - ServerSideDiff=false
+          - ServerSideDiff=true
         retry:
           limit: 2
   # add template https://github.com/argoproj/argo-cd/issues/17637
