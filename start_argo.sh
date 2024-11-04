@@ -2,7 +2,7 @@
 
 
 
-be="aws-nginx-ingress bp-k8s-infra bp-ace-cd bp-oam bp-oam-agent bp-monitoring-tools bp-network-analytics bp-analyzer-infra bp-session-analyzer bp-packet-analyzer bp-event-bus bp-application-be bp-applications bp-online-db bp-object-storage bp-adminapp-be bp-admin-applications bp-aim bp-automation-infra-cdf"
+be="bp-k8s-infra bp-ace-cd bp-oam bp-oam-agent bp-monitoring-tools bp-network-analytics bp-analyzer-infra bp-session-analyzer bp-packet-analyzer bp-event-bus bp-application-be bp-applications bp-online-db bp-object-storage bp-adminapp-be bp-admin-applications bp-aim bp-automation-infra-cdf"
 #be="bp-k8s-infra bp-oam bp-oam-agent"
 
 #be="bp-oam bp-oam-agent bp-monitoring-tools bp-network-analytics bp-analyzer-infra bp-session-analyzer bp-packet-analyzer bp-event-bus bp-application-be bp-applications bp-online-db bp-object-storage bp-adminapp-be bp-admin-applications bp-aim bp-automation-infra-cdf"
@@ -22,7 +22,7 @@ fi
 for  b in "${arr[@]}";do
 	#echo "Launch app $b"
 	cd applications/$b
-	echo kubectl ${mode} -f argo_manifast.yaml 
+	kubectl ${mode} -f argo_manifast.yaml 
 	cd -
 	#sleep 2
 done
@@ -30,3 +30,5 @@ done
 
 
 #for b in `argocd app list | awk '{print $1}'|grep -v NAME|grep -v argocd/bp-k8s-infra`;do argocd app delete $b -y;argocd app  terminate-op $b;done
+#for x in `argocd app list | grep bp-|awk '{print $1}'`;do argocd app delete $x -y;argocd app terminate-op $x;done
+
