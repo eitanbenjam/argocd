@@ -8,6 +8,12 @@ metadata:
   name: bp-adminapp-be
   namespace: openshift-gitops
 spec:
+  ignoreDifferences:
+  - group: "batch"
+    kind: "Job"
+    jqPathExpressions:
+    - '.spec.template.spec.containers[].pullPolicy'
+
   destination:
     namespace: default
     server: https://kubernetes.default.svc
