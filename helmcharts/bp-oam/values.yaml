@@ -10,7 +10,6 @@ cs-oam:
           - port: 80
             targetPort: 8085
             name: http-actuator
-
   config-distribution-chart:
     services:
       configDistributionActuatorService:
@@ -18,6 +17,8 @@ cs-oam:
           - port: 80
             targetPort: 8085
             name: http-actuator
+  # oam-agent-chart:
+  #   enabled: false
   service-access-config-chart:
     legacyConf:
     - interface: oam_direct
