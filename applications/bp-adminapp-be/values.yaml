@@ -1,5 +1,15 @@
 cs-adminapp-be:
   nifi-chart:
+    radcomConfiguration:
+      nifiserver:
+        resources:
+          limits:
+            cpu: 1
+            memory: 2Gi
+          requests:
+            cpu: 1
+            memory: 1Gi
+
     persistence:
       storageClass: hostpath-csi
 shared-templates:
