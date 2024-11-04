@@ -47,7 +47,7 @@ cs-oam-agent:
     enabled: false
   service-access-config-chart:
     legacyConf:
-    - interface: int_beinterconnect
+    - interface: oam_direct
       ipType: ip
       name: kafka
       port: '9092'
@@ -60,13 +60,13 @@ cs-oam-agent:
       port: '9093'
       siteType: primary
       type: kafka
-    - interface: int_beinterconnect
+    - interface: oam_direct
       ipType: ip
       name: vertica
       port: '5433'
       siteType: home
       type: vertica
-    - interface: int_beinterconnect
+    - interface: oam_direct
       ipType: ip
       name: vertica-np
       port: '5433'
@@ -108,7 +108,7 @@ cs-oam-agent:
       port: '30201'
       siteType: primary
       type: kuberiq
-    - interface: int_beinterconnect
+    - interface: oam_direct
       ipType: ip
       name: eventbus-bic-primary
       port: '9092'
@@ -125,7 +125,7 @@ cs-oam-agent:
       port: '30201'
       siteType: secondary
       type: kuberiq
-    - interface: int_beinterconnect
+    - interface: oam_direct
       ipType: ip
       name: eventbus-bic-secondary
       port: '9092'
