@@ -17,8 +17,8 @@ cs-oam:
           - port: 80
             targetPort: 8085
             name: http-actuator
-  # oam-agent-chart:
-  #   enabled: false
+  oam-agent-chart:
+    enabled: false
   service-access-config-chart:
     autoDiscovery:
       condcutorDnsName: *CONDUCTOR_VIP_PLACEHOLDER
