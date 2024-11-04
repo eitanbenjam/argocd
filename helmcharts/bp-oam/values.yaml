@@ -22,6 +22,8 @@ cs-oam:
   service-access-config-chart:
     autoDiscovery:
       condcutorDnsName: *CONDUCTOR_VIP_PLACEHOLDER
+      isLocalFilesAvailable: false
+      systemOrchestrationMode: ""
     legacyConf:
     - interface: oam_direct
       ipType: ip
