@@ -1,3 +1,7 @@
+cs-adminapp-be:
+  nifi-chart:
+    persistence:
+      storageClass: hostpath-csi
 shared-templates:
   add_blueprints: false
   save_blueprint: true
