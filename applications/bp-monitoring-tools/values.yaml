@@ -1,4 +1,8 @@
 cs-monitoring-tools:
+  grafana-helm-chart:
+    ingress:
+      hosts: []
+
   elasticsearch-chart:
     master:
       containerSecurityContext:
