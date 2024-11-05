@@ -1,5 +1,8 @@
 cs-monitoring-tools:
   elasticsearch-chart:
+    master:
+      containerSecurityContext:
+        enabled: true
     volumePermissions:
       enabled: true
   prometheus-operator-chart:
