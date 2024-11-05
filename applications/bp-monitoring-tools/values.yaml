@@ -1,4 +1,7 @@
 cs-monitoring-tools:
+  elasticsearch-chart:
+    volumePermissions:
+      enabled: true
   prometheus-operator-chart:
     prometheus.prometheusSpec:
       retentionSize: 12G

@@ -1,3 +1,7 @@
+cs-application-be:
+  qinsight-db-chart:
+    persistence:
+      storageClass: EITAN
 shared-templates:
   add_blueprints: false
   save_blueprint: true
