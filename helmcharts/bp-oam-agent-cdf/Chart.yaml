@@ -7,7 +7,7 @@ dependencies:
   version: 1.1001.29
 - name: shared-templates
   repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.0.1
+  version: 1.0.0
 description: cs-oam-agent-cdf
 name: cs-oam-agent-cdf
 version: 13.09.04
