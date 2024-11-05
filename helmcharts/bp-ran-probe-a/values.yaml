@@ -21,7 +21,7 @@ cs-ran:
       packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
       siteName: *SITE_PLACEHOLDER
       conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
-      qrouterIp: *QROUTER_IP
+      qrouterIps: *QROUTER_IP
       mongoIp: *MONGO_IP
       trafficMirrorNetworkGateway: ''
       storageClassName: gp2-persistent
