@@ -44,7 +44,7 @@ cs-oam-agent:
       port: 8081
       type: ClusterIP
   schema-builder-chart:
-    enabled: false
+    enabled: true
   service-access-config-chart:
     legacyConf:
     - interface: oam_direct
