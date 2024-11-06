@@ -1,4 +1,4 @@
-{{- if .Values.save_blueprint }}
+{{- if .Values.shared-templates.save_blueprint }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
