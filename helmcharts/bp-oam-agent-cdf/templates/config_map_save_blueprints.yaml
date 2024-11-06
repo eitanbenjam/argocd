@@ -1,4 +1,4 @@
-{{ if index .Values "shared-templates" "save_blueprint" }}
+{{ if eq index (.Values "shared-templates" "save_blueprint") "true" }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
