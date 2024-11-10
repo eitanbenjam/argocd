@@ -30,7 +30,7 @@ spec:
       - /spec/syncPolicy
   template:
     metadata:
-      name: '{{.application.name}}{{or .application.nameSuffix "" | replace "/" "-"}}'
+      name: '{{.application.name}}-{{}} {{or .application.nameSuffix "" | replace "/" "-"}}'
       labels:
         app.kubernetes.io/component: '{{.cluster.name}}'
         app.kubernetes.io/part-of: argocd-vm

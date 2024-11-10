@@ -8,7 +8,7 @@ application:
       kind: Secret
       jsonPointers:
       - /spec
-  name: "mongo"
+  name: "mongo0"
   namespace: "default"
   componentName: SettingsAndHealthDB
 target:
