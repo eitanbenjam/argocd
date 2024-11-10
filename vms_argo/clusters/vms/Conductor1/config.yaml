@@ -9,6 +9,7 @@ application:
       jsonPointers:
       - /spec
   name: "conductor1"
+  componentName: Conductor1
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"
