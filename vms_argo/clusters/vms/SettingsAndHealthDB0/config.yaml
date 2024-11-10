@@ -8,13 +8,13 @@ application:
       kind: Secret
       jsonPointers:
       - /spec
-  name: "settingsandhealthdb"
+  name: "mongo"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"
   path: "vms_argo/helmcharts/SettingsAndHealthDB0"
-  componentName: mongo
-deploy: false
+  componentName: SettingsAndHealthDB
+deploy: true
 cluster:
   name: in-cluster
   address: "https://kubernetes.default.svc"

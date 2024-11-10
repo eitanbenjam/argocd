@@ -8,12 +8,12 @@ application:
       kind: Secret
       jsonPointers:
       - /spec
-  name: "settingsandhealthdb"
+  name: "mongo"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"
   path: "vms_argo/helmcharts/SettingsAndHealthDB2"
-  componentName: mongo
+  componentName: SettingsAndHealthDB
 deploy: false
 cluster:
   name: in-cluster
