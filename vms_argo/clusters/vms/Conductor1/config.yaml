@@ -13,7 +13,7 @@ application:
 target:
   targetRevision: "datavolume-cluster"
   path: "vms_argo/helmcharts/Conductor1"
-deploy: false
+deploy: true
 cluster:
   name: in-cluster
   address: "https://kubernetes.default.svc"
