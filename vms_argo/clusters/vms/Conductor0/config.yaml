@@ -8,11 +8,12 @@ application:
       kind: Secret
       jsonPointers:
       - /spec
-  name: "conductor1"
+  name: "conductor0"
+  componentName: Conductor0
   namespace: "default"
 target:
-  targetRevision: "datavolume-cluster"
-  path: "vms_argo/helmcharts/Conductor1"
+  targetRevision: datavolume-cluster
+  path: "vms_argo/helmcharts/Conductor0"
 deploy: true
 cluster:
   name: in-cluster
