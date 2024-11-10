@@ -1,0 +1,20 @@
+application:
+  ignoreDifferences:
+    - group: 'kubevirt.io'
+      kind: VirtualMachine
+      jsonPointers:
+      - /spec
+    - group: ''
+      kind: Secret
+      jsonPointers:
+      - /spec
+  name: "settingsandhealthdb"
+  namespace: "default"
+target:
+  targetRevision: "datavolume-cluster"
+  path: "vms_argo/helmcharts/SettingsAndHealthDB0"
+  componentName: mongo
+deploy: false
+cluster:
+  name: in-cluster
+  address: "https://kubernetes.default.svc"
