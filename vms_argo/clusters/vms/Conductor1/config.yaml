@@ -9,12 +9,11 @@ application:
       jsonPointers:
       - /spec
   name: "conductor1"
-  componentName: Conductor1
+  componentName: Conductor
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"
   path: "vms_argo/helmcharts/Conductor1"
-  valueFile: "vms_argo/cluster/Conductor1/values.yaml"
 deploy: true
 cluster:
   name: in-cluster
