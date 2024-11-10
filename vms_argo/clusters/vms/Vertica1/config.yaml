@@ -8,12 +8,12 @@ application:
       kind: Secret
       jsonPointers:
       - /spec
-  name: "vertica0"
+  name: "vertica1"
   namespace: "default"
   componentName: Vertica
 target:
   targetRevision: "datavolume-cluster"
-  path: "vms_argo/helmcharts/Vertica0"
+  path: "vms_argo/helmcharts/Vertica1"
 deploy: true
 cluster:
   name: in-cluster
