@@ -1,0 +1,30 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+  {{- range $key, $value := .Values.ingress.service.annotations }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+  labels:
+    app.kubernetes.io/component: base
+  {{- if .Values.ingress.service.labels }}
+    {{- toYaml .Values.ingress.service.labels | nindent 4 }}
+  {{- end }}
+  namespace: {{ .Release.Namespace }}
+  name: conductor-load-balancer
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  ipFamilyPolicy: SingleStack
+  ipFamilies: 
+    - IPv4
+  ports:
+    - name: http
+      port: 8084
+      protocol: TCP
+      targetPort: 8084
+      appProtocol: http
+  selector:
+    app: conductor
+{{ end }}

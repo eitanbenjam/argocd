@@ -1,0 +1,87 @@
+{{- $storageClass := .Values.storageClass }}
+{{- range $currNetwork := .Values.networks -}}
+{{- $enabled := $currNetwork.enabled }}
+{{- $dhcp := $currNetwork.dhcp }}
+{{- if $dhcp }}
+kind: ConfigMap
+apiVersion: v1
+metadata:
+ name: {{ $currNetwork.networkName }}-dhcp-server-conf
+data:
+ dhcpd.conf: |
+   authoritative;
+   default-lease-time -1;
+   max-lease-time -1;
+   subnet {{ $currNetwork.networkPrefix }}0 netmask 255.255.255.0 {
+           range {{ $currNetwork.networkPrefix }}2 {{ $currNetwork.networkPrefix }}254;
+           option broadcast-address {{ $currNetwork.networkPrefix }}255;
+   }
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: {{ $currNetwork.networkName }}-dhcp-db
+spec:
+ accessModes:
+   - ReadWriteOnce
+ resources:
+   requests:
+     storage: 25Mi
+ storageClassName: {{ $storageClass }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: {{ $currNetwork.networkName }}-dhcp-server
+ labels:
+   app: dhcp
+spec:
+ replicas: 1
+ selector:
+   matchLabels:
+     app: dhcp
+ template:
+   metadata:
+     labels:
+       app: dhcp
+     annotations:
+       k8s.v1.cni.cncf.io/networks: '[
+         {
+           "name": "{{ $currNetwork.networkInterfaceDefinition }}",
+           "ips": ["{{ $currNetwork.networkPrefix }}1/24"]
+         }
+       ]'
+   spec:
+     containers:
+     - name: server
+       image: ghcr.io/maiqueb/ovn-k-secondary-net-dhcp:main
+       args:
+         - "-4"
+         - "-f"
+         - "-d"
+         - "--no-pid"
+         - "-cf"
+         - "/etc/dhcp/dhcpd.conf"
+       securityContext:
+         runAsUser: 1000
+         privileged: true
+       volumeMounts:
+       - name: {{ $currNetwork.networkName }}-multus-daemon-config
+         mountPath: /etc/dhcp
+         readOnly: true
+       - name: dhcpdb
+         mountPath: "/var/lib/dhcp"
+     volumes:
+     - name: {{ $currNetwork.networkName }}-multus-daemon-config
+       configMap:
+         name: {{ $currNetwork.networkName }}-dhcp-server-conf
+         items:
+         - key: dhcpd.conf
+           path: dhcpd.conf
+     - name: dhcpdb
+       persistentVolumeClaim:
+         claimName: {{ $currNetwork.networkName }}-dhcp-db
+---
+{{- end }}
+{{- end }}
+

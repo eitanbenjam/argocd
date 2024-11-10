@@ -1,0 +1,25 @@
+storageClass: hostpath-csi
+namespace: default
+networks:
+  - networkName: backend-net
+    enabled: true
+    dhcp: true
+    networkPrefix: 10.20.0.
+    networkInterfaceDefinition: backend-net
+  - networkName: oam-protected-net
+    enabled: true
+    dhcp: true
+    networkPrefix: 10.30.0.
+    networkInterfaceDefinition: oam-protected-net
+  - networkName: vertica-ic-net
+    enabled: true
+    dhcp: true
+    networkPrefix: 10.40.0.
+    networkInterfaceDefinition: vertica-ic-net
+  - networkName: cdr-direct-net
+    enabled: true
+    dhcp: true
+    networkPrefix: 10.50.0.
+    networkInterfaceDefinition: cdr-direct-net
+
+

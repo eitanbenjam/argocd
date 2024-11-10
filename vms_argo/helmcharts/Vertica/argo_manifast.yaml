@@ -6,7 +6,7 @@ metadata:
   labels:
     name: vertica
   name: vertica
-  namespace: openshift-gitops-operator
+  namespace: openshift-gitops
 spec:
   destination:
     namespace: default

@@ -1,0 +1,8 @@
+ingress:
+  enabled: true
+  service:
+    externalTrafficPolicy: Local
+    type: LoadBalancer
+    annotations:
+      metallb.universe.tf/address-pool: openshiftpoc-ip-pools
+

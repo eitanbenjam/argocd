@@ -1,0 +1,19 @@
+{{- $namespace := .Values.namespace }}
+{{- range $currNetwork := .Values.networks -}}
+{{- $enabled := $currNetwork.enabled }}
+{{- if $enabled }}
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  annotations:
+    description: {{ $currNetwork.networkName }}
+  managedFields:
+    - apiVersion: k8s.cni.cncf.io/v1
+  name: {{ $currNetwork.networkInterfaceDefinition }}
+  namespace: {{ $namespace }}
+spec:
+  config: '{"name":"{{ $currNetwork.networkName }}","type":"ovn-k8s-cni-overlay","cniVersion":"0.3.1","topology":"layer2","netAttachDefName":"{{ $namespace }}/{{ $currNetwork.networkInterfaceDefinition }}"}'
+---
+
+{{- end }}
+{{- end }}

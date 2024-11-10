@@ -13,7 +13,7 @@ application:
 target:
   targetRevision: "eitan"
   path: "vms_argo/helmcharts/Processing"
-deploy: true
+deploy: false
 cluster:
   name: in-cluster
   address: "https://kubernetes.default.svc"

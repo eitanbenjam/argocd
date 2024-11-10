@@ -8,11 +8,11 @@ application:
       kind: Secret
       jsonPointers:
       - /spec
-  name: "qrouter"
+  name: "conductor1"
   namespace: "default"
 target:
-  targetRevision: "eitan"
-  path: "vms_argo/helmcharts/QRouter"
+  targetRevision: "datavolume-cluster"
+  path: "vms_argo/helmcharts/Conductor1"
 deploy: false
 cluster:
   name: in-cluster

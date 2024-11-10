@@ -6,7 +6,7 @@ metadata:
   labels:
     name: processing
   name: processing
-  namespace: openshift-gitops-operator
+  namespace: openshift-gitops
 spec:
   destination:
     namespace: default
