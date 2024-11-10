@@ -8,7 +8,7 @@ application:
       kind: Secret
       jsonPointers:
       - /spec
-  name: "conductor0"
+  name: "conductor-0"
   componentName: Conductor
   namespace: "default"
 target:
