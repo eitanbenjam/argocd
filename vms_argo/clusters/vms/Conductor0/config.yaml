@@ -11,7 +11,7 @@ application:
   name: "conductor0"
   namespace: "default"
 target:
-  targetRevision: eitan
+  targetRevision: datavolume-cluster
   path: "vms_argo/helmcharts/Conductor0"
 deploy: true
 cluster:
