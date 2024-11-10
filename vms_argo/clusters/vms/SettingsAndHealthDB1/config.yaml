@@ -10,10 +10,10 @@ application:
       - /spec
   name: "mongo"
   namespace: "default"
+  componentName: SettingsAndHealthDB
 target:
   targetRevision: "datavolume-cluster"
   path: "vms_argo/helmcharts/SettingsAndHealthDB1"
-  componentName: SettingsAndHealthDB
 deploy: false
 cluster:
   name: in-cluster
