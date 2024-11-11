@@ -2,7 +2,7 @@ application:
   name: "event-bus"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/bp-event-bus"
 deploy: true
 cluster:

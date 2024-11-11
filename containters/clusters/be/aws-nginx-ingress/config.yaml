@@ -2,7 +2,7 @@ application:
   name: "aws-nginx-ingress"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/aws-nginx-ingress"
 deploy: false
 cluster:

@@ -2,7 +2,7 @@ application:
   name: "ran-probe-a"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/ran-probe-a"
 deploy: false
 cluster:

@@ -2,7 +2,7 @@ application:
   name: "oam"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/bp-oam"
 deploy: true
 cluster:

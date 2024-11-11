@@ -2,7 +2,7 @@ application:
   name: "object-storage"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/object-storage"
 deploy: false
 cluster:

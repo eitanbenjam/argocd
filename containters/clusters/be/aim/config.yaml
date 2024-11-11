@@ -2,7 +2,7 @@ application:
   name: "aim"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/bp-aim"
 deploy: true
 cluster:

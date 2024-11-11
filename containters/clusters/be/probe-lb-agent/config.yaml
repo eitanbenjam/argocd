@@ -2,7 +2,7 @@ application:
   name: "probe-lb-agent"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/probe-lb-agent"
 deploy: false
 cluster:

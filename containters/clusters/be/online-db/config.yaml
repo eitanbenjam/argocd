@@ -2,7 +2,7 @@ application:
   name: "online-db"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/bp-online-db"
 deploy: true
 cluster:

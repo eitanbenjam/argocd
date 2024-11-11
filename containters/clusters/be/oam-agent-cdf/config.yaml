@@ -2,7 +2,7 @@ application:
   name: "oam-agent-cdf"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/oam-agent-cdf"
 deploy: false
 cluster:

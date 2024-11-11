@@ -2,7 +2,7 @@ application:
   name: "application-be"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/bp-application-be"
 deploy: true
 cluster:

@@ -2,7 +2,7 @@ application:
   name: "k8s-infra"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/bp-k8s-infra"
 deploy: true
 cluster:

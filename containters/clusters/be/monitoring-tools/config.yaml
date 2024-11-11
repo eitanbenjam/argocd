@@ -2,7 +2,7 @@ application:
   name: "monitoring-tools"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/bp-monitoring-tools"
 deploy: true
 cluster:

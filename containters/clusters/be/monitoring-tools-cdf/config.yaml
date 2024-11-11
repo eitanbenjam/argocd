@@ -2,7 +2,7 @@ application:
   name: "monitoring-tools-cdf"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/monitoring-tools-cdf"
 deploy: false
 cluster:

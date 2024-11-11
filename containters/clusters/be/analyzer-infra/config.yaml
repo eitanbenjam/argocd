@@ -2,7 +2,7 @@ application:
   name: "analyzer-infra"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/bp-analyzer-infra"
 deploy: true
 cluster:
