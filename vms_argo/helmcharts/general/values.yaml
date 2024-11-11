@@ -1,13 +1,13 @@
-vertica_node_count: 3
-conductor_node_count: 2
+vertica_node_count: 1
+conductor_node_count: 1
 distributedlock_node_count: 0
 k8srepository_node_count: 0
-kafka_node_count: 3
+kafka_node_count: 1
 kuberiq_cdf_node_count: 0
 kuberiq_node_count: 0
 processing_node_count: 3
 qrouter_node_count: 3
-settingsandhealthdb_node_count: 3
+settingsandhealthdb_node_count: 1
 vertica_node_count: 3
 vlbagent_node_count: 0
 vlb_node_count: 0
