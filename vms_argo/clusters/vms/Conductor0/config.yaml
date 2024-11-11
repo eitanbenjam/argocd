@@ -14,7 +14,7 @@ application:
   namespace: "default"
 target:
   targetRevision: datavolume-cluster
-  path: "vms_argo/helmcharts/Conductor0"
+  path: "vms_argo/helmcharts/Conductor"
 deploy: true
 cluster:
   name: in-cluster
