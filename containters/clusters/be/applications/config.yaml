@@ -3,7 +3,7 @@ application:
   namespace: "default"
 target:
   targetRevision: "eitan"
-  path: "containters/helmcharts/be-applications"
+  path: "containters/helmcharts/bp-applications"
 deploy: true
 cluster:
   name: in-cluster
