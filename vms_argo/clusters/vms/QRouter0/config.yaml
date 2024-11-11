@@ -1,0 +1,21 @@
+application:
+  ignoreDifferences:
+    - group: 'kubevirt.io'
+      kind: VirtualMachine
+      jsonPointers:
+      - /spec
+    - group: ''
+      kind: Secret
+      jsonPointers:
+      - /spec
+  name: "qrouter0"
+  componentName: QRouter
+  componentIndex: 0
+  namespace: "default"
+target:
+  targetRevision: datavolume-cluster
+  path: "vms_argo/helmcharts/QRouter"
+deploy: true
+cluster:
+  name: in-cluster
+  address: "https://kubernetes.default.svc"

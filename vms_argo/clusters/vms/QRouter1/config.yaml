@@ -8,12 +8,14 @@ application:
       kind: Secret
       jsonPointers:
       - /spec
-  name: "qrouter"
+  name: "qrouter1"
+  componentName: QRouter
+  componentIndex: 1
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: datavolume-cluster
   path: "vms_argo/helmcharts/QRouter"
-deploy: false
+deploy: true
 cluster:
   name: in-cluster
   address: "https://kubernetes.default.svc"
