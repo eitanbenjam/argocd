@@ -8,13 +8,14 @@ application:
       kind: Secret
       jsonPointers:
       - /spec
-  name: "vertica2"
-  namespace: "default"
+  name: "vertica2"  
   componentName: Vertica
+  componentIndex: 2
+  namespace: "default"
 target:
-  targetRevision: "datavolume-cluster"
-  path: "vms_argo/helmcharts/Vertica2"
-deploy: false
+  targetRevision: datavolume-cluster
+  path: "vms_argo/helmcharts/Vertica"
+deploy: true
 cluster:
   name: in-cluster
   address: "https://kubernetes.default.svc"
