@@ -13,7 +13,7 @@ spec:
               repoURL:  https://github.com/eitanbenjam/argocd
               revision: marian
               files:
-                - path: 'envs/**/config.yaml'
+                - path: 'environments/**/config.yaml'
           - clusters:
               selector:
                 matchLabels:
@@ -50,7 +50,7 @@ spec:
             - '../general/values.yaml'
             - 'values.yaml'
             - 'blueprint_value/values.yaml'
-            - '../../envs/{{.cluster.name}}/{{.application.name}}{{or .application.nameSuffix "" }}/values.yaml'
+            - '../../environments/{{.cluster.name}}/{{.application.name}}{{or .application.nameSuffix "" }}/values.yaml'
       destination:
         name: "{{.cluster.name}}"
         namespace: "{{.application.namespace}}"
