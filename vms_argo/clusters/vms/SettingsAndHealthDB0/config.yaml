@@ -9,12 +9,13 @@ application:
       jsonPointers:
       - /spec
   name: "mongo0"
-  namespace: "default"
   componentName: SettingsAndHealthDB
+  componentIndex: 0
+  namespace: "default"
 target:
-  targetRevision: "datavolume-cluster"
-  path: "vms_argo/helmcharts/SettingsAndHealthDB0"
-deploy: false
+  targetRevision: datavolume-cluster
+  path: "vms_argo/helmcharts/SettingsAndHealthDB"
+deploy: true
 cluster:
   name: in-cluster
   address: "https://kubernetes.default.svc"
