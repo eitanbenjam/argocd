@@ -14,7 +14,7 @@ application:
 target:
   targetRevision: "datavolume-cluster"
   path: "vms_argo/helmcharts/SettingsAndHealthDB1"
-deploy: true
+deploy: false
 cluster:
   name: in-cluster
   address: "https://kubernetes.default.svc"

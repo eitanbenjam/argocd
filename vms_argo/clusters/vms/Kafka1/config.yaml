@@ -8,12 +8,12 @@ application:
       kind: Secret
       jsonPointers:
       - /spec
-  name: "vertica2"
+  name: "kafka1"
   namespace: "default"
-  componentName: Vertica
+  componentName: Kafka
 target:
   targetRevision: "datavolume-cluster"
-  path: "vms_argo/helmcharts/Vertica2"
+  path: "vms_argo/helmcharts/Kafka1"
 deploy: false
 cluster:
   name: in-cluster

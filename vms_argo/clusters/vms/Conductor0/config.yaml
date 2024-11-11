@@ -8,8 +8,9 @@ application:
       kind: Secret
       jsonPointers:
       - /spec
-  name: "conductor0.baba.com"
+  name: "conductor0"
   componentName: Conductor
+  componentIndex: 0
   namespace: "default"
 target:
   targetRevision: datavolume-cluster
