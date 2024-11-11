@@ -1,5 +1,4 @@
 cluster_name: k8sRepository
-k8srepository_node_count: 1
 landingzone_ip: 1.2.3.4
 machine_index: 0
 machine_type: k8sRepository

@@ -5,7 +5,6 @@ cdr_direct_net_mac: None
 cluster_name: Kuberiq_cdf
 deploy_default_blueprints: 'False'
 kuberiq_cdf_chosen_instance_name: None
-kuberiq_cdf_node_count: 1
 kuberiq_first_nodes: 'True'
 kuberiq_machine_type: Kuberiq
 kuberiq_role_etcd: default

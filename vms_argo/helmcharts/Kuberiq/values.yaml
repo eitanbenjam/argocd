@@ -9,7 +9,6 @@ guardian_access_network: oam_protected
 kuberiq_chosen_instance_name: None
 kuberiq_first_nodes: 'True'
 kuberiq_machine_type: Kuberiq
-kuberiq_node_count: 1
 kuberiq_role_etcd: default
 kuberiq_role_master: default
 kuberiq_role_node: default

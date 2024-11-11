@@ -3,7 +3,6 @@ backend_ic_net_mac: None
 cluster_name: SettingsAndHealthDB
 machine_index: 2
 machine_type: SettingsAndHealthDB
-settingsandhealthdb_node_count: 3
 settingsandhealthdb_version_number: 7.0.4
 tenant: robin
 vnf_name: SettingsAndHealthDB

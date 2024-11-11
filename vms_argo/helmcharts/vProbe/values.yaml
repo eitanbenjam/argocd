@@ -19,11 +19,7 @@ probe_name: None
 probe_pod: ''
 qanalyzer_seperate_pool: None
 tenant: robin
-vLB_node_count: 1
-vProbe_node_count: 1
-vlb_node_count: 1
 vnf_name: vProbe
-vprobe_node_count: 1
 vprobe_topic: '0'
 vprobe_type: mme
 vprobes_mgmt_int_net_ip_0: ip_addr
