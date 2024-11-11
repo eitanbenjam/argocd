@@ -14,6 +14,7 @@ metadata:
 spec:
   selector:
     radcom-machine: processing-{{ .Values.machine_index }}
+  clusterIP: None
   ports:
   - name: ssh
     port: 22
