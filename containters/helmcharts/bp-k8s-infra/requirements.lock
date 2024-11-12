@@ -1,9 +1,0 @@
-dependencies:
-- name: cs-k8s-infra
-  repository: http://nexus3-prod.radcom.co.il:8081/repository/charts/
-  version: 1.99.12
-- name: shared-templates
-  repository: http://nexus3-prod.radcom.co.il:8081/repository/charts/
-  version: 1.0.0
-digest: sha256:3e3e1732b51418a780f4d86b0af93ee98119b0b1c7c12a1575f89b55565f1a2e
-generated: "2024-10-30T10:59:59.713654784+02:00"
