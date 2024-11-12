@@ -11,7 +11,7 @@ spec:
         generators:
           - git:
               repoURL:  https://github.com/eitanbenjam/argocd
-              revision: eitan
+              revision: datavolume-cluster
               files:
                 - path: 'containters/clusters/be/**/config.yaml'
           - clusters:
