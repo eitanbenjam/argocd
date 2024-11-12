@@ -15,7 +15,7 @@ application:
 target:
   targetRevision: datavolume-cluster
   path: "vms_argo/helmcharts/Processing"
-deploy: false
+deploy: true
 cluster:
   name: in-cluster
   address: "https://kubernetes.default.svc"
