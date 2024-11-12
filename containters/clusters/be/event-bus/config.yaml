@@ -1,5 +1,5 @@
 application:
-  name: "event-bus"
+  name: "bp-event-bus"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"

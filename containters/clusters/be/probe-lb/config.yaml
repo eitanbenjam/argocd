@@ -1,5 +1,5 @@
 application:
-  name: "probe-lb"
+  name: "bp-probe-lb"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"

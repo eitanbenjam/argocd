@@ -1,5 +1,5 @@
 application:
-  name: "oam-agent-cdf"
+  name: "bp-oam-agent-cdf"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"

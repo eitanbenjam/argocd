@@ -1,5 +1,5 @@
 application:
-  name: "session-analyzer"
+  name: "bp-session-analyzer"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"

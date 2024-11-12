@@ -1,5 +1,5 @@
 application:
-  name: "object-storage"
+  name: "bp-object-storage"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"

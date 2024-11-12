@@ -1,5 +1,5 @@
 application:
-  name: "k8s-infra-cdf"
+  name: "bp-k8s-infra-cdf"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"

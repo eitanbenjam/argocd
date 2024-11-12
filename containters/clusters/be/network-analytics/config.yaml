@@ -1,5 +1,5 @@
 application:
-  name: "network-analytics"
+  name: "bp-network-analytics"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"

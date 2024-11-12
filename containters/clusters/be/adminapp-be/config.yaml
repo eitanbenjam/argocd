@@ -1,5 +1,5 @@
 application:
-  name: "adminapp-be"
+  name: "bp-adminapp-be"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"

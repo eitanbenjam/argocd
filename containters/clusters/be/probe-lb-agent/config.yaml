@@ -1,5 +1,5 @@
 application:
-  name: "probe-lb-agent"
+  name: "bp-probe-lb-agent"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"

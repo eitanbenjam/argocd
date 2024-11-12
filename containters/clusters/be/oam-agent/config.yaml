@@ -1,5 +1,5 @@
 application:
-  name: "oam-agent"
+  name: "bp-oam-agent"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"

@@ -1,5 +1,5 @@
 application:
-  name: "applications"
+  name: "bp-applications"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"

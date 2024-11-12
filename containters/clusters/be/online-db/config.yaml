@@ -1,5 +1,5 @@
 application:
-  name: "online-db"
+  name: "bp-online-db"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"

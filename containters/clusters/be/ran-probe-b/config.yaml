@@ -1,5 +1,5 @@
 application:
-  name: "ran-probe-b"
+  name: "bp-ran-probe-b"
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"
