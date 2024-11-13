@@ -13,7 +13,7 @@ application:
   componentName: Kafka
 target:
   targetRevision: "datavolume-cluster"
-  path: "vms_argo/helmcharts/Kafka0"
+  path: "vms_argo/helmcharts/Kafka"
 deploy: true
 cluster:
   name: in-cluster
