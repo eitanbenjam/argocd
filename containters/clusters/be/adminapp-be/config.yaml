@@ -9,6 +9,7 @@ application:
     - ".spec.volumeClaimTemplates[].kind"
   - group: "core"
     kind: "ConfigMap"
+    name: "configmap-bp-adminapp-be-nifi-chart"
     jsonPointers:
     - "/data"
 
