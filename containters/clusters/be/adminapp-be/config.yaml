@@ -7,6 +7,11 @@ application:
     jqPathExpressions:
     - ".spec.volumeClaimTemplates[].apiVersion"
     - ".spec.volumeClaimTemplates[].kind"
+  - group: "v1"
+    kind: "ConfigMap"
+    jqPathExpressions:
+    - ".data"
+
 target:
   targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/bp-adminapp-be"
