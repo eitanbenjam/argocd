@@ -7,10 +7,10 @@ application:
     jqPathExpressions:
     - ".spec.volumeClaimTemplates[].apiVersion"
     - ".spec.volumeClaimTemplates[].kind"
-  - group: "v1"
+  - group: "core"
     kind: "ConfigMap"
-    jqPathExpressions:
-    - ".data"
+    jsonPointers:
+    - "/data"
 
 target:
   targetRevision: "datavolume-cluster"
