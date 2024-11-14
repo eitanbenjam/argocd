@@ -4,7 +4,7 @@ appVersion: '1.0'
 dependencies:
 - name: cs-session-analyzer
   repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 9.435.19
+  version: 1.7.7
 - name: shared-templates
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.0.0
