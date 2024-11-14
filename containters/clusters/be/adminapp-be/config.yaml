@@ -10,6 +10,7 @@ application:
   - group: "core"
     kind: "ConfigMap"
     name: "configmap-bp-adminapp-be-nifi-chart"
+    namespace: "default"
     jsonPointers:
     - "/data"
 
