@@ -7,7 +7,7 @@ cs-monitoring-tools:
       retentionSize: 12G
 
   fluentd-chart:
-    podSecurityContext:
+    securityContext:
      privileged: true
 
 
