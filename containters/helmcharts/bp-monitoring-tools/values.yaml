@@ -5,6 +5,15 @@ cs-monitoring-tools:
   prometheus-operator-chart:
     prometheus.prometheusSpec:
       retentionSize: 12G
+
+  fluentd-chart:
+    podSecurityContext:
+     privileged: true
+
+
+
+
+
 shared-templates:
   add_blueprints: false
   save_blueprint: true
