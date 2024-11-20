@@ -3,7 +3,7 @@ application:
   namespace: "default"
 target:
   targetRevision: "datavolume-cluster"
-  path: "containters/helmcharts/probe"
+  path: "containters/helmcharts/bp-probe"
 deploy: true
 cluster:
   name: in-cluster
