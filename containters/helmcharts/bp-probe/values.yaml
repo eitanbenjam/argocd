@@ -12,11 +12,11 @@ cs-probe:
       oamDirectInterfacePref: AWS_RADCOM_OAM_DIRECT
       packetInternalInterfacePref: AWS_RADCOM_PACKET_INTERNAL
       packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
-      qrouterIp: XXXXXXXXXXXXXXX
+      qrouterIp: qrouter-0-service
       siteName: *SITE_PLACEHOLDER
       storageClassName: ''
       trafficDataInterfacePref: AWS_RADCOM_TRAFFIC_DATA
-      useNetworkAttachmentDefinition: 'yes'
+      useNetworkAttachmentDefinition: 'no'
       versionNumber: ''
     deployments:
       probecoremsDeployment:
