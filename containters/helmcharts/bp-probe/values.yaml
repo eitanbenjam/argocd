@@ -31,13 +31,13 @@ cs-probe:
               storageClassName: *SITE_ELASTIC_STORAGE_PLACEHOLDER
               volumeMode: Filesystem
               accessModes: ReadWriteOnce
-              storage: 1G
+              storage: 1Gi
             - name: config
               mountPath: /config
               claimName: config-1001
               storageClassName: *SITE_ELASTIC_STORAGE_PLACEHOLDER
               accessModes: ReadWriteOnce
-              storage: 1G
+              storage: 1Gi
 
             env:
               AWS_RADCOM_CDF_CONTROL_INTF_NAMES: eth1
