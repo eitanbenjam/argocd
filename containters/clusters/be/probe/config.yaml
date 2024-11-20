@@ -4,7 +4,7 @@ application:
 target:
   targetRevision: "datavolume-cluster"
   path: "containters/helmcharts/bp-probe"
-deploy: true
+deploy: false
 cluster:
   name: in-cluster
   adress: "https://kubernetes.default.svc"
