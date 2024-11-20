@@ -1,3 +1,4 @@
+add_default_sa_prometheus_permissions: true
 ingress:
   enabled: true
   service:
