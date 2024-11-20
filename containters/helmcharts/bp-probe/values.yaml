@@ -1,5 +1,7 @@
 CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER conductor-service
 SITE_PLACEHOLDER: &SITE_PLACEHOLDER default
+SITE_ELASTIC_STORAGE_PLACEHOLDER: &SITE_ELASTIC_STORAGE_PLACEHOLDER hostpath-csi
+
 cs-probe:
   probe-core-ms-chart:
     conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
@@ -22,6 +24,21 @@ cs-probe:
       probecoremsDeployment:
         containers:
           probecoremsContainer:
+            persistenceVolumes:
+            - name: data
+              mountPath: /data
+              claimName: data-1001
+              storageClassName: *SITE_ELASTIC_STORAGE_PLACEHOLDER
+              volumeMode: Filesystem
+              accessModes: ReadWriteOnce
+              storage: 1G
+            - name: config
+              mountPath: /config
+              claimName: config-1001
+              storageClassName: *SITE_ELASTIC_STORAGE_PLACEHOLDER
+              accessModes: ReadWriteOnce
+              storage: 1G
+
             env:
               AWS_RADCOM_CDF_CONTROL_INTF_NAMES: eth1
               AWS_RADCOM_DEFAULT_INTF_NAMES: eth0
