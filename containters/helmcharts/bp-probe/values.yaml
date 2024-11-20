@@ -19,7 +19,7 @@ cs-probe:
       storageClassName: ''
       trafficDataInterfacePref: AWS_RADCOM_TRAFFIC_DATA
       useNetworkAttachmentDefinition: 'no'
-      versionNumber: ''
+      versionNumber: '1.2.3'
     deployments:
       probecoremsDeployment:
         containers:
