@@ -1,0 +1,49 @@
+cs-ran:
+  ran-core-ms-chart:
+    cdrPVC:
+      storageSize: 2Gi
+    configMap:
+      clusterName: RAN
+      machineType: RAN-probe-b
+      name: ranProbe-b
+      networkIpMode: ipv4
+      packetInternalInterfacePref: AWS_RADCOM_PACKET_INTERNAL
+    deployments:
+      rancoremsDeployment:
+        containers:
+          rancoremsContainer:
+            envs:
+              AWS_RADCOM_CDF_CONTROL_INTF_NAMES: eth0
+              AWS_RADCOM_DEFAULT_INTF_NAMES: eth0
+              AWS_RADCOM_NF_MANAGER_INTF_NAMES: eth0
+              AWS_RADCOM_OAM_DIRECT_INTF_NAMES: eth0
+              AWS_RADCOM_PACKET_INTERNAL_INTF_NAMES: net1
+              AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
+    resources:
+      limits:
+        cpu: 10000m
+        hugepages1Gi: 1
+        memory: 8Gi
+    services:
+      ranprobe-srv-internal:
+        clusterIP: None
+        name: ran-srv-internal-{{ .Values.global.configMap.probeId}}
+        ports:
+        - name: srv-interanal
+          port: 8010
+          protocol: TCP
+          targetPort: 8010
+        sessionAffinity: None
+        type: ClusterIP
+      ranprobe-trafficdata:
+        externalTrafficPolicy: Cluster
+        name: ran-srv-trafficdata-{{ .Values.global.configMap.probeId}}
+        ports:
+        - name: trafficdata
+          port: 7004
+          protocol: TCP
+          targetPort: 7004
+        sessionAffinity: None
+        type: NodePort
+    storagePVC:
+      storageSize: 20Gi

@@ -1,0 +1,10 @@
+application:
+  name: "ace-cd"
+  namespace: "production"
+target:
+  targetRevision: "marian"
+  path: "helmcharts/bp-ace-cd"
+deploy: true
+cluster:
+  name: cdf
+  adress: "https://kubernetes.default.svc"

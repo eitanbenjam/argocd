@@ -1,0 +1,10 @@
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v1
+appVersion: '1.0'
+dependencies:
+- name: cs-admin-applications
+  repository: *HELM_REGISTRY_PLACEHOLDER
+  version: 1.560.5
+description: bp-admin-applications
+name: bp-admin-applications
+version: 13.09.04

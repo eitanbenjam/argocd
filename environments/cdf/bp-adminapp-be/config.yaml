@@ -1,0 +1,21 @@
+application:
+  name: "adminapp-be"
+  namespace: "production"
+  ignoreDifferences:
+    - group: "apps"
+      kind: "StatefulSet"
+      jqPathExpressions:
+        - ".spec.volumeClaimTemplates[].apiVersion"
+        - ".spec.volumeClaimTemplates[].kind"
+    - group: cert-manager.io
+      kind: Certificate
+      jsonPointers:
+      - /spec/duration
+      - /spec/renewBefore
+target:
+  targetRevision: "marian"
+  path: "helmcharts/bp-adminapp-be"
+deploy: true
+cluster:
+  name: cdf
+  adress: "https://kubernetes.default.svc"

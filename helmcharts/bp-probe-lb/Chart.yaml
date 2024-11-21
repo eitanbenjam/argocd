@@ -1,0 +1,10 @@
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v1
+appVersion: '1.0'
+dependencies:
+- name: cs-probe
+  repository: *HELM_REGISTRY_PLACEHOLDER
+  version: 1.558.12
+description: bp-probe-lb
+name: bp-probe-lb
+version: 13.09.04

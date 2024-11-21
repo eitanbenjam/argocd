@@ -1,0 +1,38 @@
+CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argoRadcomBEALB-674568957.us-east-2.elb.amazonaws.com
+DOCKER_REGISTRY: &DOCKER_REGISTRY 571789434150.dkr.ecr.us-east-2.amazonaws.com
+SITE_PLACEHOLDER: &SITE_PLACEHOLDER jerus
+QROUTER_IP: &QROUTER_IP "10.8.39.88"
+MONGO_IP: &MONGO_IP "10.8.33.100"
+SRP_IP: &SRP_IP "10.8.33.252"
+
+ace-cd-chart:
+  repository: *DOCKER_REGISTRY
+  ansible_check: false
+  cloud:
+    aws_extra_params:
+      arn_role: "arn:aws:iam::571789434150:role/role-argo-ace-cd"
+      service_account_name: "cicd-cluster-eks-role"
+    type: local
+    service_account_name: "cicd-cluster-eks-role"
+  env_id: argo
+  image:
+    helm_repository_tag: latest
+    tag: argo
+  kuberiq_cluster_name: Kuberiq_reg
+  kuberiq_type: kuberiq_cdf
+  create_log_pvc: true
+  conductor_ip: *CONDUCTOR_VIP_PLACEHOLDER
+  pullPolicy: Always
+  replicas: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512M
+  site_type: CDF
+  source_control: configmap
+  srp_ip: *SRP_IP
+  sites: jerus
+  storage_class: gp3
+  cronjob_name: service-access-config
+  namespace: production
+  tag: 1.120.0

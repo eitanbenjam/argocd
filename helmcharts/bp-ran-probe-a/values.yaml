@@ -1,0 +1,67 @@
+CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argoRadcomBEALB-674568957.us-east-2.elb.amazonaws.com
+SITE_PLACEHOLDER: &SITE_PLACEHOLDER jerus
+QROUTER_IP: &QROUTER_IP "10.8.39.88"
+MONGO_IP: &MONGO_IP "10.8.33.100"
+BLUEPRINT_RAN_PROBE_A: &BLUEPRINT_RAN_PROBE_A "10"
+VERSION: 13.09.00.000.04
+
+global:
+  configMap:
+    probeId: *BLUEPRINT_RAN_PROBE_A
+
+cs-ran:
+  ran-core-ms-chart:
+    cdrPVC:
+      storageSize: 2Gi
+    configMap:
+      clusterName: RAN
+      machineType: RAN-probe-a
+      name: ranProbe-a
+      networkIpMode: ipv4
+      packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
+      siteName: *SITE_PLACEHOLDER
+      conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
+      qrouterIps: *QROUTER_IP
+      mongoIp: *MONGO_IP
+      trafficMirrorNetworkGateway: ''
+      storageClassName: gp2-persistent
+    deployments:
+      rancoremsDeployment:
+        podAnnotations:
+          k8s.v1.cni.cncf.io/networks: "dpdk-net-mirror-ran-10"
+        containers:
+          rancoremsContainer:
+            envs:
+              AWS_RADCOM_CDF_CONTROL_INTF_NAMES: eth0
+              AWS_RADCOM_DEFAULT_INTF_NAMES: eth0
+              AWS_RADCOM_NF_MANAGER_INTF_NAMES: eth0
+              AWS_RADCOM_OAM_DIRECT_INTF_NAMES: eth0
+              AWS_RADCOM_PACKET_MIRROR_INTF_NAMES: net1
+              AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
+    resources:
+      limits:
+        cpu: 10000m
+        hugepages1Gi: 1
+        memory: 8Gi
+      requests:
+        cpu: 10000m
+        hugepages1Gi: 1
+        memory: 8Gi
+    services:
+      ranprobe-trafficdata:
+        externalTrafficPolicy: Cluster
+        name: "ran-srv-trafficdata-10"
+        ports:
+        - name: trafficdata
+          port: 7004
+          protocol: TCP
+          targetPort: 7004
+        sessionAffinity: None
+        type: NodePort
+    storagePVC:
+      storageSize: 20Gi
+    storageClassName: gp2-persistent
+shared-templates:
+  add_blueprints: false
+  save_blueprint: false
+  wait_for_ace_orchestrator: false

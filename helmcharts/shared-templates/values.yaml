@@ -1,0 +1,14 @@
+DOCKER_REGISTRY: &DOCKER_REGISTRY 571789434150.dkr.ecr.us-east-2.amazonaws.com
+CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argoRadcomBEALB-674568957.us-east-2.elb.amazonaws.com
+
+global:
+  docker_registry: *DOCKER_REGISTRY
+  conductorVip: *CONDUCTOR_VIP_PLACEHOLDER
+add_blueprint: false
+save_blueprint: false
+wait_for_ace_orchestrator: false
+wait_for_ace_orchestrator_on_post: false
+create_cluster_role: false
+wait_for_event_bus: false
+ace_cd_tag: latest
+cronjob_name: false

@@ -1,7 +1,0 @@
-SITE_EVENT_BUS_STORAGE_PLACEHOLDER: &SITE_EVENT_BUS_STORAGE_PLACEHOLDER gp3
-global:
-  chartSet: cs-event-bus
-  eventbusStorageClass: *SITE_EVENT_BUS_STORAGE_PLACEHOLDER
-shared-templates:
-  add_blueprint: false
-  save_blueprint: true
