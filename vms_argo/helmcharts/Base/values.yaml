@@ -1,4 +1,7 @@
 add_default_sa_prometheus_permissions: true
+add_argocd_sa_role: true
+argocd_sa: system:serviceaccount:openshift-gitops:openshift-gitops-argocd-application-controller
+
 ingress:
   enabled: true
   service:
