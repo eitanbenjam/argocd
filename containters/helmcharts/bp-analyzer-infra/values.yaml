@@ -1,9 +1,7 @@
+cs-analyzer-infra:
+  storage-ms-chart:
+    enabled: false
 shared-templates:
   add_blueprints: false
   save_blueprint: true
   wait_for_ace_orchestrator_on_post: true
-
-cs-analyzer-infra:
-  storage-ms-chart:
-    enabled: false
-

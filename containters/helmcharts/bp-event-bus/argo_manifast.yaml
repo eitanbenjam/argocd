@@ -23,7 +23,7 @@ spec:
     path: applications/bp-event-bus
     ref: my-repo
     repoURL: https://github.com/eitanbenjam/argocd
-    targetRevision: datavolume-cluster
+    targetRevision: demo
   syncPolicy:
     automated:
       allowEmpty: false

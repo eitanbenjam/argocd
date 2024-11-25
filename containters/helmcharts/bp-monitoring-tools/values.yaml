@@ -1,19 +1,13 @@
 cs-monitoring-tools:
+  fluentd-chart:
+    securityContext:
+      privileged: true
   grafana-helm-chart:
     ingress:
       hosts: []
   prometheus-operator-chart:
     prometheus.prometheusSpec:
       retentionSize: 12G
-
-  fluentd-chart:
-    securityContext:
-     privileged: true
-
-
-
-
-
 shared-templates:
   add_blueprints: false
   save_blueprint: true
