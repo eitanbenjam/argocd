@@ -1,4 +1,4 @@
-SITE_GENERAL_STORAGE_PLACEHOLDER: &SITE_GENERAL_STORAGE_PLACEHOLDER hostpath-csi
+SITE_GENERAL_STORAGE_PLACEHOLDER: &SITE_GENERAL_STORAGE_PLACEHOLDER standard
 cs-admin-applications:
   grafana-helm-chart:
     persistence:
