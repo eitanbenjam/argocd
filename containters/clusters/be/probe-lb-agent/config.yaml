@@ -1,0 +1,10 @@
+application:
+  name: "bp-probe-lb-agent"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/probe-lb-agent"
+deploy: false
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

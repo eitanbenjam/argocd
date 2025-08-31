@@ -1,0 +1,10 @@
+application:
+  name: "bp-network-analytics"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/bp-network-analytics"
+deploy: true
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

@@ -1,0 +1,10 @@
+application:
+  name: "bp-analyzer-infra"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/bp-analyzer-infra"
+deploy: true
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

@@ -1,0 +1,7 @@
+SITE_EVENT_BUS_STORAGE_PLACEHOLDER: &SITE_EVENT_BUS_STORAGE_PLACEHOLDER hostpath-csi
+global:
+  chartSet: cs-event-bus
+  eventbusStorageClass: *SITE_EVENT_BUS_STORAGE_PLACEHOLDER
+shared-templates:
+  add_blueprint: false
+  save_blueprint: true

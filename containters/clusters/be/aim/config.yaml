@@ -1,0 +1,16 @@
+application:
+  name: "bp-aim"
+  namespace: "default"
+  ignoreDifferences:
+  - group: "apps"
+    kind: "StatefulSet"
+    jqPathExpressions:
+    - ".spec.volumeClaimTemplates[].apiVersion"
+    - ".spec.volumeClaimTemplates[].kind"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/bp-aim"
+deploy: true
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

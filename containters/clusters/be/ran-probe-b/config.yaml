@@ -1,0 +1,10 @@
+application:
+  name: "bp-ran-probe-b"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/ran-probe-b"
+deploy: false
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

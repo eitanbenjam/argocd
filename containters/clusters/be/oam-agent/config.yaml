@@ -1,0 +1,10 @@
+application:
+  name: "bp-oam-agent"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/bp-oam-agent"
+deploy: true
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

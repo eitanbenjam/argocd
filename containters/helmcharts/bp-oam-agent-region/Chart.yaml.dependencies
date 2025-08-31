@@ -1,0 +1,41 @@
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://571789434150.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v1
+appVersion: '1.0'
+description: cs-oam-agent
+name: cs-oam-agent
+version: 1.0.0
+dependencies:
+  - name: alert-notification-ms-chart
+    version: 1.19.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: daemon-chart
+    version: 1.315.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: cdf-network-manager-chart
+    version: 1.16.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: database-loader-chart
+    version: 1.232.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: database-sync-chart
+    version: 1.19.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: oam-agent-chart
+    version: 1.167.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: persistence-volume-exporter-chart
+    version: 1.47.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: radcom-chart-library-chart
+    version: 1.53.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: schema-builder-chart
+    version: 1.237.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: service-access-config-chart
+    version: 1.77.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: storageclass-exporter-chart
+    version: 1.25.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+

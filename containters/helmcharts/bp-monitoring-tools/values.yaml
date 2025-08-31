@@ -1,0 +1,21 @@
+cs-monitoring-tools:
+  grafana-helm-chart:
+    ingress:
+      hosts: []
+  prometheus-operator-chart:
+    prometheus.prometheusSpec:
+      retentionSize: 12G
+
+  fluentd-chart:
+    securityContext:
+     privileged: true
+
+
+
+
+
+shared-templates:
+  add_blueprints: false
+  save_blueprint: true
+  wait_for_ace_orchestrator: true
+  wait_for_ace_orchestrator_on_post: false

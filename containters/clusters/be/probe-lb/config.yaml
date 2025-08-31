@@ -1,0 +1,10 @@
+application:
+  name: "bp-probe-lb"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/probe-lb"
+deploy: false
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"

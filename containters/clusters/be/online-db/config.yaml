@@ -1,0 +1,10 @@
+application:
+  name: "bp-online-db"
+  namespace: "default"
+target:
+  targetRevision: "eitan"
+  path: "containters/helmcharts/bp-online-db"
+deploy: true
+cluster:
+  name: in-cluster
+  adress: "https://kubernetes.default.svc"
