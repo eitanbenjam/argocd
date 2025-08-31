@@ -2,7 +2,7 @@ application:
   name: "bp-admin-applications"
   namespace: "default"
 target:
-  targetRevision: "eitan"
+  targetRevision: "gcp"
   path: "containters/helmcharts/bp-admin-applications"
 deploy: true
 cluster:
