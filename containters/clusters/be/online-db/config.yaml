@@ -1,8 +1,8 @@
 application:
   name: "bp-online-db"
-  namespace: "default"
+  namespace: "production"
 target:
-  targetRevision: "eitan"
+  targetRevision: "gcp"
   path: "containters/helmcharts/bp-online-db"
 deploy: true
 cluster:
