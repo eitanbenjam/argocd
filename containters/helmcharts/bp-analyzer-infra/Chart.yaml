@@ -1,13 +1,13 @@
-HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER http://nexus3-prod.radcom.co.il:8081/repository/charts/
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER us-south1-docker.pkg.dev/radcom-telus-poc-400307/eitan-test
 apiVersion: v1
 appVersion: '1.0'
 dependencies:
 - name: cs-analyzer-infra
   repository: *HELM_REGISTRY_PLACEHOLDER
-  version: 1.327.33
+  version: 1.446.111
 - name: shared-templates
   repository: *HELM_REGISTRY_PLACEHOLDER
   version: 1.0.0
 description: bp-analyzer-infra
 name: cs-analyzer-infra
-version: 13.09.06
+version: 13.12.00

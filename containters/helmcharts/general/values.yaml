@@ -1,17 +1,17 @@
-SITE_OBJECT_STORAGE: &SITE_OBJECT_STORAGE hostpath-csi
-SITE_ELASTIC_STORAGE: &SITE_ELASTIC_STORAGE hostpath-csi
-SITE_GENERAL_STORAGE: &SITE_GENERAL_STORAGE hostpath-csi
-SITE_EVENT_BUS_STORAGE: &SITE_EVENT_BUS_STORAGE hostpath-csi
+SITE_OBJECT_STORAGE: &SITE_OBJECT_STORAGE standard
+SITE_ELASTIC_STORAGE: &SITE_ELASTIC_STORAGE standard
+SITE_GENERAL_STORAGE: &SITE_GENERAL_STORAGE standard
+SITE_EVENT_BUS_STORAGE: &SITE_EVENT_BUS_STORAGE standard
 SITE_HEALTH_STORAGE: &SITE_HEALTH_STORAGE hostpath-csi
 SITE: &SITE default
-HELM_REGISTRY: &HELM_REGISTRY http://nexus3-prod.radcom.co.il:8081/repository/charts/
-DOCKER_REGISTRY: &DOCKER_REGISTRY nexus3-prod.radcom.co.il:8084
-NAMESPACE: &NAMESPACE default
+HELM_REGISTRY: &HELM_REGISTRY us-south1-docker.pkg.dev/radcom-telus-poc-400307/eitan-test
+DOCKER_REGISTRY: &DOCKER_REGISTRY us-south1-docker.pkg.dev/radcom-telus-poc-400307/eitan-test
+NAMESPACE: &NAMESPACE production
 CONDUCTOR_VIP: &CONDUCTOR_VIP conductor-service
-VERSION: &VERSION 13.09.00.000.06
-CLOUD: &CLOUD openshift
+VERSION: &VERSION 13.12.00.019.00
+CLOUD: &CLOUD gcp
 GIT: https://github.com/eitanbenjam/argocd
-GIT_BRANCH: eitan
+GIT_BRANCH: gcp
 shared-templates:
   ace_cd_tag: argo
 
