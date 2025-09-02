@@ -1,3 +1,5 @@
+global:
+  namespace: argocd
 ace-cd-chart:
   ansible_check: false
   cloud:
