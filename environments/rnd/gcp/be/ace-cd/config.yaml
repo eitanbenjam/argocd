@@ -2,8 +2,8 @@ application:
   name: "ace-cd"
   namespace: "production"
 source:
-  repoURL: "ssh://git@3.12.180.20/radcom/helmcharts.git"
-  targetRevision: "master"
+  repoURL: "https://github.com/eitanbenjam/argocd"
+  targetRevision: "gcp"
   path: "helmcharts/radcom/ace-cd"
 deploy: "true"
 cluster:
