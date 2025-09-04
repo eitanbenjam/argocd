@@ -1,0 +1,14 @@
+apiVersion: v2
+description: Unofficial Bitwarden compatible server written in Rust
+name: vaultwarden
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.16.0-0"
+dependencies:
+  - name: vaultwarden
+    repository: https://gissilabs.github.io/charts/
+    version: 1.2.6
+  - name: library-chart
+    version: 1.11.1
+    repository: file://../../radcom/library-chart
+    alias: library-chart

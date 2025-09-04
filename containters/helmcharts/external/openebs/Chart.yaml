@@ -1,0 +1,11 @@
+apiVersion: v2
+description: A Helm chart for openebs.
+name: openebs
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: openebs
+    version: 4.3.3
+    repository: https://openebs.github.io/openebs
+    alias: openebs

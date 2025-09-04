@@ -1,0 +1,10 @@
+apiVersion: v2
+description: A Helm chart for Anchovy RADCOM Sardina Stacks Browser
+name: anchovy
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: anchovy
+    version: 2.0.5
+    repository: https://nexus3-prod.radcom.co.il/repository/charts

@@ -1,0 +1,11 @@
+apiVersion: v2
+description: A Helm chart for Prometheus SNMP Exporter.
+name: prometheus-snmp-exporter
+version: 9.6.0
+appVersion: 0.29.0
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: prometheus-snmp-exporter
+    version: 9.6.2
+    repository: https://prometheus-community.github.io/helm-charts
+    alias: prometheus-snmp-exporter

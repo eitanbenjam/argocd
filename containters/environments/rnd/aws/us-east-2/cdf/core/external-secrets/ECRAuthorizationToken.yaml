@@ -1,0 +1,15 @@
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: ECRAuthorizationToken
+metadata:
+  name: ecr-gen
+  namespace: "argocd"
+spec:
+  region: "us-east-2"
+  auth:
+    secretRef:
+      accessKeyIDSecretRef:
+        name: "aws-ecr-access-key"
+        key: "AWS_ACCESS_KEY_ID"
+      secretAccessKeySecretRef:
+        name: "aws-ecr-access-key"
+        key: "AWS_SECRET_ACCESS_KEY"

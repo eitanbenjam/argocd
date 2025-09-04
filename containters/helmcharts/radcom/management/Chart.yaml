@@ -1,0 +1,65 @@
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://692859913461.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v2
+description: A Helm chart for management.
+name: "management"
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: ace-manager
+    version: 1.127.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: config-manager
+    version: 1.85.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: topology-manager
+    version: 1.158.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: secrets-ms
+    version: 1.65.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: user-admin-ms
+    version: 1.276.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: vault
+    version: 1.66.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: kafka
+    version: 1.29.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: radcom-manager-ms
+    version: 1.394.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: ne-loader-ms
+    version: 1.230.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: enrichment-loader-ms
+    version: 1.223.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: authentication-ms
+    version: 1.266.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: admin-ui
+    version: 1.265.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: maveriq-admin-ui
+    version: 1.276.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: portal-ui
+    version: 1.89.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: maveriq-health-kpi-ms
+    version: 1.153.2
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: vertica
+    version: 1.20.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: mongo-db
+    version: 1.0.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: automation-infra
+    version: 1.888.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: version-data-importer
+    version: 1.33.0
+    repository: *HELM_REGISTRY_PLACEHOLDER

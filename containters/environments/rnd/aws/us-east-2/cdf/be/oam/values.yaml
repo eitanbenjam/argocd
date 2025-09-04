@@ -1,0 +1,53 @@
+CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argocd14RadcomBEALB-783104905.us-east-2.elb.amazonaws.com
+DOCKER_REGISTRY: &DOCKER_REGISTRY 692859913461.dkr.ecr.us-east-2.amazonaws.com
+MONGO_IP: &MONGO_IP "10.8.33.203"
+QROUTER_IP: &QROUTER_IP "10.8.33.247"
+SITE_ELASTIC_STORAGE_PLACEHOLDER: &SITE_ELASTIC_STORAGE_PLACEHOLDER gp3
+SITE_HEALTH_STORAGE_PLACEHOLDER: &SITE_HEALTH_STORAGE_PLACEHOLDER gp3
+NAMESPACE: &NAMESPACE production
+CLOUD: &CLOUD aws
+VERSION: &VERSION 14.01.00.000.04
+
+cs-oam:
+  system-db-backup-chart:
+    services:
+      systemDbBackupActuatorService:
+        type: ClusterIP
+        name: system-db-backup-actuator-srv
+        ports:
+          - port: 80
+            targetPort: 8085
+            name: http-actuator
+  vault-chart:
+    server:
+      ingress:
+        annotations: |
+          kubernetes.io/ingress.class: nginx
+          ingress.kubernetes.io/secure-backends: "true"
+          nginx.ingress.kubernetes.io/backend-protocol: HTTPS    
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_set_header Accept-Encoding "";
+            {{- if .Values.global.CSP_junction_name }}
+            sub_filter '<head>' '<head> <base href="/{{ .Values.global.CSP_junction_name }}/vault/">';
+            {{- else }}
+            sub_filter '<head>' '<head> <base href="/vault/">';
+            {{- end }}
+            sub_filter_types *;
+            sub_filter_once off;
+            sub_filter '"/ui' '"/vault/ui';
+            sub_filter '"v1' '"vault/v1';
+            sub_filter '"/v1' '"/vault/v1';
+            sub_filter 'v1/' 'vault/v1/';
+            sub_filter 'integrity="' '"';
+          nginx.ingress.kubernetes.io/proxy-redirect-to: /vault/$1
+          nginx.ingress.kubernetes.io/proxy-redirect-from: ~*/(.*)
+          nginx.ingress.kubernetes.io/rewrite-target: /$2
+          nginx.ingress.kubernetes.io/use-regex: "true"
+shared-templates:
+  ace_cd_tag: argocd
+  update_topology: false
+  add_blueprints: false
+  save_blueprint: false
+  wait_for_ace_orchestrator: false
+  wait_for_ace_orchestrator_on_post: false
+  # wait_for_event_bus: true

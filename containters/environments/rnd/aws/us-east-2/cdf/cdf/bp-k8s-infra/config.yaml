@@ -1,0 +1,15 @@
+application:
+  name: "k8s-infra"
+  namespace: "production"
+source:
+  repoURL: "ssh://git@3.12.180.20/radcom/helmcharts.git"
+  targetRevision: "master"
+  path: "helmcharts/radcom/bp-k8s-infra"
+deploy: false
+cluster:
+  name: "cdf"
+  environment: "rnd"
+  provider: "aws"
+  region: "us-east-2"
+  project: "cdf"
+  adress: "https://kubernetes.default.svc"

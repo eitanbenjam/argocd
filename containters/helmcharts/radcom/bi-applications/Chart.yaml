@@ -1,0 +1,44 @@
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://692859913461.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v2
+description: A Helm chart for bi-applications.
+name: "bi-applications"
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: secrets-ms
+    version: 1.65.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: vault
+    version: 1.66.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: vault-unsealer
+    version: 1.81.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: preferences-ms
+    version: 1.256.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: gateway-ms
+    version: 1.121.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: folder
+    version: 1.67.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: qinsight-ui
+    version: 1.0.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: qinsight-config
+    version: 1.64.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: qinsight-auth
+    version: 1.65.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: qinsight-db
+    version: 1.65.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: dashboard-ui-ms
+    version: 1.608.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: shared-templates
+    version: 1.11.1
+    repository: file://../../radcom/shared-templates

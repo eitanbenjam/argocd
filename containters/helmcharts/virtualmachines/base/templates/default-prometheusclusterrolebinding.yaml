@@ -1,0 +1,14 @@
+{{- if .Values.add_default_sa_prometheus_permissions }}
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: default-clusterrole-prom-rolebind
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: default-clusterrole-prom
+subjects:
+- kind: ServiceAccount
+  namespace: {{ .Values.general.namespace }}
+  name: default
+{{- end }}

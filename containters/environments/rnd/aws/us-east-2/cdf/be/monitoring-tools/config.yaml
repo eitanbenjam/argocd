@@ -1,0 +1,21 @@
+application:
+  name: "monitoring-tools"
+  namespace: "production"
+  ignoreDifferences:
+  - group: "apps"
+    kind: "StatefulSet"
+    jqPathExpressions:
+      - ".spec.volumeClaimTemplates[].apiVersion"
+      - ".spec.volumeClaimTemplates[].kind"
+source:
+  repoURL: "ssh://git@3.12.180.20/radcom/helmcharts.git"
+  targetRevision: "master"
+  path: "helmcharts/radcom/monitoring-tools"
+deploy: true
+cluster:
+  provider: "aws"
+  region: "us-east-2"
+  name: "cdf"
+  environment: "rnd"
+  project: "be"
+  adress: "https://AC7149A00FBB8E4EFBC7B78C9318A9C5.gr7.us-east-2.eks.amazonaws.com"

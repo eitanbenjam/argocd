@@ -1,0 +1,19 @@
+sonarqube:
+  community:
+    enabled: true
+  ingress:
+    enabled: true
+    hosts:
+      - name: sonarqube.radcom.co.il
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 20M
+    tls:
+      - secretName: wildcard-radcom-co-il-certificate
+        hosts:
+          - sonarqube.radcom.co.il
+  persistence:
+    enabled: true
+  passwordSecretName: "admin-password-secret-name"
+  monitoringPasscodeSecretName: "admin-password-secret-name"
+  monitoringPasscodeSecretKey: "monitoringPasscodeSecret"

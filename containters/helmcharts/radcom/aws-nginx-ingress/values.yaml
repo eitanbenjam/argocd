@@ -1,0 +1,20 @@
+DOCKER_REGISTRY_PLACEHOLDER: &DOCKER_REGISTRY_PLACEHOLDER 692859913461.dkr.ecr.us-east-2.amazonaws.com
+
+cs-k8s-infra:
+  persistence-volume-provisioner-chart:
+    enabled: false
+
+  radcom-ingress-nginx-chart:
+    enabled: false
+
+  radcom-crds-chart:
+    enabled: false
+
+  multus-chart:
+    enabled: false
+
+  maveriq-dns-chart:
+    enabled: false
+
+shared-templates:
+  add_blueprint: true

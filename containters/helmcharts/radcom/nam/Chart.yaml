@@ -1,0 +1,41 @@
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://692859913461.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v2
+description: A Helm chart for name nam.
+name: "nam"
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: dashboard-ui-ms
+    version: 1.608.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: dashboard-ms
+    version: 1.229.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: template-ms
+    version: 1.472.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: metrics-ms
+    version: 1.630.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: preferences-ms
+    version: 1.256.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: export-ms
+    version: 1.100.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: gateway-ms
+    version: 1.121.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: mongo-db
+    version: 1.0.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: vertica
+    version: 1.20.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: automation-infra
+    version: 1.888.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: version-data-importer
+    version: 1.33.0
+    repository: *HELM_REGISTRY_PLACEHOLDER

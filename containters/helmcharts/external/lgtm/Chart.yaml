@@ -1,0 +1,32 @@
+apiVersion: v2
+description: A Helm chart for LGTM ( Loki, Grafana, Tempo, Mimir ).
+name: lgtm
+version: 1.12.0
+appVersion: 1.12.0
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: grafana
+    alias: grafana
+    condition: grafana.enabled
+    repository: https://grafana.github.io/helm-charts
+    version: 9.4.4
+  - name: loki-distributed
+    alias: loki
+    condition: loki.enabled
+    repository: "https://grafana.github.io/helm-charts"
+    version: 0.80.5
+  - name: mimir-distributed
+    alias: mimir
+    condition: mimir.enabled
+    repository: "https://grafana.github.io/helm-charts"
+    version: 5.8.0
+  - name: tempo-distributed
+    alias: tempo
+    condition: tempo.enabled
+    repository: "https://grafana.github.io/helm-charts"
+    version: 1.47.1
+  - name: grafana-mcp
+    alias: grafana-mcp
+    condition: grafana-mcp.enabled
+    repository: "https://grafana.github.io/helm-charts"
+    version: 0.1.2

@@ -1,0 +1,28 @@
+application:
+  name: "ran-probe-a"
+  namespace: "production"
+  ignoreDifferences:
+    - group: 'k8s.cni.cncf.io'
+      kind: NetworkAttachmentDefinition
+      jsonPointers:
+      - /spec/config
+    - group: 'topology.radcom.com'
+      kind: vProbe
+      jsonPointers:
+      - /spec/customAttributes
+    - group: apps
+      kind: StatefulSet
+      jqPathExpressions:
+        - '.spec.template.spec.containers[] | select(.env[]?.name == "POD_CPU_LIMIT" or .env[]?.name == "POD_CPU_REQUEST" or .env[]?.name == "POD_MEM_REQUEST").env[]?.valueFrom.resourceFieldRef.divisor'
+source:
+  repoURL: "ssh://git@3.12.180.20/radcom/helmcharts.git"
+  targetRevision: "master"
+  path: "helmcharts/radcom/bp-ran-probe-a"
+deploy: false
+cluster:
+  name: "cdf"
+  environment: "rnd"
+  provider: "aws"
+  region: "us-east-2"
+  project: "cdf"
+  adress: "https://kubernetes.default.svc"

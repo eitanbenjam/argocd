@@ -1,0 +1,20 @@
+shared-templates:
+  add_blueprints: false
+  save_blueprint: true
+  wait_for_ace_orchestrator_on_post: true
+
+analyzer-infra:
+  expressionbuilder-ms-chart:
+    deployments:
+      expressionbuildermsDeployment:
+        podSecurityContext:
+          hostPID: false
+          hostIPC: false
+          hostNetwork: false
+  scheme-ms-chart:
+    deployments:
+      schememsDeployment:
+        podSecurityContext:
+          hostPID: false
+          hostIPC: false
+          hostNetwork: false

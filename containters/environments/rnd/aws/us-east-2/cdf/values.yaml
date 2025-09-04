@@ -1,0 +1,61 @@
+SITE_OBJECT_STORAGE: &SITE_OBJECT_STORAGE gp3
+SITE_ELASTIC_STORAGE: &SITE_ELASTIC_STORAGE gp3
+SITE_GENERAL_STORAGE: &SITE_GENERAL_STORAGE gp3
+SITE_EVENT_BUS_STORAGE: &SITE_EVENT_BUS_STORAGE gp3
+SITE_HEALTH_STORAGE: &SITE_HEALTH_STORAGE gp3
+SITE: &SITE jerus
+SITE_TYPE: &SITE_TYPE national
+HELM_REGISTRY: &HELM_REGISTRY oci://692859913461.dkr.ecr.us-east-2.amazonaws.com
+DOCKER_REGISTRY: &DOCKER_REGISTRY 692859913461.dkr.ecr.us-east-2.amazonaws.com
+NAMESPACE: &NAMESPACE production
+#CONDUCTOR_VIP: &CONDUCTOR_VIP internal-argocd14RadcomBEALB-783104905.us-east-2.elb.amazonaws.com
+CONDUCTOR_VIP: &CONDUCTOR_VIP internal-argocd14RadcomBEALB-783104905.us-east-2.elb.amazonaws.com
+VERSION: &VERSION 14.01.00.000.04
+CLOUD: &CLOUD aws
+ENV_ID: &ENV_ID argocd14
+CDF_CLUSTER_NAME: &CDF_CLUSTER_NAME argocd14_cdf1
+BE_CLUSTER_NAME: &BE_CLUSTER_NAME argocd14_be
+GIT: "ssh://git@ec2-18-224-62-230.us-east-2.compute.amazonaws.com/radcom/helmcharts"
+GIT_BRANCH: "master"
+UPDATE_TOPOLOGY_CRONJOB_NAME: &UPDATE_TOPOLOGY_CRONJOB_NAME "service-access-config"
+shared-templates:
+  ace_cd_tag: argo
+
+QROUTER_IP: &QROUTER_IP "10.8.33.247"
+MONGO_IP: &MONGO_IP "10.8.33.203"
+SRP_IP: &SRP_IP "10.8.33.135"
+BLUEPRINT_PROBE_ID: &BLUEPRINT_PROBE_ID "100001"
+BLUEPRINT_PROBE_LB_ID: &BLUEPRINT_PROBE_LB_ID "100002"
+BLUEPRINT_PROBE_LB_AGENT_ID: &BLUEPRINT_PROBE_LB_AGENT_ID "100003"
+BLUEPRINT_RAN_PROBE_A: &BLUEPRINT_RAN_PROBE_A "10"
+BLUEPRINT_RAN_PROBE_B: &BLUEPRINT_RAN_PROBE_B "100"
+
+###############################################
+repository: *DOCKER_REGISTRY
+global:
+  appreleaseversion: *VERSION
+  cloud_provider: *CLOUD
+  cdf_cluster_name: *CDF_CLUSTER_NAME
+  be_cluster_name: *BE_CLUSTER_NAME
+  conductorIP: *CONDUCTOR_VIP
+  conductorVip: *CONDUCTOR_VIP
+  digDnsCommand: "dig @%s %s.default.svc.cluster.local +short"
+  docker_registry: *DOCKER_REGISTRY
+  dockerRegistry: *DOCKER_REGISTRY
+  elasticStorageClass: *SITE_ELASTIC_STORAGE
+  generalStorageClass: *SITE_GENERAL_STORAGE
+  healthStorageClass: *SITE_HEALTH_STORAGE
+  imageRegistry: *DOCKER_REGISTRY
+  maveriq_version: *VERSION
+  mongoIp: *MONGO_IP
+  namespace: *NAMESPACE
+  objectStorageClass: *SITE_OBJECT_STORAGE
+  qrouterIp: *QROUTER_IP
+  repository: *DOCKER_REGISTRY
+  site: *SITE
+  site_type: *SITE_TYPE
+  update_topology_cronjob_name: *UPDATE_TOPOLOGY_CRONJOB_NAME
+  vaultConfig:   # for mng pods
+    vaultDataServicePath: "http://secretsms-srv"
+    vaultPathPrefix: "v1/radcom"
+  vaultDataServicePath: "http://secretsms-srv"

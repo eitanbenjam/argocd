@@ -1,0 +1,28 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: "aws-ecr-access-key"
+  namespace: "argocd"
+spec:
+  refreshInterval: 12h
+  secretStoreRef:
+    name: "global-secret-store"
+    kind: ClusterSecretStore
+  target:
+    name: "aws-ecr-access-key"
+    creationPolicy: Owner
+  data:
+    - secretKey: AWS_SECRET_ACCESS_KEY
+      remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: "argocd/cdf/core/ecr-access-key"
+        metadataPolicy: None
+        property: AWS_SECRET_ACCESS_KEY
+    - secretKey: AWS_ACCESS_KEY_ID
+      remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: "argocd/cdf/core/ecr-access-key"
+        metadataPolicy: None
+        property: AWS_ACCESS_KEY_ID

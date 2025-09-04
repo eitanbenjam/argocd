@@ -1,0 +1,9 @@
+k8s-monitoring:
+  cluster:
+    # -- The name of this cluster, which will be set in all labels. Required.
+    name: "isolation"
+  clusterMetrics:
+    opencost:
+      opencost:
+        exporter:
+          defaultClusterId: "isolation"

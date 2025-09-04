@@ -1,0 +1,15 @@
+application:
+  name: "external-dns"
+  namespace: "external-dns"
+source:
+  repoURL: "ssh://git@bitbucket-prod.radcom.co.il:7999/devopstools/helmcharts.git"
+  targetRevision: "master"
+  path: "helmcharts/external/external-dns"
+deploy: false
+cluster:
+  name: "isolation"
+  environment: "rnd"
+  provider: "vsphere"
+  region: "telaviv"
+  project: "core"
+  adress: "https://kubernetes.default.svc"

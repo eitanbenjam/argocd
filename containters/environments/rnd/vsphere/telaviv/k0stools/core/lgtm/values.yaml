@@ -1,0 +1,4 @@
+mimir:
+  minio:
+    nodeSelector:
+      kubernetes.io/hostname: k0s-tools-worker-1

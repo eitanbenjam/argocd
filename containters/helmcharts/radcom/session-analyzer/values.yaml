@@ -1,0 +1,11 @@
+shared-templates:
+  add_blueprints: false
+  save_blueprint: false
+  wait_for_ace_orchestrator_on_post: false
+radcom-api-ms-chart:
+  deployments:
+    radcomapimsDeployment:
+      podSecurityContext:
+        hostPID: false
+        hostIPC: false
+        hostNetwork: false

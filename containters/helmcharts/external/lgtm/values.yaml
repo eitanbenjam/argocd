@@ -1,0 +1,556 @@
+enabled: false
+lgtm-distributed:
+  global:
+    extraEnvFrom:
+      - secretRef:
+          name: "alertmanager-credentials"
+    podAnnotations:
+      bucketSecretVersion: "0"
+grafana:
+  # -- Deploy Grafana if enabled. See [upstream readme](https://github.com/grafana/helm-charts/tree/main/charts/grafana#configuration) for full values reference.
+  enabled: true
+  env:
+    GF_AUTH_MANAGED_SERVICE_ACCOUNTS_ENABLED: true
+  envValueFrom:
+    GF_AUTH_AZUREAD_CLIENT_ID:
+      secretKeyRef:
+        name: grafana-azuread-credentials
+        key: CLIENT_ID
+    GF_AUTH_AZUREAD_CLIENT_SECRET:
+      secretKeyRef:
+        name: grafana-azuread-credentials
+        key: CLIENT_SECRET
+    GF_SMTP_USER:
+      secretKeyRef:
+        name: lgtm-smtp-credentials
+        key: smtp-user
+    GF_SMTP_PASSWORD:
+      secretKeyRef:
+        name: lgtm-smtp-credentials
+        key: smtp-password
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      # -- Datasources linked to the Grafana instance. Override if you disable any components.
+      datasources:
+#           https://grafana.com/docs/grafana/latest/datasources/loki/#provision-the-loki-data-source
+        - name: Loki
+          uid: loki
+          type: loki
+          url: http://loki.radcom.co.il
+          isDefault: false
+#           https://grafana.com/docs/grafana/latest/datasources/prometheus/#provision-the-data-source
+        - name: Mimir
+          uid: prom
+          type: prometheus
+          url: http://{{ .Release.Name }}-mimir-nginx/prometheus
+          isDefault: true
+        # https://grafana.com/docs/grafana/latest/datasources/tempo/configure-tempo-data-source/#provision-the-data-source
+#          - name: Tempo
+#            uid: tempo
+#            type: tempo
+#            url: http://{{ .Release.Name }}-tempo-query-frontend:3100
+#            isDefault: false
+#            jsonData:
+#              tracesToLogsV2:
+#                datasourceUid: loki
+#              lokiSearch:
+#                datasourceUid: loki
+#              tracesToMetrics:
+#                datasourceUid: prom
+#              serviceMap:
+#                datasourceUid: prom
+  plugins:
+    - https://storage.googleapis.com/integration-artifacts/grafana-lokiexplore-app/grafana-lokiexplore-app-latest.zip;grafana-lokiexplore-app
+    - grafana-piechart-panel
+    - grafana-clock-panel
+    - grafana-worldmap-panel
+    - grafana-kubernetes-app
+    - grafana-opensearch-datasource
+    - grafana-clickhouse-datasource
+
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: 'vm-node-exporter'
+          orgId: 1
+          folder: 'VM Node Exporter'
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/vm-node-exporter
+        - name: 'Logs'
+          orgId: 1
+          folder: 'Logs'
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/logs
+        - name: 'nginx'
+          orgId: 1
+          folder: 'Nginx'
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/nginx
+        - name: 'grafana-dashboards-kubernetes'
+          orgId: 1
+          folder: 'Kubernetes'
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/grafana-dashboards-kubernetes
+        - name: 'opencost'
+          orgId: 1
+          folder: 'Opencost'
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/opencost
+        - name: 'jenkins'
+          orgId: 1
+          folder: 'Jenkins'
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/jenkins
+        - name: 'openstack'
+          orgId: 1
+          folder: 'OpenStack'
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/openstack
+        - name: 'jvm'
+          orgId: 1
+          folder: 'JVM'
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/jvm
+        - name: 'ceph'
+          orgId: 1
+          folder: 'Ceph'
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/ceph
+        - name: 'nexus'
+          orgId: 1
+          folder: 'Nexus'
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/nexus
+  dashboards:
+    vm-node-exporter:
+      radcomNodeExporters:
+        gnetId: 1860
+        datasource: Mimir
+    nginx:
+      overview:
+        gnetId: 16677
+      requestHandlingPerformance:
+        gnetId: 20510
+      nextGen:
+        url: https://raw.githubusercontent.com/DevOps-Nirvana/Grafana-Dashboards/refs/heads/main/kubernetes-nginx-ingress-via-prometheus.json
+        token: ''
+    logs:
+      logs:
+        gnetId: 13639
+        datasource: Loki
+    grafana-dashboards-kubernetes:
+      k8s-system-api-server:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+        token: ''
+      k8s-system-coredns:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
+        token: ''
+      k8s-views-global:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
+        token: ''
+      k8s-views-namespaces:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
+        token: ''
+      k8s-views-nodes:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
+        token: ''
+      k8s-views-pods:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
+        token: ''
+      # Add k8s volumes dashboard for better storage monitoring
+      k8s-views-volumes:
+        gnetId: 17092
+        datasource: Mimir
+        revision: 4
+      # Add cluster resources monitoring
+      k8s-resources-cluster:
+        gnetId: 15761
+        datasource: Mimir
+        revision: 4
+      # Add comprehensive node exporter dashboard for detailed host monitoring
+      node-exporter-full:
+        gnetId: 1860
+        datasource: Mimir
+        revision: 30
+    opencost:
+      opencost-overview:
+        url: https://raw.githubusercontent.com/adinhodovic/opencost-mixin/refs/heads/main/dashboards_out/opencost-mixin-overview.json
+        token: ''
+      opencost-namespace:
+        url: https://raw.githubusercontent.com/adinhodovic/opencost-mixin/refs/heads/main/dashboards_out/opencost-mixin-namespace.json
+        token: ''
+    jenkins:
+      # Add comprehensive Jenkins monitoring dashboard
+      jenkins-performance:
+        gnetId: 9964
+        datasource: Mimir
+      jenkins-overview:
+        gnetId: 10242
+        datasource: Mimir
+    openstack:
+      # Add OpenStack monitoring dashboards
+      openstack-overview:
+        gnetId: 10531
+        datasource: Mimir
+      openstack-nova:
+        gnetId: 15759
+        datasource: Mimir
+      openstack-neutron:
+        gnetId: 11132
+        datasource: Mimir
+      openstack-cinder:
+        gnetId: 10530
+        datasource: Mimir
+    jvm:
+      # Add JVM monitoring dashboard for Java applications
+      jvm-micrometer:
+        gnetId: 4701
+        datasource: Mimir
+      jvm-detailed:
+        gnetId: 17359
+        datasource: Mimir
+    ceph:
+      # Add Ceph storage monitoring dashboards
+      ceph-cluster:
+        gnetId: 2842
+        datasource: Mimir
+      ceph-osd:
+        gnetId: 5336
+        datasource: Mimir
+      ceph-pools:
+        gnetId: 5342
+        datasource: Mimir
+    nexus:
+      # Add Nexus Repository Manager monitoring dashboards
+      nexus-repository-manager:
+        gnetId: 11963
+        datasource: Mimir
+      nexus-overview:
+        gnetId: 14031
+        datasource: Mimir
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+    hosts:
+      - grafana.radcom.co.il
+    extraPaths: []
+    tls:
+      - hosts:
+          - grafana.radcom.co.il
+        secretName: wildcard-radcom-co-il-certificate
+  sidecar:
+    alerts:
+      enabled: true
+      ignoreAlreadyProcessed: true
+      label: "grafana_alert"
+      labelValue: "alert"
+      envFromSecrets:
+        -  name: "alertmanager-credentials"
+      provider:
+        allowUiUpdates: true
+        foldersFromFilesStructure: true
+    dashboards:
+      enabled: true
+      default:
+        radcomNodeExporterFull:
+          gnetId: 1860
+          datasource: prom
+      label: "grafana_dashboard"
+      labelValue: "dashboard"
+      folderAnnotation: "grafana_folder"
+      provider:
+        allowUiUpdates: true
+        foldersFromFilesStructure: true
+      searchIndexInterval: "5m"
+      defaultFolderName: "General"
+      SCProvider: true
+    plugins:
+      enabled: true
+  persistence:
+    type: pvc
+    enabled: false
+    size: 10Gi
+  envFromSecrets:
+    -  name: "alertmanager-credentials"
+    -  name: "lgtm-smtp-credentials"
+  adminUser: admin
+  grafana.ini:
+    server:
+      root_url: "https://grafana.radcom.co.il"
+    smtp:
+      enabled: true
+      host: "172.16.1.125:25"
+      cert_file: ""
+      key_file: ""
+      skip_verify: true
+      from_address: "devops@radcom.com"
+      from_name: "Grafana"
+      ehlo_identity: ""
+      startTLS_policy: ""
+    auth.azuread:
+      enabled: true
+      name: "Azure AD"
+      allow_sign_up: true
+      auto_login: false
+      scopes: "openid email profile"
+      auth_url: "https://login.microsoftonline.com/0eb9e2d9-8763-412e-9709-3f539e9e25bc/oauth2/v2.0/authorize"
+      token_url: " https://login.microsoftonline.com/0eb9e2d9-8763-412e-9709-3f539e9e25bc/oauth2/v2.0/token"
+      allowed_organizations: "0eb9e2d9-8763-412e-9709-3f539e9e25bc"
+      role_attribute_path: contains(groups[*], 'DevOps') && 'Admin' || contains(groups[*], 'Devops-grafana-editors') && 'Admin' || 'Viewer'
+    feature_toggles:
+      enable: 'correlations autoMigrateOldPanels traceQLStreaming externalServiceAccounts dashboardPreviews nestedFolders panelTitleSearch publicDashboards publicDashboardsEmailSharing dashboardComments'
+    dashboards:
+      min_refresh_interval: 5s
+  admin:
+    existingSecret: "lgtm-grafana"
+    userKey: admin-user
+    passwordKey: admin-password
+  # extraVolumes:
+  #   - name: provisioning
+  #     configMap:
+  #       name: helm-testing-grafana-plugin-provisioning
+# -- Mimir chart values. Resources are set to a minimum by default.
+mimir:
+  # -- Deploy Mimir if enabled. See [upstream values.yaml](https://github.com/grafana/mimir/blob/main/operations/helm/charts/mimir-distributed/values.yaml) for full values reference.
+  enabled: true
+  metaMonitoring:
+    serviceMonitor:
+      enabled: false
+    grafanaAgent:
+      enabled: false
+      installOperator: false
+      logs:
+        enabled: false
+      metrics:
+        enabled: false
+  structuredConfig:
+    limits:
+      out_of_order_time_window: 12h
+  alertmanager:
+    persistentVolume:
+      enabled: true
+    # resources:
+    #   requests:
+    #     cpu: 20m
+  compactor:
+    limits:
+      compactor_blocks_retention_period: 3d
+    persistentVolume:
+      size: 20Gi
+  distributor:
+    replicas: 2
+    extraArgs:
+      distributor.ingestion-rate-limit: "10000000000000"
+  ingester:
+    persistentVolume:
+      size: 50Gi
+    replicas: 3
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: target # support for enterprise.legacyLabels
+                  operator: In
+                  values:
+                    - ingester
+            topologyKey: 'kubernetes.io/hostname'
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - ingester
+            topologyKey: 'kubernetes.io/hostname'
+    zoneAwareReplication:
+      topologyKey: 'kubernetes.io/hostname'
+      # enabled: false
+    extraArgs:
+      ingester.max-global-series-per-user: "0"
+      ingester.max-global-series-per-metric: "0"
+  querier:
+    replicas: 1
+  query_scheduler:
+    replicas: 1
+  store_gateway:
+    zoneAwareReplication:
+      enabled: false
+      # topologyKey: 'kubernetes.io/hostname'
+    persistence:
+      size: 2Gi
+    topologySpreadConstraints: {}
+  minio:
+    persistence:
+      size: 100Gi
+  chunks-cache:
+    enabled: true
+    replicas: 2
+  metadata-cache:
+    enabled: true
+  nginx:
+    enabled: true
+    replicas: 1
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        kubernetes.io/tls-acme: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      hosts:
+        - host: mimir.radcom.co.il
+          paths:
+            - path: /
+              pathType: Prefix
+tempo:
+  # -- Deploy Tempo if enabled.  See [upstream readme](https://github.com/grafana/helm-charts/blob/main/charts/tempo-distributed/README.md#values) for full values reference.
+  enabled: false
+  metaMonitoring:
+    serviceMonitor:
+      enabled: false
+    grafanaAgent:
+      enabled: false
+      installOperator: false
+      logs:
+        enabled: false
+      metrics:
+        enabled: false
+  ingester:
+    replicas: 1
+
+metaMonitoring:
+  serviceMonitor:
+    enabled: false
+  grafanaAgent:
+    enabled: false
+    installOperator: false
+    logs:
+      enabled: false
+    metrics:
+      enabled: false
+loki:
+  # -- Deploy Loki if enabled. See [upstream readme](https://github.com/grafana/helm-charts/tree/main/charts/loki-distributed#values) for full values reference.
+  enabled: true
+  ruler:
+    enabled: true # Enable ruler for LogQL alerting and recording rules
+    directories:
+      fake:
+        rules.txt: |
+          groups:
+            - name: example
+              rules: []
+    extraArgs:
+      - "-ruler.rule-path=/tmp/loki/scratch"
+      - "-ruler.storage.type=local"
+      - "-ruler.storage.local.directory=/tmp/loki/rules"
+  gateway:
+    enabled: false
+  compactor:
+    enabled: true
+    retention_enabled: true
+  metaMonitoring:
+    serviceMonitor:
+      enabled: false
+    grafanaAgent:
+      enabled: false
+      installOperator: false
+      logs:
+        enabled: false
+      metrics:
+        enabled: false
+  containerSecurityContext:
+    readOnlyRootFilesystem: false
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    hosts:
+      - loki.radcom.co.il
+  limits_config:
+    retention_period: 7d
+    volume_enabled: true
+    allow_structured_metadata: true
+    volume_max_series: 5000
+    discover_log_levels: true
+  config: |
+    limits_config:
+      retention_period: 7d
+      volume_enabled: true
+      allow_structured_metadata: true
+      volume_max_series: 5000
+      discover_log_levels: true
+    compactor:
+      retention_enabled: true
+    pattern_ingester:
+      enabled: true
+    ruler:
+      alertmanager_url: "http://lgtm-mimir-alertmanager.observability.svc.cluster.local/alertmanager"
+      enable_api: true
+      ring:
+        kvstore:
+          store: memberlist
+      rule_path: "/tmp/loki/scratch"
+      storage:
+        type: local
+        local:
+          directory: "/tmp/loki/rules"
+      wal:
+        dir: "/tmp/loki/ruler-wal"
+silence:
+  enabled: true  # toggle the silence provisioner job
+  silences:
+    - matcher:
+        name: "hostname"
+        value: "sardina3-compute-03"
+        isRegex: false
+      startsAt: "2025-07-09T12:00:00Z"
+      endsAt: "2026-07-09T14:00:00Z"
+      createdBy: "Marian Maireanu Dobos - Devops"
+      comment: "Silence alerts from sardina3-compute-03 host"
+
+# -- Grafana MCP (Model Context Protocol) server configuration
+grafana-mcp:
+  enabled: true
+  grafana:
+    url: "https://grafana.radcom.co.il"
+    apiKeySecret:
+      name: "grafana-mcp-api"
+      key: "api-key"

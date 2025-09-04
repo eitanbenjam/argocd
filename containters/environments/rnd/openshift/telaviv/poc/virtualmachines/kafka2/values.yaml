@@ -1,0 +1,10 @@
+backend_ic_net_ip_0: ip_addr
+backend_ic_net_mac: None
+cluster_name: Kafka
+kafka_version_number: 2.13-3.2.0
+machine_index: 2
+machine_type: kafka
+tenant: robin
+vnf_name: Kafka
+vprobes_mgmt_int_net_ip_0: ip_addr
+vprobes_mgmt_int_net_mac: None

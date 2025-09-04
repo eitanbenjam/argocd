@@ -1,0 +1,6 @@
+apiVersion: v2
+description: A collection of chart templates.
+name: library-chart
+version: 1.11.1
+kubeVersion: ">=1.23.0-0"
+type: library

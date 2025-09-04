@@ -1,0 +1,16 @@
+apiVersion: v2
+description: A Helm chart for Ansible AWX operator.
+name: ansible-awx-operator
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+icon: https://raw.githubusercontent.com/ansible/awx-logos/master/awx/ui/client/assets/logo-login.svg
+dependencies:
+  - name: awx-operator
+    version: 3.2.0
+    repository: https://ansible-community.github.io/awx-operator-helm/
+    alias: awx-operator
+  - name: library-chart
+    version: 1.11.1
+    repository: file://../../radcom/library-chart
+    alias: library-chart

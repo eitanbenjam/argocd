@@ -1,0 +1,21 @@
+anchovy:
+  ingress:
+    enabled: true
+    className: "nginx"
+    hosts:
+      - host: anchovy.radcom.co.il
+        paths:
+          - path: /anchovy(/|$)(.*)
+            pathType: ImplementationSpecific
+      - http:
+        paths:
+          - path: /anchovy(/|$)(.*)
+            pathType: ImplementationSpecific
+    tls:
+      - secretName: wildcard-radcom-co-il-certificate
+        hosts:
+          - anchovy.radcom.co.il
+  image:
+    repository: nexus3-prod.radcom.co.il:8084/anchovy
+  volumes:
+    storageClassName: "openebs-hostpath"

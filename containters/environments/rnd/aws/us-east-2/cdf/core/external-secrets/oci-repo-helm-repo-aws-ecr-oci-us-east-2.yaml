@@ -1,0 +1,19 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: "repo-230664369"
+  namespace: "argocd"
+spec:
+  refreshInterval: "12h"
+  target:
+    name: repo-230664369
+    creationPolicy: Merge
+    template:
+      data:
+        password: "{{ .password  }}"
+  dataFrom:
+  - sourceRef:
+      generatorRef:
+        apiVersion: generators.external-secrets.io/v1alpha1
+        kind: ECRAuthorizationToken
+        name: "ecr-gen"

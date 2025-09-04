@@ -1,0 +1,10 @@
+apiVersion: v2
+description: A Helm chart for external-secrets
+name: external-secrets
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: external-secrets
+    version: 0.19.2
+    repository: https://charts.external-secrets.io/

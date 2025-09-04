@@ -1,0 +1,43 @@
+BLUEPRINT_PROBE_ID: &BLUEPRINT_PROBE_ID "100001"
+CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argocd14RadcomBEALB-783104905.us-east-2.elb.amazonaws.com
+DOCKER_REGISTRY: &DOCKER_REGISTRY 692859913461.dkr.ecr.us-east-2.amazonaws.com
+MONGO_IP: &MONGO_IP "10.8.33.203"
+QROUTER_IP: &QROUTER_IP "10.8.33.247"
+SITE_PLACEHOLDER: &SITE_PLACEHOLDER jerus
+NAMESPACE: &NAMESPACE production
+CLOUD: &CLOUD aws
+VERSION: &VERSION 14.01.00.000.04
+
+cs-probe:
+  probe-core-ms-chart:
+    configMap:
+      cdfControlInterfacePref: AWS_RADCOM_CDF_CONTROL
+      conductorIp: *CONDUCTOR_VIP_PLACEHOLDER
+      defaultInterfacePref: AWS_RADCOM_DEFAULT
+      mongoIp: *MONGO_IP
+      nfManagerInterfacePref: AWS_RADCOM_NF_MANAGER
+      oamDirectInterfacePref: AWS_RADCOM_OAM_DIRECT
+      packetInternalInterfacePref: AWS_RADCOM_PACKET_INTERNAL
+      packetMirrorInterfacePref: AWS_RADCOM_PACKET_MIRROR
+      qrouterIp: *QROUTER_IP
+      siteName: *SITE_PLACEHOLDER
+      storageClassName: gp3-persistent
+      trafficDataInterfacePref: AWS_RADCOM_TRAFFIC_DATA
+      useNetworkAttachmentDefinition: 'yes'
+      versionNumber: *VERSION
+    deployments:
+      probecoremsDeployment:
+        containers:
+          probecoremsContainer:
+            env:
+              AWS_RADCOM_CDF_CONTROL_INTF_NAMES: eth0
+              AWS_RADCOM_DEFAULT_INTF_NAMES: eth0
+              AWS_RADCOM_NF_MANAGER_INTF_NAMES: eth0
+              AWS_RADCOM_OAM_DIRECT_INTF_NAMES: eth0
+              AWS_RADCOM_PACKET_INTERNAL_INTF_NAMES: net1
+              AWS_RADCOM_TRAFFIC_DATA_INTF_NAMES: eth0
+        podAnnotations:
+          k8s.v1.cni.cncf.io/networks: dpdk-net-internal-probe-100001
+global:
+  configMap:
+    probeId: *BLUEPRINT_PROBE_ID

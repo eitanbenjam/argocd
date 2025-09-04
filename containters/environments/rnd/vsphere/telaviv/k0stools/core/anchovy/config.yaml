@@ -1,0 +1,15 @@
+application:
+  name: "anchovy"
+  namespace: "anchovy"
+source:
+  repoURL: "ssh://git@bitbucket-prod.radcom.co.il:7999/devopstools/helmcharts.git"
+  targetRevision: "master"
+  path: "helmcharts/radcom/anchovy"
+deploy: true
+cluster:
+  provider: "vsphere"
+  region: "telaviv"
+  name: "k0stools"
+  environment: "rnd"
+  project: "core"
+  adress: "https://kubernetes.default.svc"

@@ -1,0 +1,21 @@
+application:
+  name: "oam"
+  namespace: "production"
+  ignoreDifferences:
+      - group: "apps"
+        kind: "StatefulSet"
+        jqPathExpressions:
+          - ".spec.volumeClaimTemplates[].apiVersion"
+          - ".spec.volumeClaimTemplates[].kind"
+source:
+  repoURL: "ssh://git@3.12.180.20/radcom/helmcharts.git"
+  targetRevision: "master"
+  path: "helmcharts/radcom/bp-oam"
+deploy: false
+cluster:
+  name: "cdf"
+  environment: "rnd"
+  provider: "aws"
+  region: "us-east-2"
+  project: "cdf"
+  adress: "https://kubernetes.default.svc"

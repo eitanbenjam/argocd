@@ -1,0 +1,10 @@
+apiVersion: v2
+description: A Helm chart for Jenkins
+name: jenkins
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: jenkins
+    version: 5.8.79
+    repository: https://nexus3-prod.radcom.co.il/repository/helm-proxy-charts-jenkins-io/

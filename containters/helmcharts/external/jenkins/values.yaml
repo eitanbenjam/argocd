@@ -1,0 +1,899 @@
+jenkins:
+  controller:
+    # Override Jenkins controller image to use Nexus proxy
+    image:
+      registry: "nexus3-prod.radcom.co.il:8084"
+    existingSecret: jenkins-credentials
+    csrfdefaultCrumbIssuer:
+      enabled: true
+    JCasC:
+      enabled: true
+      defaultConfig: false
+      authorizationstrategy: |-
+        jenkins:
+          authorizationStrategy:
+            projectMatrix:
+              entries:
+              - "GROUP:Agent/Build:DevOps"
+              - "GROUP:Agent/Build:devops_admin"
+              - "GROUP:Agent/Build:swcompil"
+              - "GROUP:Agent/Configure:devops_admin"
+              - "GROUP:Agent/Connect:DevOps"
+              - "GROUP:Agent/Connect:devops_admin"
+              - "GROUP:Agent/Connect:swcompil"
+              - "GROUP:Agent/Create:devops_admin"
+              - "GROUP:Agent/Create:swcompil"
+              - "GROUP:Agent/Delete:devops_admin"
+              - "GROUP:Agent/Delete:swcompil"
+              - "GROUP:Agent/Disconnect:DevOps"
+              - "GROUP:Agent/Disconnect:devops_admin"
+              - "GROUP:Agent/Disconnect:swcompil"
+              - "GROUP:Artifactory/Promote:DevOps"
+              - "GROUP:Artifactory/Promote:devops_admin"
+              - "GROUP:Artifactory/Promote:swcompil"
+              - "GROUP:Artifactory/Release:DevOps"
+              - "GROUP:Artifactory/Release:devops_admin"
+              - "GROUP:Artifactory/Release:swcompil"
+              - "GROUP:Credentials/Create:DevOps"
+              - "GROUP:Credentials/Create:devops_admin"
+              - "GROUP:Credentials/Create:swcompil"
+              - "GROUP:Credentials/Delete:DevOps"
+              - "GROUP:Credentials/Delete:devops_admin"
+              - "GROUP:Credentials/Delete:swcompil"
+              - "GROUP:Credentials/ManageDomains:DevOps"
+              - "GROUP:Credentials/ManageDomains:devops_admin"
+              - "GROUP:Credentials/ManageDomains:swcompil"
+              - "GROUP:Credentials/Update:DevOps"
+              - "GROUP:Credentials/Update:devops_admin"
+              - "GROUP:Credentials/Update:swcompil"
+              - "GROUP:Credentials/View:DevOps"
+              - "GROUP:Credentials/View:devops_admin"
+              - "GROUP:Credentials/View:swcompil"
+              - "GROUP:Job/Build:DevOps"
+              - "GROUP:Job/Build:authenticated"
+              - "GROUP:Job/Build:devops_admin"
+              - "GROUP:Job/Build:swcompil"
+              - "GROUP:Job/Cancel:DevOps"
+              - "GROUP:Job/Cancel:authenticated"
+              - "GROUP:Job/Cancel:devops_admin"
+              - "GROUP:Job/Cancel:swcompil"
+              - "GROUP:Job/Configure:DevOps"
+              - "GROUP:Job/Configure:devops_admin"
+              - "GROUP:Job/Create:DevOps"
+              - "GROUP:Job/Create:devops_admin"
+              - "GROUP:Job/Delete:devops_admin"
+              - "GROUP:Job/Discover:DevOps"
+              - "GROUP:Job/Discover:authenticated"
+              - "GROUP:Job/Discover:devops_admin"
+              - "GROUP:Job/Discover:swcompil"
+              - "GROUP:Job/Move:DevOps"
+              - "GROUP:Job/Move:devops_admin"
+              - "GROUP:Job/Read:DevOps"
+              - "GROUP:Job/Read:authenticated"
+              - "GROUP:Job/Read:devops_admin"
+              - "GROUP:Job/Read:swcompil"
+              - "GROUP:Job/ViewStatus:DevOps"
+              - "GROUP:Job/ViewStatus:authenticated"
+              - "GROUP:Job/ViewStatus:devops_admin"
+              - "GROUP:Job/ViewStatus:swcompil"
+              - "GROUP:Job/Workspace:DevOps"
+              - "GROUP:Job/Workspace:authenticated"
+              - "GROUP:Job/Workspace:devops_admin"
+              - "GROUP:Job/Workspace:swcompil"
+              - "GROUP:Lockable Resources/Reserve:DevOps"
+              - "GROUP:Lockable Resources/Reserve:devops_admin"
+              - "GROUP:Lockable Resources/Reserve:swcompil"
+              - "GROUP:Lockable Resources/Unlock:DevOps"
+              - "GROUP:Lockable Resources/Unlock:devops_admin"
+              - "GROUP:Lockable Resources/Unlock:swcompil"
+              - "GROUP:Metrics/HealthCheck:DevOps"
+              - "GROUP:Metrics/HealthCheck:devops_admin"
+              - "GROUP:Metrics/HealthCheck:swcompil"
+              - "GROUP:Metrics/ThreadDump:DevOps"
+              - "GROUP:Metrics/ThreadDump:devops_admin"
+              - "GROUP:Metrics/ThreadDump:swcompil"
+              - "GROUP:Metrics/View:DevOps"
+              - "GROUP:Metrics/View:devops_admin"
+              - "GROUP:Metrics/View:swcompil"
+              - "GROUP:Overall/Administer:DevOps"
+              - "GROUP:Overall/Administer:admin"
+              - "GROUP:Overall/Administer:devops_admin"
+              - "GROUP:Overall/Read:DevOps"
+              - "GROUP:Overall/Read:authenticated"
+              - "GROUP:Overall/Read:devops_admin"
+              - "GROUP:Overall/Read:swcompil"
+              - "GROUP:Run/Delete:DevOps"
+              - "GROUP:Run/Delete:devops_admin"
+              - "GROUP:Run/Delete:swcompil"
+              - "GROUP:Run/Replay:DevOps"
+              - "GROUP:Run/Replay:devops_admin"
+              - "GROUP:Run/Replay:swcompil"
+              - "GROUP:Run/Update:DevOps"
+              - "GROUP:Run/Update:devops_admin"
+              - "GROUP:Run/Update:swcompil"
+              - "GROUP:SCM/Tag:DevOps"
+              - "GROUP:SCM/Tag:authenticated"
+              - "GROUP:SCM/Tag:devops_admin"
+              - "GROUP:SCM/Tag:swcompil"
+              - "USER:Agent/Build:moshe.dana"
+              - "USER:Agent/Build:nicolae.rosia"
+              - "USER:Agent/Configure:moshe.dana"
+              - "USER:Agent/Configure:nicolae.rosia"
+              - "USER:Agent/Connect:moshe.dana"
+              - "USER:Agent/Connect:nicolae.rosia"
+              - "USER:Agent/Create:moshe.dana"
+              - "USER:Agent/Create:nicolae.rosia"
+              - "USER:Agent/Delete:moshe.dana"
+              - "USER:Agent/Delete:nicolae.rosia"
+              - "USER:Agent/Disconnect:moshe.dana"
+              - "USER:Agent/Disconnect:nicolae.rosia"
+              - "USER:Artifactory/Promote:moshe.dana"
+              - "USER:Artifactory/Promote:nicolae.rosia"
+              - "USER:Artifactory/Release:moshe.dana"
+              - "USER:Artifactory/Release:nicolae.rosia"
+              - "USER:Credentials/Create:moshe.dana"
+              - "USER:Credentials/Create:nicolae.rosia"
+              - "USER:Credentials/Delete:moshe.dana"
+              - "USER:Credentials/Delete:nicolae.rosia"
+              - "USER:Credentials/ManageDomains:moshe.dana"
+              - "USER:Credentials/ManageDomains:nicolae.rosia"
+              - "USER:Credentials/Update:moshe.dana"
+              - "USER:Credentials/Update:nicolae.rosia"
+              - "USER:Credentials/View:ioseb.kuprashvili"
+              - "USER:Credentials/View:moshe.dana"
+              - "USER:Credentials<View:nicolae.rosia"
+    configScripts:
+      jenkins-casc-configs: |-
+        credentials:
+          system:
+            domainCredentials:
+            - credentials:
+              - basicSSHUserPrivateKey:
+                  description: "deployment-rsa"
+                  id: "deployment-rsa"
+                  privateKeySource:
+                    directEntry:
+                      privateKey: "${DEPLOYMENT_RSA_PRIVATE_KEY}"
+                  scope: GLOBAL
+                  username: "deployment"
+              - basicSSHUserPrivateKey:
+                  description: "jenkins-ci"
+                  id: "gitsshkey"
+                  privateKeySource:
+                    directEntry:
+                      privateKey: "${GITSSHKEY_PRIVATE_KEY}"
+                  scope: GLOBAL
+                  username: "jenkins-ci"
+              - basicSSHUserPrivateKey:
+                  description: "jenkins-ci-rsa"
+                  id: "jenkins-ci-rsa"
+                  privateKeySource:
+                    directEntry:
+                      privateKey: "${JENKINS_CI_RSA_PRIVATE_KEY}"
+                  scope: GLOBAL
+                  username: "jenkins-ci"
+              - usernamePassword:
+                  description: "legacy-omniqpp-slave-pass"
+                  id: "legacy-omniqpp-slave-pass"
+                  password: "${LEGACY_OMNIQPP_SLAVE_PASS}"
+                  scope: GLOBAL
+                  username: "root"
+              - usernamePassword:
+                  description: "nexus-admin"
+                  id: "nexus-admin"
+                  password: "${NEXUS_ADMIN_PASSWORD}"
+                  scope: GLOBAL
+                  username: "admin"
+              - usernamePassword:
+                  description: "radcomregistry-azure"
+                  id: "radcomregistry-azure"
+                  password: "${RADCOMREGISTRY_AZURE_PASSWORD}"
+                  scope: GLOBAL
+                  username: "radcomregistry"
+                  usernameSecret: true
+              - usernamePassword:
+                  description: "RHOSP-01 Openstack User:Pass"
+                  id: "rhosp-01-user-pass"
+                  password: "${RHOSP_01_USER_PASS}"
+                  scope: GLOBAL
+                  username: "admin"
+              - usernamePassword:
+                  description: "RHOSPQA-01 Openstack User:Pass"
+                  id: "rhospqa-01-user-pass"
+                  password: "${RHOSPQA_01_USER_PASS}"
+                  scope: GLOBAL
+                  username: "admin"
+              - string:
+                  description: "The slack secret token"
+                  id: "slack"
+                  scope: GLOBAL
+                  secret: "${SLACK_SECRET_TOKEN}"
+              - usernamePassword:
+                  description: "swcompil-user for svn"
+                  id: "swcompil-user"
+                  password: "${SWCOMPIL_USER_PASSWORD}"
+                  scope: GLOBAL
+                  username: "swcompil"
+              - usernamePassword:
+                  description: "Jenkins-master-password"
+                  id: "Jenkins-master-password"
+                  password: "${JENKINS_MASTER_PASSWORD}"
+                  scope: GLOBAL
+                  username: "root"
+              - usernamePassword:
+                  description: "rcc"
+                  id: "rcc"
+                  password: "${RCC_PASSWORD}"
+                  scope: GLOBAL
+                  username: "rcc"
+              - usernamePassword:
+                  description: "ace-developer"
+                  id: "ace-developer"
+                  password: "${ACE_DEVELOPER_PASSWORD}"
+                  scope: GLOBAL
+                  username: "ace-developer"
+              - usernamePassword:
+                  description: "eks-user"
+                  id: "eks-user"
+                  password: "${EKS_USER_PASSWORD}"
+                  scope: SYSTEM
+                  username: "osboxes"
+              - aws:
+                  accessKey: "${JENKINS_AWS_ACCESS_KEY}"
+                  id: "jenkins_aws"
+                  scope: GLOBAL
+                  secretKey: "${JENKINS_AWS_SECRET_KEY}"
+              - usernamePassword:
+                  description: "to download tenable io scanner latest"
+                  id: "Tenable_io_login"
+                  password: "${TENABLE_IO_LOGIN_PASSWORD}"
+                  scope: GLOBAL
+                  username: "pubread"
+                  usernameSecret: true
+              - usernamePassword:
+                  description: "X-ApiKeys to access Tenable io"
+                  id: "X-ApiKeys-Tenable-io"
+                  password: "${X_APIKEYS_TENABLE_IO_PASSWORD}"
+                  scope: GLOBAL
+                  username: "${X_APIKEYS_TENABLE_IO_USERNAME}"
+                  usernameSecret: true
+              - file:
+                  fileName: "1"
+                  id: "eks_file"
+                  scope: GLOBAL
+                  secretBytes: "${EKS_FILE_SECRET_BYTES}"
+              - usernamePassword:
+                  description: "creds to run a CD job"
+                  id: "radcom-cd"
+                  password: "${RADCOM_CD_PASSWORD}"
+                  scope: GLOBAL
+                  username: "radcom-cd"
+                  usernameSecret: true
+              - file:
+                  description: "DEPLOYMENTKEYRSA"
+                  fileName: "deployment.key"
+                  id: "DEPLOYMENTKEYRSA"
+                  scope: GLOBAL
+                  secretBytes: "${DEPLOYMENTKEYRSA_SECRET_BYTES}"
+              - string:
+                  description: "SonarQube API key"
+                  id: "SonarQube-API-key"
+                  scope: GLOBAL
+                  secret: "${SONARQUBE_API_KEY}"
+              - file:
+                  description: ".npmrc file"
+                  fileName: ".npmrc"
+                  id: "NPMRC"
+                  scope: GLOBAL
+                  secretBytes: "${NPMRC_SECRET_BYTES}"
+              - string:
+                  id: "ORCA_SECURITY_API_TOKEN"
+                  scope: GLOBAL
+                  secret: "${ORCA_SECURITY_API_TOKEN}"
+              - string:
+                  description: "Jenkins Token for running jobs inside the DevOps microk8s cluster"
+                  id: "microk8s-agents-jenkins-token"
+                  scope: GLOBAL
+                  secret: "${MICROK8S_AGENTS_JENKINS_TOKEN}"
+              - aws:
+                  accessKey: "${AWS_EKS_984565958963_JENKINS_USER_ACCESS_KEY}"
+                  id: "aws-eks-984565958963-jenkins-user"
+                  scope: GLOBAL
+                  secretKey: "${AWS_EKS_984565958963_JENKINS_USER_SECRET_KEY}"
+              - aws:
+                  accessKey: "${RADCOM_SUBSCRIPTION_AWS_EKS_692859913461_JENKINS_USER_ACCESS_KEY}"
+                  id: "radcom-subscription-aws-eks-692859913461-jenkins-user"
+                  scope: GLOBAL
+                  secretKey: "${RADCOM_SUBSCRIPTION_AWS_EKS_692859913461_JENKINS_USER_SECRET_KEY}"
+              - string:
+                  description: "Migrated from gitlab-branch-source-plugin webhook secret"
+                  id: "7cd84bf4-ef74-4e28-989b-fb2f1bd387cf"
+                  scope: GLOBAL
+                  secret: "${GITLAB_BRANCH_SOURCE_PLUGIN_WEBHOOK_SECRET}"
+              - file:
+                  description: "kube_config file for OnPrem Isolation cluster"
+                  fileName: "isolation-k0s.yaml"
+                  id: "on-prem-microk8s-kube-config"
+                  scope: GLOBAL
+                  secretBytes: "${ON_PREM_MICROK8S_KUBE_CONFIG_SECRET_BYTES}"
+              - usernamePassword:
+                  id: "b3efc480-00a7-4398-8085-dd9efd64f1d0"
+                  password: "${B3EFC480_00A7_4398_8085_DD9EFD64F1D0_PASSWORD}"
+                  scope: GLOBAL
+                  username: "apikey"
+                  usernameSecret: true
+              - usernamePassword:
+                  id: "4857b008-c829-4fcb-b563-f3340abc8391"
+                  password: "${4857B008_C829_4FCB_B563_F3340ABC8391_PASSWORD}"
+                  scope: GLOBAL
+                  username: "apikey"
+              - aws:
+                  accessKey: "${JENKINS_AWS_BEDC_ACCESS_KEY}"
+                  id: "jenkins_aws_bedc"
+                  scope: GLOBAL
+                  secretKey: "${JENKINS_AWS_BEDC_SECRET_KEY}"
+              - usernamePassword:
+                  description: "var-admin"
+                  id: "var-admin"
+                  password: "${VAR_ADMIN_PASSWORD}"
+                  scope: GLOBAL
+                  username: "admin"
+              - usernamePassword:
+                  description: "base_repo"
+                  id: "base_repo"
+                  password: "${BASE_REPO_PASSWORD}"
+                  scope: GLOBAL
+                  username: "root"
+              - file:
+                  fileName: "isolation-k0s.yaml"
+                  id: "on-prem-isolation-kubernetes-cluster-kubeconfig"
+                  scope: GLOBAL
+                  secretBytes: "${ON_PREM_ISOLATION_KUBERNETES_CLUSTER_KUBECONFIG_SECRET_BYTES}"
+              - usernamePassword:
+                  description: "jenkins-nexus"
+                  id: "jenkins-nexus"
+                  password: "${JENKINS_NEXUS_PASSWORD}"
+                  scope: GLOBAL
+                  username: "devops"
+              - basicSSHUserPrivateKey:
+                  description: "cots-rsa"
+                  id: "cots-rsa"
+                  privateKeySource:
+                    directEntry:
+                      privateKey: "${COTS_RSA_PRIVATE_KEY}"
+                  scope: GLOBAL
+                  username: "deployment"
+              - usernamePassword:
+                  id: "qauser"
+                  password: "${QAUSER_PASSWORD}"
+                  scope: GLOBAL
+                  username: "qauser"
+              - aws:
+                  accessKey: "${JENKINS_AWS_RND_ACCESS_KEY}"
+                  id: "jenkins_aws_rnd"
+                  scope: GLOBAL
+                  secretKey: "${JENKINS_AWS_RND_SECRET_KEY}"
+              - usernamePassword:
+                  description: "sftp-att-credentials"
+                  id: "sftp-att-credentials"
+                  password: "${SFTP_ATT_CREDENTIALS_PASSWORD}"
+                  scope: GLOBAL
+                  username: "ATT"
+              - usernamePassword:
+                  description: "radfs-user"
+                  id: "radfs-user"
+                  password: "${RADFS_USER_PASSWORD}"
+                  scope: GLOBAL
+                  username: "Jenkinsjob"
+              - usernamePassword:
+                  id: "apikey"
+                  password: "${APIKEY_PASSWORD}"
+                  scope: GLOBAL
+                  username: "apikey"
+              - basicSSHUserPrivateKey:
+                  description: "aws-gitlab-radcom-us-east-2"
+                  id: "aws-gitlab-radcom-us-east-2"
+                  privateKeySource:
+                    directEntry:
+                      privateKey: "${AWS_GITLAB_RADCOM_US_EAST_2_PRIVATE_KEY}"
+                  scope: GLOBAL
+                  username: "marian.maireanu"
+              - usernamePassword:
+                  id: "aws-gitlab-radcom-us-east-2-username"
+                  password: "${AWS_GITLAB_RADCOM_US_EAST_2_USERNAME_PASSWORD}"
+                  scope: GLOBAL
+                  username: "marian.maireanu"
+              - file:
+                  description: "GOVC-VSPHERE-DEVOPS"
+                  fileName: "govc.env"
+                  id: "GOVC-VSPHERE-DEVOPS"
+                  scope: GLOBAL
+                  secretBytes: "${GOVC_VSPHERE_DEVOPS_SECRET_BYTES}"
+              - file:
+                  description: "SARDINA4-admin-openrc"
+                  fileName: "SARDINA4-admin-openrc"
+                  id: "SARDINA4-admin-openrc"
+                  scope: GLOBAL
+                  secretBytes: "${SARDINA4_ADMIN_OPENRC_SECRET_BYTES}"
+              - file:
+                  description: "SARDINA3-admin-openrc"
+                  fileName: "SARDINA3-admin-openrc"
+                  id: "SARDINA3-admin-openrc"
+                  scope: GLOBAL
+                  secretBytes: "${SARDINA3_ADMIN_OPENRC_SECRET_BYTES}"
+              - file:
+                  description: "SARDINA2-admin-openrc"
+                  fileName: "SARDINA2-admin-openrc"
+                  id: "SARDINA2-admin-openrc"
+                  scope: GLOBAL
+                  secretBytes: "${SARDINA2_ADMIN_OPENRC_SECRET_BYTES}"
+              - file:
+                  description: "SARDINA1-admin-openrc"
+                  fileName: "SARDINA1-admin-openrc"
+                  id: "SARDINA1-admin-openrc"
+                  scope: GLOBAL
+                  secretBytes: "${SARDINA1_ADMIN_OPENRC_SECRET_BYTES}"
+              - string:
+                  id: "PACKER_GITHUB_API_TOKEN"
+                  scope: GLOBAL
+                  secret: "${PACKER_GITHUB_API_TOKEN}"
+              - aws:
+                  accessKey: "${JENKINS_AWS_PSOLABS_ACCESS_KEY}"
+                  description: "010526251918 "
+                  id: "jenkins_aws_psolabs"
+                  scope: GLOBAL
+                  secretKey: "${JENKINS_AWS_PSOLABS_SECRET_KEY}"
+              - aws:
+                  accessKey: "${JENKINS_AWS_NDC_ACCESS_KEY}"
+                  description: "434721272023"
+                  id: "jenkins_aws_ndc"
+                  scope: GLOBAL
+                  secretKey: "${JENKINS_AWS_NDC_SECRET_KEY}"
+              - aws:
+                  accessKey: "${JENKINS_AWS_RDC_ACCESS_KEY}"
+                  description: "044224332302"
+                  id: "jenkins_aws_rdc"
+                  scope: GLOBAL
+                  secretKey: "${JENKINS_AWS_RDC_SECRET_KEY}"
+              - usernamePassword:
+                  description: "url: vc-devops.lab.radcom.co.il"
+                  id: "VSPHERE_DEVOPS_CREDENTIALS"
+                  password: "${VSPHERE_DEVOPS_CREDENTIALS_PASSWORD}"
+                  scope: GLOBAL
+                  username: "devops-automation@vsphere.local"
+              - usernamePassword:
+                  description: "url: vsandr-esxi01.radcom.co.il"
+                  id: "VSPHERE_VSAN_DR_CREDENTIALS"
+                  password: "${VSPHERE_VSAN_DR_CREDENTIALS_PASSWORD}"
+                  scope: GLOBAL
+                  username: "root"
+              - usernamePassword:
+                  description: "url: vcenterdr.radcom.co.il"
+                  id: "VSPHERE_VCENTER_DR_CREDENTIALS"
+                  password: "${VSPHERE_VCENTER_DR_CREDENTIALS_PASSWORD}"
+                  scope: GLOBAL
+                  username: "root"
+              # end of credentials block
+      clouds-yaml: |-
+        clouds:
+          - docker:
+              disabled:
+                disabledByChoice: true
+                enabledByChoice: false
+              dockerApi:
+                connectTimeout: 60
+                dockerHost:
+                  uri: "unix:///var/run/docker.sock"
+                readTimeout: 60
+              exposeDockerHost: true
+              name: "docker-local"
+              templates: []
+          - docker:
+              containerCap: 15
+              dockerApi:
+                connectTimeout: 60
+                dockerHost:
+                  uri: "tcp://acedocker-srv01.radcom.co.il:2375"
+                readTimeout: 60
+              exposeDockerHost: true
+              name: "acedocker-srv01"
+              templates: []
+      global-node-properties: |-
+        globalNodeProperties:
+          - envVars:
+              env:
+              - key: "APPCYCLES_DEBUG_MODE"
+                value: "false"
+              - key: "APPCYCLES_DEFAULT_JDK_TOOL_NAME"
+                value: "jdk"
+              - key: "APPCYCLES_DEFAULT_MAVEN_SETTINGS_FILE_CONFIG_NAME"
+                value: "maven-settings"
+              - key: "APPCYCLES_DEFAULT_MAVEN_TOOL_NAME"
+                value: "maven"
+              - key: "APPCYCLES_PIPELINES_BRANCH"
+                value: "lts"
+              - key: "JENKINS_HOSTNAME"
+                value: "RCC"
+              - key: "RADCOM_PIPELINES_BRANCH"
+                value: "develop"
+              - key: "RCC_PIPELINES_BRANCH"
+                value: "master"
+      label-atoms: |-
+        labelAtoms:
+          - name: "CentOS7"
+          - name: "InputAPI"
+          - name: "InputAPI-test"
+          - name: "RCC-ROCKY9-AGENT-K8S-JENKINS-ACC"
+          - name: "RCCBaseAgent"
+          - name: "RCCBaseAgent_Singleton"
+          - name: "acedocker-srv02-aws-pipelines-agent-001pwlx4zk96f"
+          - name: "aws-pipelines-agent"
+          - name: "aws-pipelines-agent-test"
+          - name: "jenkins-jnlp-slave"
+          - name: "master"
+          - name: "medCompilation"
+          - name: "medCompilation-rocky"
+          - name: "probesCompilation01"
+          - name: "product-validation-154"
+          - name: "product-validation-156"
+          - name: "product_validation"
+          - name: "rcc-centos7"
+          - name: "rcc-centos7-aim"
+          - name: "rcc-centos7-helm3"
+          - name: "rcc-centos7-helm3-aws"
+          - name: "rcc-centos7-mvn"
+          - name: "rcc-rocky9-agent-base-cots"
+          - name: "rcc-rocky9-base"
+          - name: "rcc-rocky9-test"
+      nodes: |-
+        nodes:
+          - permanent:
+              labelString: "product_validation"
+              launcher:
+                ssh:
+                  credentialsId: "deployment-rsa"
+                  host: "172.16.3.154"
+                  port: 22
+                  sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+              mode: EXCLUSIVE
+              name: "product-validation-154"
+              nodeDescription: "worker for product validation"
+              nodeProperties:
+                - envVars:
+                    env:
+                    - key: "MAVEN_OPTS"
+              remoteFS: "/var/tmp/jenkins"
+              retentionStrategy: "always"
+          - permanent:
+              labelString: "product_validation"
+              launcher:
+                ssh:
+                  credentialsId: "deployment-rsa"
+                  host: "172.16.3.156"
+                  port: 22
+                  sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+              mode: EXCLUSIVE
+              name: "product-validation-156"
+              nodeDescription: "worker for product validation"
+              nodeProperties:
+                - envVars:
+                    env:
+                    - key: "MAVEN_OPTS"
+              remoteFS: "/var/tmp/jenkins"
+              retentionStrategy: "always"
+          - permanent:
+              labelString: "rcc-centos7"
+              launcher:
+                ssh:
+                  credentialsId: "deployment-rsa"
+                  host: "172.16.3.161"
+                  port: 22
+                  sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+              mode: EXCLUSIVE
+              name: "rcc-centos7-aim"
+              nodeDescription: "RCC CentOS7 Agent with AIM"
+              remoteFS: "/var/tmp/jenkins"
+              retentionStrategy: "always"
+          - permanent:
+              labelString: "rcc-centos7-helm3"
+              launcher:
+                ssh:
+                  credentialsId: "deployment-rsa"
+                  host: "172.16.3.162"
+                  port: 22
+                  sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+              mode: EXCLUSIVE
+              name: "rcc-centos7-helm3-aws"
+              nodeDescription: "RCC CentOS7 Agent with Helm3 and AWS CLI"
+              remoteFS: "/var/tmp/jenkins"
+              retentionStrategy: "always"
+          - permanent:
+              labelString: "rcc-rocky9-base"
+              launcher:
+                ssh:
+                  credentialsId: "deployment-rsa"
+                  host: "172.16.3.163"
+                  port: 22
+                  sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+              mode: EXCLUSIVE
+              name: "rcc-rocky9-base"
+              nodeDescription: "RCC Rocky9 Base Agent"
+              remoteFS: "/var/tmp/jenkins"
+              retentionStrategy: "always"
+          - permanent:
+              labelString: "rcc-rocky9-test"
+              launcher:
+                ssh:
+                  credentialsId: "deployment-rsa"
+                  host: "172.16.3.164"
+                  port: 22
+                  sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+              mode: EXCLUSIVE
+              name: "rcc-rocky9-test"
+              nodeDescription: "RCC Rocky9 Test Agent"
+              remoteFS: "/var/tmp/jenkins"
+              retentionStrategy: "always"
+      unclassified: |-
+        unclassified:
+          artifactoryBuilder:
+            jfrogPipelinesServer:
+              bypassProxy: false
+              connectionRetries: 3
+              credentialsConfig:
+                ignoreCredentialPluginDisabled: true
+                overridingCredentials: false
+                password: "${ARTIFACTORY_JFROG_PIPELINES_PASSWORD}"
+                username: "${ARTIFACTORY_JFROG_PIPELINES_USERNAME}"
+              timeout: 300
+            useCredentialsPlugin: false
+          bitbucketEndpointConfiguration:
+            endpoints:
+            - bitbucketServerEndpoint:
+                callCanMerge: false
+                credentialsId: "swcompil-user"
+                displayName: "Radcom-Bitbucket"
+                manageHooks: true
+                serverUrl: "http://bitbucket-prod.radcom.co.il:7990"
+                webhookImplementation: NATIVE
+          buildDiscarders:
+            configuredBuildDiscarders:
+            - "jobBuildDiscarder"
+          buildStepOperation:
+            enabled: false
+          buildUserVars:
+            allBuilds: false
+          cxScanBuilder:
+            asyncHtmlRemoval: false
+            continueBuildWhenTimedOut: false
+            enableCertificateValidation: false
+            enableDataRetention: false
+            exceptionOnThresholdErrorGlobal: false
+            filterPattern: "..."
+            forcingVulnerabilityThresholdEnabled: false
+            globallyDefineScanSettings: false
+            hideDebugLogs: false
+            hideResults: false
+            isProxy: true
+            jobGlobalStatusOnError: FAILURE
+            jobGlobalStatusOnThresholdViolation: FAILURE
+            lockVulnerabilitySettings: true
+            password: "${CXSCAN_BUILDER_PASSWORD}"
+            prohibitProjectCreation: false
+            scanTimeOutEnabled: false
+          email-ext:
+            adminRequiredForTemplateTesting: false
+            allowUnregisteredEnabled: false
+            charset: "UTF-8"
+            debugMode: false
+            defaultBody: |-
+              $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS: ...
+            defaultContentType: "text/plain"
+            defaultReplyTo: "devops@radcom.com"
+            defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
+            defaultSuffix: "@radcom.com"
+            defaultTriggerIds:
+            - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
+            mailAccount:
+              credentialsId: "4857b008-c829-4fcb-b563-f3340abc8391"
+              smtpHost: "172.16.1.125"
+              useTls: true
+            maxAttachmentSize: -1
+            maxAttachmentSizeMb: -1
+            precedenceBulk: false
+            watchingEnabled: false
+          enrichedSummaryConfig:
+            enrichedSummaryEnabled: false
+            httpClientDelayBetweenRetriesInSeconds: 1
+            httpClientMaxRetries: 3
+            httpClientTimeoutInSeconds: 1
+          fingerprints:
+            fingerprintCleanupDisabled: false
+            storage: "file"
+          gitHubConfiguration:
+            apiRateLimitChecker: ThrottleForNormalize
+          gitHubPluginConfig:
+            hookUrl: "https://acc.radcom.co.il/github-webhook/"
+          globalBuildPromotedBuilds:
+            timeZone: "Asia/Tel_Aviv"
+          globalConfigFiles:
+            configs:
+            - openstackUserData:
+                content: |-
+                  #cloud-config ...
+                id: "75a0d730-69e5-412e-82c5-29511800700b"
+                name: "UserData"
+            - custom:
+                comment: "clouds-yaml"
+                content: |-
+                  ---
+                  clouds: ...
+                id: "clouds-yaml"
+                name: "clouds-yaml"
+            - globalMavenSettings:
+                comment: "global-maven-settings"
+                content: |-
+                  <?xml ...> ...
+                id: "global-maven-settings"
+                isReplaceAll: false
+                name: "global-maven-settings"
+                serverCredentialMappings: ...
+      updateSiteWarningsConfiguration: |-
+        updateSiteWarningsConfiguration:
+          ignoredWarnings:
+          - "SECURITY-2617-extended-choice-parameter"
+          - "SECURITY-569"
+          - "SECURITY-2232"
+          - "SECURITY-1351"
+          - "SECURITY-1350"
+          - "SECURITY-2784-image-tag-parameter"
+      security-realm: |-
+        securityRealm:
+          activeDirectory:
+            bindPassword: "${AD_BIND_PASSWORD}"
+            cache:
+              size: 256
+              ttl: 600
+            customDomain: true
+            domains:
+            - bindName: "CN=Jenkins,OU=R&D,OU=Groups,OU=RadCom,DC=radcom,DC=co,DC=il"
+              bindPassword: "${AD_DOMAIN_BIND_PASSWORD}"
+              name: "radcom.co.il"
+              servers: "RDC01.radcom.co.il:3269"
+              site: "optional-site"
+              tlsConfiguration: TRUST_ALL_CERTIFICATES
+            groupLookupStrategy: AUTO
+            removeIrrelevantGroups: false
+            requireTLS: true
+            startTls: true
+      tool: |-
+        tool:
+          dockerTool:
+            installations:
+            - name: "docker"
+              properties:
+              - installSource:
+                  installers:
+                  - command:
+                      command: "sudo yum install docker-ce -y"
+          git:
+            installations:
+            - home: "git"
+              name: "Default"
+          go:
+            installations:
+            - name: "go"
+              properties:
+              - installSource:
+                  installers:
+                  - golangInstaller:
+                      id: "1.8"
+          jdk:
+            installations:
+            - name: "jdk17"
+              properties:
+              - installSource:
+                  installers:
+                  - zip:
+                      subdir: "jdk-17.0.6+10"
+                      url: "https://nexus3-prod.radcom.co.il/repository/radcom-files/DevOpsFiles/jdk/17.0.6/OpenJDK17U-jdk_x64_linux_hotspot_17.0.6_10.tar.gz"
+            - name: "jdk11.0.5"
+              properties:
+              - installSource:
+                  installers:
+                  - zip:
+                      subdir: "openjdk-11.0.5+10"
+                      url: "https://nexus3-prod.radcom.co.il/repository/radcom-files/DevOpsFiles/jdk/11.0.5/jdk-11.0.5_linux-x64_bin.tar.gz"
+            - name: "jdk11"
+              properties:
+              - installSource:
+                  installers:
+                  - zip:
+                      subdir: "jdk-11.0.2"
+                      url: "https://nexus3-prod.radcom.co.il/repository/radcom-files/DevOpsFiles/jdk/11.0.2/jdk-11.0.2-x64_bin.tar.gz"
+            - name: "jdk8"
+              properties:
+              - installSource:
+                  installers:
+                  - zip:
+                      subdir: "jdk1.8.0_162"
+                      url: "https://nexus3-prod.radcom.co.il/repository/radcom-files/DevOpsFiles/jdk/8/jdk-8-x64.tar.gz"
+            - home: "/usr/lib/jvm/java-1.8-openjdk"
+              name: "jdk"
+          maven:
+            installations:
+            - name: "mvn-3.6.3"
+              properties:
+              - installSource:
+                  installers:
+                  - maven:
+                      id: "3.6.3"
+            - name: "maven"
+              properties:
+              - installSource:
+                  installers:
+                  - maven:
+                      id: "3.6.0"
+            - name: "mvn-3.5.2"
+              properties:
+              - installSource:
+                  installers:
+                  - maven:
+                      id: "3.5.2"
+          mavenGlobalConfig:
+            globalSettingsProvider: "standard"
+            settingsProvider: "standard"
+          nodejs:
+            installations:
+            - name: "node20"
+              properties:
+              - installSource:
+                  installers:
+                  - nodeJSInstaller:
+                      id: "20.12.1"
+                      npmPackagesRefreshHours: 72
+            - name: "node18"
+              properties:
+              - installSource:
+                  installers:
+                  - nodeJSInstaller:
+                      id: "18.14.0"
+                      npmPackagesRefreshHours: 72
+            - name: "node16"
+              properties:
+              - installSource:
+                  installers:
+                  - nodeJSInstaller:
+                      id: "16.9.0"
+                      npmPackagesRefreshHours: 72
+            - name: "node14"
+              properties:
+              - installSource:
+                  installers:
+                  - nodeJSInstaller:
+                      id: "14.8.0"
+                      npmPackagesRefreshHours: 0
+            - name: "node10"
+              properties:
+              - installSource:
+                  installers:
+                  - nodeJSInstaller:
+                      id: "10.13.0"
+                      npmPackagesRefreshHours: 72
+            - name: "node12"
+              properties:
+              - installSource:
+                  installers:
+                  - nodeJSInstaller:
+                      id: "12.22.12"
+                      npmPackagesRefreshHours: 72
+
+    # Override sidecar image to use Nexus proxy
+    sidecars:
+      configAutoReload:
+        image:
+          registry: nexus3-prod.radcom.co.il:8084
+
+  # Override agent image to use Nexus proxy
+  agent:
+    image:
+      registry: nexus3-prod.radcom.co.il:8084

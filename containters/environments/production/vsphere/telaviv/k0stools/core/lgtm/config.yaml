@@ -1,0 +1,21 @@
+application:
+  name: "lgtm"
+  namespace: "observability"
+  ignoreDifferences:
+    - group: "apps"
+      kind: "StatefulSet"
+      jqPathExpressions:
+        - ".spec.volumeClaimTemplates[].apiVersion"
+        - ".spec.volumeClaimTemplates[].kind"
+source:
+  repoURL: "ssh://git@bitbucket-prod.radcom.co.il:7999/devopstools/helmcharts.git"
+  targetRevision: "master"
+  path: "helmcharts/external/lgtm"
+deploy: false
+cluster:
+  name: "k0stools"
+  environment: "production"
+  provider: "vsphere"
+  region: "telaviv"
+  project: "core"
+  adress: "https://kubernetes.default.svc"

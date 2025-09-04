@@ -1,0 +1,3 @@
+helperImage:
+  repository: nexus3-prod.radcom.co.il:8084/busybox
+  tag: latest

@@ -1,0 +1,10 @@
+apiVersion: v2
+description: A Helm chart for istio
+name: ztunnel
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: ztunnel
+    version: 1.27.0
+    repository: https://istio-release.storage.googleapis.com/charts

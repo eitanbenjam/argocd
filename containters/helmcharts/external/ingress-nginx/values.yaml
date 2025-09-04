@@ -1,0 +1,9 @@
+ingress-nginx:
+  controller:
+    extraArgs:
+      default-ssl-certificate: "ingress-nginx/wildcard-radcom-co-il-certificate"
+    metrics:
+      enabled: true
+    allowSnippetAnnotations: true
+    config:
+      annotations-risk-level: Critical

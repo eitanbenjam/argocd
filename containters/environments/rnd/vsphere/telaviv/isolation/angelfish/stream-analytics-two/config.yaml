@@ -1,0 +1,15 @@
+application:
+  name: "stream-analytics-two"
+  namespace: "project-angelfish"
+source:
+  repoURL: "ssh://git@bitbucket-prod.radcom.co.il:7999/devopstools/helmcharts.git"
+  targetRevision: "master"
+  path: "helmcharts/radcom/stream-analytics"
+deploy: false
+cluster:
+  name: "isolation"
+  environment: "rnd"
+  provider: "vsphere"
+  region: "telaviv"
+  project: "project-angelfish"
+  adress: "https://kubernetes.default.svc"

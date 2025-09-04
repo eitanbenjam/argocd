@@ -1,0 +1,25 @@
+application:
+  ignoreDifferences:
+    - group: 'kubevirt.io'
+      kind: VirtualMachine
+      jsonPointers:
+      - /spec
+    - group: ''
+      kind: Secret
+      jsonPointers:
+      - /spec
+  name: "mongo1"
+  componentName: SettingsAndHealthDB
+  componentIndex: 1
+  namespace: "default"
+source:
+  targetRevision: "master"
+  path: "helmcharts/virtualmachines/settings-and-health-db1"
+deploy: false
+cluster:
+  name: "poc"
+  environment: "rnd"
+  provider: "openshift"
+  region: "telaviv"
+  project: "virtualmachines"
+  adress: "https://kubernetes.default.svc"

@@ -1,0 +1,12 @@
+argo-cd:
+  global:
+    # -- Default domain used by all components
+    ## Used for ingresses, certificates, SSO, notifications, etc.
+    domain: "argocd-openshift.radcom.co.il"
+  server:
+    certificate:
+      # -- Deploy a Certificate resource (requires cert-manager)
+      enabled: false
+      # -- Certificate primary domain (commonName)
+      # @default -- `""` (defaults to global.domain)
+      domain: "argocd-openshift.radcom.co.il"

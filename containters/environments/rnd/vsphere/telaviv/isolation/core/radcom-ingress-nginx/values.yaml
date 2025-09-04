@@ -1,0 +1,58 @@
+radcom-ingress-nginx-chart:
+  enabled: true
+  # without fullnameOverride the size of some object names are exceeding the 63 characters limit
+  fullnameOverride: radcom-ingress-nginx-chart
+  controller:
+    allowSnippetAnnotations: true
+    ingressClassResource:
+      enabled: true
+    watchIngressWithoutClass: true
+    reportNodeInternalIp: false
+    # hostNetwork overriden for isolation, dnsPolicty changed to ClusterFirst
+    hostNetwork: false
+    dnsPolicy: ClusterFirst
+    # removed extra args
+    podAnnotations:
+      prometheus.io/port: "10254"
+      prometheus.io/scrape: "true"
+    scope:
+      enabled: false
+    config:
+      ssl-protocols: TLSv1.3
+    service:
+      # enabled true and type LoadBalancer overriden for isolation
+      enabled: true
+      type: LoadBalancer
+    image:
+      pullPolicy: Always
+      registry: nexus3-prod.radcom.co.il:8084
+      image: registry.k8s.io/ingress-nginx/controller
+      digest: ""
+    admissionWebhooks:
+      enabled: true
+      patch:
+        image:
+          registry: nexus3-prod.radcom.co.il:8084
+          image: registry.k8s.io/ingress-nginx/kube-webhook-certgen
+          digest: ""
+    metrics:
+      port: 10254
+      enabled: true
+  rbac:
+    create: true
+    scope: false
+  udp:
+    5353: "kube-system/coredns:53"
+  tcp:
+    30093: "production/monitoring-tools-elasticsearch-chart:9300"
+    30201: "production/eventbus-kafka:30201"
+    30202: "production/eventbus-kafka-0-external:30202"
+    30203: "production/eventbus-kafka-1-external:30202"
+    30204: "production/eventbus-kafka-2-external:30202"
+    30205: "production/eventbus-kafka-3-external:30202"
+    30206: "production/eventbus-kafka-4-external:30202"
+    30207: "production/eventbus-kafka-5-external:30202"
+    30208: "production/eventbus-kafka-6-external:30202"
+    30209: "production/eventbus-kafka-7-external:30202"
+    30210: "production/eventbus-kafka-8-external:30202"
+    #9094: "nam-danvisan-dev2943kaf/kafka-controller-0-external:9094"

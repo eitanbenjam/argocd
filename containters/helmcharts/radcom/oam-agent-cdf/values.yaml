@@ -1,0 +1,26 @@
+cs-oam-agent:
+  auto-discovery-chart:
+    autoDiscovery: {}
+  elasticsearch-chart:
+    data:
+      persistence: {}
+    master:
+      persistence: {}
+  prometheus-operator-chart:
+    alertmanager:
+      alertmanagerSpec:
+        storage:
+          volumeClaimTemplate:
+            spec: {}
+    prometheus:
+      prometheusSpec:
+        storageSpec:
+          volumeClaimTemplate:
+            spec: {}
+  service-access-config-chart:
+    enabled: true
+    radcomConfiguration: {}
+  wait_for_ace_orchestrator: false
+shared-templates:
+  save_blueprint: true
+  wait_for_ace_orchestrator: true

@@ -1,0 +1,18 @@
+cs-monitoring-tools:
+  prometheus-operator-chart:
+    prometheus.prometheusSpec:
+      retentionSize: "12G"
+  grafana-helm-chart:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+    # Override only the numeric values that cause template errors
+    grafana.ini:
+      database:
+        transaction_retries: "10"
+      dataproxy:
+        timeout: "120"
+shared-templates:
+  add_blueprints: false
+  save_blueprint: true
+  wait_for_ace_orchestrator: true
+  wait_for_ace_orchestrator_on_post: false

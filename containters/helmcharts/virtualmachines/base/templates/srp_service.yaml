@@ -1,0 +1,17 @@
+{{- $fixed_version := .Values.general.version_number | replace "." "-" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: srp-{{ $fixed_version }}
+spec:
+  selector:
+    appversion: srp-{{ $fixed_version }}
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+      targetPort: 80
+    - protocol: TCP
+      name: https
+      port: 443
+      targetPort: 443

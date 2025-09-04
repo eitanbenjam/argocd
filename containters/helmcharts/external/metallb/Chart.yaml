@@ -1,0 +1,11 @@
+apiVersion: v2
+description: A Helm chart for Nginx ingress.
+name: metallb
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: metallb
+    version: 0.15.2
+    repository: https://metallb.github.io/metallb
+    alias: metallb

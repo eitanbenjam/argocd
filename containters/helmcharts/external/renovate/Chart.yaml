@@ -1,0 +1,11 @@
+apiVersion: v2
+description: A Helm chart for renovatebot.
+name: renovate
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: renovate
+    version: 43.32.3
+    repository: https://docs.renovatebot.com/helm-charts
+    alias: renovate

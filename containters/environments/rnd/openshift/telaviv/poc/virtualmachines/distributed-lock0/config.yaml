@@ -1,0 +1,23 @@
+application:
+  ignoreDifferences:
+    - group: 'kubevirt.io'
+      kind: VirtualMachine
+      jsonPointers:
+      - /spec
+    - group: ''
+      kind: Secret
+      jsonPointers:
+      - /spec
+  name: "dtl"
+  namespace: "default"
+source:
+  targetRevision: "master"
+  path: "helmcharts/virtualmachines/distributed-lock"
+deploy: false
+cluster:
+  name: "poc"
+  environment: "rnd"
+  provider: "openshift"
+  region: "telaviv"
+  project: "virtualmachines"
+  adress: "https://kubernetes.default.svc"

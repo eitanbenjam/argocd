@@ -1,0 +1,111 @@
+{{- $files := .Files.Glob "files/alerts/**.yml" }}
+{{- if $files }}
+{{- range $path, $fileContents := $files }}
+{{- $file := lower $path }}
+{{- $filePath := (dir $file) }}
+{{- $fileName := (base $file) }}
+{{- $alertName := $fileName | replace (ext $fileName) "" | trunc 63 | trimSuffix "-" }}
+{{- $alertPath := printf "Alerts/%s" (regexSplit "/" $filePath  -1 | rest | join " " | title | replace " " "/") }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alert-{{ $alertName }}
+  labels:
+    grafana_alert: "alert"
+data:
+  {{ $alertName }}.yaml: |
+    apiVersion: 1
+    policies:
+      - orgId: 1
+        receiver: grafana-teams-webhook
+        group_by: ['alertname']
+        group_wait: 60s
+        group_interval: 5m
+        repeat_interval: 4h
+        routes:
+          - receiver: grafana-teams-webhook
+    contactPoints:
+      - orgId: 1
+        name: grafana-teams-webhook
+        receivers:
+          - uid: "grafana-teams-webhook"
+            type: "teams"
+            disableResolveMessage: false
+            settings:
+              url: "${TEAMS_WEBHOOK_URL}"
+              title: '{{ `{{ if eq .Status "firing" }}🔥 {{ .Status | title }} {{ end }}{{ if eq .Status "resolved" }}✅ {{ .Status | title }} {{ end }}{{ if .Alerts.Firing }}{{ len .Alerts.Firing }}{{ else }}0{{ end }} {{ if and .Alerts.Firing (gt (len .Alerts.Firing) 1) }}alerts{{ else }}alert{{ end }}{{ if .CommonLabels.alertname }} for {{ .CommonLabels.alertname }}{{ end }}` }}'
+              message: |-
+                {{ `{{ if and .Alerts .Alerts.Firing (gt (len .Alerts.Firing) 0) }}
+                ## 🚨 {{ if .CommonLabels.alertname }}{{ .CommonLabels.alertname }}{{ else }}Alert Notification{{ end }}
+                {{ range .Alerts.Firing }}
+                **Severity**: {{ if .Labels.severity }}{{ .Labels.severity | title }}{{ else }}Unknown{{ end }}{{ if .Labels.team }} | **Team**: {{ .Labels.team }}{{ end }}
+
+                **Summary**: {{ if .Annotations.summary }}{{ .Annotations.summary }}{{ else }}No summary provided{{ end }}
+
+                **Description**: {{ if .Annotations.description }}{{ .Annotations.description }}{{ else }}No description provided{{ end }}
+
+                {{ if .Annotations.dashboard_url }}**Dashboard**: [View Dashboard]({{ .Annotations.dashboard_url }}){{ end }}
+                {{ if .Annotations.runbook_url }}**Runbook**: [View Runbook]({{ .Annotations.runbook_url }}){{ end }}
+
+                **Started**: {{ .StartsAt.Format "2006-01-02 15:04:05 IDT" }}
+
+                ---
+                {{ end }}
+                {{ end }}
+                {{ if and .Alerts .Alerts.Resolved (gt (len .Alerts.Resolved) 0) }}
+                ## ✅ Resolved Alerts
+                {{ range .Alerts.Resolved }}
+                **{{ if .Annotations.summary }}{{ .Annotations.summary }}{{ else }}Alert{{ end }}**
+
+                {{ if .Annotations.dashboard_url }}**Dashboard**: [View Dashboard]({{ .Annotations.dashboard_url }}){{ end }}
+
+                **Resolved at**: {{ .EndsAt.Format "2006-01-02 15:04:05 IDT" }}
+
+                ---
+                {{ end }}
+                {{ end }}` }}
+      - orgId: 1
+        name: grafana-mail
+        receivers:
+          - uid: "grafana-mail"
+            type: "email"
+            disableResolveMessage: false
+            settings:
+              addresses: "devops@radcom.com"
+              subject: '{{ `{{ if eq .Status "firing" }}🔥 {{ .Status | title }} {{ end }}{{ if eq .Status "resolved" }}✅ {{ .Status | title }} {{ end }}{{ if .Alerts.Firing }}{{ len .Alerts.Firing }}{{ else }}0{{ end }} {{ if and .Alerts.Firing (gt (len .Alerts.Firing) 1) }}alerts{{ else }}alert{{ end }}{{ if .CommonLabels.alertname }} for {{ .CommonLabels.alertname }}{{ end }}` }}'
+              message: |-
+                {{ `{{ if and .Alerts .Alerts.Firing (gt (len .Alerts.Firing) 0) }}
+                🚨 {{ if .CommonLabels.alertname }}{{ .CommonLabels.alertname }}{{ else }}Alert Notification{{ end }}
+                
+                {{ range .Alerts.Firing }}
+                Severity: {{ if .Labels.severity }}{{ .Labels.severity | title }}{{ else }}Unknown{{ end }}{{ if .Labels.team }} | Team: {{ .Labels.team }}{{ end }}
+                
+                Summary: {{ if .Annotations.summary }}{{ .Annotations.summary }}{{ else }}No summary provided{{ end }}
+                
+                Description: {{ if .Annotations.description }}{{ .Annotations.description }}{{ else }}No description provided{{ end }}
+                
+                {{ if .Annotations.dashboard_url }}Dashboard: {{ .Annotations.dashboard_url }}{{ end }}
+                {{ if .Annotations.runbook_url }}Runbook: {{ .Annotations.runbook_url }}{{ end }}
+                
+                Started: {{ .StartsAt.Format "2006-01-02 15:04:05 IDT" }}
+                
+                ---
+                {{ end }}
+                {{ end }}
+                {{ if and .Alerts .Alerts.Resolved (gt (len .Alerts.Resolved) 0) }}
+                ✅ Resolved Alerts
+                {{ range .Alerts.Resolved }}
+                {{ if .Annotations.summary }}{{ .Annotations.summary }}{{ else }}Alert{{ end }}
+                
+                {{ if .Annotations.dashboard_url }}Dashboard: {{ .Annotations.dashboard_url }}{{ end }}
+                
+                Resolved at: {{ .EndsAt.Format "2006-01-02 15:04:05 IDT" }}
+                
+                ---
+                {{ end }}
+                {{ end }}` }}
+{{ ($.Files.Get $path) | indent 4 }}
+
+{{- end }}
+{{- end }}

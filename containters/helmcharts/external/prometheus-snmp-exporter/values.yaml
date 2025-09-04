@@ -1,0 +1,614 @@
+# Prometheus SNMP Exporter configuration for HP iLO monitoring
+prometheus-snmp-exporter:
+  # Enable environment variable expansion for authentication
+  extraArgs:
+    - "--config.expand-environment-variables"
+    - "--log.level=debug"
+
+  # Environment variables for authentication from External Secrets
+  envFrom:
+    - secretRef:
+        name: hp-ilo-auth
+
+  configmapReload:
+    enabled: true
+
+  # SNMP configuration for HP iLO servers
+  config: |-
+    auths:
+      hp_ilo_v2:
+        community: "${SNMP_COMMUNITY}"
+        version: 2
+      hp_ilo_v3:
+        username: "${SNMP_USERNAME}"
+        password: "${SNMP_PASSWORD}"
+        priv_password: "${SNMP_PRIV_PASSWORD}"
+        auth_protocol: SHA
+        priv_protocol: AES
+        security_level: authPriv
+        version: 3
+
+    modules:
+      # HPE Compaq Hardware Monitoring
+      hpe:
+        walk:
+        - 1.3.6.1.4.1.232.2.2.4.2
+        - 1.3.6.1.4.1.232.6.2.6.7.1.1
+        - 1.3.6.1.4.1.232.6.2.6.7.1.2
+        - 1.3.6.1.4.1.232.6.2.6.7.1.3
+        - 1.3.6.1.4.1.232.6.2.6.7.1.4
+        - 1.3.6.1.4.1.232.6.2.6.7.1.5
+        - 1.3.6.1.4.1.232.6.2.6.7.1.6
+        - 1.3.6.1.4.1.232.6.2.6.7.1.7
+        - 1.3.6.1.4.1.232.6.2.6.7.1.8
+        - 1.3.6.1.4.1.232.6.2.6.7.1.9
+        - 1.3.6.1.4.1.232.6.2.6.7.1.10
+        - 1.3.6.1.4.1.232.6.2.6.7.1.11
+        - 1.3.6.1.4.1.232.6.2.6.7.1.12
+        - 1.3.6.1.4.1.232.11.2.3.1.1
+        - 1.3.6.1.4.1.232.11.2.3.1.2
+        - 1.3.6.1.4.1.232.11.2.3.1.3
+        - 1.3.6.1.4.1.232.11.2.3.1.4
+        - 1.3.6.1.4.1.232.11.2.3.1.5
+        - 1.3.6.1.4.1.232.11.2.3.1.6
+        - 1.3.6.1.4.1.232.11.2.3.1.7
+        - 1.3.6.1.4.1.232.11.2.3.1.8
+        - 1.3.6.1.4.1.232.11.2.3.1.9
+        - 1.3.6.1.4.1.232.11.2.3.1.10
+        - 1.3.6.1.4.1.232.11.2.3.1.11
+        - 1.3.6.1.4.1.232.11.2.3.1.12
+        - 1.3.6.1.4.1.232.11.2.3.1.13
+        - 1.3.6.1.4.1.232.11.2.3.1.14
+        - 1.3.6.1.4.1.232.11.2.3.1.15
+        - 1.3.6.1.4.1.232.11.2.3.1.16
+        - 1.3.6.1.4.1.232.11.2.3.1.17
+        - 1.3.6.1.4.1.232.11.2.3.1.18
+        - 1.3.6.1.4.1.232.11.2.3.1.19
+        - 1.3.6.1.4.1.232.11.2.3.1.20
+        - 1.3.6.1.4.1.232.11.2.3.1.21
+        - 1.3.6.1.4.1.232.11.2.3.1.22
+        - 1.3.6.1.4.1.232.11.2.3.1.23
+        - 1.3.6.1.4.1.232.11.2.3.1.24
+        - 1.3.6.1.4.1.232.11.2.3.1.25
+        - 1.3.6.1.4.1.232.11.2.3.2
+        - 1.3.6.1.4.1.232.11.2.3.3
+        - 1.3.6.1.4.1.232.11.2.4.1
+        - 1.3.6.1.4.1.232.11.2.4.2.1.1
+        - 1.3.6.1.4.1.232.11.2.4.2.1.2
+        - 1.3.6.1.4.1.232.11.2.4.2.1.3
+        - 1.3.6.1.4.1.232.11.2.4.2.1.4
+        - 1.3.6.1.4.1.232.11.2.4.2.1.5
+        - 1.3.6.1.4.1.232.11.2.4.2.1.6
+        - 1.3.6.1.4.1.232.11.2.4.2.1.7
+        - 1.3.6.1.4.1.232.11.2.4.2.1.8
+        - 1.3.6.1.4.1.232.11.2.4.2.1.9
+        - 1.3.6.1.4.1.232.11.2.4.2.1.10
+        - 1.3.6.1.4.1.232.11.2.4.2.1.11
+        - 1.3.6.1.4.1.232.11.2.4.2.1.12
+        - 1.3.6.1.4.1.232.11.2.4.2.1.13
+        - 1.3.6.1.4.1.232.11.2.4.2.1.14
+        - 1.3.6.1.4.1.232.11.2.4.2.1.15
+        - 1.3.6.1.4.1.232.11.2.4.2.1.16
+        - 1.3.6.1.4.1.232.11.2.4.2.1.17
+        - 1.3.6.1.4.1.232.11.2.4.2.1.18
+        - 1.3.6.1.4.1.232.11.2.4.2.1.19
+        - 1.3.6.1.4.1.232.11.2.4.2.1.20
+        - 1.3.6.1.4.1.232.11.2.4.2.1.21
+        - 1.3.6.1.4.1.232.11.2.4.2.1.22
+        - 1.3.6.1.4.1.232.11.2.4.2.1.23
+        - 1.3.6.1.4.1.232.11.2.4.2.1.24
+        - 1.3.6.1.4.1.232.11.2.4.2.1.25
+        - 1.3.6.1.4.1.232.11.2.4.2.1.26
+        - 1.3.6.1.4.1.232.11.2.4.2.1.27
+        - 1.3.6.1.4.1.232.11.2.4.2.1.28
+        - 1.3.6.1.4.1.232.11.2.5.1.1
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.1
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.2
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.3
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.4
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.5
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.6
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.7
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.8
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.9
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.10
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.11
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.12
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.13
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.14
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.15
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.16
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.17
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.18
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.19
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.20
+        - 1.3.6.1.4.1.232.11.2.5.1.2.1.21
+        metrics:
+        - name: cpqSeCpuUnitIndex
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.1
+          type: gauge
+          help: The CPU Unit Index within the system - 1.3.6.1.4.1.232.1.2.2.1.1.1
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+        - name: cpqSeCpuSlot
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.2
+          type: gauge
+          help: The CPU slot within the system - 1.3.6.1.4.1.232.1.2.2.1.1.2
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+        - name: cpqSeCpuName
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.3
+          type: DisplayString
+          help: The name of the CPU - 1.3.6.1.4.1.232.1.2.2.1.1.3
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+        - name: cpqSeCpuStatus
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.6
+          type: gauge
+          help: The status of the CPU - 1.3.6.1.4.1.232.1.2.2.1.1.6
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+          enum_values:
+            1: unknown
+            2: ok
+            3: degraded
+            4: failed
+            5: disabled
+        - name: cpqSeCpuExtendedStatus
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.7
+          type: gauge
+          help: The extended status of the CPU - 1.3.6.1.4.1.232.1.2.2.1.1.7
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+          enum_values:
+            1: unknown
+            2: ok
+            3: degraded
+            4: failed
+            5: disabled
+        - name: cpqSeCpuSocketNumber
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.8
+          type: gauge
+          help: The socket number of the CPU - 1.3.6.1.4.1.232.1.2.2.1.1.8
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+        - name: cpqSeCpuCondition
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.9
+          type: gauge
+          help: The condition of the CPU - 1.3.6.1.4.1.232.1.2.2.1.1.9
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+          enum_values:
+            1: other
+            2: ok
+            3: degraded
+            4: failed
+        - name: cpqSeCpuSpeed
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.11
+          type: gauge
+          help: The speed of the CPU in MHz - 1.3.6.1.4.1.232.1.2.2.1.1.11
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+        - name: cpqSeCpuStep
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.12
+          type: gauge
+          help: The step of the CPU - 1.3.6.1.4.1.232.1.2.2.1.1.12
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+        - name: cpqSeCpuDesignVoltage
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.13
+          type: gauge
+          help: The design voltage of the CPU in millivolts - 1.3.6.1.4.1.232.1.2.2.1.1.13
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+        - name: cpqSeCpuCurrentVoltage
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.14
+          type: gauge
+          help: The current voltage of the CPU in millivolts - 1.3.6.1.4.1.232.1.2.2.1.1.14
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+        - name: cpqSeCpuHyperThreading
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.30
+          type: gauge
+          help: The hyperthreading status of the CPU - 1.3.6.1.4.1.232.1.2.2.1.1.30
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+          enum_values:
+            1: unknown
+            2: enabled
+            3: disabled
+        - name: cpqSeCpuCoreSteppingText
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.32
+          type: DisplayString
+          help: The core stepping text of the CPU - 1.3.6.1.4.1.232.1.2.2.1.1.32
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+        - name: cpqSeCpuLowPowerStatus
+          oid: 1.3.6.1.4.1.232.1.2.2.1.1.35
+          type: gauge
+          help: The low power status of the CPU - 1.3.6.1.4.1.232.1.2.2.1.1.35
+          indexes:
+          - labelname: cpqSeCpuUnitIndex
+            type: gauge
+          enum_values:
+            1: unknown
+            2: normal
+            3: low
+        - name: cpqHoMibRevMajor
+          oid: 1.3.6.1.4.1.232.11.2.1.1
+          type: gauge
+          help: The major revision of the MIB - 1.3.6.1.4.1.232.11.2.1.1
+        - name: cpqHoMibRevMinor
+          oid: 1.3.6.1.4.1.232.11.2.1.2
+          type: gauge
+          help: The minor revision of the MIB - 1.3.6.1.4.1.232.11.2.1.2
+        - name: cpqHoMibCondition
+          oid: 1.3.6.1.4.1.232.11.2.1.3
+          type: gauge
+          help: The overall condition of the system - 1.3.6.1.4.1.232.11.2.1.3
+          enum_values:
+            1: other
+            2: ok
+            3: degraded
+            4: failed
+        - name: cpqHoComputerName
+          oid: 1.3.6.1.4.1.232.11.2.1.4
+          type: DisplayString
+          help: The computer name - 1.3.6.1.4.1.232.11.2.1.4
+        - name: cpqHoSystemName
+          oid: 1.3.6.1.4.1.232.11.2.1.5
+          type: DisplayString
+          help: The system name - 1.3.6.1.4.1.232.11.2.1.5
+        - name: cpqHoCpuUtilUnitIndex
+          oid: 1.3.6.1.4.1.232.11.2.3.1.1.1
+          type: gauge
+          help: CPU Utilization Unit Index - 1.3.6.1.4.1.232.11.2.3.1.1.1
+          indexes:
+          - labelname: cpqHoCpuUtilUnitIndex
+            type: gauge
+        - name: cpqHoCpuUtilMin
+          oid: 1.3.6.1.4.1.232.11.2.3.1.1.2
+          type: gauge
+          help: CPU Utilization Minimum Percentage - 1.3.6.1.4.1.232.11.2.3.1.1.2
+          indexes:
+          - labelname: cpqHoCpuUtilUnitIndex
+            type: gauge
+        - name: cpqHoCpuUtilFiveMin
+          oid: 1.3.6.1.4.1.232.11.2.3.1.1.3
+          type: gauge
+          help: CPU Utilization Five Minute Average - 1.3.6.1.4.1.232.11.2.3.1.1.3
+          indexes:
+          - labelname: cpqHoCpuUtilUnitIndex
+            type: gauge
+        - name: cpqHoCpuUtilThirtyMin
+          oid: 1.3.6.1.4.1.232.11.2.3.1.1.4
+          type: gauge
+          help: CPU Utilization Thirty Minute Average - 1.3.6.1.4.1.232.11.2.3.1.1.4
+          indexes:
+          - labelname: cpqHoCpuUtilUnitIndex
+            type: gauge
+        - name: cpqHoCpuUtilHour
+          oid: 1.3.6.1.4.1.232.11.2.3.1.1.5
+          type: gauge
+          help: CPU Utilization One Hour Average - 1.3.6.1.4.1.232.11.2.3.1.1.5
+          indexes:
+          - labelname: cpqHoCpuUtilUnitIndex
+            type: gauge
+        - name: cpqHoCpuUtilHwLocation
+          oid: 1.3.6.1.4.1.232.11.2.3.1.1.6
+          type: DisplayString
+          help: CPU Utilization Hardware Location - 1.3.6.1.4.1.232.11.2.3.1.1.6
+          indexes:
+          - labelname: cpqHoCpuUtilUnitIndex
+            type: gauge
+        - name: cpqHoFileSysIndex
+          oid: 1.3.6.1.4.1.232.11.2.4.2.1.1
+          type: gauge
+          help: File System Index - 1.3.6.1.4.1.232.11.2.4.2.1.1
+          indexes:
+          - labelname: cpqHoFileSysIndex
+            type: gauge
+        - name: cpqHoFileSysDesc
+          oid: 1.3.6.1.4.1.232.11.2.4.2.1.2
+          type: DisplayString
+          help: File System Description - 1.3.6.1.4.1.232.11.2.4.2.1.2
+          indexes:
+          - labelname: cpqHoFileSysIndex
+            type: gauge
+        - name: cpqHoFileSysSpaceTotal
+          oid: 1.3.6.1.4.1.232.11.2.4.2.1.3
+          type: gauge
+          help: File System Total Space in KB - 1.3.6.1.4.1.232.11.2.4.2.1.3
+          indexes:
+          - labelname: cpqHoFileSysIndex
+            type: gauge
+        - name: cpqHoFileSysSpaceAvail
+          oid: 1.3.6.1.4.1.232.11.2.4.2.1.4
+          type: gauge
+          help: File System Available Space in KB - 1.3.6.1.4.1.232.11.2.4.2.1.4
+          indexes:
+          - labelname: cpqHoFileSysIndex
+            type: gauge
+        - name: cpqHoFileSysPercentSpaceUsed
+          oid: 1.3.6.1.4.1.232.11.2.4.2.1.5
+          type: gauge
+          help: File System Percent Space Used - 1.3.6.1.4.1.232.11.2.4.2.1.5
+          indexes:
+          - labelname: cpqHoFileSysIndex
+            type: gauge
+        - name: cpqHoFileSysAllocUnitsTotal
+          oid: 1.3.6.1.4.1.232.11.2.4.2.1.6
+          type: gauge
+          help: File System Total Allocation Units - 1.3.6.1.4.1.232.11.2.4.2.1.6
+          indexes:
+          - labelname: cpqHoFileSysIndex
+            type: gauge
+        - name: cpqHoFileSysAllocUnitsAvail
+          oid: 1.3.6.1.4.1.232.11.2.4.2.1.7
+          type: gauge
+          help: File System Available Allocation Units - 1.3.6.1.4.1.232.11.2.4.2.1.7
+          indexes:
+          - labelname: cpqHoFileSysIndex
+            type: gauge
+        - name: cpqHoFileSysAllocUnitSize
+          oid: 1.3.6.1.4.1.232.11.2.4.2.1.8
+          type: gauge
+          help: File System Allocation Unit Size - 1.3.6.1.4.1.232.11.2.4.2.1.8
+          indexes:
+          - labelname: cpqHoFileSysIndex
+            type: gauge
+        - name: cpqHoFileSysStatus
+          oid: 1.3.6.1.4.1.232.11.2.4.2.1.9
+          type: gauge
+          help: File System Status - 1.3.6.1.4.1.232.11.2.4.2.1.9
+          indexes:
+          - labelname: cpqHoFileSysIndex
+            type: gauge
+          enum_values:
+            1: other
+            2: ok
+            3: degraded
+            4: failed
+        - name: cpqHoFileSysCondition
+          oid: 1.3.6.1.4.1.232.11.2.4.2.1.10
+          type: gauge
+          help: File System Condition - 1.3.6.1.4.1.232.11.2.4.2.1.10
+          indexes:
+          - labelname: cpqHoFileSysIndex
+            type: gauge
+          enum_values:
+            1: other
+            2: ok
+            3: degraded
+            4: failed
+        - name: cpqHoIfPhysMapIndex
+          oid: 1.3.6.1.4.1.232.11.2.5.1.2.1.1
+          type: gauge
+          help: Interface Physical Map Index - 1.3.6.1.4.1.232.11.2.5.1.2.1.1
+          indexes:
+          - labelname: cpqHoIfPhysMapIndex
+            type: gauge
+        - name: cpqHoIfPhysMapSlot
+          oid: 1.3.6.1.4.1.232.11.2.5.1.2.1.2
+          type: gauge
+          help: Interface Physical Map Slot - 1.3.6.1.4.1.232.11.2.5.1.2.1.2
+          indexes:
+          - labelname: cpqHoIfPhysMapIndex
+            type: gauge
+        - name: cpqHoIfPhysMapIoBaseAddr
+          oid: 1.3.6.1.4.1.232.11.2.5.1.2.1.3
+          type: gauge
+          help: Interface Physical Map IO Base Address - 1.3.6.1.4.1.232.11.2.5.1.2.1.3
+          indexes:
+          - labelname: cpqHoIfPhysMapIndex
+            type: gauge
+        - name: cpqHoIfPhysMapMemBaseAddr
+          oid: 1.3.6.1.4.1.232.11.2.5.1.2.1.4
+          type: gauge
+          help: Interface Physical Map Memory Base Address - 1.3.6.1.4.1.232.11.2.5.1.2.1.4
+          indexes:
+          - labelname: cpqHoIfPhysMapIndex
+            type: gauge
+        - name: cpqHoIfPhysMapPort
+          oid: 1.3.6.1.4.1.232.11.2.5.1.2.1.5
+          type: gauge
+          help: Interface Physical Map Port - 1.3.6.1.4.1.232.11.2.5.1.2.1.5
+          indexes:
+          - labelname: cpqHoIfPhysMapIndex
+            type: gauge
+        - name: cpqHoIfPhysMapDuplexState
+          oid: 1.3.6.1.4.1.232.11.2.5.1.2.1.6
+          type: gauge
+          help: Interface Physical Map Duplex State - 1.3.6.1.4.1.232.11.2.5.1.2.1.6
+          indexes:
+          - labelname: cpqHoIfPhysMapIndex
+            type: gauge
+          enum_values:
+            1: other
+            2: unknown
+            3: halfduplex
+            4: fullduplex
+        - name: cpqHoIfPhysMapCondition
+          oid: 1.3.6.1.4.1.232.11.2.5.1.2.1.7
+          type: gauge
+          help: Interface Physical Map Condition - 1.3.6.1.4.1.232.11.2.5.1.2.1.7
+          indexes:
+          - labelname: cpqHoIfPhysMapIndex
+            type: gauge
+          enum_values:
+            1: other
+            2: ok
+            3: degraded
+            4: failed
+        - name: cpqHoIfPhysMapGroupType
+          oid: 1.3.6.1.4.1.232.11.2.5.1.2.1.8
+          type: gauge
+          help: Interface Physical Map Group Type - 1.3.6.1.4.1.232.11.2.5.1.2.1.8
+          indexes:
+          - labelname: cpqHoIfPhysMapIndex
+            type: gauge
+          enum_values:
+            1: other
+            2: none
+            3: multipleNic
+            4: redundantPair
+            5: nft
+            6: alb
+            7: fec
+            8: slb
+        - name: cpqHoIfPhysMapAdapterCount
+          oid: 1.3.6.1.4.1.232.11.2.5.1.2.1.9
+          type: gauge
+          help: Interface Physical Map Adapter Count - 1.3.6.1.4.1.232.11.2.5.1.2.1.9
+          indexes:
+          - labelname: cpqHoIfPhysMapIndex
+            type: gauge
+        - name: cpqHoIfPhysMapAdapterOKCount
+          oid: 1.3.6.1.4.1.232.11.2.5.1.2.1.10
+          type: gauge
+          help: Interface Physical Map Adapter OK Count - 1.3.6.1.4.1.232.11.2.5.1.2.1.10
+          indexes:
+          - labelname: cpqHoIfPhysMapIndex
+            type: gauge
+        - name: cpqHoIfPhysMapMACAddress
+          oid: 1.3.6.1.4.1.232.11.2.5.1.2.1.11
+          type: PhysAddress48
+          help: Interface Physical Map MAC Address - 1.3.6.1.4.1.232.11.2.5.1.2.1.11
+          indexes:
+          - labelname: cpqHoIfPhysMapIndex
+            type: gauge
+        - name: cpqHoIfPhysMapOverallCondition
+          oid: 1.3.6.1.4.1.232.11.2.5.1.2.1.12
+          type: gauge
+          help: Interface Physical Map Overall Condition - 1.3.6.1.4.1.232.11.2.5.1.2.1.12
+          indexes:
+          - labelname: cpqHoIfPhysMapIndex
+            type: gauge
+          enum_values:
+            1: other
+            2: ok
+            3: degraded
+            4: failed
+        - name: cpqHoSWRunningIndex
+          oid: 1.3.6.1.4.1.232.11.2.6.1.1.1
+          type: gauge
+          help: Software Running Index - 1.3.6.1.4.1.232.11.2.6.1.1.1
+          indexes:
+          - labelname: cpqHoSWRunningIndex
+            type: gauge
+        - name: cpqHoSWRunningName
+          oid: 1.3.6.1.4.1.232.11.2.6.1.1.2
+          type: DisplayString
+          help: Software Running Name - 1.3.6.1.4.1.232.11.2.6.1.1.2
+          indexes:
+          - labelname: cpqHoSWRunningIndex
+            type: gauge
+        - name: cpqHoSWRunningDesc
+          oid: 1.3.6.1.4.1.232.11.2.6.1.1.3
+          type: DisplayString
+          help: Software Running Description - 1.3.6.1.4.1.232.11.2.6.1.1.3
+          indexes:
+          - labelname: cpqHoSWRunningIndex
+            type: gauge
+        - name: cpqHoSWRunningVersion
+          oid: 1.3.6.1.4.1.232.11.2.6.1.1.4
+          type: DisplayString
+          help: Software Running Version - 1.3.6.1.4.1.232.11.2.6.1.1.4
+          indexes:
+          - labelname: cpqHoSWRunningIndex
+            type: gauge
+        - name: cpqHoSWRunningLocation
+          oid: 1.3.6.1.4.1.232.11.2.6.1.1.5
+          type: DisplayString
+          help: Software Running Location - 1.3.6.1.4.1.232.11.2.6.1.1.5
+          indexes:
+          - labelname: cpqHoSWRunningIndex
+            type: gauge
+        - name: cpqHoSWRunningMonitor
+          oid: 1.3.6.1.4.1.232.11.2.6.1.1.6
+          type: gauge
+          help: Software Running Monitor Status - 1.3.6.1.4.1.232.11.2.6.1.1.6
+          indexes:
+          - labelname: cpqHoSWRunningIndex
+            type: gauge
+          enum_values:
+            1: other
+            2: dontMonitor
+            3: monitorStarted
+            4: monitorStopped
+            5: monitorStartedStopped
+            6: monitorCountMin
+            7: monitorCountMax
+            8: monitorCountMinMax
+        - name: cpqHoSWRunningState
+          oid: 1.3.6.1.4.1.232.11.2.6.1.1.7
+          type: gauge
+          help: Software Running State - 1.3.6.1.4.1.232.11.2.6.1.1.7
+          indexes:
+          - labelname: cpqHoSWRunningIndex
+            type: gauge
+          enum_values:
+            1: other
+            2: started
+            3: stopped
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 9116
+
+  # ServiceMonitor configuration for Prometheus
+  serviceMonitor:
+    enabled: true
+    interval: 60s
+    scrapeTimeout: 30s
+
+    # Additional labels for Mimir routing
+    additionalLabels:
+      prometheus_instance: "k0s-tools"
+      component: "ilo-monitoring"
+
+    relabelings:
+      - targetLabel: job
+        replacement: "snmp-exporter-hp-ilo"
+
+    params:
+      - name: hp-ilo-1
+        module:
+          - hpe
+        auth:
+          - hp_ilo_v3
+        target: 172.29.60.113
+
+        # additionalMetricsRelabels:
+        #   server: "hp-ilo-1"
+        #   environment: "production"
+        #   ip: "172.29.60.113"
+        #   ilo_version: "4"
+
+  # Resource limits
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+  # Pod security context
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 1000

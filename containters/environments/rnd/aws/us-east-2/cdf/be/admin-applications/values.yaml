@@ -1,0 +1,10 @@
+SITE_GENERAL_STORAGE_PLACEHOLDER: &SITE_GENERAL_STORAGE_PLACEHOLDER gp3
+DOCKER_REGISTRY: &DOCKER_REGISTRY 692859913461.dkr.ecr.us-east-2.amazonaws.com
+NAMESPACE: &NAMESPACE production
+CLOUD: &CLOUD aws
+
+cs-admin-applications:
+  grafana-helm-chart:
+    persistence:
+      storageClass: *SITE_GENERAL_STORAGE_PLACEHOLDER
+      storageClassName: *SITE_GENERAL_STORAGE_PLACEHOLDER

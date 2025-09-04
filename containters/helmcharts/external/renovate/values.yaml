@@ -1,0 +1,117 @@
+renovate:
+  cronjob:
+    # -- Schedules the job to run using cron notation
+    schedule: '0 2 * * 1,3,5'  # At 02:00 on Monday, Wednesday, and Friday
+    # -- You can specify a time zone for a CronJob by setting timeZone to the name of a valid time zone. (starting with k8s 1.27) <https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#time-zones>
+    timeZone: 'UTC'  # see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for valid names
+    # -- If it is set to true, all subsequent executions are suspended. This setting does not apply to already started executions.
+    suspend: false
+    # -- The number of successful finished jobs to retain
+    successfulJobsHistoryLimit: 3
+    # -- The number of failed finished jobs to retain
+    failedJobsHistoryLimit: 1
+    # -- Deadline in seconds for starting the job if it misses scheduled time for any reason
+    startingDeadlineSeconds: 3600
+  renovate:
+    # See https://docs.renovatebot.com/self-hosted-configuration
+    #-- Use the Helm tpl function on your configuration. See README for how to use this value
+    config: |
+      {
+        "gitAuthor": "Renovate Bot <devops@radcom.co.il>",
+        "repositories": [
+          "devopstools/helmcharts",
+          "sysc/radcom-manager-ms",
+          "kad/radcom-ingress-nginx",
+          "rcc/ace-cd"
+        ],
+        "prHourlyLimit": 3,
+        "prConcurrentLimit": 5,
+        "timezone": "UTC",
+        "labels": ["dependencies", "renovate-bot"],
+        "assignees": ["devops"],
+        "vulnerabilityAlerts": {
+          "enabled": true
+        },
+        "osvVulnerabilityAlerts": true,
+        "dependencyDashboard": true,
+        "dependencyDashboardTitle": "Dependency Dashboard",
+        "dependencyDashboardHeader": "This is an overview of Renovate updates and their statuses.",
+        "semanticCommits": "enabled",
+        "commitMessageTopic": "{{`{{depName}}`}}",
+        "commitMessageExtra": "to {{`{{newVersion}}`}}",
+        "branchPrefix": "chore/",
+        "hostRules": [
+          {
+            "hostType": "docker",
+            "matchHost": "docker.io",
+            "username": "{{`{{DOCKER_HUB_USERNAME}}`}}",
+            "password": "{{`{{DOCKER_HUB_PASSWORD}}`}}",
+            "timeout": 60000
+          },
+          {
+            "hostType": "docker",
+            "matchHost": "*.dkr.ecr.*.amazonaws.com",
+            "username": "{{`{{AWS_ACCESS_KEY_ID}}`}}",
+            "password": "{{`{{AWS_SECRET_ACCESS_KEY}}`}}",
+            "timeout": 60000
+          },
+          {
+            "matchHost": "nexus3-prod.radcom.co.il",
+            "hostType": "helm",
+            "username": "{{`{{NEXUS_USER}}`}}",
+            "password": "{{`{{NEXUS_PASSWORD}}`}}",
+            "timeout": 60000
+          }
+        ]
+      }
+    configEnableHelmTpl: true
+    extraConfigmaps:
+    - name: config
+      data:
+        config.js: |
+          module.exports = {
+            hostRules: [
+              {
+                matchHost: "nexus3-prod.radcom.co.il",
+                username: process.env.NEXUS_USER,
+                password: process.env.NEXUS_PASSWORD,
+                timeout: 60000
+              },
+              {
+                hostType: "docker",
+                matchHost: "docker.io",
+                username: process.env.DOCKER_HUB_USERNAME,
+                password: process.env.DOCKER_HUB_PASSWORD,
+                timeout: 60000
+              }
+            ],
+            secrets: {
+              NEXUS_USER: process.env.NEXUS_USER,
+              NEXUS_PASSWORD: process.env.NEXUS_PASSWORD,
+              DOCKER_HUB_USERNAME: process.env.DOCKER_HUB_USERNAME,
+              DOCKER_HUB_PASSWORD: process.env.DOCKER_HUB_PASSWORD,
+            }
+          };
+  envFrom:
+    - secretRef:
+        name: 'renovate-env'
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 1000
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+  nodeSelector:
+    kubernetes.io/os: linux
+  tolerations: []
+  affinity: {}

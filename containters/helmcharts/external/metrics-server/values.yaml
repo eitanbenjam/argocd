@@ -1,0 +1,10 @@
+enabled: false
+
+# metrics-server:
+#     apiService:
+#         insecureSkipTLSVerify: false
+#  hostNetwork:
+#    enabled: true
+#  args:
+#    - --kubelet-insecure-tls
+#    - --requestheader-client-ca-file

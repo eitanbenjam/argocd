@@ -1,0 +1,29 @@
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://692859913461.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v2
+description: A Helm chart for cdf.
+name: "cdf"
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: probe-core-ms
+    version: 1.970.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: automation-infra
+    version: 1.888.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: mongo-db
+    version: 1.0.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: config-manager
+    version: 1.85.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: radcom-manager-ms
+    version: 1.394.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: version-data-importer
+    version: 1.33.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: shared-templates
+    version: 1.11.1
+    repository: file://../../radcom/shared-templates

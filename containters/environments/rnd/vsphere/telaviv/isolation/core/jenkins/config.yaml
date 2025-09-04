@@ -1,0 +1,15 @@
+application:
+  name: "jenkins"
+  namespace: "jenkins"
+source:
+  repoURL: "ssh://git@bitbucket-prod.radcom.co.il:7999/devopstools/helmcharts.git"
+  targetRevision: "master"
+  path: "helmcharts/external/jenkins"
+deploy: false
+cluster:
+  name: "isolation"
+  environment: "rnd"
+  provider: "vsphere"
+  region: "telaviv"
+  project: "core"
+  adress: "https://kubernetes.default.svc"

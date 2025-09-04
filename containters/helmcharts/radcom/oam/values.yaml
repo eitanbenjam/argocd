@@ -1,0 +1,36 @@
+# cs-oam:
+#   config-distribution-chart:
+#     services:
+#       configDistributionService:
+#         type: ClusterIP
+#         name: config-distribution-srv
+#         ports:
+#           - port: 80
+#             targetPort: 8085
+#             name: http-actuator-config-distribution-srv
+#   ggsn-distribution-ms-chart:
+#     services:
+#       ggsnDistributionMsActuatorService:
+#         ports:
+#         - name: http-actuator-ggsn-distribution-ms
+#           port: 80
+#           targetPort: 8085
+#   system-db-backup-chart:
+#     services:
+#       systemDbBackupActuatorService:
+#         type: ClusterIP
+#         name: system-db-backup-actuator-srv
+#         ports:
+#           - port: 80
+#             targetPort: 8085
+#             name: http-actuator-system-db-backup
+#   oam-agent-chart:
+#     enabled: false
+#   vault-unsealer-chart:
+#     enabled: true
+# shared-templates:
+#   add_blueprints: true
+#   save_blueprint: true
+#   wait_for_ace_orchestrator: false
+#   wait_for_ace_orchestrator_on_post: true
+#   wait_for_event_bus: true

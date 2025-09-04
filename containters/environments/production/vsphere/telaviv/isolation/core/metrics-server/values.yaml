@@ -1,0 +1,8 @@
+enabled: true
+# metrics-server:
+#   args:
+#     - --kubelet-insecure-tls
+#   apiService:
+#     insecureSkipTLSVerify: true
+#   hostNetwork:
+#     enabled: true

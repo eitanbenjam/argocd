@@ -1,0 +1,15 @@
+application:
+  name: "metrics-server"
+  namespace: "kube-system"
+source:
+  repoURL: "ssh://git@bitbucket-prod.radcom.co.il:7999/devopstools/helmcharts.git"
+  targetRevision: "master"
+  path: "helmcharts/external/metrics-server"
+deploy: false
+cluster:
+  name: "k0stools"
+  environment: "rnd"
+  provider: "vsphere"
+  region: "telaviv"
+  project: "core"
+  adress: "https://kubernetes.default.svc"

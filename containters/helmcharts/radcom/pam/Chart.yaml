@@ -1,0 +1,77 @@
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://692859913461.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v2
+description: A Helm chart for pam.
+name: "pam"
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: pam-ui-ms-chart
+    version: 1.417.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: data-ms-chart
+    version: 1.293.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: data-ms-manager-chart
+    version: 1.119.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: executer-ms-chart
+    version: 1.119.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: traces-ms-chart
+    version: 1.248.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: packet-trace-manager-chart
+    version: 1.76.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: packet-trace-executor-chart
+    version: 1.73.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: packet-trace-analyzer-chart
+    version: 1.100.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: online-db-chart
+    version: 1.66.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: minio-chart
+    version: 1.46.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: kafka-chart
+    version: 1.12.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: vertica-chart
+    version: 1.6.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: mongo-db-chart
+    version: 1.2.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: topology-manager-chart
+    version: 1.110.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: config-manager-chart
+    version: 1.61.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: gateway-ms-chart
+    version: 1.96.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: provisioning-ms-chart
+    version: 1.263.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: preferences-ms-chart
+    version: 1.214.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: scheme-ms-chart
+    version: 1.162.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: storage-ms-chart
+    version: 1.187.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: expressionbuilder-ms-chart
+    version: 1.141.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: automation-infra-chart
+    version: 1.846.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: version-data-importer-chart
+    version: 1.22.0
+    repository: *HELM_REGISTRY_PLACEHOLDER

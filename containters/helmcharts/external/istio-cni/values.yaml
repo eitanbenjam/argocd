@@ -1,0 +1,6 @@
+istio-cni:
+  cni:
+    logLevel: info
+    privileged: true
+    ambient:
+      enabled: true

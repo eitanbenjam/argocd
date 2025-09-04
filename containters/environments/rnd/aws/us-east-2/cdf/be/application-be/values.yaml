@@ -1,0 +1,9 @@
+SITE_ELASTIC_STORAGE_PLACEHOLDER: &SITE_ELASTIC_STORAGE_PLACEHOLDER gp3
+DOCKER_REGISTRY: &DOCKER_REGISTRY 692859913461.dkr.ecr.us-east-2.amazonaws.com
+NAMESPACE: &NAMESPACE production
+CLOUD: &CLOUD aws
+
+cs-application-be:
+  qinsight-db-chart:
+    persistence:
+      storageClass: *SITE_ELASTIC_STORAGE_PLACEHOLDER

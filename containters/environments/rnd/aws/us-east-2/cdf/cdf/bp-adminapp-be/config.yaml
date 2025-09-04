@@ -1,0 +1,26 @@
+application:
+  name: "adminapp-be"
+  namespace: "production"
+  ignoreDifferences:
+    - group: "apps"
+      kind: "StatefulSet"
+      jqPathExpressions:
+        - ".spec.volumeClaimTemplates[].apiVersion"
+        - ".spec.volumeClaimTemplates[].kind"
+    - group: cert-manager.io
+      kind: Certificate
+      jsonPointers:
+      - /spec/duration
+      - /spec/renewBefore
+source:
+  repoURL: "ssh://git@3.12.180.20/radcom/helmcharts.git"
+  targetRevision: "master"
+  path: "helmcharts/radcom/bp-adminapp-be"
+deploy: false
+cluster:
+  name: "cdf"
+  environment: "rnd"
+  provider: "aws"
+  region: "us-east-2"
+  project: "cdf"
+  adress: "https://kubernetes.default.svc"

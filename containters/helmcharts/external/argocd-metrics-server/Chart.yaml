@@ -1,0 +1,10 @@
+apiVersion: v2
+description: A Helm chart for Argocd metrics server extension
+name: argocd-metrics-server
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: argocd-metrics-server
+    version: 1.0.7
+    repository: https://charts.christianhuth.de

@@ -1,0 +1,10 @@
+apiVersion: v2
+description: A Helm chart for istio
+name: istio
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: istio
+    version: 1.24.3
+    repository: https://istio-release.storage.googleapis.com/charts

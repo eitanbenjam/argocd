@@ -1,0 +1,731 @@
+groups:
+  - orgId: 1
+    name: kubernetes
+    folder: Kubernetes Alerts
+    interval: 15m
+    rules:
+      - uid: 95d94e29-bf3d-49d6-8a0e-dbe9f867b13a
+        title: 'Namespaces older than 45d (isolation)'
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: prom
+            model:
+              editorMode: code
+              expr: '(time() - kube_namespace_created{k8s_cluster_name="isolation", namespace!~"metallb|vba|kube-system|kube-public|kube-node-lease|k0s-autopilot|jenkins|ingress-nginx|external-secrets|external-dns|default|collector|ansible|vpa"}) / 86400 > 45'
+              instant: true
+              intervalMs: 1000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+        noDataState: NoData
+        execErrState: Error
+        for: 1m
+        annotations:
+          summary: "🕒 {{ $labels.namespace }} | {{ $value | printf \"%.0f\" }}d old | Cluster: {{ $labels.k8s_cluster_name }}"
+          description: "🚨 Namespace {{ $labels.namespace }} on cluster '{{ $labels.k8s_cluster_name }}' is {{ $value | printf \"%.0f\" }} days old (older than 45 days).\n\n**Recommended actions:**\n1. Contact namespace owner to verify if still needed\n2. Check for running workloads: `kubectl get pods -n {{ $labels.namespace }}`\n3. Review namespace resources: `kubectl describe ns {{ $labels.namespace }}`\n4. Check namespace annotations: `kubectl get ns {{ $labels.namespace }} -o yaml`\n5. Consider cleanup if unused: `kubectl delete ns {{ $labels.namespace }}`"
+          dashboard_url: "https://grafana.radcom.co.il/dashboards"
+        labels:
+          severity: warning
+          team: infrastructure
+        isPaused: false
+      - uid: 123e4567-e89b-12d3-a456-426614174003
+        title: PersistentVolumeUsageHigh
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: prom
+            model:
+              editorMode: code
+              expr: 'kubelet_volume_stats_used_bytes / kubelet_volume_stats_capacity_bytes > 0.8'
+              instant: true
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: A
+        noDataState: OK
+        execErrState: Error
+        for: 15m
+        annotations:
+          summary: "⚠️ PersistentVolume usage high on {{ $labels.persistentvolumeclaim }} - {{ $value | humanizePercentage }}"
+          description: "PV {{ $labels.persistentvolumeclaim }} in namespace {{ $labels.namespace }} is {{ $value | humanizePercentage }} utilized (over 80%). This may impact application performance.\n\n**Recommended actions:**\n1. Check volume usage with `kubectl get pv`\n2. Review data that can be cleaned up \n3. Consider expanding the volume with `kubectl patch pvc {{ $labels.persistentvolumeclaim }} -n {{ $labels.namespace }} -p '{\"spec\":{\"resources\":{\"requests\":{\"storage\":\"<new-size>\"}}}}}'`"
+          dashboard_url: "https://grafana.radcom.co.il/dashboards"
+          runbook_url: "https://radcom-prod.atlassian.net/wiki/spaces/DEV/pages/275284001/Runbooks#persistentvolume-usage-high"
+        labels:
+          severity: warning
+          component: "storage"
+          namespace: "{{ $labels.namespace }}"
+          persistentvolumeclaim: "{{ $labels.persistentvolumeclaim }}"
+          team: "infrastructure"
+        isPaused: false
+      - uid: gx5pzu7qk3e3wd
+        title: KubernetesInsufficientResources
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: loki
+            model:
+              datasource:
+                type: loki
+                name: loki
+              editorMode: code
+              expr: 'sum(count_over_time({app="kube-scheduler"} |~ "Insufficient (cpu|memory|hugepages)" [10m])) by (cluster, pod) > 5'
+              queryType: range
+              refId: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+        noDataState: OK
+        execErrState: Error
+        for: 10m
+        annotations:
+          summary: "⚠️ Kubernetes resource shortage in {{ $labels.cluster }} on node {{ $labels.instance }} - {{ $value }} occurrences"
+          description: "Scheduler pod {{ $labels.pod }} reported insufficient resources (CPU, memory, or hugepages) {{ $value }} times in the last 10 minutes. This is preventing new pods from being scheduled.\n\n**Recommended actions:**\n1. Check node resource utilization with `kubectl top nodes`\n2. Review pending pods with `kubectl get pods --all-namespaces | grep Pending`\n3. Identify resource pressure with `kubectl describe node {{ $labels.instance }} | grep -A10 'Allocated resources'`\n4. Consider scaling up the cluster or reducing resource requests"
+          dashboard_url: "https://grafana.radcom.co.il/dashboards"
+          runbook_url: "https://radcom-prod.atlassian.net/wiki/spaces/DEV/pages/275284001/Runbooks#kubernetes-insufficient-resources"
+        labels:
+          severity: warning
+          component: "kubernetes-scheduler"
+          cluster: "{{ $labels.cluster }}"
+          instance: "{{ $labels.instance }}"
+          job: "{{ $labels.job }}"
+          service_name: "{{ $labels.service_name }}"
+          team: "infrastructure"
+        isPaused: true
+      - uid: ed8edcea-ad82-44f0-b6b6-e4b7b519c001
+        title: KubernetesNodeNotReady
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 21600
+              to: 0
+            datasourceUid: prom
+            model:
+              editorMode: code
+              exemplar: false
+              expr: 'kube_node_status_condition{job!="",condition="Ready",status="true"} == 0'
+              instant: true
+              intervalMs: 1000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+        noDataState: OK
+        execErrState: KeepLast
+        for: 60m
+        annotations:
+          summary: "🔴 Node {{ $labels.node }} is in NotReady state"
+          description: "Kubernetes node {{ $labels.node }} has been in NotReady state for more than 60 minutes.\n\n**Recommended actions:**\n1. Check node status with `kubectl describe node {{ $labels.node }}`\n2. Review kubelet logs with `journalctl -u kubelet`\n3. Check node resources with `kubectl top node {{ $labels.node }}`\n4. Verify network connectivity to the node"
+          dashboard_url: "https://grafana.radcom.co.il/dashboards"
+          runbook_url: "https://radcom-prod.atlassian.net/wiki/spaces/DEV/pages/275284001/Runbooks#kubernetes-node-not-ready"
+        labels:
+          severity: warning
+          component: "node"
+          node: "{{ $labels.node }}"
+          team: "infrastructure"
+        isPaused: false
+      - uid: ed8edcea-ad82-44f0-b6b6-e4b7b5193003
+        title: MemoryRequestsTooHigh
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 21600
+              to: 0
+            datasourceUid: prom
+            model:
+              editorMode: code
+              exemplar: false
+              expr: 'sum by(cluster)(kube_pod_container_resource_requests{resource="memory"})/sum by(cluster)(kube_node_status_capacity{resource="memory"}) > 0.80'
+              instant: true
+              intervalMs: 1000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+        noDataState: OK
+        execErrState: KeepLast
+        for: 60m
+        annotations:
+          summary: "⚠️ High memory requests in cluster {{ $labels.cluster }} - {{ $value | humanizePercentage }}"
+          description: "Memory requests exceed 80% of cluster capacity in cluster {{ $labels.cluster }}. Current usage: {{ $value | humanizePercentage }}. This may prevent scheduling of new pods.\n\n**Recommended actions:**\n1. Check pod resource requests with `kubectl top pods --all-namespaces`\n2. Review resource requests vs limits\n3. Consider scaling up the cluster or optimizing workload resource requests\n4. Identify pods with excessive memory requests"
+          dashboard_url: "https://grafana.radcom.co.il/dashboards"
+          runbook_url: "https://radcom-prod.atlassian.net/wiki/spaces/DEV/pages/275284001/Runbooks#memoryrequeststoohigh"
+        labels:
+          severity: warning
+          component: "memory"
+          cluster: "{{ $labels.cluster }}"
+          team: "infrastructure"
+        isPaused: false
+  - orgId: 1
+    name: node-exporter
+    folder: Node Exporter Alerts
+    interval: 5m
+    rules:
+      - uid: ed8edcea-ad82-44f0-b6c6-e4b7b5193002
+        title: HostOutOfDiskSpace
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 21600
+              to: 0
+            datasourceUid: prom
+            model:
+              editorMode: code
+              exemplar: false
+              expr: '100 - ((node_filesystem_avail_bytes * 100) / node_filesystem_size_bytes) > 90'
+              instant: true
+              intervalMs: 1000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+        noDataState: OK
+        execErrState: KeepLast
+        for: 10m
+        annotations:
+          summary: "💾 Low disk space on host {{ $labels.instance }} - {{ $value }}% used"
+          description: "Filesystem {{ $labels.mountpoint }} on {{ $labels.instance }} has less than 10% free space remaining. Current usage: {{ $value }}%.\n\n**Recommended actions:**\n1. Check disk usage with `df -h {{ $labels.mountpoint }}`\n2. Find large files with `du -sh {{ $labels.mountpoint }}/* | sort -hr | head -20`\n3. Clean up logs, temporary files, or old backups\n4. Consider expanding the filesystem or adding storage"
+          dashboard_url: "https://grafana.radcom.co.il/dashboards"
+          runbook_url: "https://radcom-prod.atlassian.net/wiki/spaces/DEV/pages/275284001/Runbooks#host-out-of-disk-space"
+        labels:
+          severity: warning
+          component: "storage"
+          instance: "{{ $labels.instance }}"
+          mountpoint: "{{ $labels.mountpoint }}"
+          team: "infrastructure"
+        isPaused: false
+      - uid: ed8edcea-ad82-44f0-b6c6-e4b7b5193003
+        title: HostUsedMemoryTooHigh
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 21600
+              to: 0
+            datasourceUid: prom
+            model:
+              editorMode: code
+              exemplar: false
+              expr: '1-(node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) > 0.80'
+              instant: true
+              intervalMs: 1000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+        noDataState: OK
+        execErrState: KeepLast
+        for: 60m
+        annotations:
+          summary: "🧠 High memory usage on host {{ $labels.instance }} - {{ $value | humanizePercentage }}"
+          description: "Host {{ $labels.instance }} memory usage is above 80% for more than 60 minutes. Current usage: {{ $value | humanizePercentage }}. This may impact system stability.\n\n**Recommended actions:**\n1. Check memory usage with `free -h` and `top -o %MEM`\n2. Identify memory-intensive processes with `ps aux --sort=-%mem | head -20`\n3. Check for memory leaks in applications\n4. Consider adding more RAM or optimizing applications"
+          dashboard_url: "https://grafana.radcom.co.il/dashboards"
+          runbook_url: "https://radcom-prod.atlassian.net/wiki/spaces/DEV/pages/275284001/Runbooks#host-used-memory-too-high"
+        labels:
+          severity: warning
+          component: "memory"
+          instance: "{{ $labels.instance }}"
+          team: "infrastructure"
+        isPaused: false
+  - orgId: 1
+    name: openstack
+    folder: Openstack Alerts
+    interval: 5m
+    rules:
+      - uid: ee2g1tlmghs00e
+        title: Nova agent status
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: prom
+            model:
+              datasource:
+                  type: prometheus
+                  uid: prom
+              disableTextWrap: false
+              editorMode: builder
+              exemplar: true
+              expr: last_over_time(openstack_nova_agent_state{adminState="enabled", cluster_name=~"(sardina-1|sardina-2|sardina-3|sardina-4)"}[15m])
+              format: table
+              fullMetaSearch: false
+              includeNullMetadata: true
+              instant: true
+              interval: ""
+              intervalFactor: 1
+              intervalMs: 15000
+              legendFormat: ""
+              maxDataPoints: 43200
+              range: false
+              refId: A
+              useBackend: false
+          - refId: C
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                  - evaluator:
+                      params:
+                          - 1
+                      type: lt
+                    operator:
+                      type: and
+                    query:
+                      params:
+                          - C
+                    reducer:
+                      params: []
+                      type: last
+                    type: query
+              datasource:
+                  type: __expr__
+                  uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+        dashboardUid: YZCsB1Qmy
+        panelId: 16
+        noDataState: OK
+        execErrState: Error
+        for: 5m
+        annotations:
+          __dashboardUid__: YZCsB1Qmy
+          __panelId__: "16"
+          summary: "🔴 Nova agent down - [{{ $labels.cluster_name }}] - {{ $labels.service }}"
+          description: "Nova agent is down on cluster {{ $labels.cluster_name }}, host {{ $labels.hostname }}, service {{ $labels.service }}.\n\n**Recommended actions:**\n1. SSH to the host with `ssh {{ $labels.hostname }}`\n2. Check service status with `systemctl status openstack-nova-{{ $labels.service }}`\n3. View logs with `journalctl -u openstack-nova-{{ $labels.service }} -n 100`\n4. Restart service if needed with `systemctl restart openstack-nova-{{ $labels.service }}`"
+          dashboard_url: "https://grafana.radcom.co.il/dashboards"
+          runbook_url: "https://radcom-prod.atlassian.net/wiki/spaces/DEV/pages/275284001/Runbooks#nova-agent-status"
+        labels:
+          severity: critical
+          component: "openstack-nova"
+          cluster: "{{ $labels.cluster_name }}"
+          hostname: "{{ $labels.hostname }}"
+          service: "{{ $labels.service }}"
+          team: "cloud-ops"
+        isPaused: false
+      - uid: fe2g23488ms5cd
+        title: "Neutron Agent Down"
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: prom
+            model:
+              datasource:
+                  type: prometheus
+                  uid: prom
+              disableTextWrap: false
+              editorMode: builder
+              exemplar: true
+              expr: last_over_time(openstack_neutron_agent_state{cluster_name=~"(sardina-1|sardina-2|sardina-3|sardina-4)"}[15m])
+              format: table
+              fullMetaSearch: false
+              includeNullMetadata: true
+              instant: true
+              interval: ""
+              intervalFactor: 1
+              intervalMs: 15000
+              legendFormat: ""
+              maxDataPoints: 43200
+              range: false
+              refId: A
+              useBackend: false
+          - refId: C
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                  - evaluator:
+                      params:
+                          - 1
+                      type: lt
+                    operator:
+                      type: and
+                    query:
+                      params:
+                          - C
+                    reducer:
+                      params: []
+                      type: last
+                    type: query
+              datasource:
+                  type: __expr__
+                  uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+        dashboardUid: YZCsB1Qmy
+        panelId: 25
+        noDataState: OK
+        execErrState: Error
+        for: 5m
+        annotations:
+          __dashboardUid__: YZCsB1Qmy
+          __panelId__: "25"
+          summary: "🔴 Neutron agent down - [{{ $labels.cluster_name }}] - {{ $labels.service }}"
+          description: "Neutron agent {{ $labels.service }} is down on cluster {{ $labels.cluster_name }}, host {{ $labels.hostname }}.\n\n**Recommended actions:**\n1. SSH to the host with `ssh {{ $labels.hostname }}`\n2. Check service status with `systemctl status neutron-{{ $labels.service }}`\n3. View logs with `less /var/log/neutron/{{ $labels.service }}.log`\n4. Check neutron agent list with `source ~/openrc && neutron agent-list`\n5. Restart service if needed with `systemctl restart neutron-{{ $labels.service }}`"
+          dashboard_url: "https://grafana.radcom.co.il/dashboards"
+          runbook_url: "https://radcom-prod.atlassian.net/wiki/spaces/DEV/pages/275284001/Runbooks#neutron-agent-down"
+        labels:
+          severity: critical
+          component: "openstack-neutron"
+          cluster: "{{ $labels.cluster_name }}"
+          hostname: "{{ $labels.hostname }}"
+          service: "{{ $labels.service }}"
+          team: "cloud-ops"
+        isPaused: false
+      - uid: fdvkpubqtibk0d
+        title: Cinder agents down
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 1800
+              to: 0
+            datasourceUid: prom
+            model:
+              datasource:
+                  type: prometheus
+                  uid: prom
+              disableTextWrap: false
+              editorMode: builder
+              expr: count(last_over_time(openstack_cinder_agent_state{adminState="enabled", cluster_name=~"(sardina-1|sardina-2|sardina-3|sardina-4)"}[1h])) - sum(last_over_time(openstack_cinder_agent_state{adminState="enabled", cluster_name=~"(sardina-1|sardina-2|sardina-3|sardina-4)"}[1h]))
+              format: time_series
+              fullMetaSearch: false
+              includeNullMetadata: true
+              instant: true
+              interval: ""
+              intervalFactor: 1
+              intervalMs: 20000
+              maxDataPoints: 100
+              range: false
+              refId: A
+              useBackend: false
+          - refId: B
+            relativeTimeRange:
+              from: 1800
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                  - evaluator:
+                      params: []
+                      type: gt
+                    operator:
+                      type: and
+                    query:
+                      params:
+                          - B
+                    reducer:
+                      params: []
+                      type: last
+                    type: query
+              datasource:
+                  type: __expr__
+                  uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              reducer: last
+              refId: B
+              type: reduce
+          - refId: C
+            relativeTimeRange:
+              from: 1800
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                  - evaluator:
+                      params:
+                          - 0
+                      type: gt
+                    operator:
+                      type: and
+                    query:
+                      params:
+                          - C
+                    reducer:
+                      params: []
+                      type: last
+                    type: query
+              datasource:
+                  type: __expr__
+                  uid: __expr__
+              expression: B
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+        dashboardUid: YZCsB1Qmy
+        panelId: 18
+        noDataState: OK
+        execErrState: Error
+        for: 5m
+        annotations:
+          __dashboardUid__: YZCsB1Qmy
+          __panelId__: "18"
+          summary: "🔴 Cinder agents down - [Sardina clusters] - {{ $value }} agents down"
+          description: "{{ $value }} Cinder storage agents are down in Sardina clusters. This may affect storage operations and volume provisioning.\n\n**Recommended actions:**\n1. Check Cinder services with `openstack volume service list --service cinder-volume`\n2. View logs with `less /var/log/cinder/volume.log` on affected nodes\n3. Check storage backend connectivity\n4. Restart services with `systemctl restart openstack-cinder-volume`"
+          dashboard_url: "https://grafana.radcom.co.il/dashboards"
+          runbook_url: "https://radcom-prod.atlassian.net/wiki/spaces/DEV/pages/275284001/Runbooks#cinder-agents-down"
+        labels:
+          severity: critical
+          component: "openstack-cinder"
+          team: "cloud-ops"
+        isPaused: false
+      - uid: ae2fyej5yfldse
+        title: Ceph OSD down on Sardina clouds
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: prom
+            model:
+              datasource:
+                  type: prometheus
+                  uid: prom
+              disableTextWrap: false
+              editorMode: code
+              expr: count by(cluster_name, ceph_daemon) (ceph_osd_up == 0)
+              format: table
+              fullMetaSearch: false
+              includeNullMetadata: true
+              instant: true
+              interval: ""
+              intervalFactor: 1
+              intervalMs: 15000
+              legendFormat: ""
+              maxDataPoints: 43200
+              range: false
+              refId: A
+              useBackend: false
+          - refId: C
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                  - evaluator:
+                      params:
+                          - 0
+                      type: gt
+                    operator:
+                      type: and
+                    query:
+                      params:
+                          - C
+                    reducer:
+                      params: []
+                      type: last
+                    type: query
+              datasource:
+                  type: __expr__
+                  uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+        dashboardUid: tbO9LAiZK
+        panelId: 41
+        noDataState: OK
+        execErrState: Error
+        for: 5m
+        annotations:
+          __dashboardUid__: tbO9LAiZK
+          __panelId__: "41"
+          summary: "🔴 Ceph OSD down - [{{ $labels.cluster_name }}] - {{ $labels.ceph_daemon }}"
+          description: "Ceph OSD {{ $labels.ceph_daemon }} is down in cluster {{ $labels.cluster_name }}. This may affect storage replication and availability.\n\n**Recommended actions:**\n1. Check OSD status with `ceph osd status`\n2. Verify host reachability with `ping {{ $labels.hostname }}`\n3. View service logs with `journalctl -u ceph-osd@{{ $labels.osd_id }}`\n4. Attempt to restart with `systemctl restart ceph-osd@{{ $labels.osd_id }}`"
+          dashboard_url: "https://grafana.radcom.co.il/dashboards"
+          runbook_url: "https://radcom-prod.atlassian.net/wiki/spaces/DEV/pages/275284001/Runbooks#ceph-osd-down-on-sardina-clouds"
+        labels:
+          severity: critical
+          component: "ceph-storage"
+          cluster: "{{ $labels.cluster_name }}"
+          ceph_daemon: "{{ $labels.ceph_daemon }}"
+          team: "storage-ops"
+        isPaused: false
+      - uid: ee2fojneyp1xcf
+        title: Ceph capacity critical
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 1800
+              to: 0
+            datasourceUid: prom
+            model:
+              datasource:
+                  type: prometheus
+                  uid: prom
+              expr: (ceph_cluster_total_bytes{}-ceph_cluster_total_used_bytes{})/ceph_cluster_total_bytes{}
+              format: time_series
+              instant: true
+              interval: 30m
+              intervalFactor: 1
+              intervalMs: 300000
+              legendFormat: ""
+              maxDataPoints: 100
+              refId: A
+              step: 300
+          - refId: B
+            relativeTimeRange:
+              from: 1800
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                  - evaluator:
+                      params: []
+                      type: gt
+                    operator:
+                      type: and
+                    query:
+                      params:
+                          - B
+                    reducer:
+                      params: []
+                      type: last
+                    type: query
+              datasource:
+                  type: __expr__
+                  uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              reducer: last
+              refId: B
+              type: reduce
+          - refId: C
+            relativeTimeRange:
+              from: 1800
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                  - evaluator:
+                      params:
+                          - 0.15
+                      type: lt
+                    operator:
+                      type: and
+                    query:
+                      params:
+                          - C
+                    reducer:
+                      params: []
+                      type: last
+                    type: query
+              datasource:
+                  type: __expr__
+                  uid: __expr__
+              expression: B
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+        dashboardUid: tbO9LAiZK
+        panelId: 7
+        noDataState: OK
+        execErrState: Error
+        for: 5m
+        annotations:
+          __dashboardUid__: tbO9LAiZK
+          __panelId__: "7"
+          summary: "⚠️ Ceph storage critical - [{{ $labels.cluster_name }}] - {{ $value | humanizePercentage }} free"
+          description: "Ceph cluster {{ $labels.cluster_name }} has less than 15% free space remaining. Current free space: {{ $value | humanizePercentage }}.\n\n**Recommended actions:**\n1. Check space usage with `ceph df`\n2. Find unused volumes with `openstack volume list --status available --long`\n3. Clean up snapshots and unused volumes\n4. Plan for storage capacity expansion"
+          dashboard_url: "https://grafana.radcom.co.il/dashboards"
+          runbook_url: "https://radcom-prod.atlassian.net/wiki/spaces/DEV/pages/275284001/Runbooks#ceph-capacity-critical"
+        labels:
+          severity: critical
+          component: "ceph-storage"
+          cluster: "{{ $labels.cluster_name }}"
+          team: "storage-ops"
+        isPaused: false
+  - orgId: 1
+    name: openstack-services
+    folder: "OpenStack Service Alerts"
+    interval: 5m
+    rules:
+      - uid: 123e4567-e89b-12d3-a456-426614174004
+        title: RabbitMQQueueDepth
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prom
+            model:
+              editorMode: code
+              expr: 'rabbitmq_queue_messages_ready > 1000'
+              instant: true
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: A
+        noDataState: OK
+        execErrState: Error
+        for: 5m
+        annotations:
+          summary: "⚠️ RabbitMQ queue depth high - {{ $value }} messages"
+          description: "RabbitMQ queue {{ $labels.queue }} has {{ $value }} messages waiting to be processed. This indicates consumers are lagging behind producers.\n\n**Recommended actions:**\n1. Check consumer service status\n2. Verify RabbitMQ connection settings\n3. Monitor queue with `rabbitmqctl list_queues`\n4. Consider scaling consumer services"
+          dashboard_url: "https://grafana.radcom.co.il/dashboards"
+          runbook_url: "https://radcom-prod.atlassian.net/wiki/spaces/DEV/pages/275284001/Runbooks#rabbitmq-queue-depth"
+        labels:
+          severity: warning
+          component: "rabbitmq"
+          queue: "{{ $labels.queue }}"
+          team: "cloud-ops"
+        isPaused: true
+      # - uid: 123e4567-e89b-12d3-a456-426614174005
+      #   title: DBReplicationLag
+      #   condition: A
+      #   data:
+      #     - refId: A
+      #       relativeTimeRange:
+      #         from: 300
+      #         to: 0
+      #       datasourceUid: prom
+      #       model:
+      #         editorMode: code
+      #         expr: 'max(openstack_db_replication_lag_seconds) > 5'
+      #         instant: true
+      #         intervalMs: 1000
+      #         maxDataPoints: 43200
+      #         refId: A
+      #   for: 5m
+      #   annotations:
+      #     summary: "⚠️ OpenStack DB replication lag high"
+      #     description: "Database replication lag exceeds 5 seconds. Investigate DB performance."
+      #   labels:
+      #     severity: warning
+      #     component: "database"
+      #     team: "cloud-ops"
+      #   isPaused: false

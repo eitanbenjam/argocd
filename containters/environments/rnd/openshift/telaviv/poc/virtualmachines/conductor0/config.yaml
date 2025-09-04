@@ -1,0 +1,25 @@
+application:
+  ignoreDifferences:
+    - group: 'kubevirt.io'
+      kind: VirtualMachine
+      jsonPointers:
+      - /spec
+    - group: ''
+      kind: Secret
+      jsonPointers:
+      - /spec
+  name: "conductor0"
+  componentName: Conductor
+  componentIndex: 0
+  namespace: "default"
+source:
+  targetRevision: "master"
+  path: "helmcharts/virtualmachines/conductor"
+deploy: false
+cluster:
+  name: "poc"
+  environment: "rnd"
+  provider: "openshift"
+  region: "telaviv"
+  project: "virtualmachines"
+  adress: "https://kubernetes.default.svc"

@@ -1,0 +1,14 @@
+apiVersion: v2
+description: Official Sonarqube helm chart
+name: sonarqube
+version: 1.11.0
+appVersion: 1.11.0
+kubeVersion: ">=1.16.0-0"
+dependencies:
+  - name: sonarqube
+    repository: https://SonarSource.github.io/helm-chart-sonarqube
+    version: 2025.4.2
+  - name: library-chart
+    version: 1.11.1
+    repository: file://../library-chart
+    alias: library-chart

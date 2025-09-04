@@ -1,0 +1,32 @@
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://692859913461.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v2
+appVersion: 1.11.1
+description: A Helm chart for stream-analytics.
+kubeVersion: '>=1.23.0-0'
+name: stream-analytics
+version: 14.01.04
+dependencies:
+- name: cs-adminapp-be
+  repository: *HELM_REGISTRY_PLACEHOLDER
+  version: 1.432.0
+- name: cs-data-lake
+  repository: *HELM_REGISTRY_PLACEHOLDER
+  version: 1.37.0
+- name: cs-event-bus
+  repository: *HELM_REGISTRY_PLACEHOLDER
+  version: 1.70.0
+- name: cs-monitoring-tools
+  repository: *HELM_REGISTRY_PLACEHOLDER
+  version: 1.410.0
+- name: cs-oam
+  repository: *HELM_REGISTRY_PLACEHOLDER
+  version: 1.1591.0
+- name: cs-stream-analytics
+  repository: *HELM_REGISTRY_PLACEHOLDER
+  version: 1.83.0
+- name: cs-qa-automation
+  repository: *HELM_REGISTRY_PLACEHOLDER
+  version: 1.768.0
+- name: cs-probe
+  repository: *HELM_REGISTRY_PLACEHOLDER
+  version: 1.883.0

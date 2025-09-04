@@ -1,0 +1,35 @@
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://692859913461.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v2
+description: A Helm chart for processing.
+name: "processing"
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: cdr-processing
+    version: 1.108.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: radcom-manager-ms
+    version: 2.0.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: config-manager
+    version: 3.0.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: kafka
+    version: feature/1.0.1
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: database-loader
+    version: 2.0.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: vertica
+    version: 3.0.1
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: mongo-db
+    version: 3.0.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: automation-infra
+    version: 3.0.2
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: version-data-importer
+    version: 3.0.0
+    repository: *HELM_REGISTRY_PLACEHOLDER

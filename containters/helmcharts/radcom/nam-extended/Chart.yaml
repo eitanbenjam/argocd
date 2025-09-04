@@ -1,0 +1,92 @@
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://692859913461.dkr.ecr.us-east-2.amazonaws.com
+apiVersion: v2
+description: A Helm chart for nam-extended.
+name: "nam-extended"
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: radcom-manager-ms
+    version: 1.394.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: storage-ms
+    version: 1.219.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: preferences-ms
+    version: 1.256.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: scheme-ms
+    version: 1.214.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: expressionbuilder-ms
+    version: 1.171.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: enrichments-ms
+    version: 1.181.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: traces-ms
+    version: 1.284.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: sessions-data-ms
+    version: 1.303.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: provisioning-ms
+    version: 1.315.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: dashboard-ms
+    version: 1.229.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: template-ms
+    version: 1.472.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: metrics-ms
+    version: 1.630.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: export-ms
+    version: 1.100.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: sam-ui-ms
+    version: 1.734.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: dashboard-ui-ms
+    version: 1.608.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: gateway-ms
+    version: 1.121.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: config-manager
+    version: 1.85.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: topology-manager
+    version: 1.158.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: trace-executor-ms
+    version: 1.382.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: trace-manager-ms
+    version: 1.245.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: query-executor-ms
+    version: 1.345.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: online-db
+    version: 1.83.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: minio
+    version: 1.62.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: kafka
+    version: 1.29.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: vertica
+    version: 1.20.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: mongo-db
+    version: 1.0.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: automation-infra
+    version: 1.888.0
+    repository: *HELM_REGISTRY_PLACEHOLDER
+  - name: version-data-importer
+    version: 1.33.0
+    repository: *HELM_REGISTRY_PLACEHOLDER

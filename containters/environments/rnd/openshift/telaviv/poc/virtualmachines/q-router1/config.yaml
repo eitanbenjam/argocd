@@ -1,0 +1,25 @@
+application:
+  ignoreDifferences:
+    - group: 'kubevirt.io'
+      kind: VirtualMachine
+      jsonPointers:
+      - /spec
+    - group: ''
+      kind: Secret
+      jsonPointers:
+      - /spec
+  name: "qrouter1"
+  componentName: QRouter
+  componentIndex: 1
+  namespace: "default"
+source:
+  targetRevision: "master"
+  path: "helmcharts/virtualmachines/q-router"
+deploy: false
+cluster:
+  name: "poc"
+  environment: "rnd"
+  provider: "openshift"
+  region: "telaviv"
+  project: "virtualmachines"
+  adress: "https://kubernetes.default.svc"

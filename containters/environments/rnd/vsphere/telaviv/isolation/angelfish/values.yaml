@@ -1,0 +1,23 @@
+global:
+  vaultDataServicePath: "http://secretsms-srv"
+  vaultPathPrefix: "v1/radcom"
+  storageClass: local-storage
+  objectStorageClass: local-storage
+  eventbusStorageClass: local-storage
+  healthStorageClass: local-storage
+  digDnsCommand: "dig @%s %s.project-angelfish.svc.cluster.local +short"
+  apigw_vip: configmanager-srv
+  analyst_vip: configmanager-srv
+  conductor_vip: topology-manager-srv
+  vaultConfig:   # for mng pods
+    vaultDataServicePath: "http://secretsms-srv"
+    vaultPathPrefix: "v1/radcom"
+  site: SiteA-national
+  isIsolation: true
+  kafka:
+    epName: kafka
+  rollme: true
+  mongoUserName: root
+  mongoPassword: 2108a185c5b4969394c9cc18308c72a9
+  mongoPort: 27017
+  mongoDNSServiceName: mongodb

@@ -1,0 +1,64 @@
+{{- if .Values.update_topology }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-update-topology"
+  labels:
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    #"helm.sh/hook": post-install
+    #"helm.sh/hook-weight": "-2"
+    #"helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      name: "{{ .Release.Name }}-update-topology"
+      labels:
+        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: {{ .Release.Name }}-update-topology
+        image: "{{ .Values.global.docker_registry }}/ace-cd:{{ .Values.ace_cd_tag }}"
+        imagePullPolicy: Always
+        workingDir: /external_orch/ps_tools
+        command: ["bash", "argocd/update_topology.sh"]
+        # args:
+        #   - "-con"
+        #   - "{{ .Values.global.conductorVip }}"
+        #   - "-srp"
+        #   - "{{ .Values.global.srpIp }}"
+        #   - "-env"
+        #   - "{{ .Values.global.envId }}"
+        #   - "--force"
+        env:
+        - name: CONDUCTOR_VIP_PLACEHOLDER
+          value: "{{ .Values.global.conductorVip }}"
+        - name: RADCOM_CONDUCTOR_IP
+          value: "{{ .Values.global.conductorVip }}"
+        - name: SRP_IP
+          value: "{{ .Values.global.srpIp }}"
+        - name: ENV_ID
+          value: "{{ .Values.global.envId }}"
+        - name: RADCOM_DEPLOYMENTNAME
+          value: {{ .Release.Name }}
+        - name: RADCOM_VERSION
+          value: "{{ .Values.global.maveriq_version }}"
+        - name: RADCOM_SITE
+          value: "{{ .Values.global.site }}"
+        - name: RADCOM_CRONJOB_NAME
+          value: "{{ .Values.global.update_topology_cronjob_name }}"
+        - name: RADCOM_MACHINE_TYPE
+          value: "{{ .Values.global.site_type }}"
+        - name: RADCOM_SITE_TYPE
+          value: "{{ .Values.global.site_type }}"
+        - name: role
+          value: "{{ .Values.global.site_type }}"
+        - name: RADCOM_CLUSTER_NAME
+          value: "{{ .Values.global.be_cluster_name }}"
+{{ end }}

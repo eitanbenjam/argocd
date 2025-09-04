@@ -1,0 +1,10 @@
+apiVersion: v2
+description: A Helm chart for Radcom Nginx ingress.
+name: radcom-ingress-nginx-chart
+version: 1.11.1
+appVersion: 1.11.1
+kubeVersion: ">=1.23.0-0"
+dependencies:
+  - name: radcom-ingress-nginx-chart
+    version: 1.17.0
+    repository: https://nexus3-prod.radcom.co.il/repository/charts

@@ -1,0 +1,24 @@
+application:
+  ignoreDifferences:
+    - group: 'kubevirt.io'
+      kind: VirtualMachine
+      jsonPointers:
+      - /spec
+    - group: ''
+      kind: Secret
+      jsonPointers:
+      - /spec
+  name: "kafka2"
+  namespace: "default"
+  componentName: Kafka
+source:
+  targetRevision: "master"
+  path: "helmcharts/virtualmachines/Kafka"
+deploy: false
+cluster:
+  name: "poc"
+  environment: "rnd"
+  provider: "openshift"
+  region: "telaviv"
+  project: "virtualmachines"
+  adress: "https://kubernetes.default.svc"

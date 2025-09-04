@@ -1,0 +1,50 @@
+CONDUCTOR_VIP_PLACEHOLDER: &CONDUCTOR_VIP_PLACEHOLDER internal-argocd14RadcomBEALB-783104905.us-east-2.elb.amazonaws.com
+DOCKER_REGISTRY: &DOCKER_REGISTRY 692859913461.dkr.ecr.us-east-2.amazonaws.com
+MONGO_IP: &MONGO_IP "10.8.33.203"
+QROUTER_IP: &QROUTER_IP "10.8.33.247"
+SITE_PLACEHOLDER: &SITE_PLACEHOLDER jerus
+SRP_IP: &SRP_IP "10.8.33.135"
+VERSION: &VERSION 14.01.00.000.04
+NAMESPACE: &NAMESPACE production
+CLOUD: &CLOUD aws
+ENV_ID: &ENV_ID argocd14
+
+shared-templates:
+  ace_cd_tag: argocd
+  update_topology: false
+  create_cluster_role: true
+
+# RBAC configuration - enable cluster-wide permissions
+rbac:
+  create: true
+  useClusterRole: true
+  
+global:
+  conductorVip: *CONDUCTOR_VIP_PLACEHOLDER
+  srpIp: *SRP_IP
+  envId: *ENV_ID
+  docker_registry: *DOCKER_REGISTRY
+  maveriq_version: *VERSION
+  site: *SITE_PLACEHOLDER
+  namespace: *NAMESPACE
+
+ace-cd:
+  ace-cd-chart:
+    cronjob_name: service-access-config
+    repository: *DOCKER_REGISTRY
+    conductor_ip: *CONDUCTOR_VIP_PLACEHOLDER
+    sites: *SITE_PLACEHOLDER
+    srp_ip: *SRP_IP
+    cloud:
+      aws_extra_params:
+        arn_role: "arn:aws:iam::692859913461:role/role-argocd14-ace-cd"
+        service_account_name: cicd-cluster-eks-role
+      service_account_name: cicd-cluster-eks-role
+      type: *CLOUD
+    env_id: *ENV_ID
+    namespace: *NAMESPACE
+    pullPolicy: Always
+    replicas: 1
+    site_type: national
+    source_control: configmap
+    storage_class: gp3

@@ -1,0 +1,2587 @@
+jenkins:
+  controller:
+    existingSecret: jenkins-credentials
+    csrfdefaultCrumbIssuer:
+      enabled: true
+    JCasC:
+      authorizationstrategy: |-
+        jenkins:
+          authorizationStrategy:
+            projectMatrix:
+              entries:
+              - "GROUP:Agent/Build:DevOps"
+              - "GROUP:Agent/Build:devops_admin"
+              - "GROUP:Agent/Build:swcompil"
+              - "GROUP:Agent/Configure:devops_admin"
+              - "GROUP:Agent/Connect:DevOps"
+              - "GROUP:Agent/Connect:devops_admin"
+              - "GROUP:Agent/Connect:swcompil"
+              - "GROUP:Agent/Create:devops_admin"
+              - "GROUP:Agent/Create:swcompil"
+              - "GROUP:Agent/Delete:devops_admin"
+              - "GROUP:Agent/Delete:swcompil"
+              - "GROUP:Agent/Disconnect:DevOps"
+              - "GROUP:Agent/Disconnect:devops_admin"
+              - "GROUP:Agent/Disconnect:swcompil"
+              - "GROUP:Artifactory/Promote:DevOps"
+              - "GROUP:Artifactory/Promote:devops_admin"
+              - "GROUP:Artifactory/Promote:swcompil"
+              - "GROUP:Artifactory/Release:DevOps"
+              - "GROUP:Artifactory/Release:devops_admin"
+              - "GROUP:Artifactory/Release:swcompil"
+              - "GROUP:Credentials/Create:DevOps"
+              - "GROUP:Credentials/Create:devops_admin"
+              - "GROUP:Credentials/Create:swcompil"
+              - "GROUP:Credentials/Delete:DevOps"
+              - "GROUP:Credentials/Delete:devops_admin"
+              - "GROUP:Credentials/Delete:swcompil"
+              - "GROUP:Credentials/ManageDomains:DevOps"
+              - "GROUP:Credentials/ManageDomains:devops_admin"
+              - "GROUP:Credentials/ManageDomains:swcompil"
+              - "GROUP:Credentials/Update:DevOps"
+              - "GROUP:Credentials/Update:devops_admin"
+              - "GROUP:Credentials/Update:swcompil"
+              - "GROUP:Credentials/View:DevOps"
+              - "GROUP:Credentials/View:devops_admin"
+              - "GROUP:Credentials/View:swcompil"
+              - "GROUP:Job/Build:DevOps"
+              - "GROUP:Job/Build:authenticated"
+              - "GROUP:Job/Build:devops_admin"
+              - "GROUP:Job/Build:swcompil"
+              - "GROUP:Job/Cancel:DevOps"
+              - "GROUP:Job/Cancel:authenticated"
+              - "GROUP:Job/Cancel:devops_admin"
+              - "GROUP:Job/Cancel:swcompil"
+              - "GROUP:Job/Configure:DevOps"
+              - "GROUP:Job/Configure:devops_admin"
+              - "GROUP:Job/Create:DevOps"
+              - "GROUP:Job/Create:devops_admin"
+              - "GROUP:Job/Delete:devops_admin"
+              - "GROUP:Job/Discover:DevOps"
+              - "GROUP:Job/Discover:authenticated"
+              - "GROUP:Job/Discover:devops_admin"
+              - "GROUP:Job/Discover:swcompil"
+              - "GROUP:Job/Move:DevOps"
+              - "GROUP:Job/Move:devops_admin"
+              - "GROUP:Job/Read:DevOps"
+              - "GROUP:Job/Read:authenticated"
+              - "GROUP:Job/Read:devops_admin"
+              - "GROUP:Job/Read:swcompil"
+              - "GROUP:Job/ViewStatus:DevOps"
+              - "GROUP:Job/ViewStatus:authenticated"
+              - "GROUP:Job/ViewStatus:devops_admin"
+              - "GROUP:Job/ViewStatus:swcompil"
+              - "GROUP:Job/Workspace:DevOps"
+              - "GROUP:Job/Workspace:authenticated"
+              - "GROUP:Job/Workspace:devops_admin"
+              - "GROUP:Job/Workspace:swcompil"
+              - "GROUP:Lockable Resources/Reserve:DevOps"
+              - "GROUP:Lockable Resources/Reserve:devops_admin"
+              - "GROUP:Lockable Resources/Reserve:swcompil"
+              - "GROUP:Lockable Resources/Unlock:DevOps"
+              - "GROUP:Lockable Resources/Unlock:devops_admin"
+              - "GROUP:Lockable Resources/Unlock:swcompil"
+              - "GROUP:Metrics/HealthCheck:DevOps"
+              - "GROUP:Metrics/HealthCheck:devops_admin"
+              - "GROUP:Metrics/HealthCheck:swcompil"
+              - "GROUP:Metrics/ThreadDump:DevOps"
+              - "GROUP:Metrics/ThreadDump:devops_admin"
+              - "GROUP:Metrics/ThreadDump:swcompil"
+              - "GROUP:Metrics/View:DevOps"
+              - "GROUP:Metrics/View:devops_admin"
+              - "GROUP:Metrics/View:swcompil"
+              - "GROUP:Overall/Administer:DevOps"
+              - "GROUP:Overall/Administer:admin"
+              - "GROUP:Overall/Administer:devops_admin"
+              - "GROUP:Overall/Read:DevOps"
+              - "GROUP:Overall/Read:authenticated"
+              - "GROUP:Overall/Read:devops_admin"
+              - "GROUP:Overall/Read:swcompil"
+              - "GROUP:Run/Delete:DevOps"
+              - "GROUP:Run/Delete:devops_admin"
+              - "GROUP:Run/Delete:swcompil"
+              - "GROUP:Run/Replay:DevOps"
+              - "GROUP:Run/Replay:devops_admin"
+              - "GROUP:Run/Replay:swcompil"
+              - "GROUP:Run/Update:DevOps"
+              - "GROUP:Run/Update:devops_admin"
+              - "GROUP:Run/Update:swcompil"
+              - "GROUP:SCM/Tag:DevOps"
+              - "GROUP:SCM/Tag:authenticated"
+              - "GROUP:SCM/Tag:devops_admin"
+              - "GROUP:SCM/Tag:swcompil"
+              - "USER:Agent/Build:moshe.dana"
+              - "USER:Agent/Build:nicolae.rosia"
+              - "USER:Agent/Configure:moshe.dana"
+              - "USER:Agent/Configure:nicolae.rosia"
+              - "USER:Agent/Connect:moshe.dana"
+              - "USER:Agent/Connect:nicolae.rosia"
+              - "USER:Agent/Create:moshe.dana"
+              - "USER:Agent/Create:nicolae.rosia"
+              - "USER:Agent/Delete:moshe.dana"
+              - "USER:Agent/Delete:nicolae.rosia"
+              - "USER:Agent/Disconnect:moshe.dana"
+              - "USER:Agent/Disconnect:nicolae.rosia"
+              - "USER:Artifactory/Promote:moshe.dana"
+              - "USER:Artifactory/Promote:nicolae.rosia"
+              - "USER:Artifactory/Release:moshe.dana"
+              - "USER:Artifactory/Release:nicolae.rosia"
+              - "USER:Credentials/Create:moshe.dana"
+              - "USER:Credentials/Create:nicolae.rosia"
+              - "USER:Credentials/Delete:moshe.dana"
+              - "USER:Credentials/Delete:nicolae.rosia"
+              - "USER:Credentials/ManageDomains:moshe.dana"
+              - "USER:Credentials/ManageDomains:nicolae.rosia"
+              - "USER:Credentials/Update:moshe.dana"
+              - "USER:Credentials/Update:nicolae.rosia"
+              - "USER:Credentials/View:ioseb.kuprashvili"
+              - "USER:Credentials/View:moshe.dana"
+              - "USER:Credentials/View:nicolae.rosia"
+              - "USER:Job/Build:moshe.dana"
+              - "USER:Job/Build:nicolae.rosia"
+              - "USER:Job/Cancel:moshe.dana"
+              - "USER:Job/Cancel:nicolae.rosia"
+              - "USER:Job/Configure:moshe.dana"
+              - "USER:Job/Configure:nicolae.rosia"
+              - "USER:Job/Create:moshe.dana"
+              - "USER:Job/Create:nicolae.rosia"
+              - "USER:Job/Delete:moshe.dana"
+              - "USER:Job/Delete:nicolae.rosia"
+              - "USER:Job/Discover:moshe.dana"
+              - "USER:Job/Discover:nicolae.rosia"
+              - "USER:Job/Move:moshe.dana"
+              - "USER:Job/Move:nicolae.rosia"
+              - "USER:Job/Read:moshe.dana"
+              - "USER:Job/Read:nicolae.rosia"
+              - "USER:Job/ViewStatus:moshe.dana"
+              - "USER:Job/ViewStatus:nicolae.rosia"
+              - "USER:Job/Workspace:moshe.dana"
+              - "USER:Job/Workspace:nicolae.rosia"
+              - "USER:Lockable Resources/Reserve:moshe.dana"
+              - "USER:Lockable Resources/Reserve:nicolae.rosia"
+              - "USER:Lockable Resources/Steal:moshe.dana"
+              - "USER:Lockable Resources/Steal:nicolae.rosia"
+              - "USER:Lockable Resources/Unlock:moshe.dana"
+              - "USER:Lockable Resources/Unlock:nicolae.rosia"
+              - "USER:Lockable Resources/View:moshe.dana"
+              - "USER:Lockable Resources/View:nicolae.rosia"
+              - "USER:Metrics/HealthCheck:moshe.dana"
+              - "USER:Metrics/HealthCheck:nicolae.rosia"
+              - "USER:Metrics/ThreadDump:moshe.dana"
+              - "USER:Metrics/ThreadDump:nicolae.rosia"
+              - "USER:Metrics/View:moshe.dana"
+              - "USER:Metrics/View:nicolae.rosia"
+              - "USER:Overall/Administer:moshe.dana"
+              - "USER:Overall/Administer:nicolae.rosia"
+              - "USER:Overall/Read:ioseb.kuprashvili"
+              - "USER:Overall/Read:moshe.dana"
+              - "USER:Overall/Read:nicolae.rosia"
+              - "USER:Promotion/Promote:moshe.dana"
+              - "USER:Promotion/Promote:nicolae.rosia"
+              - "USER:Run/Delete:moshe.dana"
+              - "USER:Run/Delete:nicolae.rosia"
+              - "USER:Run/Replay:moshe.dana"
+              - "USER:Run/Replay:nicolae.rosia"
+              - "USER:Run/Update:moshe.dana"
+              - "USER:Run/Update:nicolae.rosia"
+              - "USER:SCM/Tag:moshe.dana"
+              - "USER:SCM/Tag:nicolae.rosia"
+              - "USER:View/Configure:moshe.dana"
+              - "USER:View/Configure:nicolae.rosia"
+              - "USER:View/Create:moshe.dana"
+              - "USER:View/Create:nicolae.rosia"
+              - "USER:View/Delete:moshe.dana"
+              - "USER:View/Delete:nicolae.rosia"
+              - "USER:View/Read:moshe.dana"
+              - "USER:View/Read:nicolae.rosia"
+              - "GROUP:View/Configure:DevOps"
+              - "GROUP:View/Configure:devops_admin"
+              - "GROUP:View/Configure:swcompil"
+              - "GROUP:View/Create:devops_admin"
+              - "GROUP:View/Create:swcompil"
+              - "GROUP:View/Delete:devops_admin"
+              - "GROUP:View/Delete:swcompil"
+              - "GROUP:View/Read:DevOps"
+              - "GROUP:View/Read:authenticated"
+              - "GROUP:View/Read:devops_admin"
+              - "GROUP:View/Read:swcompil"
+      configScripts:
+        jenkins-casc-configs: |-
+          credentials:
+            system:
+              domainCredentials:
+              - credentials:
+                - basicSSHUserPrivateKey:
+                    description: "deployment-rsa"
+                    id: "deployment-rsa"
+                    privateKeySource:
+                      directEntry:
+                        privateKey: "${DEPLOYMENT_RSA_PRIVATE_KEY}"
+                    scope: GLOBAL
+                    username: "deployment"
+                - basicSSHUserPrivateKey:
+                    description: "jenkins-ci"
+                    id: "gitsshkey"
+                    privateKeySource:
+                      directEntry:
+                        privateKey: "${GITSSHKEY_PRIVATE_KEY}"
+                    scope: GLOBAL
+                    username: "jenkins-ci"
+                - basicSSHUserPrivateKey:
+                    description: "jenkins-ci"
+                    id: "jenkins-ci"
+                    privateKeySource:
+                      directEntry:
+                        privateKey: "${JENKINS_CI_PRIVATE_KEY}"
+                    scope: GLOBAL
+                    username: "jenkins-ci"
+                - basicSSHUserPrivateKey:
+                    description: "jenkins-ci-rsa"
+                    id: "jenkins-ci-rsa"
+                    privateKeySource:
+                      directEntry:
+                        privateKey: "${JENKINS_CI_RSA_PRIVATE_KEY}"
+                    scope: GLOBAL
+                    username: "jenkins-ci"
+                - usernamePassword:
+                    description: "legacy-omniqpp-slave-pass"
+                    id: "legacy-omniqpp-slave-pass"
+                    password: "${LEGACY_OMNIQPP_SLAVE_PASS}"
+                    scope: GLOBAL
+                    username: "root"
+                - usernamePassword:
+                    description: "nexus-admin"
+                    id: "nexus-admin"
+                    password: "${NEXUS_ADMIN_PASSWORD}"
+                    scope: GLOBAL
+                    username: "admin"
+                - usernamePassword:
+                    description: "radcomregistry-azure"
+                    id: "radcomregistry-azure"
+                    password: "${RADCOMREGISTRY_AZURE_PASSWORD}"
+                    scope: GLOBAL
+                    username: "radcomregistry"
+                    usernameSecret: true
+                - usernamePassword:
+                    description: "RHOSP-01 Openstack User:Pass"
+                    id: "rhosp-01-user-pass"
+                    password: "${RHOSP_01_USER_PASS}"
+                    scope: GLOBAL
+                    username: "admin"
+                - usernamePassword:
+                    description: "RHOSPQA-01 Openstack User:Pass"
+                    id: "rhospqa-01-user-pass"
+                    password: "${RHOSPQA_01_USER_PASS}"
+                    scope: GLOBAL
+                    username: "admin"
+                - string:
+                    description: "The slack secret token"
+                    id: "slack"
+                    scope: GLOBAL
+                    secret: "${SLACK_SECRET_TOKEN}"
+                - usernamePassword:
+                    description: "swcompil-user for svn"
+                    id: "swcompil-user"
+                    password: "${SWCOMPIL_USER_PASSWORD}"
+                    scope: GLOBAL
+                    username: "swcompil"
+                - usernamePassword:
+                    description: "Jenkins-master-password"
+                    id: "Jenkins-master-password"
+                    password: "${JENKINS_MASTER_PASSWORD}"
+                    scope: GLOBAL
+                    username: "root"
+                - usernamePassword:
+                    description: "rcc"
+                    id: "rcc"
+                    password: "${RCC_PASSWORD}"
+                    scope: GLOBAL
+                    username: "rcc"
+                - usernamePassword:
+                    description: "ace-developer"
+                    id: "ace-developer"
+                    password: "${ACE_DEVELOPER_PASSWORD}"
+                    scope: GLOBAL
+                    username: "ace-developer"
+                    usernameSecret: true
+                - usernamePassword:
+                    description: "eks-user"
+                    id: "eks-user"
+                    password: "${EKS_USER_PASSWORD}"
+                    scope: SYSTEM
+                    username: "osboxes"
+                    usernameSecret: true
+                - aws:
+                    accessKey: "${JENKINS_AWS_ACCESS_KEY}"
+                    id: "jenkins_aws"
+                    scope: GLOBAL
+                    secretKey: "${JENKINS_AWS_SECRET_KEY}"
+                    stsTokenDuration: 14400
+                - usernamePassword:
+                    description: "to download tenable io scanner latest"
+                    id: "Tenable_io_login"
+                    password: "${TENABLE_IO_LOGIN_PASSWORD}"
+                    scope: GLOBAL
+                    username: "pubread"
+                    usernameSecret: true
+                - usernamePassword:
+                    description: "X-ApiKeys to access Tenable io"
+                    id: "X-ApiKeys-Tenable-io"
+                    password: "${X_APIKEYS_TENABLE_IO_PASSWORD}"
+                    scope: GLOBAL
+                    username: "${X_APIKEYS_TENABLE_IO_USERNAME}"
+                    usernameSecret: true
+                - file:
+                    fileName: "1"
+                    id: "eks_file"
+                    scope: GLOBAL
+                    secretBytes: "${EKS_FILE_SECRET_BYTES}"
+                - usernamePassword:
+                    description: "creds to run a CD job"
+                    id: "radcom-cd"
+                    password: "${RADCOM_CD_PASSWORD}"
+                    scope: GLOBAL
+                    username: "radcom-cd"
+                    usernameSecret: true
+                - file:
+                    description: "DEPLOYMENTKEYRSA"
+                    fileName: "deployment.key"
+                    id: "DEPLOYMENTKEYRSA"
+                    scope: GLOBAL
+                    secretBytes: "${DEPLOYMENTKEYRSA_SECRET_BYTES}"
+                - string:
+                    description: "SonarQube API key"
+                    id: "SonarQube-API-key"
+                    scope: GLOBAL
+                    secret: "${SONARQUBE_API_KEY}"
+                - file:
+                    description: ".npmrc file"
+                    fileName: ".npmrc"
+                    id: "NPMRC"
+                    scope: GLOBAL
+                    secretBytes: "${NPMRC_SECRET_BYTES}"
+                - string:
+                    id: "ORCA_SECURITY_API_TOKEN"
+                    scope: GLOBAL
+                    secret: "${ORCA_SECURITY_API_TOKEN}"
+                - string:
+                    description: "Jenkins Token for running jobs inside the DevOps microk8s\
+                      \ cluster"
+                    id: "microk8s-agents-jenkins-token"
+                    scope: GLOBAL
+                    secret: "${MICROK8S_AGENTS_JENKINS_TOKEN}"
+                - aws:
+                    accessKey: "${AWS_EKS_984565958963_JENKINS_USER_ACCESS_KEY}"
+                    id: "aws-eks-984565958963-jenkins-user"
+                    scope: GLOBAL
+                    secretKey: "${AWS_EKS_984565958963_JENKINS_USER_SECRET_KEY}"
+                - aws:
+                    accessKey: "${RADCOM_SUBSCRIPTION_AWS_EKS_692859913461_JENKINS_USER_ACCESS_KEY}"
+                    id: "radcom-subscription-aws-eks-692859913461-jenkins-user"
+                    scope: GLOBAL
+                    secretKey: "${RADCOM_SUBSCRIPTION_AWS_EKS_692859913461_JENKINS_USER_SECRET_KEY}"
+                - string:
+                    description: "Migrated from gitlab-branch-source-plugin webhook secret"
+                    id: "7cd84bf4-ef74-4e28-989b-fb2f1bd387cf"
+                    scope: GLOBAL
+                    secret: "${GITLAB_BRANCH_SOURCE_PLUGIN_WEBHOOK_SECRET}"
+                - file:
+                    description: "kube_config file for OnPrem Isolation cluster"
+                    fileName: "isolation-k0s.yaml"
+                    id: "on-prem-microk8s-kube-config"
+                    scope: GLOBAL
+                    secretBytes: "${ON_PREM_MICROK8S_KUBE_CONFIG_SECRET_BYTES}"
+                - usernamePassword:
+                    id: "b3efc480-00a7-4398-8085-dd9efd64f1d0"
+                    password: "${B3EFC480_00A7_4398_8085_DD9EFD64F1D0_PASSWORD}"
+                    scope: GLOBAL
+                    username: "apikey"
+                    usernameSecret: true
+                - usernamePassword:
+                    id: "4857b008-c829-4fcb-b563-f3340abc8391"
+                    password: "${4857B008_C829_4FCB_B563_F3340ABC8391_PASSWORD}"
+                    scope: GLOBAL
+                    username: "apikey"
+                - aws:
+                    accessKey: "${JENKINS_AWS_BEDC_ACCESS_KEY}"
+                    id: "jenkins_aws_bedc"
+                    scope: GLOBAL
+                    secretKey: "${JENKINS_AWS_BEDC_SECRET_KEY}"
+                - usernamePassword:
+                    description: "var-admin"
+                    id: "var-admin"
+                    password: "${VAR_ADMIN_PASSWORD}"
+                    scope: GLOBAL
+                    username: "admin"
+                - usernamePassword:
+                    description: "base_repo"
+                    id: "base_repo"
+                    password: "${BASE_REPO_PASSWORD}"
+                    scope: GLOBAL
+                    username: "root"
+                - file:
+                    fileName: "isolation-k0s.yaml"
+                    id: "on-prem-isolation-kubernetes-cluster-kubeconfig"
+                    scope: GLOBAL
+                    secretBytes: "${ON_PREM_ISOLATION_KUBERNETES_CLUSTER_KUBECONFIG_SECRET_BYTES}"
+                - usernamePassword:
+                    description: "jenkins-nexus"
+                    id: "jenkins-nexus"
+                    password: "${JENKINS_NEXUS_PASSWORD}"
+                    scope: GLOBAL
+                    username: "devops"
+                - basicSSHUserPrivateKey:
+                    description: "cots-rsa"
+                    id: "cots-rsa"
+                    privateKeySource:
+                      directEntry:
+                        privateKey: "${COTS_RSA_PRIVATE_KEY}"
+                    scope: GLOBAL
+                    username: "deployment"
+                - usernamePassword:
+                    id: "qauser"
+                    password: "${QAUSER_PASSWORD}"
+                    scope: GLOBAL
+                    username: "qauser"
+                - aws:
+                    accessKey: "${JENKINS_AWS_RND_ACCESS_KEY}"
+                    id: "jenkins_aws_rnd"
+                    scope: GLOBAL
+                    secretKey: "${JENKINS_AWS_RND_SECRET_KEY}"
+                - usernamePassword:
+                    description: "sftp-att-credentials"
+                    id: "sftp-att-credentials"
+                    password: "${SFTP_ATT_CREDENTIALS_PASSWORD}"
+                    scope: GLOBAL
+                    username: "ATT"
+                - usernamePassword:
+                    description: "radfs-user"
+                    id: "radfs-user"
+                    password: "${RADFS_USER_PASSWORD}"
+                    scope: GLOBAL
+                    username: "Jenkinsjob"
+                - usernamePassword:
+                    id: "apikey"
+                    password: "${APIKEY_PASSWORD}"
+                    scope: GLOBAL
+                    username: "apikey"
+                - basicSSHUserPrivateKey:
+                    description: "aws-gitlab-radcom-us-east-2"
+                    id: "aws-gitlab-radcom-us-east-2"
+                    privateKeySource:
+                      directEntry:
+                        privateKey: "${AWS_GITLAB_RADCOM_US_EAST_2_PRIVATE_KEY}"
+                    scope: GLOBAL
+                    username: "marian.maireanu"
+                - usernamePassword:
+                    id: "aws-gitlab-radcom-us-east-2-username"
+                    password: "${AWS_GITLAB_RADCOM_US_EAST_2_USERNAME_PASSWORD}"
+                    scope: GLOBAL
+                    username: "marian.maireanu"
+                - file:
+                    description: "GOVC-VSPHERE-DEVOPS"
+                    fileName: "govc.env"
+                    id: "GOVC-VSPHERE-DEVOPS"
+                    scope: GLOBAL
+                    secretBytes: "${GOVC_VSPHERE_DEVOPS_SECRET_BYTES}"
+                - file:
+                    description: "SARDINA4-admin-openrc"
+                    fileName: "SARDINA4-admin-openrc"
+                    id: "SARDINA4-admin-openrc"
+                    scope: GLOBAL
+                    secretBytes: "${SARDINA4_ADMIN_OPENRC_SECRET_BYTES}"
+                - file:
+                    description: "SARDINA3-admin-openrc"
+                    fileName: "SARDINA3-admin-openrc"
+                    id: "SARDINA3-admin-openrc"
+                    scope: GLOBAL
+                    secretBytes: "${SARDINA3_ADMIN_OPENRC_SECRET_BYTES}"
+                - file:
+                    description: "SARDINA2-admin-openrc"
+                    fileName: "SARDINA2-admin-openrc"
+                    id: "SARDINA2-admin-openrc"
+                    scope: GLOBAL
+                    secretBytes: "${SARDINA2_ADMIN_OPENRC_SECRET_BYTES}"
+                - file:
+                    description: "SARDINA1-admin-openrc"
+                    fileName: "SARDINA1-admin-openrc"
+                    id: "SARDINA1-admin-openrc"
+                    scope: GLOBAL
+                    secretBytes: "${SARDINA1_ADMIN_OPENRC_SECRET_BYTES}"
+                - string:
+                    id: "PACKER_GITHUB_API_TOKEN"
+                    scope: GLOBAL
+                    secret: "${PACKER_GITHUB_API_TOKEN}"
+                - aws:
+                    accessKey: "${JENKINS_AWS_PSOLABS_ACCESS_KEY}"
+                    description: "010526251918 "
+                    id: "jenkins_aws_psolabs"
+                    scope: GLOBAL
+                    secretKey: "${JENKINS_AWS_PSOLABS_SECRET_KEY}"
+                - aws:
+                    accessKey: "${JENKINS_AWS_NDC_ACCESS_KEY}"
+                    description: "434721272023"
+                    id: "jenkins_aws_ndc"
+                    scope: GLOBAL
+                    secretKey: "${JENKINS_AWS_NDC_SECRET_KEY}"
+                - aws:
+                    accessKey: "${JENKINS_AWS_RDC_ACCESS_KEY}"
+                    description: "044224332302"
+                    id: "jenkins_aws_rdc"
+                    scope: GLOBAL
+                    secretKey: "${JENKINS_AWS_RDC_SECRET_KEY}"
+                - usernamePassword:
+                    description: "url: vc-devops.lab.radcom.co.il"
+                    id: "VSPHERE_DEVOPS_CREDENTIALS"
+                    password: "${VSPHERE_DEVOPS_CREDENTIALS_PASSWORD}"
+                    scope: GLOBAL
+                    username: "devops-automation@vsphere.local"
+                    usernameSecret: true
+                - usernamePassword:
+                    description: "url: vsandr-esxi01.radcom.co.il"
+                    id: "VSPHERE_VSAN_DR_CREDENTIALS"
+                    password: "${VSPHERE_VSAN_DR_CREDENTIALS_PASSWORD}"
+                    scope: GLOBAL
+                    username: "root"
+                - usernamePassword:
+                    description: "url: vcenterdr.radcom.co.il"
+                    id: "VSPHERE_VCENTER_DR_CREDENTIALS"
+                    password: "${VSPHERE_VCENTER_DR_CREDENTIALS_PASSWORD}"
+                    scope: GLOBAL
+                    username: "devopsAUTO@vsphere.local"
+                - usernamePassword:
+                    id: "ROCKY_ROOT_PASSWORD"
+                    password: "${ROCKY_ROOT_PASSWORD}"
+                    scope: GLOBAL
+                    username: "root"
+        global-node-properties: |-
+          globalNodeProperties:
+            - envVars:
+                env:
+                - key: "APPCYCLES_DEBUG_MODE"
+                  value: "false"
+                - key: "APPCYCLES_DEFAULT_JDK_TOOL_NAME"
+                  value: "jdk"
+                - key: "APPCYCLES_DEFAULT_MAVEN_SETTINGS_FILE_CONFIG_NAME"
+                  value: "maven-settings"
+                - key: "APPCYCLES_DEFAULT_MAVEN_TOOL_NAME"
+                  value: "maven"
+                - key: "APPCYCLES_PIPELINES_BRANCH"
+                  value: "lts"
+                - key: "JENKINS_HOSTNAME"
+                  value: "RCC"
+                - key: "RADCOM_PIPELINES_BRANCH"
+                  value: "develop"
+                - key: "RCC_PIPELINES_BRANCH"
+                  value: "master"
+        label-atoms: |-
+          labelAtoms:
+            - name: "CentOS7"
+            - name: "InputAPI"
+            - name: "InputAPI-test"
+            - name: "RCC-ROCKY9-AGENT-K8S-JENKINS-ACC"
+            - name: "RCCBaseAgent"
+            - name: "RCCBaseAgent_Singleton"
+            - name: "acedocker-srv02-aws-pipelines-agent-001pwlx4zk96f"
+            - name: "aws-pipelines-agent"
+            - name: "aws-pipelines-agent-test"
+            - name: "jenkins-jnlp-slave"
+            - name: "master"
+            - name: "medCompilation"
+            - name: "medCompilation-rocky"
+            - name: "probesCompilation01"
+            - name: "product-validation-154"
+            - name: "product-validation-156"
+            - name: "product_validation"
+            - name: "rcc-centos7"
+            - name: "rcc-centos7-aim"
+            - name: "rcc-centos7-helm3"
+            - name: "rcc-centos7-helm3-aws"
+            - name: "rcc-centos7-mvn"
+            - name: "rcc-rocky9-agent-base-cots"
+            - name: "rcc-rocky9-base"
+            - name: "rcc-rocky9-test"
+        nodes: |-
+          nodes:
+            - permanent:
+                labelString: "product_validation"
+                launcher:
+                  ssh:
+                    credentialsId: "deployment-rsa"
+                    host: "172.16.3.154"
+                    port: 22
+                    sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+                mode: EXCLUSIVE
+                name: "product-validation-154"
+                nodeDescription: "worker for product validation"
+                nodeProperties:
+                - envVars:
+                    env:
+                    - key: "MAVEN_OPTS"
+                remoteFS: "/var/tmp/jenkins"
+                retentionStrategy: "always"
+            - permanent:
+                labelString: "product_validation"
+                launcher:
+                  ssh:
+                    credentialsId: "deployment-rsa"
+                    host: "172.16.3.156"
+                    port: 22
+                    sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+                mode: EXCLUSIVE
+                name: "product-validation-156"
+                nodeDescription: "worker for product validation"
+                nodeProperties:
+                - envVars:
+                    env:
+                    - key: "MAVEN_OPTS"
+                remoteFS: "/var/tmp/jenkins"
+                retentionStrategy: "always"
+        unclassified: |-
+          unclassified:
+            artifactoryBuilder:
+              jfrogPipelinesServer:
+                bypassProxy: false
+                connectionRetries: 3
+                credentialsConfig:
+                  ignoreCredentialPluginDisabled: true
+                  overridingCredentials: false
+                  password: "${ARTIFACTORY_JFROG_PIPELINES_PASSWORD}"
+                  username: "${ARTIFACTORY_JFROG_PIPELINES_USERNAME}"
+                timeout: 300
+              useCredentialsPlugin: false
+            bitbucketEndpointConfiguration:
+              endpoints:
+              - bitbucketServerEndpoint:
+                  callCanMerge: false
+                  credentialsId: "swcompil-user"
+                  displayName: "Radcom-Bitbucket"
+                  manageHooks: true
+                  serverUrl: "http://bitbucket-prod.radcom.co.il:7990"
+                  webhookImplementation: NATIVE
+            buildDiscarders:
+              configuredBuildDiscarders:
+              - "jobBuildDiscarder"
+            buildStepOperation:
+              enabled: false
+            buildUserVars:
+              allBuilds: false
+            cxScanBuilder:
+              asyncHtmlRemoval: false
+              continueBuildWhenTimedOut: false
+              enableCertificateValidation: false
+              enableDataRetention: false
+              exceptionOnThresholdErrorGlobal: false
+              filterPattern: |-
+                !**/_cvs/**/*, !**/.svn/**/*, !**/.hg/**/*, !**/.git/**/*, !**/.bzr/**/*,
+                        !**/.gitgnore/**/*, !**/.gradle/**/*, !**/.checkstyle/**/*, !**/.classpath/**/*, !**/bin/**/*,
+                        !**/obj/**/*, !**/backup/**/*, !**/.idea/**/*, !**/*.DS_Store, !**/*.ipr, !**/*.iws,
+                        !**/*.bak, !**/*.tmp, !**/*.aac, !**/*.aif, !**/*.iff, !**/*.m3u, !**/*.mid, !**/*.mp3,
+                        !**/*.mpa, !**/*.ra, !**/*.wav, !**/*.wma, !**/*.3g2, !**/*.3gp, !**/*.asf, !**/*.asx,
+                        !**/*.avi, !**/*.flv, !**/*.mov, !**/*.mp4, !**/*.mpg, !**/*.rm, !**/*.swf, !**/*.vob,
+                        !**/*.wmv, !**/*.bmp, !**/*.gif, !**/*.jpg, !**/*.png, !**/*.psd, !**/*.tif, !**/*.swf,
+                        !**/*.jar, !**/*.zip, !**/*.rar, !**/*.exe, !**/*.dll, !**/*.pdb, !**/*.7z, !**/*.gz,
+                        !**/*.tar.gz, !**/*.tar, !**/*.gz, !**/*.ahtm, !**/*.ahtml, !**/*.fhtml, !**/*.hdm,
+                        !**/*.hdml, !**/*.hsql, !**/*.ht, !**/*.hta, !**/*.htc, !**/*.htd, !**/*.war, !**/*.ear,
+                        !**/*.htmls, !**/*.ihtml, !**/*.mht, !**/*.mhtm, !**/*.mhtml, !**/*.ssi, !**/*.stm,
+                        !**/*.bin,!**/*.lock,!**/*.svg,!**/*.obj,
+                        !**/*.stml, !**/*.ttml, !**/*.txn, !**/*.xhtm, !**/*.xhtml, !**/*.class, !**/*.iml, !Checkmarx/Reports/*.*,
+                        !OSADependencies.json, !**/node_modules/**/*
+              forcingVulnerabilityThresholdEnabled: false
+              globallyDefineScanSettings: false
+              hideDebugLogs: false
+              hideResults: false
+              isProxy: true
+              jobGlobalStatusOnError: FAILURE
+              jobGlobalStatusOnThresholdViolation: FAILURE
+              lockVulnerabilitySettings: true
+              password: "${CXSCAN_BUILDER_PASSWORD}"
+              prohibitProjectCreation: false
+              scanTimeOutEnabled: false
+              scanTimeoutDuration: 1
+            email-ext:
+              adminRequiredForTemplateTesting: false
+              allowUnregisteredEnabled: false
+              charset: "UTF-8"
+              debugMode: false
+              defaultBody: |-
+                $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+                Check console output at $BUILD_URL to view the results.
+              defaultContentType: "text/plain"
+              defaultReplyTo: "devops@radcom.com"
+              defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
+              defaultSuffix: "@radcom.com"
+              defaultTriggerIds:
+              - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
+              mailAccount:
+                credentialsId: "4857b008-c829-4fcb-b563-f3340abc8391"
+                smtpHost: "172.16.1.125"
+                useTls: true
+              maxAttachmentSize: -1
+              maxAttachmentSizeMb: -1
+              precedenceBulk: false
+              watchingEnabled: false
+            enrichedSummaryConfig:
+              enrichedSummaryEnabled: false
+              httpClientDelayBetweenRetriesInSeconds: 1
+              httpClientMaxRetries: 3
+              httpClientTimeoutInSeconds: 1
+            fingerprints:
+              fingerprintCleanupDisabled: false
+              storage: "file"
+            gitHubConfiguration:
+              apiRateLimitChecker: ThrottleForNormalize
+            gitHubPluginConfig:
+              hookUrl: "https://acc.radcom.co.il/github-webhook/"
+            globalBuildPromotedBuilds:
+              timeZone: "Asia/Tel_Aviv"
+            globalConfigFiles:
+              configs:
+              - openstackUserData:
+                  content: |-
+                    #cloud-config
+                      manage_etc_hosts: false
+                      bootcmd:
+                      - "wget http://radcom-repository.radcom.co.il:8080/downloads/keys/index.html -O /home/deployment/.ssh/deployment_key"
+                      - "chown deployment:deployment /home/deployment/.ssh/deployment_key"
+                      - "chmod 600 /home/deployment/.ssh/deployment_key"
+                  id: "75a0d730-69e5-412e-82c5-29511800700b"
+                  name: "UserData"
+              - custom:
+                  comment: "clouds-yaml"
+                  content: |-
+                    ---
+                    clouds:
+                      Liberty:
+                        auth:
+                          auth_url: "http://172.16.9.16:5000/v2.0"
+                          password: "${LIBERTY_AUTH_PASSWORD}"
+                          username: admin
+                          tenant_name: Jenkins
+                      Mitaka:
+                        auth:
+                          auth_url: "http://172.16.113.9:5000/v2.0"
+                          password: "${MITAKA_AUTH_PASSWORD}"
+                          username: admin
+                          tenant_name: admin
+                      RHEL:
+                        auth:
+                          auth_url: "http://172.29.9.208:5000/v2.0"
+                          password: "${RHEL_AUTH_PASSWORD}"
+                          username: admin
+                          tenant_name: Jenkins-Slaves
+                      RHELQA:
+                        auth:
+                          auth_url: "http://172.29.28.108:5000/"
+                          password: "${RHELQA_AUTH_PASSWORD}"
+                          username: admin
+                          tenant_name: qa
+                          tenant_id: bba4997c1fa34accad695f34d98ba622
+                          user_domain_name: Default
+                      Perf:
+                        auth:
+                          auth_url: http://172.16.200.3:5000/v2.0
+                          username: admin
+                          password: "${PERF_AUTH_PASSWORD}"
+                          tenant_name: admin
+                          tenant_id: 7bf4dedfc47a468280bb7d9a721962a5
+                  id: "clouds-yaml"
+                  name: "clouds-yaml"
+              - globalMavenSettings:
+                  comment: "global-maven-settings"
+                  content: |-
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                              xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+                      <pluginGroups></pluginGroups>
+                      <proxies></proxies>
+                      <servers>
+                        <server>
+                          <id>radcom-releases</id>
+                          <username>admin</username>
+                          <password>admin123</password>
+                        </server>
+                        <server>
+                          <id>radcom-snapshots</id>
+                          <username>admin</username>
+                          <password>admin123</password>
+                        </server>
+
+                        <server>
+                          <id>maveriq-releases</id>
+                          <username>deployment</username>
+                          <password>deployment</password>
+                        </server>
+                        <server>
+                          <id>maveriq-snapshots</id>
+                          <username>deployment</username>
+                          <password>deployment</password>
+                        </server>
+
+                        <server>
+                          <id>ng-system-release</id>
+                          <username>deployment</username>
+                          <password>deployment</password>
+                        </server>
+                        <server>
+                          <id>ng-system-snapshots</id>
+                          <username>deployment</username>
+                          <password>deployment</password>
+                        </server>
+
+                        <server>
+                          <id>logs</id>
+                          <username>deployment</username>
+                          <password>deployment</password>
+                        </server>
+                      </servers>
+                      <mirrors></mirrors>
+                      <profiles>
+                        <profile>
+                          <repositories>
+                            <repository>
+                              <releases>
+                                <enabled>true</enabled>
+                                <updatePolicy>always</updatePolicy>
+                                <checksumPolicy>warn</checksumPolicy>
+                              </releases>
+                              <snapshots>
+                                <enabled>true</enabled>
+                                <updatePolicy>always</updatePolicy>
+                                <checksumPolicy>fail</checksumPolicy>
+                              </snapshots>
+                              <id>maveriq</id>
+                              <name>maveriq</name>
+                              <url>http://nexus-prod.radcom.co.il:8081/nexus/content/groups/maveriq</url>
+                              <layout>default</layout>
+                            </repository>
+                            <repository>
+                              <releases>
+                                <enabled>true</enabled>
+                                <updatePolicy>always</updatePolicy>
+                                <checksumPolicy>warn</checksumPolicy>
+                              </releases>
+                              <snapshots>
+                                <enabled>true</enabled>
+                                <updatePolicy>always</updatePolicy>
+                                <checksumPolicy>fail</checksumPolicy>
+                              </snapshots>
+                              <id>ng-system</id>
+                              <name>ng-system</name>
+                              <url>http://nexus-prod.radcom.co.il:8081/nexus/content/groups/ng-system</url>
+                              <layout>default</layout>
+                            </repository>
+                          </repositories>
+                        </profile>
+                      </profiles>
+                    </settings>
+                  id: "global-maven-settings"
+                  isReplaceAll: false
+                  name: "global-maven-settings"
+                  serverCredentialMappings:
+                  - credentialsId: "deployment-rsa"
+                    serverId: "maveriq"
+                  - credentialsId: "deployment-rsa"
+                    serverId: "maveriq-releases"
+                  - credentialsId: "deployment-rsa"
+                    serverId: "maveriq-snapshots"
+                  - credentialsId: "deployment-rsa"
+                    serverId: "logs"
+                  - credentialsId: "deployment-rsa"
+                    serverId: "ng-system-release"
+                  - credentialsId: "deployment-rsa"
+                    serverId: "ng-system-snapshots"
+                  - credentialsId: "deployment-rsa"
+                    serverId: "ng-system"
+                  - credentialsId: "nexus-admin"
+                    serverId: "radcom"
+                  - credentialsId: "nexus-admin"
+                    serverId: "radcom-releases"
+                  - credentialsId: "nexus-admin"
+                    serverId: "radcom-snapshots"
+              - mavenSettings:
+                  comment: "maven-settings"
+                  content: |-
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                              xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+                      <pluginGroups></pluginGroups>
+                      <proxies></proxies>
+                      <servers>
+                        <server>
+                          <id>radcom-releases</id>
+                          <username>admin</username>
+                          <password>admin123</password>
+                        </server>
+                        <server>
+                          <id>radcom-snapshots</id>
+                          <username>admin</username>
+                          <password>admin123</password>
+                        </server>
+
+                        <server>
+                          <id>maveriq-releases</id>
+                          <username>deployment</username>
+                          <password>deployment</password>
+                        </server>
+                        <server>
+                          <id>maveriq-snapshots</id>
+                          <username>deployment</username>
+                          <password>deployment</password>
+                        </server>
+
+                        <server>
+                          <id>ng-system-release</id>
+                          <username>deployment</username>
+                          <password>deployment</password>
+                        </server>
+                        <server>
+                          <id>ng-system-snapshots</id>
+                          <username>deployment</username>
+                          <password>deployment</password>
+                        </server>
+
+                        <server>
+                          <id>logs</id>
+                          <username>deployment</username>
+                          <password>deployment</password>
+                        </server>
+                      </servers>
+                      <mirrors></mirrors>
+                      <profiles>
+                        <profile>
+                          <repositories>
+                            <repository>
+                              <releases>
+                                <enabled>true</enabled>
+                                <updatePolicy>always</updatePolicy>
+                                <checksumPolicy>warn</checksumPolicy>
+                              </releases>
+                              <snapshots>
+                                <enabled>true</enabled>
+                                <updatePolicy>always</updatePolicy>
+                                <checksumPolicy>fail</checksumPolicy>
+                              </snapshots>
+                              <id>maveriq</id>
+                              <name>maveriq</name>
+                              <url>http://nexus-prod.radcom.co.il:8081/nexus/content/groups/maveriq</url>
+                              <layout>default</layout>
+                            </repository>
+                            <repository>
+                              <releases>
+                                <enabled>true</enabled>
+                                <updatePolicy>always</updatePolicy>
+                                <checksumPolicy>warn</checksumPolicy>
+                              </releases>
+                              <snapshots>
+                                <enabled>true</enabled>
+                                <updatePolicy>always</updatePolicy>
+                                <checksumPolicy>fail</checksumPolicy>
+                              </snapshots>
+                              <id>ng-system</id>
+                              <name>ng-system</name>
+                              <url>http://nexus-prod.radcom.co.il:8081/nexus/content/groups/ng-system</url>
+                              <layout>default</layout>
+                            </repository>
+                          </repositories>
+                        </profile>
+                      </profiles>
+                    </settings>
+                  id: "maven-settings"
+                  isReplaceAll: false
+                  name: "maven-settings"
+                  serverCredentialMappings:
+                  - credentialsId: "deployment-rsa"
+                    serverId: "maveriq"
+                  - credentialsId: "deployment-rsa"
+                    serverId: "maveriq-releases"
+                  - credentialsId: "deployment-rsa"
+                    serverId: "maveriq-snapshots"
+                  - credentialsId: "deployment-rsa"
+                    serverId: "logs"
+                  - credentialsId: "deployment-rsa"
+                    serverId: "ng-system-release"
+                  - credentialsId: "deployment-rsa"
+                    serverId: "ng-system-snapshots"
+                  - credentialsId: "deployment-rsa"
+                    serverId: "ng-system"
+                  - credentialsId: "nexus-admin"
+                    serverId: "radcom"
+                  - credentialsId: "nexus-admin"
+                    serverId: "radcom-releases"
+                  - credentialsId: "nexus-admin"
+                    serverId: "radcom-snapshots"
+            globalLibraries:
+              libraries:
+              - defaultVersion: "master"
+                name: "rcc-library"
+                retriever:
+                  modernSCM:
+                    libraryPath: "./"
+                    scm:
+                      git:
+                        credentialsId: "jenkins-ci-rsa"
+                        id: "git-scm-rcc-library"
+                        remote: "ssh://git@bitbucket-prod.radcom.co.il:7999/rcc/rcc-library.git"
+                        traits:
+                        - "gitBranchDiscovery"
+            globalTimeOutConfiguration:
+              operations:
+              - "abortOperation"
+              overwriteable: false
+            imageTagParameterConfiguration:
+              defaultRegistry: "https://registry-1.docker.io"
+              defaultTagOrdering: NATURAL
+            injectionConfig:
+              allowUntrusted: false
+              checkForBuildAgentErrors: false
+              enabled: false
+              enforceUrl: false
+              injectCcudExtension: false
+              injectMavenExtension: false
+            ivyBuildTrigger:
+              extendedVersionMatching: false
+            jiraStepsConfig:
+              sites:
+              - password: "${JIRA_STEPS_PASSWORD}"
+                readTimeout: 10000
+                secret: "${JIRA_STEPS_SECRET}"
+                timeout: 10000
+                token: "${JIRA_STEPS_TOKEN}"
+            junitTestResultStorage:
+              storage: "file"
+            lockableResourcesManager:
+              declaredResources:
+              - description: "AIM"
+                labels: "aim-monorepo"
+                name: "aim-monorepo"
+            mailer:
+              authentication:
+                password: "${MAILER_PASSWORD}"
+                username: "apikey"
+              charset: "UTF-8"
+              defaultSuffix: "@radcom.com"
+              replyToAddress: "devops@radcom.com"
+              smtpHost: "172.16.1.125"
+              smtpPort: "25"
+              useSsl: false
+              useTls: true
+            mavenModuleSet:
+              localRepository: "default"
+            notifyBitbucket:
+              considerUnstableAsSuccess: false
+              disableInprogressNotification: false
+              ignoreUnverifiedSsl: false
+              includeBuildNumberInKey: false
+              prependParentProjectKey: false
+            perforce:
+              lastSuccess: false
+            pipeline-model-docker:
+              dockerLabel: "CentOS7"
+              registry:
+                url: "file:///var/run/docker.sock"
+            pollSCM:
+              pollingThreadCount: 10
+            robotConfig:
+              buildsToShowInResultsColumn: 15
+              robotResultsColumnEnabled: true
+              xAxisLabelFormat: "#$build"
+            scmGit:
+              addGitTagAction: false
+              allowSecondFetch: false
+              createAccountBasedOnEmail: false
+              disableGitToolChooser: false
+              hideCredentials: false
+              showEntireCommitSummaryInChanges: false
+              useExistingAccountWithSameEmail: false
+            sonarGlobalConfiguration:
+              buildWrapperEnabled: true
+              installations:
+              - credentialsId: "SonarQube-API-key"
+                name: "SonarQube"
+                serverUrl: "https://sonarqube.radcom.co.il"
+                triggers:
+                  skipScmCause: false
+                  skipUpstreamCause: false
+            subversionSCM:
+              workspaceFormat: 8
+            timestamper:
+              allPipelines: false
+              elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
+              systemTimeFormat: "'<b>'HH:mm:ss'</b> '"
+            upstream:
+              globalUpstreamFilterStrategy: UseOldest
+        tool: |-
+          tool:
+            dockerTool:
+              installations:
+              - name: "docker"
+                properties:
+                - installSource:
+                    installers:
+                    - command:
+                        command: "sudo yum install docker-ce -y"
+            git:
+              installations:
+              - home: "git"
+                name: "Default"
+            go:
+              installations:
+              - name: "go"
+                properties:
+                - installSource:
+                    installers:
+                    - golangInstaller:
+                        id: "1.8"
+            jdk:
+              installations:
+              - name: "jdk17"
+                properties:
+                - installSource:
+                    installers:
+                    - zip:
+                        subdir: "jdk-17.0.6+10"
+                        url: "https://nexus3-prod.radcom.co.il/repository/radcom-files/DevOpsFiles/jdk/17.0.6/OpenJDK17U-jdk_x64_linux_hotspot_17.0.6_10.tar.gz"
+              - name: "jdk11.0.5"
+                properties:
+                - installSource:
+                    installers:
+                    - zip:
+                        subdir: "openjdk-11.0.5+10"
+                        url: "https://nexus3-prod.radcom.co.il/repository/radcom-files/DevOpsFiles/jdk/11.0.5/jdk-11.0.5_linux-x64_bin.tar.gz"
+              - name: "jdk11"
+                properties:
+                - installSource:
+                    installers:
+                    - zip:
+                        subdir: "jdk-11.0.2"
+                        url: "https://nexus3-prod.radcom.co.il/repository/radcom-files/DevOpsFiles/jdk/11.0.2/jdk-11.0.2-x64_bin.tar.gz"
+              - name: "jdk8"
+                properties:
+                - installSource:
+                    installers:
+                    - zip:
+                        subdir: "jdk1.8.0_162"
+                        url: "https://nexus3-prod.radcom.co.il/repository/radcom-files/DevOpsFiles/jdk/8/jdk-8-x64.tar.gz"
+              - home: "/usr/lib/jvm/java-1.8-openjdk"
+                name: "jdk"
+              - name: "jdk7"
+                properties:
+                - installSource:
+                    installers:
+                    - zip:
+                        subdir: "jdk1.7.0_80"
+                        url: "http://nexus-prod.radcom.co.il:8081/nexus/service/local/repositories/DevOpsFiles/content/radcom/jdk/7/jdk-7-x64.tar.gz"
+            maven:
+              installations:
+              - name: "mvn-3.6.3"
+                properties:
+                - installSource:
+                    installers:
+                    - maven:
+                        id: "3.6.3"
+              - name: "maven"
+                properties:
+                - installSource:
+                    installers:
+                    - maven:
+                        id: "3.6.0"
+              - name: "mvn-3.5.2"
+                properties:
+                - installSource:
+                    installers:
+                    - maven:
+                        id: "3.5.2"
+            mavenGlobalConfig:
+              globalSettingsProvider: "standard"
+              settingsProvider: "standard"
+            nodejs:
+              installations:
+              - name: "node20"
+                properties:
+                - installSource:
+                    installers:
+                    - nodeJSInstaller:
+                        id: "20.12.1"
+                        npmPackagesRefreshHours: 72
+              - name: "node18"
+                properties:
+                - installSource:
+                    installers:
+                    - nodeJSInstaller:
+                        id: "18.14.0"
+                        npmPackagesRefreshHours: 72
+              - name: "node16"
+                properties:
+                - installSource:
+                    installers:
+                    - nodeJSInstaller:
+                        id: "16.9.0"
+                        npmPackagesRefreshHours: 72
+              - name: "node14"
+                properties:
+                - installSource:
+                    installers:
+                    - nodeJSInstaller:
+                        id: "14.8.0"
+                        npmPackagesRefreshHours: 0
+              - name: "node10"
+                properties:
+                - installSource:
+                    installers:
+                    - nodeJSInstaller:
+                        id: "10.13.0"
+                        npmPackagesRefreshHours: 72
+              - name: "node12"
+                properties:
+                - installSource:
+                    installers:
+                    - nodeJSInstaller:
+                        id: "12.7.0"
+                        npmPackagesRefreshHours: 72
+              - name: "node622"
+                properties:
+                - installSource:
+                    installers:
+                    - nodeJSInstaller:
+                        id: "6.2.2"
+                        npmPackagesRefreshHours: 72
+              - name: "node15"
+                properties:
+                - installSource:
+                    installers:
+                    - nodeJSInstaller:
+                        id: "15.12.0"
+                        npmPackagesRefreshHours: 72
+            pipelineMaven:
+              daoClass: "org.jenkinsci.plugins.pipeline.maven.dao.PipelineMavenPluginNullDao"
+              globalTraceability: false
+              triggerDownstreamUponResultAborted: false
+              triggerDownstreamUponResultFailure: false
+              triggerDownstreamUponResultNotBuilt: false
+              triggerDownstreamUponResultSuccess: true
+              triggerDownstreamUponResultUnstable: false
+        security: |-
+          security:
+            globalJobDslSecurityConfiguration:
+              useScriptSecurity: false
+            sSHD:
+              port: -1
+            scriptApproval:
+              approvedSignatures:
+              - "field java.lang.String value"
+              - "method groovy.lang.GroovyObject getProperty java.lang.String"
+              - "method groovy.lang.GroovyObject invokeMethod java.lang.String java.lang.Object"
+              - "method groovy.lang.GroovyObject setProperty java.lang.String java.lang.Object"
+              - "method groovy.util.XmlParser parseText java.lang.String"
+              - "method groovy.util.XmlSlurper parseText java.lang.String"
+              - "method groovy.util.slurpersupport.GPathResult text"
+              - "method hudson.model.Hudson getJob java.lang.String"
+              - "method jenkins.org.apache.commons.validator.routines.InetAddressValidator isValidInet4Address java.lang.String"
+              - "method org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper getRawBuild"
+              - "new groovy.json.JsonBuilder"
+              - "new groovy.json.JsonSlurperClassic"
+              - "new groovy.lang.GroovyShell"
+              - "new groovy.util.XmlParser"
+              - "new groovy.util.XmlSlurper"
+              - "new groovy.util.XmlSlurper boolean boolean"
+              - "new java.io.File java.lang.String"
+              - "new java.io.FileWriter java.lang.String"
+              - "staticMethod groovy.xml.XmlUtil serialize groovy.util.slurpersupport.GPathResult"
+              - "staticMethod groovy.xml.XmlUtil serialize groovy.util.slurpersupport.GPathResult java.io.Writer"
+              - "staticMethod jenkins.model.Jenkins getInstance"
+              - "staticMethod jenkins.org.apache.commons.validator.routines.InetAddressValidator getInstance"
+              - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods execute java.lang.String"
+              - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods find java.lang.Object groovy.lang.Closure"
+              - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods flatten java.lang.Object[]"
+              - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods flatten java.util.Set"
+              - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getAt java.lang.Object java.lang.String"
+              - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getAt java.util.Collection java.lang.String"
+              - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods max java.util.Collection"
+              - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods putAt java.lang.Object java.lang.String java.lang.Object"
+              - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods write java.io.File java.lang.String"
+            updateSiteWarningsConfiguration:
+              ignoredWarnings:
+              - "SECURITY-2617-extended-choice-parameter"
+              - "SECURITY-569"
+              - "SECURITY-2232"
+              - "SECURITY-1351"
+              - "SECURITY-1350"
+              - "SECURITY-2784-image-tag-parameter"
+        security-realm: |-
+          securityRealm:
+            activeDirectory:
+              bindPassword: "${AD_BIND_PASSWORD}"
+              cache:
+                size: 256
+                ttl: 600
+              customDomain: true
+              domains:
+              - bindName: "CN=Jenkins,OU=R&D,OU=Groups,OU=RadCom,DC=radcom,DC=co,DC=il"
+                bindPassword: "${AD_DOMAIN_BIND_PASSWORD}"
+                name: "radcom.co.il"
+                servers: "RDC01.radcom.co.il:3269"
+                site: "optional-site"
+                tlsConfiguration: TRUST_ALL_CERTIFICATES
+              groupLookupStrategy: AUTO
+              removeIrrelevantGroups: false
+              requireTLS: true
+              startTls: true
+        clouds: |-
+          clouds:
+            - docker:
+                disabled:
+                  disabledByChoice: true
+                  enabledByChoice: false
+                dockerApi:
+                  connectTimeout: 60
+                  dockerHost:
+                    uri: "unix:///var/run/docker.sock"
+                  readTimeout: 60
+                exposeDockerHost: true
+                name: "docker-local"
+                templates:
+                - connector:
+                    attach:
+                      user: "jenkins"
+                    disabled:
+                      disabledByChoice: true
+                      enabledByChoice: false
+                    dockerTemplateBase:
+                      cpuPeriod: 0
+                      cpuQuota: 0
+                      image: "nexus3-prod.radcom.co.il:32768/rccbaseagent:201912092209"
+                      mounts:
+                      - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock,readonly"
+                      mountsString: "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock,readonly"
+                    labelString: "NOUSE-RCCBaseAgent"
+                    name: "RCCBaseAgent"
+                    pullStrategy: PULL_ALWAYS
+                    pullTimeout: 300
+                    remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                    disabled:
+                      disabledByChoice: true
+                      enabledByChoice: false
+                    dockerTemplateBase:
+                      cpuPeriod: 0
+                      cpuQuota: 0
+                      image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-helm3:1.1.0"
+                      mounts:
+                      - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                      mountsString: "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    labelString: "NOUSE-rcc-centos7-helm3"
+                    name: "rcc-centos7"
+                    pullStrategy: PULL_ALWAYS
+                    pullTimeout: 300
+                    remoteFs: "/home/jenkins"
+                - connector: "attach"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-helm3:1.1.0"
+                    mounts:
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  labelString: "NOUSE-rcc-centos7"
+                  name: "rcc-centos7"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                - connector: "attach"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    hostname: "rcc-centos7-helm3-aws"
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-helm3-aws:1.1.0"
+                    mounts:
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  labelString: "NOUSE-rcc-centos7-helm3-aws"
+                  name: "rcc-centos7-helm3-aws"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+            - docker:
+                containerCap: 15
+                dockerApi:
+                  connectTimeout: 60
+                  dockerHost:
+                    uri: "tcp://acedocker-srv01.radcom.co.il:2375"
+                  readTimeout: 60
+                exposeDockerHost: true
+                name: "acedocker-srv01"
+                templates:
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-agent:1.30.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  instanceCapStr: "10"
+                  labelString: "rcc-centos7"
+                  name: "acedocker-srv01-rcc-centos7"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rccbaseagent:202210171020-jdk11"
+                    mounts:
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock,readonly"
+                    mountsString: "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock,readonly"
+                  instanceCapStr: "0"
+                  labelString: "RCCBaseAgent"
+                  name: "acedocker-srv01-RCCBaseAgent"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    cpuShares: 1024
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-agent:1.15.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                    - "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                      "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                  instanceCapStr: "0"
+                  labelString: "rcc-centos7-stack"
+                  name: "acedocker-srv01-RCC-CENTOS7-STACK"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                  stopTimeout: 0
+                - connector: "attach"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    hostname: "rcc-centos7-helm3-python3-aws"
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-helm3-aws-terraform:1.4.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  instanceCapStr: "0"
+                  labelString: "rcc-centos7-helm3-python3-aws"
+                  name: "acedocker-srv01-rcc-centos7-python3-aws"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                - connector: "attach"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-mvn:1.0.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                    - "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                      "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                  instanceCapStr: "0"
+                  labelString: "rcc-centos7-mvn"
+                  name: "acedocker-srv01-rcc-centos7-mvn"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rccbaseagent:202210171020-jdk11"
+                  instanceCapStr: "1"
+                  labelString: "RCCBaseAgent_Singleton"
+                  name: "acedocker-srv01-RCCBaseAgent_Singleton"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "omniq"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/med_compilation:1.10.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  instanceCapStr: "2"
+                  labelString: "medCompilation-rocky"
+                  name: "acedocker-srv01-med-compilation-rocky"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/omniq"
+                - connector:
+                    attach:
+                      user: "omniq"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    cpus: "8"
+                    image: "nexus3-prod.radcom.co.il:32768/med_compilation:1.1.1"
+                    memoryLimit: 8192
+                  instanceCapStr: "2"
+                  labelString: " medCompilation"
+                  name: "acedocker-srv01-med-compilation-centos"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/omniq"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-rocky9-agent:1.8.0"
+                  instanceCapStr: "5"
+                  labelString: "rcc-rocky9-test"
+                  name: "acedocker-srv01-rcc-rocky9-base-test"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-rocky9-agent:1.8.0"
+                    mounts:
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    - "type=bind,source=/home/jenkins/workspace,destination=/home/jenkins/workspace"
+                    mountsString: |-
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                      "type=bind,source=/home/jenkins/workspace,destination=/home/jenkins/workspace"
+                  instanceCapStr: "9"
+                  labelString: "rcc-rocky9-base"
+                  name: "acedocker-srv01-rcc-rocky9-base"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-aim-agent:0.0.3"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    - "type=bind,source=/home/jenkins/workspace,destination=/home/jenkins/workspace"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                      'type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock'
+                      "type=bind,source=/home/jenkins/workspace,destination=/home/jenkins/workspace"
+                    user: "0"
+                  instanceCapStr: "9"
+                  labelString: "rcc-centos7-aim"
+                  mode: EXCLUSIVE
+                  name: "acedocker-srv01-rcc-centos7-aim"
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+            - docker:
+                containerCap: 15
+                dockerApi:
+                  connectTimeout: 60
+                  dockerHost:
+                    uri: "tcp://acedocker-srv02.radcom.co.il:2375"
+                  readTimeout: 60
+                exposeDockerHost: true
+                name: "acedocker-srv02"
+                templates:
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rccbaseagent:202210171020-jdk11"
+                    mounts:
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock,readonly"
+                    mountsString: "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock,readonly"
+                  instanceCapStr: "0"
+                  labelString: "RCCBaseAgent"
+                  name: "acedocker-srv02-RCCBaseAgent"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-helm3-aws-terraform:1.4.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  instanceCapStr: "0"
+                  labelString: "rcc-centos7-helm3"
+                  name: "acedocker-srv02-rcc-centos7-helm3"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-agent:1.30.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  instanceCapStr: "10"
+                  labelString: "rcc-centos7"
+                  name: "acedocker-srv02-rcc-centos7"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector: "attach"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    hostname: "rcc-centos7-helm3-aws"
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-helm3-aws-terraform:1.4.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    - "type=bind,source=/etc/docker/daemon.json,destination=/etc/docker/daemon.json"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                      "type=bind,source=/etc/docker/daemon.json,destination=/etc/docker/daemon.json"
+                  instanceCapStr: "0"
+                  labelString: "rcc-centos7-helm3-aws"
+                  name: "acedocker-srv02-rcc-centos7-helm3-aws"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                - connector:
+                    jnlp:
+                      jenkinsUrl: "http://acc.radcom.co.il:8080"
+                      jnlpLauncher:
+                        workDirSettings:
+                          disabled: false
+                          failIfWorkDirIsMissing: false
+                          internalDir: "remoting"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    cpuShares: 1024
+                    image: "odavid/jenkins-jnlp-slave:4.3-9-29@sha256:ec13ab337d09ba19f6383d0b5cd0b90c33bd5e7462c32119d3b8e602cef76f87"
+                    mounts:
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  instanceCapStr: "0"
+                  labelString: "CentOS7Docker"
+                  name: "acedocker-srv02-CENTOS7"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                  stopTimeout: 0
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    cpuShares: 1024
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-agent:1.15.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                    - "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                      "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                  instanceCapStr: "12"
+                  labelString: "rcc-centos7-stack"
+                  name: "acedocker-srv02-RCC-CENTOS7-STACK"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                  stopTimeout: 0
+                - connector: "attach"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-mvn:1.0.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                    - "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                      "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                  labelString: "rcc-centos7-mvn"
+                  name: "acedocker-srv02-rcc-centos7-mvn"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rccbaseagent:202210171020-jdk11"
+                  instanceCapStr: "1"
+                  labelString: "RCCBaseAgent_Singleton"
+                  name: "acedocker-srv02-RCCBaseAgent_Singleton"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    hostname: "rcc-rocky9-agent-k8s-test2"
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-rocky9-agent:1.8.0"
+                    mounts:
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    privileged: true
+                  instanceCapStr: "0"
+                  labelString: "rcc-rocky9-agent-base-cots"
+                  name: "acedocker-srv02-rcc-rocky9-agent-base-cots"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    hostname: "aws-pipelines-agent"
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-rocky9-aws-minimal-agent:1.2.0"
+                    mounts:
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  instanceCapStr: "0"
+                  labelString: "aws-pipelines-agent"
+                  name: "acedocker-srv02-aws-pipelines-agent"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector: "attach"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-agent:1.30.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    - "type=bind,source=/home/jenkins/workspace,destination=/home/jenkins/workspace"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                      "type=bind,source=/home/jenkins/workspace,destination=/home/jenkins/workspace"
+                    user: "0"
+                  instanceCapStr: "9"
+                  labelString: "rcc-centos7-aim"
+                  mode: EXCLUSIVE
+                  name: "acedocker-srv02-rcc-centos7-aim"
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+            - docker:
+                containerCap: 9
+                dockerApi:
+                  connectTimeout: 60
+                  dockerHost:
+                    uri: "tcp://acedocker-srv03.radcom.co.il:2375"
+                  readTimeout: 60
+                exposeDockerHost: true
+                name: "acedocker-srv03"
+                templates:
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rccbaseagent:202210171020-jdk11"
+                    mounts:
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock,readonly"
+                    mountsString: "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock,readonly"
+                  labelString: "RCCBaseAgent"
+                  name: "acedocker-srv03-RCCBaseAgent"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-helm3-aws-terraform:1.4.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  labelString: "rcc-centos7-helm3"
+                  name: "acedocker-srv03-rcc-centos7-helm3"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-agent:1.30.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  instanceCapStr: "10"
+                  labelString: "rcc-centos7 CentOS7"
+                  name: "acedocker-srv03-rcc-centos7"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector: "attach"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    hostname: "rcc-centos7-helm3-aws"
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-helm3-aws-terraform:1.4.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  labelString: "rcc-centos7-helm3-aws"
+                  name: "acedocker-srv03-rcc-centos7-helm3-aws"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                - connector:
+                    jnlp:
+                      jenkinsUrl: "http://acc.radcom.co.il:8080"
+                      jnlpLauncher:
+                        workDirSettings:
+                          disabled: false
+                          failIfWorkDirIsMissing: false
+                          internalDir: "remoting"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    cpuShares: 1024
+                    image: "odavid/jenkins-jnlp-slave:4.3-9-29@sha256:ec13ab337d09ba19f6383d0b5cd0b90c33bd5e7462c32119d3b8e602cef76f87"
+                    mounts:
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  instanceCapStr: "5"
+                  labelString: "CentOS7Docker"
+                  name: "acedocker-srv03-CENTOS7"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                  stopTimeout: 0
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    cpuShares: 1024
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-agent:1.15.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                    - "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                      "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                  instanceCapStr: "12"
+                  labelString: "rcc-centos7-stack"
+                  name: "acedocker-srv03-RCC-CENTOS7-STACK"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                  stopTimeout: 0
+                - connector: "attach"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    hostname: "rcc-centos7-helm3-aws-terraform"
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-helm3-aws-terraform:1.4.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  labelString: "rcc-centos7-helm3-aws-terraform"
+                  name: "rcc-centos7-helm3-aws-terraform"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  disabled:
+                    disabledByChoice: true
+                    enabledByChoice: false
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    hostname: "acedocker-srv03-rcc-centos7-mvn"
+                    image: "nexus3-prod.radcom.co.il:32768/rccbaseagent:202210171020-jdk11"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                    - "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                      "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                  instanceCapStr: "1"
+                  labelString: "RCCBaseAgent_Singleton"
+                  name: "acedocker-srv03-RCCBaseAgent_Singleton"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+            - docker:
+                containerCap: 15
+                dockerApi:
+                  connectTimeout: 60
+                  dockerHost:
+                    uri: "tcp://172.16.3.134:2375"
+                  readTimeout: 60
+                exposeDockerHost: true
+                name: "acedocker-srv04"
+                templates:
+                - connector: "attach"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    hostname: "acedocker-srv04-rcc-centos7-mvn"
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-mvn:1.0.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                    - "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home,destination=/var/jenkins_home"
+                      "type=bind,source=/home/jenkins/.m2,destination=/home/jenkins/.m2"
+                  instanceCapStr: "4"
+                  labelString: "rcc-centos7-mvn"
+                  name: "acedocker-srv04-rcc-centos7-mvn"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-centos7-helm3-aws-terraform:1.4.0"
+                    mounts:
+                    - "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    mountsString: |-
+                      "type=bind,source=/var/jenkins_home/.m2,destination=/home/jenkins/.m2"
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                  instanceCapStr: "3"
+                  labelString: "rcc-centos7-helm3-aws"
+                  name: "acedocker-srv04-rcc-centos7-python3-aws"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rccbaseagent:202210171020-jdk11"
+                  instanceCapStr: "4"
+                  labelString: "RCCBaseAgent"
+                  name: "acedocker-srv04-RCCBaseAgent"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "root"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/inputapi_slave:202110061530"
+                  instanceCapStr: "1"
+                  labelString: "InputAPI"
+                  name: "acedocker-srv04-inputapi"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rccbaseagent:202210171020-jdk11"
+                  instanceCapStr: "1"
+                  labelString: "RCCBaseAgent_Singleton"
+                  name: "acedocker-srv04-RCCBaseAgent_Singleton"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "root"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:8084/inputapi_slave:0.0.61144-maissaid-SNAPSHOT"
+                  instanceCapStr: "1"
+                  labelString: "InputAPI-test"
+                  name: "acedocker-srv04-inputapi-test"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home"
+                - connector:
+                    attach:
+                      user: "omniq"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    cpus: "8"
+                    image: "nexus3-prod.radcom.co.il:32768/med_compilation:1.1.1"
+                    memoryLimit: 8192
+                  instanceCapStr: "2"
+                  labelString: "medCompilation"
+                  name: "acedocker-srv04-med-compilation-centos"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/omniq"
+                - connector:
+                    attach:
+                      user: "omniq"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    cpus: "8"
+                    image: "nexus3-prod.radcom.co.il:32768/med_compilation:1.10.0"
+                    memoryLimit: 8192
+                  instanceCapStr: "2"
+                  labelString: "medCompilation-rocky"
+                  name: "acedocker-srv04-med-compilation-rocky"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/omniq"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-rocky9-agent:1.8.0"
+                    mounts:
+                    - "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                    - "type=bind,source=/home/jenkins/workspace,destination=/home/jenkins/workspace"
+                    mountsString: |-
+                      "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock"
+                      "type=bind,source=/home/jenkins/workspace,destination=/home/jenkins/workspace"
+                  instanceCapStr: "10"
+                  labelString: "rcc-rocky9-base"
+                  name: "rcc-rocky9-base acedocker-srv04-rcc-rocky9-base"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      javaExe: "/usr/lib/jvm/java-11-openjdk-11.0.18.0.10-1.el7_9.x86_64/bin/java"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    cpuShares: 1024
+                    environment:
+                    - "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.18.0.10-1.el7_9.x86_64"
+                    environmentsString: "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.18.0.10-1.el7_9.x86_64"
+                    image: "nexus3-prod.radcom.co.il:32768/probes_compilation:1.15.0"
+                    privileged: true
+                  instanceCapStr: "4"
+                  labelString: "probesCompilation01"
+                  mode: EXCLUSIVE
+                  name: "acedocker-srv04-probesCompilation01"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/omniq"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:32768/rcc-rocky9-aws-minimal-agent:1.2.0"
+                  instanceCapStr: "0"
+                  labelString: "aws-pipelines-agent"
+                  name: "acedocker-srv04-aws-pipelines-agent"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+                - connector:
+                    attach:
+                      user: "jenkins"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    image: "nexus3-prod.radcom.co.il:8083/rcc-rocky9-aws-minimal-agent:0.0.1515-shirmakl-SNAPSHOT"
+                  instanceCapStr: "0"
+                  labelString: "aws-pipelines-agent-test"
+                  name: "acedocker-srv04-aws-pipelines-agent-test"
+                  pullStrategy: PULL_ALWAYS
+                  pullTimeout: 300
+                  remoteFs: "/home/jenkins"
+            - kubernetes:
+                containerCap: 64
+                containerCapStr: "64"
+                credentialsId: "microk8s-agents-jenkins-token"
+                directConnection: true
+                jenkinsUrl: "http://acc.radcom.co.il:8080"
+                name: "Kubernetes cluster - microk8s - managed by DevOps"
+                namespace: "jenkins-agents"
+                serverCertificate: "${KUBERNETES_SERVER_CERTIFICATE}"
+                serverUrl: "https://172.16.3.122:16443"
+                skipTlsVerify: true
+                templates:
+                - containers:
+                  - alwaysPullImage: true
+                    image: "nexus3-prod.radcom.co.il:8084/rcc-rocky9-agent:1.3.3"
+                    livenessProbe:
+                      failureThreshold: 0
+                      initialDelaySeconds: 0
+                      periodSeconds: 0
+                      successThreshold: 0
+                      timeoutSeconds: 0
+                    name: "jnlp"
+                    workingDir: "/home/jenkins/agent"
+                  - command: "/app/kubedock server -n jenkins-agents --inspector --image-pull-secrets\
+                      \ nexus3-prod-8084 --reverse-proxy -v 10"
+                    image: "nexus3-prod.radcom.co.il:8084/joyrex2001/kubedock:0.13.0"
+                    livenessProbe:
+                      failureThreshold: 0
+                      initialDelaySeconds: 0
+                      periodSeconds: 0
+                      successThreshold: 0
+                      timeoutSeconds: 0
+                    name: "kubedock"
+                    runAsGroup: "1000"
+                    runAsUser: "1000"
+                    ttyEnabled: true
+                    workingDir: "/home/jenkins/agent"
+                  - args: "3600"
+                    command: "sleep"
+                    image: "nexus3-prod.radcom.co.il:8084/gcr.io/kaniko-project/executor:v1.15.0-debug"
+                    livenessProbe:
+                      failureThreshold: 0
+                      initialDelaySeconds: 0
+                      periodSeconds: 0
+                      successThreshold: 0
+                      timeoutSeconds: 0
+                    name: "kaniko"
+                    ttyEnabled: true
+                    workingDir: "/home/jenkins/agent"
+                  - image: "nexus3-prod.radcom.co.il:8084/registry:2.8.2"
+                    livenessProbe:
+                      failureThreshold: 0
+                      initialDelaySeconds: 0
+                      periodSeconds: 0
+                      successThreshold: 0
+                      timeoutSeconds: 0
+                    name: "registry"
+                    workingDir: "/home/jenkins"
+                  envVars:
+                  - envVar:
+                      key: "TESTCONTAINERS_RYUK_DISABLED"
+                      value: "true"
+                  - envVar:
+                      key: "TESTCONTAINERS_CHECKS_DISABLE"
+                      value: "true"
+                  - envVar:
+                      key: "DOCKER_HOST"
+                      value: "tcp://172.16.3.134:2375"
+                  - envVar:
+                      key: "DOCKER_TLS_VERIFY"
+                      value: "0"
+                  - envVar:
+                      key: "DOCKER_CONFIG"
+                      value: "/kaniko/.docker/"
+                  id: "194ae39c-f604-4408-b9a9-c78a83819c86"
+                  imagePullSecrets:
+                  - name: "nexus3-docker-cache-8087"
+                  inheritFrom: "jenkins/jnlp-slave"
+                  label: "RCC-ROCKY9-AGENT-K8S-JENKINS-ACC"
+                  name: "RCC-ROCKY9-AGENT-K8S-JENKINS-ACC"
+                  namespace: "jenkins-agents"
+                  serviceAccount: "kubedock-sa"
+                  volumes:
+                  - secretVolume:
+                      mountPath: "/kaniko/.docker/"
+                      optional: false
+                      secretName: "docker-config-json-secret"
+                  yamlMergeStrategy: "override"
+            - docker:
+                dockerApi:
+                  dockerHost:
+                    uri: "unix:///var/run/docker.sock"
+                exposeDockerHost: true
+                name: "AppCycles-docker"
+                templates:
+                - connector:
+                    jnlp:
+                      jenkinsUrl: "http://172.240.0.1:8080"
+                      jnlpLauncher:
+                        workDirSettings:
+                          disabled: false
+                          failIfWorkDirIsMissing: false
+                          internalDir: "remoting"
+                  dockerTemplateBase:
+                    cpuPeriod: 0
+                    cpuQuota: 0
+                    cpuShares: 0
+                    image: "odavid/jenkins-jnlp-slave:latest@sha256:f5e9179baea06cd31084f14755df24e9fce2e7b7cf860e38c68a32f6982337fe"
+                    memoryLimit: 0
+                    memorySwap: 0
+                    mounts:
+                    - "/var/run/docker.sock:/var/run/docker.sock"
+                    mountsString: "/var/run/docker.sock:/var/run/docker.sock"
+                    shmSize: 0
+                  instanceCapStr: "10"
+                  labelString: "jenkins-jnlp-slave"
+                  remoteFs: "/home/jenkins"
+    additionalPlugins:
+      - active-directory
+      - amazon-ecr
+      - amazon-ecs
+      - anchore-container-scanner
+      - ansicolor
+      - ant
+      - antisamy-markup-formatter
+      - apache-httpcomponents-client-4-api
+      - apache-httpcomponents-client-5-api
+      - artifactory
+      - authentication-tokens
+      - aws-credentials
+      - aws-java-sdk
+      - aws-java-sdk-cloudformation
+      - aws-java-sdk-codebuild
+      - aws-java-sdk-ec2
+      - aws-java-sdk-ecr
+      - aws-java-sdk-ecs
+      - aws-java-sdk-efs
+      - aws-java-sdk-elasticbeanstalk
+      - aws-java-sdk-iam
+      - aws-java-sdk-kinesis
+      - aws-java-sdk-logs
+      - aws-java-sdk-minimal
+      - aws-java-sdk-secretsmanager
+      - aws-java-sdk-sns
+      - aws-java-sdk-sqs
+      - aws-java-sdk-ssm
+      - badge
+      - basic-branch-build-strategies
+      - blueocean
+      - blueocean-autofavorite
+      - blueocean-bitbucket-pipeline
+      - blueocean-commons
+      - blueocean-config
+      - blueocean-core-js
+      - blueocean-dashboard
+      - blueocean-display-url
+      - blueocean-events
+      - blueocean-git-pipeline
+      - blueocean-github-pipeline
+      - blueocean-i18n
+      - blueocean-jira
+      - blueocean-jwt
+      - blueocean-personalization
+      - blueocean-pipeline-api-impl
+      - blueocean-pipeline-editor
+      - blueocean-pipeline-scm-api
+      - blueocean-rest
+      - blueocean-rest-impl
+      - blueocean-web
+      - bootstrap4-api
+      - bootstrap5-api
+      - bouncycastle-api
+      - branch-api
+      - build-timeout
+      - build-user-vars-plugin
+      - buildtriggerbadge
+      - caffeine-api
+      - checkmarx
+      - checks-api
+      - cloud-stats
+      - cloudbees-bitbucket-branch-source
+      - cloudbees-disk-usage-simple
+      - cloudbees-folder
+      - cobertura
+      - code-coverage-api
+      - command-launcher
+      - commons-lang3-api
+      - commons-text-api
+      - conditional-buildstep
+      - config-file-provider
+      - copyartifact
+      - credentials
+      - credentials-binding
+      - cucumber-reports
+      - custom-tools-plugin
+      - dashboard-view
+      - data-tables-api
+      - display-url-api
+      - docker-build-publish
+      - docker-commons
+      - docker-java-api
+      - docker-plugin
+      - docker-workflow
+      - durable-task
+      - echarts-api
+      - email-ext
+      - emailext-template
+      - embeddable-build-status
+      - envinject
+      - envinject-api
+      - extended-choice-parameter
+      - extensible-choice-parameter
+      - external-monitor-job
+      - favorite
+      - filesystem_scm
+      - font-awesome-api
+      - forensics-api
+      - gatling
+      - git-changelog
+      - git-client
+      - git-parameter
+      - git-server
+      - github
+      - github-api
+      - github-branch-source
+      - github-oauth
+      - gitlab-api
+      - gitlab-branch-source
+      - gitlab-plugin
+      - golang
+      - google-login
+      - gradle
+      - groovy-postbuild
+      - h2-api
+      - handlebars
+      - handy-uri-templates-2-api
+      - htmlpublisher
+      - http_request
+      - image-tag-parameter
+      - instance-identity
+      - ivy
+      - jackson2-api
+      - jakarta-activation-api
+      - jakarta-mail-api
+      - javadoc
+      - javax-activation-api
+      - javax-mail-api
+      - jaxb
+      - jdk-tool
+      - jenkins-design-language
+      - jersey2-api
+      - jira
+      - jira-steps
+      - jjwt-api
+      - jnr-posix-api
+      - job-dsl
+      - jquery
+      - jquery-detached
+      - jquery3-api
+      - jsch
+      - junit
+      - kubernetes-cli
+      - kubernetes-client-api
+      - kubernetes-credentials
+      - ldap
+      - lockable-resources
+      - mailer
+      - mapdb-api
+      - mask-passwords
+      - matrix-auth
+      - matrix-project
+      - maven-plugin
+      - mercurial
+      - metrics
+      - mina-sshd-api-common
+      - mina-sshd-api-core
+      - momentjs
+      - nodejs
+      - Office-365-Connector
+      - oic-auth
+      - okhttp-api
+      - openstack-cloud
+      - p4
+      - pam-auth
+      - parallel-test-executor
+      - Parameterized-Remote-Trigger
+      - parameterized-trigger
+      - pipeline-aws
+      - pipeline-build-step
+      - pipeline-graph-analysis
+      - pipeline-groovy-lib
+      - pipeline-input-step
+      - pipeline-maven
+      - pipeline-maven-api
+      - pipeline-milestone-step
+      - pipeline-model-api
+      - pipeline-model-definition
+      - pipeline-model-extensions
+      - pipeline-rest-api
+      - pipeline-stage-step
+      - pipeline-stage-tags-metadata
+      - pipeline-stage-view
+      - pipeline-utility-steps
+      - plain-credentials
+      - plugin-util-api
+      - popper-api
+      - popper2-api
+      - prism-api
+      - prometheus
+      - promoted-builds
+      - pubsub-light
+      - rebuild
+      - resource-disposer
+      - robot
+      - run-condition
+      - saml
+      - sbt
+      - scm-api
+      - script-security
+      - simple-theme-plugin
+      - slack
+      - snakeyaml-api
+      - sonar
+      - sse-gateway
+      - ssh-agent
+      - ssh-credentials
+      - ssh-slaves
+      - sshd
+      - stashNotifier
+      - strict-crumb-issuer
+      - structs
+      - subversion
+      - swarm
+      - throttle-concurrents
+      - timestamper
+      - token-macro
+      - trilead-api
+      - uno-choice
+      - variant
+      - windows-slaves
+      - workflow-api
+      - workflow-basic-steps
+      - workflow-cps
+      - workflow-cps-global-lib
+      - workflow-durable-task-step
+      - workflow-job
+      - workflow-multibranch
+      - workflow-remote-loader
+      - workflow-scm-step
+      - workflow-step-api
+      - workflow-support
+      - ws-cleanup
+      - xvfb
+      # Deprecated plugins
+      # - ace-editor
+      # - whitesource
+      # - ionicons-api
+
+#  jenkins-casc-configs: |
+          # security:
+          #   gitHostKeyVerificationConfiguration:
+          #     sshHostKeyVerificationStrategy: "noHostKeyVerificationStrategy"
+          #   copyartifact:
+          #     mode: PRODUCTION

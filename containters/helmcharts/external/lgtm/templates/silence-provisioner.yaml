@@ -1,0 +1,44 @@
+{{- if .Values.silence.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: grafana-alert-silence-provisioner
+  labels:
+    app.kubernetes.io/name: grafana-alerr-silence-provisioner
+    app.kubernetes.io/instance: lgtm
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": "before-hook-creation"
+spec:
+  template:
+    spec:
+      containers:
+      - name: provision-grafana-alert-silences
+        image: curlimages/curl:7.85.0
+        env:
+        - name: GRAFANA_URL
+          value: https://grafana.radcom.co.il
+        - name: GRAFANA_USER
+          valueFrom:
+            secretKeyRef:
+              name: lgtm-grafana
+              key: admin-user
+        - name: GRAFANA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: lgtm-grafana
+              key: admin-password
+        command:
+        - sh
+        - -c
+        - |
+          {{- range .Values.silence.silences }}
+          curl -u $GRAFANA_USER:$GRAFANA_PASSWORD -H "Content-Type: application/json" \
+            -XPOST "$GRAFANA_URL/api/alertmanager/grafana/api/v2/silences" \
+            -d '{"matchers":[{"name":"{{ .matcher.name }}","value":"{{ .matcher.value }}","isRegex":{{ .matcher.isRegex }}}],"startsAt":"{{ .startsAt }}","endsAt":"{{ .endsAt }}","createdBy":"{{ .createdBy }}","comment":"{{ .comment }}"}' || true
+          {{- end }}
+      restartPolicy: OnFailure
+  backoffLimit: 3
+{{- end }}
+
+

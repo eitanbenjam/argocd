@@ -1,0 +1,20 @@
+{{- $files := .Files.Glob "files/plugins/**.yaml" }}
+{{- if $files }}
+{{- range $path, $fileContents := $files }}
+{{- $file := lower $path }}
+{{- $filePath := (dir $file) }}
+{{- $fileName := (base $file) }}
+{{- $pluginName := $fileName | replace (ext $fileName) "" | trunc 63 | trimSuffix "-" }}
+{{- $pluginPath := regexSplit "/" $filePath  -1 | rest | join " " | title | replace " " "/" }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: plugin-{{ $pluginName }}
+  labels:
+    grafana_plugin: "plugin"
+data:
+  {{ $pluginName }}.yaml: |
+{{ ($.Files.Get $path) | indent 4 }}
+{{- end }}
+{{ end }}

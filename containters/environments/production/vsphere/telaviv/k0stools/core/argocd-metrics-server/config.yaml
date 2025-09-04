@@ -1,0 +1,15 @@
+application:
+  name: "argocd-metrics-server"
+  namespace: "argocd"
+source:
+  repoURL: "ssh://git@bitbucket-prod.radcom.co.il:7999/devopstools/helmcharts.git"
+  targetRevision: "master"
+  path: "helmcharts/external/argocd-metrics-server"
+deploy: false
+cluster:
+  name: "k0stools"
+  environment: "production"
+  provider: "vsphere"
+  region: "telaviv"
+  project: "core"
+  adress: "https://kubernetes.default.svc"

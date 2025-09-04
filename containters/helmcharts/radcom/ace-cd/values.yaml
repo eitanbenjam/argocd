@@ -1,0 +1,22 @@
+# RBAC configuration
+rbac:
+  # Specifies whether RBAC resources should be created
+  create: true
+  # Use ClusterRole instead of Role for cross-namespace access
+  useClusterRole: true
+
+ace-cd:
+  ace-cd-chart:
+    ansible_check: false
+    create_log_pvc: true
+    # cronjob_name: service-access-config
+    image:
+      helm_repository_tag: latest
+      tag: 1.156.0
+    kuberiq_cluster_name: Kuberiq_reg
+    kuberiq_type: kuberiq_cdf
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512M
+    source_control: configmap

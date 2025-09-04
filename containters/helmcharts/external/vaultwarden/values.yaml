@@ -1,0 +1,64 @@
+vaultwarden:
+  database:
+    type: sqlite
+
+  vaultwarden:
+    admin:
+      enabled: true
+  # Kubernetes Ingress
+  ingress:
+    enabled: true
+    className: "nginx"
+    host: "password.radcom.co.il"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+    tls:
+      - secretName: wildcard-radcom-co-il-certificate
+        hosts:
+          - password.radcom.co.il
+  persistence:
+    enabled: true
+    size: 1Gi
+    accessMode: ReadWriteOnce
+
+libraryChart:
+  cronjob:
+    name: vaultwarden-backup
+    schedule: "23 4 * * *"
+    env:
+      - name: NEXUS_USER
+        valueFrom:
+          secretKeyRef:
+            name: nexus-credentials
+            key: user
+      - name: NEXUS_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: nexus-credentials
+            key: password
+    image:
+      name: alpine
+      tag: latest
+    command: ["/bin/sh", "-c"]
+    args:
+      - |
+        set -x && \
+        apk add --no-cache curl && \
+        backup_name=$(date +%Y_%m_%dT%H_%M)_data-backup.tar.gz && \
+        tar -czf ${backup_name} -C /data . && \
+        curl -u ${NEXUS_USER}:${NEXUS_PASSWORD} -T ${backup_name} https://nexus3-prod.radcom.co.il/repository/radcom-files/backups/vaultwarden/${backup_name} && \
+        echo "Backup and upload completed!"
+    volumeMounts:
+      - mountPath: /data
+        name: data-volume
+        readOnly: true
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    restartPolicy: OnFailure
+    volumes:
+    - name: data-volume
+      persistentVolumeClaim:
+        claimName: vaultwarden
