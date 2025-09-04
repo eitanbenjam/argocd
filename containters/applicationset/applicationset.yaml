@@ -10,8 +10,8 @@ spec:
     - matrix:
         generators:
           - git:
-              repoURL:  ssh://git@bitbucket-prod.radcom.co.il:7999/devopstools/helmcharts.git
-              revision: master
+              repoURL:  https://github.com/eitanbenjam/argocd
+              revision: gcp
               files:
                 - path: 'environments/**/config.yaml'
           - clusters:
