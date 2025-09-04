@@ -8,7 +8,7 @@ source:
 deploy: true
 cluster:
   provider: "gcp"
-  region: "eitan"
+  region: "be"
   name: "gcp"
   environment: "rnd"
   project: "be"
