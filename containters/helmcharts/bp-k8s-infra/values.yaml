@@ -23,14 +23,14 @@ cs-k8s-infra:
       publishService:
         enabled: false
       service:
-        enabled: true
-        externalTrafficPolicy: Local
-        type: LoadBalancer
-        nodePorts:
-          https: 30443
-          http: 30080
         annotations:
           metallb.universe.tf/address-pool: openshiftpoc-ip-pools
+        enabled: true
+        externalTrafficPolicy: Local
+        nodePorts:
+          http: 30080
+          https: 30443
+        type: LoadBalancer
     enabled: true
     tcp: {}
     udp: {}

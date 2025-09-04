@@ -1,5 +1,3 @@
-global:
-  namespace: argocd
 ace-cd-chart:
   ansible_check: false
   cloud:
@@ -28,3 +26,5 @@ ace-cd-chart:
   source_control: configmap
   srp_ip: None
   tag: 1.120.0
+global:
+  namespace: argocd

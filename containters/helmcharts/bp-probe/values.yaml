@@ -6,7 +6,7 @@ cs-probe:
     configMap:
       cdfControlInterfacePref: AWS_RADCOM_CDF_CONTROL
       cdfGroup: ''
-      defaultInterfacePref: AWS_RADCOM_DEFAULT
+      *SITE_PLACEHOLDERInterfacePref: AWS_RADCOM_DEFAULT
       interfaceNames: ''
       nfManagerInterfacePref: AWS_RADCOM_NF_MANAGER
       oamDirectInterfacePref: AWS_RADCOM_OAM_DIRECT
