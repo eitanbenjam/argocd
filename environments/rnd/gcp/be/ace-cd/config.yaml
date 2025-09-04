@@ -5,7 +5,7 @@ source:
   repoURL: "https://github.com/eitanbenjam/argocd"
   targetRevision: "gcp"
   path: "helmcharts/radcom/ace-cd"
-deploy: "true"
+deploy: true
 cluster:
   provider: "gcp"
   region: "eitan"
