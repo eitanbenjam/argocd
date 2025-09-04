@@ -17,10 +17,10 @@ spec:
           - clusters:
               selector:
                 matchLabels:
-                  cluster: '{{.cluster.name}}'
-                  region: '{{.cluster.region}}'
-                  provider: '{{.cluster.provider}}'
-                  environment: '{{.cluster.environment}}'
+                  cluster: 'gcp'
+                  region: 'eitan'
+                  provider: 'gcp'
+                  environment: 'rnd'
       selector:
         matchExpressions:
         - key: deploy
