@@ -8,8 +8,8 @@ source:
 deploy: true
 cluster:
   provider: "gcp"
-  region: "be"
-  name: "gcp"
+  region: "us-south1"
+  name: "eitan-gke"
   environment: "rnd"
-  project: "be"
+  project: "rgrpoc"
   adress: "https://AC7149A00FBB8E4EFBC7B78C9318A9C5.gr7.us-east-2.eks.amazonaws.com"
