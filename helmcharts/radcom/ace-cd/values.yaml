@@ -12,7 +12,7 @@ ace-cd:
     # cronjob_name: service-access-config
     image:
       helm_repository_tag: latest
-      tag: 1.156.0
+      tag: argocd
     kuberiq_cluster_name: Kuberiq_reg
     kuberiq_type: kuberiq_cdf
     resources:
