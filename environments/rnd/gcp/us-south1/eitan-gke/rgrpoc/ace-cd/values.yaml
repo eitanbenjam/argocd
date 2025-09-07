@@ -47,4 +47,4 @@ ace-cd:
     replicas: 1
     site_type: national
     source_control: configmap
-    storage_class: gp3
+    storage_class: standard-rwo
