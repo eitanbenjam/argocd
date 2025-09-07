@@ -1,4 +1,4 @@
-HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://692859913461.dkr.ecr.us-east-2.amazonaws.com
+HELM_REGISTRY_PLACEHOLDER: &HELM_REGISTRY_PLACEHOLDER oci://us-south1-docker.pkg.dev/radcom-telus-poc-400307/eitan-test
 apiVersion: v1
 appVersion: '1.0'
 description: ace-cd
